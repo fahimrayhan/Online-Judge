@@ -148,10 +148,10 @@ function loadCreateSubmissionPage(){
 function createSubmission(){
 	var data = {
 		'languageId': 53,
-		'sourceCode': editAreaLoader.getValue("sourceCodeEditor"),
+		'sourceCode': btoa(editAreaLoader.getValue("sourceCodeEditor")),
 		'problemId': problemId
 	}
-	console.log(data);
+	//console.log(data);
 	$.post(dashboard_action_url,buildData("createSubmission",data),function(response){
 		//$("#modal_md_body").html(response);
 		modal_action("md","Add Test Case","close");

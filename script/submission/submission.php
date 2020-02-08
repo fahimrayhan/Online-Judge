@@ -75,7 +75,9 @@ class Submission {
  		$verdictClass="label label-$verdictClass";
 
  		return "<span class='$verdictClass'>$verdictName</span>";
- 	}
+	 }
+	 
+
 
 
 
