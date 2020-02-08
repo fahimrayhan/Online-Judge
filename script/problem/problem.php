@@ -15,7 +15,14 @@ class Problem {
  		$sql="select * from problems where problemId=$id";
  		$data=$this->DB->getData($sql);
  		return $json?json_encode($data[0]):$data[0];
- 	}
+	}
+	 
+	public function checkProblemModerator($problemId,$userId){
+		$sql="select * from problem_moderator where problemId=$problemId and userId=$userId";
+		$data=$this->db->getData($sql);
+		if(!isset($data[0]))return -1;
+		return $data['moderatorRoles'];
+	}
 
  	public function getProblemModeratorList($problemId,$json=false){
  		$sql="select userId,userHandle,userPhoto,moderatorRoles from problem_moderator natural join users where problemId=$problemId";
@@ -32,7 +39,15 @@ class Problem {
  	public function addProblemModerator($info){
  		$info['moderatorRoles']=20;
  		$this->DB->pushData("problem_moderator","insert",$info);
- 	}
+	}
+
+	public function removeProblemModerator($info){
+		$chechModeratorRole=$this->checkProblemModerator($info['problemId'],$info['userId']);
+		if($chechModeratorRole==-1 || $chechModeratorRole==10)return;
+		
+	}
+	 
+	
 
  	public function processModeratorData($data){
  		foreach ($data as $key => $value) {
