@@ -46,6 +46,10 @@ function modalOpen(type="md",header="Header"){
   $("#modal_"+type+"_header").html(header);
 }
 
+function modalClose(type="md"){
+  modal_action(type,"","close");
+}
+
 function modal_action(type,header="Header",permission="open"){
   if(type=="sm")modal_sm(permission,header);
   else if(type=="md")modal_md(permission,header);

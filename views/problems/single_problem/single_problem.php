@@ -1,5 +1,6 @@
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript" src="views/problems/single_problem/js/problem.js"></script>
 <script>
 window.onload = function () {
 
@@ -69,7 +70,7 @@ chart.render();
 		<div class="box none_border">
 			<div class="box_header">Submit</div>
 			<div class="box_body" style="text-align: center;">
-				<button>Submit Your Solution</button>
+				<button onclick="load_submit_problem_page()">Submit Your Solution</button>
 			</div>
 		</div>
 	</div>

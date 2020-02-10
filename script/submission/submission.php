@@ -99,6 +99,17 @@ class Submission {
  		print_r($response);
  	}
 
+ 	public function getSubmissionAllInfo($info,$json=false){
+ 		$submissionId=$info['submissionId'];
+ 		$data=array();
+ 		$json_data=array();
+ 		$json_data['submissionId']=$submissionId;
+ 		$submissionInfo=$this->getSubmissionList(json_encode($json_data));
+ 		$data['submissionInfo']=$submissionInfo[0];
+ 		return $json==true?json_encode($data):$data;
+
+ 	}
+
  	
 
 
