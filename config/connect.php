@@ -130,6 +130,21 @@ class Database
         return $sql;
     }
     
+    public function buildDeleteSql($arr,$table){
+
+        $sql = "DELETE FROM $table WHERE ";
+        $size      = sizeof($arr);
+        $c         = 0;
+        
+        foreach ($arr as $key => $value) {
+            $sql .= $key . "='" . $value . "'";
+            if ($c != $size - 1)
+                $sql .= " and ";
+            $c++;
+        }
+        return $sql;
+
+    }
     
     public function pushData($table, $action, $info,$json=false)
     {
@@ -145,9 +160,8 @@ class Database
             $action_name = "Insert New " . $table;
             $sql         = $this->buildInsertSql($info, $table);
         } else if ($action == "delete") {
-            $id          = $info[$pk];
             $action_name = "Delete " . $table;
-            $sql         = "DELETE FROM $table WHERE $pk=$id";
+            $sql         = $this->buildDeleteSql($info,$table);
         }
         
         $res = $this->select($sql);
