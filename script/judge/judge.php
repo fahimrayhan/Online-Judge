@@ -29,6 +29,8 @@ class Judge {
 
  		$data=$this->DB->getData($sql);
 
+ 		print_r($data);
+
  		if(isset($data[0])){
  			$this->submissionData=$data[0];
  			$this->isPending=1;
@@ -83,6 +85,7 @@ class Judge {
  		if($this->isPending==0)
  			return;
  		$data=json_decode($this->apiData,true);
+ 		print_r($data);
  		if(!isset($data['status'])){
  			$this->analysisData['verdict']=6;
  			$this->analysisData['memory']=0;
@@ -122,7 +125,7 @@ class Judge {
  		$this->saveSubmissionTestData['verdict']=$this->analysisData['verdict'];
  		$this->saveSubmissionTestData['totalTime']=$this->analysisData['time'];
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
- 		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
+ 		//$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;
  	}
 

@@ -19,6 +19,8 @@
 
 .box{
 	margin-bottom: 20px;
+	box-shadow: 2px 2px 2px 2px #aaaaaa;
+	border-radius: 5px;
 }
 
 

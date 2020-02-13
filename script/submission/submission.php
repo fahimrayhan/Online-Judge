@@ -12,14 +12,15 @@ class Submission {
 
  	public function getSubmissionList($requestData,$json=false){
  		$requestData=($requestData=="")?"{}":$requestData;
+
  		$info=json_decode($requestData,true);
  		$sql="";
  		foreach ($info as $key => $value) {
  			$sql.=($sql!="")?" and ":"";
- 			$sql.= "$key=$value";
+ 			$sql.= "submissions.$key=$value";
  		}
  		$sql=($sql!="")?" where ".$sql:"";
- 		$sql="select * from submissions natural join users $sql order by submissionId desc";
+ 		$sql="select submissions.*,users.userHandle,problems.problemName from submissions join users on users.userId=submissions.userId join problems on problems.problemId=submissions.problemId $sql order by submissionId desc";
  		$data=$this->DB->getData($sql);
  		$data=$this->processSubmissionData($data);
  		return $json?json_encode($data):$data;
@@ -48,11 +49,21 @@ class Submission {
  		return $data;
  	}
 
+ 	public function submissionLanguageList($json=false){
+ 		$sql="select languageList from judgeSetting";
+ 		$data=$this->DB->getData($sql);
+ 		return $json?$date[0]:json_decode($data[0],true);
+ 	}
+
  	public function getVerdict($verdictId,$testCaseRun=-1){
 
  		$verdictClass="danger";
  		$verdictName="";
- 		if($verdictId==0){
+ 		if($verdictId==-1){
+ 			$verdictName="Skip";
+ 			$verdictClass="default";
+ 		}
+ 		else if($verdictId==0){
  			$verdictName="In Queue";
  			$verdictClass="default";
  		}
@@ -61,7 +72,8 @@ class Submission {
  			$verdictClass="info";
  		}
  		else if($verdictId==2){
- 			$verdictName="Running On Test $testCaseRun";
+ 			$verdictName="Running";
+ 			if($testCaseRun>-1)$verdictName.=" On Test $testCaseRun";
  			$verdictClass="primary";
  		}
  		else if($verdictId==3){
@@ -76,10 +88,9 @@ class Submission {
 
  		return "<span class='$verdictClass'>$verdictName</span>";
 	 }
+
+
 	 
-
-
-
 
  	public function createSubmission($info,$submissionType=2){
  		if(!$this->loggedIn)
@@ -99,6 +110,27 @@ class Submission {
  		print_r($response);
  	}
 
+ 	public function getSubmissionTestCase($submissionId,$submissionFinish,$runOnTest){
+ 		$sql="select submissionTestCaseId,testCaseSerialNo, verdict ,totalTime,totalMemory from submissions_on_test_case where submissionId=$submissionId";
+ 		$data=$this->DB->getData($sql);
+ 		$skip=0;
+ 		foreach ($data as $key => $value) {
+ 			
+ 			if($skip==1)
+ 				$judgeStatus=$this->getVerdict(-1);
+ 			else if($value['testCaseSerialNo']==$runOnTest && $submissionFinish==0){
+ 				$judgeStatus=$this->getVerdict(2);
+ 			}
+ 			else{
+ 				if($value['verdict']>3)
+ 					$skip=1;
+ 				$judgeStatus=$this->getVerdict($value['verdict']);
+ 			}
+ 			$data[$key]['judgeStatus']=$judgeStatus;
+ 		}
+ 		return $data;
+ 	}
+
  	public function getSubmissionAllInfo($info,$json=false){
  		$submissionId=$info['submissionId'];
  		$data=array();
@@ -106,6 +138,7 @@ class Submission {
  		$json_data['submissionId']=$submissionId;
  		$submissionInfo=$this->getSubmissionList(json_encode($json_data));
  		$data['submissionInfo']=$submissionInfo[0];
+ 		$data['submissionTestCase']=$this->getSubmissionTestCase($submissionId,$submissionInfo[0]['judgeComplete'],$submissionInfo[0]['runOnTest']);
  		return $json==true?json_encode($data):$data;
 
  	}
