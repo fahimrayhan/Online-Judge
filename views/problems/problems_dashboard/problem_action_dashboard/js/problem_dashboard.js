@@ -153,6 +153,8 @@ function createSubmission(){
 	}
 	//console.log(data);
 	$.post(dashboard_action_url,buildData("createSubmission",data),function(response){
+		response=JSON.parse(response);
+		window.open("submission.php?id="+response.insert_id, '_self');
 		//$("#modal_md_body").html(response);
 		modal_action("md","Add Test Case","close");
 		loadTestingPage();

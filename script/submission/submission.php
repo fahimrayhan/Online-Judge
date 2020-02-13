@@ -106,8 +106,8 @@ class Submission {
  		$info['submissionType']=$submissionType;
  		$info['userId']=$this->loggedIn;
  		$info['submissionTime']=$this->DB->date();
- 		$response=$this->DB->pushData("submissions","insert",$info);
- 		print_r($response);
+ 		$response=$this->DB->pushData("submissions","insert",$info,true);
+ 		return $response;
  	}
 
  	public function getSubmissionTestCase($submissionId,$submissionFinish,$runOnTest){
@@ -143,9 +143,7 @@ class Submission {
 
  	}
 
- 	
-
-
+ 
  
 }
 ?>

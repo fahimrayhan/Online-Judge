@@ -10,7 +10,9 @@ th{
 	background-color: #F4F6F8;
 }
 
-
+a {
+	color: #2156D2;
+}
 
 table#datatable.dataTable tbody tr:hover {
   background-color: #F4F6F8;
@@ -34,3 +36,132 @@ table#datatable.dataTable tbody tr:hover > .sorting_1 {
 	border: 1px solid #DDDDDD;
 	padding: 5px;
 }
+/*
+
+/*nav bar css*/
+
+  .navbar-login
+{
+    width: 280px;
+    padding: 8px;
+    padding-bottom: 0px;
+}
+
+
+.navbar-nav>li:hover{
+    color: #000000;
+    background-color: #414b59;
+    border: 1px solid #f0932b;
+    border-width: 0px 0px 1px 0px;
+
+}
+.navbar_body{
+  background-color: #0A3D62;
+  padding: 15px;
+  align-content: center;
+}
+.navbar-login-session
+{
+    
+    padding: 20px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+
+}
+
+.nav_logo{
+	font-size: 18px;
+}
+.span_icon{
+	margin-right: 4px;
+	font-weight: bold;
+	font-size: 12px;
+	color: #ced6e0;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+
+
+/*end nav bar css*/
+
+/*start modal css*/
+
+    .modal-content{
+        border-radius: 0px;
+    }
+    .modal_sm .modal-dialog{max-width: 350px; width: 100%;}
+    .modal_md .modal-dialog{max-width: 600px; width: 100%;}
+    .modal_lg .modal-dialog{max-width: 950px; width: 100%;}
+    .modal_header{
+       border-radius: 10px 10px 0px 0px;
+    }
+    .modal_sm_body,.modal_md_body,.modal_lg_body{
+        padding: 20px;
+        background-color: #FFFFFF;
+        /*overflow: scroll;*/
+        /*max-height: 500px;*/
+    }
+    .modal-content  {
+     -webkit-border-radius: 5px !important;
+     -moz-border-radius: 5px !important;
+     border-radius: 0px 0px 5px 5px !important; 
+    }
+    .modal_content_header{
+        background-color: var(--bg-color);
+        color: var(--font-color);
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .modal_header .close {
+      margin: 0;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 23px;
+      background-color: #00aeef;
+      color: #ffe300;
+      font-size: 20px;
+      opacity: 1;
+      z-index: 10;
+    }
+    .modal_header .close:hover {
+      outline: none;
+      font-size: 30px;
+    }
+    
+    .modal_header .close:focus {
+      outline: none;
+      background-color: #049ad1;
+    }
+    .modal_error{
+      padding: 5px;
+      color: #C47A77;
+      font-size: 15px;
+      font-weight: bold;
+      border: 1px dotted #ECCDD1;
+      display: none;
+      background-color: #F2DEDE;
+      margin-bottom: 10px;
+    }
+
+    .modal_msg{
+      padding: 5px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      border: 1px dotted #10ac84;
+      display: none;
+      background-color: #1dd1a1;
+      margin-bottom: 10px;
+    }
+    .modal_error li{
+
+    }
+
+/*end modal css*/

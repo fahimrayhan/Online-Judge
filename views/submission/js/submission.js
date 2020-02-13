@@ -53,6 +53,23 @@ function setTestCaseInfo(){
 	}	
 }
 
+function setEditor(language_name){
+	setEditorLanguage("CPP");
+}
+
+function setEditorLanguage(language){
+	editAreaLoader.init({
+        id: "sourceCodeEditor",  
+        start_highlight: true,
+        allow_resize: "both",
+        allow_toggle: false,
+        word_wrap: true,
+        language: "en",
+        syntax: language  
+    });
+
+}
+
 
 setInterval(function(){ 
 	getSubmissionAllInfo();

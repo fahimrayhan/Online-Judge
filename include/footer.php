@@ -7,17 +7,20 @@
 <div class="col-sm-12" style="padding-top: 80px;">
 </div>
   <div class="container-fluid col-sm-12">
-  <div class="row" style="padding-top: 10px; padding-bottom: 7px; color: #ffffff; background-color:  var(--header-bg-color); border: 0px solid black; margin-top: 80px;">
-    <div class="col-sm-1">
+  <div class="row" style="padding-top: 5px; padding-bottom: 15px; color: #000000;   border: 1px solid #E7ECF1; margin-top: 80px;border-width: 1px 0px 0px 0px; font-weight: bold;">
+    <div class="col-sm-0">
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-12">
    <footer class="footer">
         <div class="row">
           <div class="col-sm-12"  style="padding-top: 2px;">
-             <p style="font-size:15px; text-align: center; ">&copy;<font face="Times New Roman"> <b>Copyright 2018 by EWUPSC</b><br/>
-             Judge Developed By:<a href="https://www.facebook.com/amir.hamza.7399"> Sk.Amir Hamza</a><br/>
-            
+             <p style="font-size:14px; text-align: center; color: #4A525B "><font face="Times New Roman"> 
+
+            &copy; 2020 CoderOJ<br/>
+            Developed By: Sk.Amir Hamza<br/>
              Server Time: <a id="server_time"></a>
+            
+             
            </font></p>
           </div>
         </div>
@@ -34,8 +37,4 @@
     document.getElementById("server_time").innerHTML = d.toLocaleTimeString();
 }
  </script>
- <!-- Footer end -->
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="style/lib/bootstrap/js/bootstrap.min.js"></script>
+

@@ -46,6 +46,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="http://localhost/project/EWUPSC/php_plugin/editarea_0_8_2/editarea_0_8_2/edit_area/edit_area_full.js"></script>
+<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
 
 <script type="text/javascript" src="views/problems/problems_dashboard/problem_action_dashboard/js/problem_dashboard.js"></script>

@@ -27,7 +27,7 @@
 	}
 
 	if(isset($_POST['createSubmission'])){
-		$Submission->createSubmission($_POST['createSubmission'],1);
+		echo $Submission->createSubmission($_POST['createSubmission'],1);
 	}
 	else if(isset($_POST['getModeratorsList'])){
 		echo $Problem->getNonProblemModeratorList($_POST['getModeratorsList'],true);

@@ -1,4 +1,6 @@
 
+
+
 <?php
     
     $info=array();
@@ -8,6 +10,12 @@
     $submissionInfo=$submissionAllInfo['submissionInfo'];
     $submissionTestCase=$submissionAllInfo['submissionTestCase'];
 
+    $sourceCodePermission=1;
+    $testCaseAreaCol=$sourceCodePermission==1?6:12;
+
+
+    $sourceCode=$submissionInfo['sourceCode'];
+
 ?>
 
 <script type="text/javascript">
@@ -15,6 +23,7 @@
     var testCaseReady = <?php echo $submissionInfo['testCaseReady']; ?>; 
 </script>
 
+<script type="text/javascript" src="views/submission/js/submission.js"></script>
 
 <div class='row'>
     <div class='col-md-12'>
@@ -47,7 +56,7 @@
            	</div>
         </div>
     </div>
-    <div class='col-md-6'>
+    <div class='col-md-<?php echo $testCaseAreaCol ?>'>
     	<div class="box">
     		<div class="box_header">Test Cases</div>
     		<div class="box_body">
@@ -74,14 +83,21 @@
     		</div>
     	</div>
     </div>
+    <?php if($sourceCodePermission==1){ ?>
+    
+    <script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
+    
     <div class='col-md-6'>
         <div class="box">
             <div class="box_header">Source Code</div>
             <div class="box_body">
-                <textarea><?php echo $submissionInfo['sourceCode']; ?></textarea>
+               <textarea id='sourceCodeEditor' style='height: 250px; width: 100%;'><?php echo $sourceCode; ?></textarea>
+                <script type="text/javascript">
+                    setEditor("d");
+                </script>
             </div>
         </div>
     </div>
+    <?php } ?>
 </div>
 
-<script type="text/javascript" src="views/submission/js/submission.js"></script>
