@@ -94,8 +94,8 @@ class Judge {
  		}
 
  		$this->analysisData['verdict']=$data['status']['id'];
- 		$this->analysisData['memory']=$data['memory'];
- 		$this->analysisData['time']=$data['time'];
+ 		$this->analysisData['memory']=$data['memory']==null?0:$data['memory'];
+ 		$this->analysisData['time']=$data['time']==null?0:$data['time'];
 
  		$this->isQueue=0;
  		if($this->analysisData['verdict']<=2)
@@ -125,8 +125,10 @@ class Judge {
  		$this->saveSubmissionTestData['verdict']=$this->analysisData['verdict'];
  		$this->saveSubmissionTestData['totalTime']=$this->analysisData['time'];
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
+
  		//$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;
+ 		print_r($this->saveSubmissionTestData);
  	}
 
  	public function saveData(){
