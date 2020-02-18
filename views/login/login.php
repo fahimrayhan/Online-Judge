@@ -12,7 +12,7 @@
  				<div id="login_success" class="alert alert-success" style="display: none"></div>         <label for="username">Handle</label>
                	<input type="text" placeholder="Enter Your Handle" autocomplete="off" id="handle">
                 <label for="password">Password</label><br>
-                <input type="text" placeholder="Enter Your Password" id="password">
+                <input type="password" placeholder="Enter Your Password" id="password">
               	<div class="form-group" style="text-align: center;">
                   	<button id="btn_login" onclick="login()">Login Your ID</button>
               	</div>                            

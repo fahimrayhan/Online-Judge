@@ -7,7 +7,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="" type="image/gif" sizes="16x16">
-    <title><?php "EWU Online Judge"; ?></title>
+    <title>CoderOJ - Competitive Programming Platform</title>
+    <link rel="icon" href="file/site_metarial/fav.png" type="image/gif" sizes="16x16">
 
     <!-- CSS Javascript Libery -->
     <?php include "include/layout/lib.php"; ?>

@@ -128,7 +128,7 @@ class Judge {
 
  		//$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;
- 		print_r($this->saveSubmissionTestData);
+ 		//print_r($this->saveSubmissionTestData);
  	}
 
  	public function saveData(){

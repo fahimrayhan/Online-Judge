@@ -37,6 +37,10 @@
 		$Problem->addProblemModerator($_POST['addProblemModerator']);
 	}
 
+	else if(isset($_POST['deleteProblemModerator'])){
+		echo $Problem->deleteProblemModerator($_POST['deleteProblemModerator']);
+	}
+
 	else 
 		include "views_action/problem_dashboard/problem_dashboard_ui.php";
 

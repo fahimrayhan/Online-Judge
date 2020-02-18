@@ -1,8 +1,8 @@
 .problem_bold_text{
-		font-size: 16px;
+		font-size: 19px;
 		font-weight: bold;
-		margin-top: 20px;
-		margin-bottom: 4px;
+		margin-top: 30px;
+		margin-bottom: 5px;
 		color: #222222;
 		
 
@@ -31,6 +31,30 @@
 		border-style: solid;
 		border-color: #888888;
 	}
+.th_input_ex{
+	background-color: #ffffff;
+	padding: 10px!important;
+}
+.td_pre{
+	width: 100%; 
+	padding: 3px 3px 3px 10px!important;
+	background-color: #ffffff;
+}
+.problem_name_area{
+	margin-bottom: 30px;
+}
+
+.problem_name{
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+.problem_limit{
+	font-size: 15px;
+}
+.number_label{
+	background-color: #333333;
+}
 
 .dashboard_input_text_area{
 		width: 100%;
@@ -48,6 +72,20 @@
 	font-weight: bold;
 	cursor: pointer;
 	font-family: "Times New Roman", Times, serif;
+	padding: 0px;
+}
+.dashboard_sidebar_li_icon{
+	background-color: #F4F6F8;
+	color: #564A4F;
+	padding: 10px 6px 10px 6px;
+	border-radius: 0px;
+	font-size: 27px;
+	width: 43px;
+	border: 1px solid #564A4F;
+	border-width: 0px 0px 0px 3px;
+	margin-bottom: 0px;
+	text-align: center;
+	margin-right: 5px;
 }
 
 .dashboard_sidebar_li:hover{

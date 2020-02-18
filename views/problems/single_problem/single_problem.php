@@ -1,7 +1,9 @@
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="views/problems/single_problem/js/problem.js"></script>
+<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
 <script>
+	var problemId=1;
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -35,7 +37,6 @@ chart.render();
 <div class="row">
 	<div class="col-md-9">
 		<div class="box sm_border">
-			<div class="box_header"><span class="glyphicon glyphicon-arrow-right"></span> Hello</div>
 			<div class="box_body">
 				 <?php include "views/problems/single_problem/problem_stat.php"; ?>
 			</div>
@@ -70,7 +71,7 @@ chart.render();
 		<div class="box none_border">
 			<div class="box_header">Submit</div>
 			<div class="box_body" style="text-align: center;">
-				<button onclick="load_submit_problem_page()">Submit Your Solution</button>
+				<button onclick="loadSubmiProblemPage()">Submit Your Solution</button>
 			</div>
 		</div>
 	</div>

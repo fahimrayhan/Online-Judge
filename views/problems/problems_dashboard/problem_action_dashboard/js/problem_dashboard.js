@@ -11,12 +11,12 @@ $( document ).ready(function() {
 //site info---------------------------------
 
 function displayPage(){
-	if(pageActionName!="edit")
+	if(pageActionName!="edit" && pageActionName!="viewProblem" )
 		changeOption(pageActionName);
 }
 
 function changeUrl(actionName,pageName=""){
-	url = "problems_dashboard.php?problemId="+problemId+"&action="+actionName;
+	url = "problems_dashboard.php?id="+problemId+"&action="+actionName;
 	var obj = { Title: pageName, Url: url };
     history.pushState(obj, obj.Title, obj.Url);
 }
@@ -51,6 +51,10 @@ function changeOption(optionName){
 		changeUrl(optionName);
 		setHeaderName('Testing Problem');
 		loadTestingPage();
+	}
+	else if(optionName=='viewProblem'){
+		changeUrl(optionName);
+		location.reload();
 	}
 	else{
 		changeUrl("overview");
@@ -94,15 +98,22 @@ function addProblemModerator(userId){
 	});
 }
 
-function search_moderators(){
-	var obj=[
-		{ "handle":"AmirHamza", "id":24},
-		{ "handle":"Alise", "id":24},
-		{ "handle":"Bob", "id":24},
-		{ "handle":"Zarry", "id":24}
-	];
-	$('#suggestion_box').html("");
+function deleteProblemModerator(userId){
+	var ok=confirm('Are You Want To Delete Moderator.');
+	if(!ok)return;
+	var data = {
+		'userId': userId,
+		'problemId': problemId
+	}
+	$.post(dashboard_action_url,buildData("deleteProblemModerator",data),function(response){
+		//console.log(response);
+		loadModeratorsPage();
+	});
+}
 
+function search_moderators(){
+	
+	$('#suggestion_box').html("");
 	var search_val=$("#search_moderators").val();
 	var co=0;
 	$.each(moderatorsList, function() {
@@ -126,7 +137,7 @@ function search_moderators(){
 
 function loadTestingPage(){
 
-	//loader("option_box_body");
+	loader("option_box_body");
 	$.post(dashboard_action_url,buildData("loadTestingPage",problemId),function(response){
 		$("#option_box_body").html(response);
 	});
@@ -156,8 +167,8 @@ function createSubmission(){
 		response=JSON.parse(response);
 		window.open("submission.php?id="+response.insert_id, '_self');
 		//$("#modal_md_body").html(response);
-		modal_action("md","Add Test Case","close");
-		loadTestingPage();
+		//modal_action("md","Add Test Case","close");
+		//loadTestingPage();
 	});
 }
 

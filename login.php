@@ -1,4 +1,5 @@
 <?php 
+	ob_start();
 	include "header.php";
 	if($isLoggedIn){
 		$page=(isset($_GET['back']))?base64_decode($_GET['back']):"index.php";

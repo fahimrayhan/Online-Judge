@@ -1,4 +1,5 @@
 <?php
+	ob_start();
 	session_start();
 	if(isset($_SESSION['oj_login_handle_id']))
 		unset($_SESSION['oj_login_handle_id']);

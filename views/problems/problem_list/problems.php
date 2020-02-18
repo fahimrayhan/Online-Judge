@@ -10,20 +10,15 @@
 
 </script>
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="box">
 			<div class="box_header">
-				<span class="glyphicon glyphicon-list-alt"></span> Problems</div>
+				<span class="glyphicon glyphicon-list-alt"></span> Problems <a href="problems_dashboard.php"><button>Problem Dashboard</button></a></div>
 			<div class="box_body">
 				<?php include "views/problems/problem_list/problem_list.php"; ?>
 			</div>
 		</div>
 		
 	</div>
-	<div class="col-md-4">
-		<div class="box">
-			<div class="box_header">Last Submission</div>
-			<div class="box_body"></div>
-		</div>
-	</div>
+
 </div>

@@ -1,28 +1,100 @@
-<table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="datatable" class="table table-striped table-bordered" style="border: 1px solid #DDDDDD" cellspacing="0" width="100%">
     				<thead>
 						<tr>
-							<th>#ID</th>
-							<th>Problem Name</th>
-							<th>Category</th>
-							<th>AC/Submission</th>
+							<th class="td_list1"><b>#ID</b></th>
+							<th class="td_list1">
+								<div class="pull-left">Problem Name</div>
+								<div class="pull-right">Tags</div>
+							</th>
+							<th class="td_list1">User Solved/Tried</td>
+							<th class="td_list1">Accepted/Total</th>
                         </tr>
 					</thead>
 
 					<tbody>
-					<?php for($i=1; $i<150; $i++){ ?>			
-						<tr class="tr_select" onclick="go_problem_link(<?php echo $i; ?>)">
-							<td><?php echo "$i"; ?></td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
+					<?php for($i=10000; $i<10020; $i++){ ?>			
+						<tr>
+							<td class="td_list2" style="width: 10%"><a href='p.php?id=<?php echo $i; ?>'><?php echo $i; ?></a></td>
+							<td class="td_list2" style="width: 60%;text-align: left;padding-left: 10px!important">
+								<div class="pull-left"><a href='p.php?id=<?php echo $i; ?>'>System Architect</a>
+								</div>
+								<div class="pull-right">
+								<span style="text-align: right;">
+								<?php 
+								$val=rand(1,4);
+								for($j=1; $j<=$val; $j++)echo "<span class='label label-default problem_tags'>solved</span> ";
+								?>
+								</span>
+								</div>
+							</td>
+							<?php
+								$stotal=rand(1,1000);
+								$sl=rand(1,$stotal);
+								$parcent1=($sl*100)/$stotal;
+							?>
+							<td class="td_list2" style="width: 15%">
+								<span class="percentcont">
+									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
+									<div class="pertext">
+										<?php echo "$sl / $stotal"; ?>								</div>
+								</span>
+							</td>
+							<?php
+								$stotal=rand(1,1000);
+								$sl=rand(1,$stotal);
+								$parcent1=($sl*100)/$stotal;
+							?>
+							<td class="td_list2" style="width: 15%">
+								<span class="percentcont">
+									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
+									<div class="pertext">
+										<?php echo "$sl / $stotal"; ?>								</div>
+								</span>
+							</td>
 						</tr>
 					<?php } ?>	
 					</tbody>
 				</table>
 
-<script type="text/javascript">
-	function go_problem_link(problem_id){
-		var link="p.php?problem="+problem_id;
-		window.location = link;
+<style type="text/css">
+
+
+	.td_list1{
+		padding: 12px 10px 12px 10px!important;
+		border-color: #DDDDDD;
+		font-weight: bold;
+		background-color: #F4F6F8;
 	}
-</script>
+	.td_list2{
+		padding: 12px 10px 12px 10px!important;
+		border-color: #000000;
+	}
+	.problem_tags{
+		border-radius: 7px;
+	}
+	.percentcont {
+		width: 100%;
+		height: 19px;
+		padding: 0px;
+		border: 1px solid #5CB85C;
+		display: block;
+		background-color: #fcfcfc;
+		border-radius: 0px;
+		overflow: hidden;
+		font-size: 11px;
+		color: #2C3542;
+	}
+
+	.perfill {
+		background: #5CB85C repeat-x 50% 50%;
+		height: 19px;
+	}
+
+	.pertext {
+		position: relative;
+		top: -19px;
+		text-align: center;
+		font-weight: bold;
+	}
+	
+</style>

@@ -63,18 +63,31 @@
 	else if(isset($_POST['loadModeratorsPage'])){
 		$problemId=$_POST['loadModeratorsPage'];
 		$moderatorList=$Problem->getProblemModeratorList($problemId,false);
+		$problemRoles=$Problem->checkProblemModeratorRoles($problemId);
 		
 		echo "
 		<div class='row'>	
 			<div class='col-md-7'>
-				<div class='box none_border'>
-				<div class='box_body'>
+				<div class='boxx none_border'>
+				<div class='box_bodyy' style='padding-left: 15px;'>
 		";
 		foreach ($moderatorList as $key => $value) {
 			$userPhoto=$value['userPhoto'];
 			$userHandle=$value['userHandle'];
 			$userId=$value['userId'];
 			$moderatorRoles=$value['moderatorRoles'];
+
+			$delBtn="";
+			$roleName="<span class='label label-success'>Owner</span>";
+			if($moderatorRoles>10){
+				$delBtn="<button onclick='deleteProblemModerator($userId)' class='btn btn-sm btn-danger'>Delete</button>";
+				$roleName="<span class='label label-default'>Moderator</span>";
+			}
+
+			if($problemRoles==2){
+				if($userId!=$DB->isLoggedIn)
+					$delBtn="";
+			}
 
 			echo "<div class='row userListCard'>
 				<div class='col-md-2 col-sm-2'>
@@ -83,27 +96,30 @@
 				<div class='col-md-10 col-sm-10'>
 					<div class='userListBody'>
 						<div class='pull-right'>
-							<button class='btn btn-sm btn-danger'>Delete</button>
+							$delBtn
 						</div>
 						<a href=''>$userHandle</a><br/>
-						<span class='userPermission'>Admin</span>
+						<span class='userPermission'>$roleName</span>
 					</div>
 				</div>
 			</div>";
-		}	
+		}
 
-		echo "</div></div></div>
-			<div class='col-md-5'>
-				<div class='box none_border'>
-				<div class='box_header'>Add Moderator</div>
-				<div class='box_body'>
-					<input type='text' onkeyup='search_moderators()' autocomplete='off' class='form-control' id='search_moderators' placeholder='Enter Moderator Handle'>
-					<div id='suggestion_box' class='moderators_suggestion_box'>
+		if($problemRoles==1){
+
+			echo "</div></div></div>
+				<div class='col-md-5'>
+					<div class='box none_border'>
+					<div class='box_header'>Add Moderator</div>
+					<div class='box_body'>
+						<input type='text' onkeyup='search_moderators()' autocomplete='off' class='form-control' id='search_moderators' placeholder='Enter Moderator Handle'>
+						<div id='suggestion_box' class='moderators_suggestion_box'>
+						</div>
 					</div>
-				</div>
-				</div>
-				</div>
-		</div>";
+					</div>
+					</div>
+			</div>";
+		}
 	}
 
 
@@ -133,7 +149,7 @@
 			$memory=$value['maxMemoryLimit'];
 			
 			echo "<tr>
-			<td class='td2'>$submissionId</td>
+			<td class='td2'><a href='submission.php?id=$submissionId' target='_blank'>$submissionId</a></td>
 			<td class='td2'>$submissionTime</td>
 			<td class='td2'>$userHandle</td>
 			<td class='td2'>$languageId</td>

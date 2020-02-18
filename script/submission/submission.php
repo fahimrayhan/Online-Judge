@@ -20,6 +20,22 @@ class Submission {
  			$sql.= "submissions.$key=$value";
  		}
  		$sql=($sql!="")?" where ".$sql:"";
+ 		$sql="select submissions.*,users.userHandle,problems.problemName from submissions join users on users.userId=submissions.userId join problems on problems.problemId=submissions.problemId $sql order by submissionId desc limit 100";
+ 		$data=$this->DB->getData($sql);
+ 		$data=$this->processSubmissionData($data);
+ 		return $json?json_encode($data):$data;
+ 	}
+
+ 	public function getJudgeStatusFromId($jsonDataIdList,$json=false){
+ 		$requestData=($jsonDataIdList=="")?"{}":$jsonDataIdList;
+ 		$info=json_decode($requestData,true);
+
+ 		$sql="";
+ 		foreach ($info as $key => $value) {
+ 			$sql.=($sql!="")?" or ":"";
+ 			$sql.= "submissions.submissionId=$value";
+ 		}
+ 		$sql=($sql!="")?" where ".$sql:"";
  		$sql="select submissions.*,users.userHandle,problems.problemName from submissions join users on users.userId=submissions.userId join problems on problems.problemId=submissions.problemId $sql order by submissionId desc";
  		$data=$this->DB->getData($sql);
  		$data=$this->processSubmissionData($data);
@@ -101,17 +117,33 @@ class Submission {
  				Problem=2
  				Contest=3
  		*/
+ 		$data=array();
+ 		$data['error']=0;
+ 		$data['msg']="";
+ 		if($info['sourceCode']==''){
+ 			$data['error']=1;
+ 			$data['msg']='<li>Source Code Is Empty</li>';
+ 		}
+ 		if($info['languageId']==-1){
+ 			$data['error']=1;
+ 			$data['msg'].='<li>Please Select Language</li>';
+ 		}
+
+ 		if($data['error']==1)
+ 			return json_encode($data);
+
  		$info['sourceCode']=base64_decode($info['sourceCode']);
  		$info['sourceCode']=$this->DB->buildSqlString($info['sourceCode']);
  		$info['submissionType']=$submissionType;
  		$info['userId']=$this->loggedIn;
  		$info['submissionTime']=$this->DB->date();
  		$response=$this->DB->pushData("submissions","insert",$info,true);
- 		return $response;
+ 		$data['msg']=$response;
+ 		return json_encode($data);
  	}
 
  	public function getSubmissionTestCase($submissionId,$submissionFinish,$runOnTest){
- 		$sql="select submissionTestCaseId,testCaseSerialNo, verdict ,totalTime,totalMemory from submissions_on_test_case where submissionId=$submissionId";
+ 		$sql="select testCaseToken,submissionTestCaseId,testCaseSerialNo, verdict ,totalTime,totalMemory from submissions_on_test_case where submissionId=$submissionId";
  		$data=$this->DB->getData($sql);
  		$skip=0;
  		foreach ($data as $key => $value) {
