@@ -4,7 +4,10 @@
     $problemId;
     $pageActionName="";
 
-
+    if($DB->isLoggedIn==0){
+        echo "Please Logged In";
+        return;
+    }
 
     if(isset($_GET['id'])){
         $ok=1;
