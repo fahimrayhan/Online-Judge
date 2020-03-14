@@ -9,12 +9,15 @@ class Database
     public $result;
     public $conn;
     public $isLoggedIn;
+    public $userRole;   
+
 
     //conection start
     public function __construct()
     {
         $this->connection();
         $this->setLoggedInId();
+        $this->setUserRole();
         date_default_timezone_set('Asia/Dhaka');
     }
     
@@ -30,6 +33,14 @@ class Database
     public function setLoggedInId(){
         $this->isLoggedIn=(isset($_SESSION['oj_login_handle_id']))?$_SESSION['oj_login_handle_id']:0;
     } 
+
+    public function setUserRole(){  
+        if($this->isLoggedIn==0)return; 
+        $userId=$this->isLoggedIn;  
+        $sql="select userRoles from users where userId=$userId";    
+        $data=$this->getData($sql); 
+        $this->userRole=$data[0]['userRoles'];  
+    }
 
     public function date(){
         return $this->getNowTime();
