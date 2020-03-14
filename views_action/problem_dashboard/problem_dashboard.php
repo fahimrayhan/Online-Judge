@@ -41,6 +41,22 @@
 		echo $Problem->deleteProblemModerator($_POST['deleteProblemModerator']);
 	}
 
+	else if(isset($_POST['addProblem'])){
+		echo $Problem->addProblem($_POST['addProblem']);
+	}
+
+	else if(isset($_POST['updateProblemSetting'])){
+		echo $Problem->updateProblemSetting($_POST['updateProblemSetting']);
+	}
+
+	else if(isset($_POST['deleteProblem'])){
+		echo $Problem->deleteProblem($_POST['deleteProblem']);
+	}
+
+	else if(isset($_POST['reqJudgeProblemList'])){
+		echo $Problem->reqJudgeProblemList($_POST['reqJudgeProblemList']);
+	}
+
 	else 
 		include "views_action/problem_dashboard/problem_dashboard_ui.php";
 

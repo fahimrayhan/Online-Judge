@@ -27,7 +27,7 @@ function setHeaderName(headerName){
 
 function loadPage(pageName,divName="option_box_body"){
 	loader(divName);
-	$.post(dashboard_action_url,buildData(pageName),function(response){
+	$.post(dashboard_action_url,buildData(pageName,problemId),function(response){
 		$("#"+divName).html(response);
 	});
 }
@@ -52,6 +52,11 @@ function changeOption(optionName){
 		setHeaderName('Testing Problem');
 		loadTestingPage();
 	}
+	else if(optionName=='setting'){
+		changeUrl(optionName);
+		setHeaderName('Setting');
+		loadSettingPage();
+	}
 	else if(optionName=='viewProblem'){
 		changeUrl(optionName);
 		location.reload();
@@ -66,7 +71,44 @@ function changeOption(optionName){
 
 //=======================================================
 
-//start overview page 
+//start setting page 
+
+function loadSettingPage(){
+	loader("option_box_body");
+	$.post(dashboard_action_url,buildData("loadSettingPage",problemId),function(response){
+		$("#option_box_body").html(response);
+	});
+}
+
+function updateProblemSetting(){
+	var data={
+		'problemId': problemId,
+		"problemName": $("#problemName").val(),
+		'cpuTimeLimit': $("#problemTimeLimit").val(),
+		'memoryLimit' : $("#problemMemoryLimit").val()
+	}
+	//console.log(data);
+	btnOff("updateProblem","Saving");
+	$("#error_area").hide();
+	$.post(dashboard_action_url,buildData("updateProblemSetting",data),function(response){
+		console.log(response);
+		response=JSON.parse(response); 
+		if(response.error==1){
+			$("#error_area").show();
+			$("#error_area").html(response.error_msg);
+			btnOn("updateProblem","Update Problem");
+		}
+		else
+			loadSettingPage();
+	});
+}
+
+function reqJudgeProblemList(){
+	btnOff("reqArc","Sending..");
+	$.post(dashboard_action_url,buildData("reqJudgeProblemList",problemId),function(response){
+		loadSettingPage();
+	});
+}
 
 
 //===========================================================
@@ -152,27 +194,40 @@ function loadCreateSubmissionPage(){
 	loader("modal_md_body");
 	$.post(dashboard_action_url,buildData("loadCreateSubmissionPage",problemId),function(response){
 		$("#modal_md_body").html(response);
-		setEditorLanguage('CPP');
+		setTimeout(function(){ setEditor(); }, 100);
 	});
 }
 
 function createSubmission(){
+	btnOff("btnCreateSubmit", "Processing");
+	$("#submission_error").hide();
 	var data = {
-		'languageId': 53,
+		'languageId': $("#selectLanguage").val(),
 		'sourceCode': btoa(editAreaLoader.getValue("sourceCodeEditor")),
-		'problemId': problemId
+		'problemId': problemId,
+		'languageName': $("#selectLanguage option:selected" ).text()
 	}
 	//console.log(data);
 	$.post(dashboard_action_url,buildData("createSubmission",data),function(response){
 		response=JSON.parse(response);
-		window.open("submission.php?id="+response.insert_id, '_self');
+		console.log(response);
+		if(response.error==1){
+			$("#submission_error").show();
+			$("#submission_error").html(response.msg);
+			btnOn("btnCreateSubmit","Submit");
+		}
+		else{
+			msg=JSON.parse(response.msg);
+		 	window.open("submission.php?id="+msg.insert_id, '_self');
+		}
+
 		//$("#modal_md_body").html(response);
 		//modal_action("md","Add Test Case","close");
 		//loadTestingPage();
 	});
 }
 
-function setEditorLanguage(language){
+function setEditor(language="CPP"){
 	editAreaLoader.init({
         id: "sourceCodeEditor",  
         start_highlight: true,
@@ -188,7 +243,8 @@ function setEditorLanguage(language){
 
 function loadTestCasePage(){
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadTestCasePage"),function(response){
+
+	$.post(dashboard_action_url,buildData("loadTestCasePage",problemId),function(response){
 		$("#option_box_body").html(response);
 	});
 }

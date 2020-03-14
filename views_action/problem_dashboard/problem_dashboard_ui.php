@@ -11,7 +11,8 @@
 			<td class='td1'>Added By</td>
 			<td class='td1'></td>
 			</tr>";
-		$info=$TestCase->getTestCaseList(1);
+		$info=$TestCase->getTestCaseList($problemId);
+
 		$c=0;
 		foreach ($info as $key => $value) {
 			$c++;
@@ -37,6 +38,14 @@
 		echo "</table>";
 	}
 
+	else if(isset($_POST['loadProblemAddPage'])){
+		echo "<div id='error_area' style='display: none' class='alert alert-danger'></div>";
+		echo "<b>Problem Name</b><input id='problemName' class='form-control' placeholder='Enter Problem Name'></input>";
+		echo "<br/><b>Time Limit</b> (Time limit unit is second and max time limit is 15 s)<input id='problemTimeLimit' type='number' max='4' class='form-control' placeholder='Enter Problem Time Limit'></input>";
+		echo "<br/><b>Memory Limit</b> (Memory Limit unit is KB)<input id='problemMemoryLimit' type='number' step='0.01' class='form-control' placeholder='Enter Problem Memory'></input>";
+		echo "<br/><center><button id='addProblem' onclick='addProblem()'>+Add Problem</button></center>";
+	}
+
 	else if(isset($_POST['loadAddTestCasePage'])){
 		echo "<b style='font-size: 17px;'>Input</b><br/><textarea class='dashboard_input_text_area' id='inputValue'></textarea><br/>";
 		echo "<b style='font-size: 17px;'>Output</b><br/><textarea class='dashboard_input_text_area' id='outputValue'></textarea><br/>";
@@ -54,10 +63,34 @@
 	}
 
 	else if(isset($_POST['loadOverviewPage'])){
-		echo "<div class='ui-widget'>
-  			<label for='tags'>Tags: </label>
-  			<input id='tags'>
-	</div>";
+		$problemStat=$Problem->problemStat($_POST['loadOverviewPage']);
+		$totalModerator=$problemStat['totalModerator'];
+		$totalTestCase=$problemStat['totalTestCase'];
+		$totalSubmission=$problemStat['totalSubmission'];
+		echo "<div class='row'>
+    			<div class='col-md-4'>
+      				<div class='card-counter custom'>
+        				<i class='fa fa-code-fork'></i>
+        				<span class='count-numbers'>$totalSubmission</span>
+        				<span class='count-name'>Total Submission</span>
+      				</div>
+      			</div>
+      			<div class='col-md-4'>
+      				<div class='card-counter custom'>
+        				<i class='fa fa-code-fork'></i>
+        				<span class='count-numbers'>$totalTestCase</span>
+        				<span class='count-name'>Total Test Case</span>
+      				</div>
+      			</div>
+      			<div class='col-md-4'>
+      				<div class='card-counter custom'>
+        				<i class='fa fa-users'></i>
+        				<span class='count-numbers'>$totalModerator</span>
+        				<span class='count-name'>Total Moderator</span>
+      				</div>
+      			</div>
+
+    		</div>";
 	}
 
 	else if(isset($_POST['loadModeratorsPage'])){
@@ -140,7 +173,7 @@
 		$info=$Submission->getSubmissionList('{"problemId":'.$problemId.'}');
 		foreach ($info as $key => $value) {
 			$submissionId=$value['submissionId'];
-			$languageId=$value['languageId'];
+			$languageId=$value['languageName'];
 			$userId=$value['userId'];
 			$userHandle=$value['userHandle'];
 			$submissionTime=$value['submissionTime'];
@@ -162,36 +195,29 @@
 	}
 
 	if(isset($_POST['loadCreateSubmissionPage'])){
-		echo "<textarea id='sourceCodeEditor' style='height: 250px; width: 100%;'></textarea>";
-		echo "<center><button onclick='createSubmission()'>Submit</button></center>";
+		$ProblemFormat->getSubmissionArea('createSubmission');
+	}
+
+	if(isset($_POST['loadSettingPage'])){
+		$problemInfo=$Problem->getProblemInfo($_POST['loadSettingPage']);
+		$problemName=$problemInfo['problemName'];
+		$timeLimit=$problemInfo['cpuTimeLimit'];
+		$memoryLimit=$problemInfo['memoryLimit'];
+		$check=$Problem->checkJudgeProblemList($_POST['loadSettingPage']);
+		$arcive="<button id='reqArc' onclick='reqJudgeProblemList()'>Request For Add This Problem In Judge Problem List</button>";
+		if($check==1)$arcive="Your problem is added in judge problem list.";
+		else if($check==0)$arcive="Your Request is pending";
+		echo "<div class='row'>";
+		echo "<div class='col-md-6'>";
+		echo "<div id='error_area' style='display: none' class='alert alert-danger'></div>";
+		echo "<b>Problem Name</b><input id='problemName' value='$problemName' class='form-control' placeholder='Enter Problem Name'></input>";
+		echo "<br/><b>Time Limit</b> (Time limit unit is second and max time limit is 15 s)<input id='problemTimeLimit' type='number' value='$timeLimit' max='4' class='form-control' placeholder='Enter Problem Time Limit'></input>";
+		echo "<br/><b>Memory Limit</b> (Memory Limit unit is KB)<input id='problemMemoryLimit' value='$memoryLimit' type='number' step='0.01' class='form-control' placeholder='Enter Problem Memory'></input>";
+		echo "<br/><center><button id='updateProblem' onclick='updateProblemSetting()'>Update Problem Problem</button></center>";
+		echo "</div><div class='col-md-6'><center>$arcive</center></div>";
+		echo "</div>";
 	}
 
 
 
 ?>
-<style type="text/css">
-	.userListCard{
-		background-color: #ffffff;
-		border: 1px solid #eeeeee;
-		padding: 10px 0px 10px 0px;
-	}
-
-	.userListImg{
-		height: 100%;
-		width: 100%;
-	}
-	.userListBody{
-	}
-	.userListBody a{
-		font-weight: bold;
-		font-size: 16px;
-	}
-
-	.userPermission{
-		font-size: 13px;
-		color: #363636;
-		font-family: serif;
-	}
-
-</style>
-								

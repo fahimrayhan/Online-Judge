@@ -47,7 +47,7 @@ class ProblemFormat {
  public function addProblemNameArea($name,$cpu,$memory){
  	if($memory!="")$memory/=1024;
  	return "<div class='problem_name_area'>
- 		<div class='problem_name'><span class='label label-default number_label'>10001</span> $name</div>
+ 		<div class='problem_name'>$name</div>
  		<div class='problem_limit'>
  			CPU: $cpu s<br/>
 			Memory: $memory MB

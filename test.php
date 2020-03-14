@@ -1,6 +1,10 @@
 <script type="text/javascript" src="style/lib/jquery/jquery.min.js"></script>
 <div id='response'></div>
 
+
+
+
+
 <script type="text/javascript">
 	var process=0;
 	//callServer();

@@ -17,6 +17,51 @@ class Problem {
  		return $json?json_encode($data[0]):$data[0];
 	}
 
+	
+
+	public function addProblem($info){
+		$error="";
+
+		if($info['memoryLimit']=='')unset($info['memoryLimit']);
+		if($info['cpuTimeLimit']=='')unset($info['cpuTimeLimit']);
+
+		if($info['problemName']==""){
+			$error.="<li>Problem Name Field Is Empty</li>";
+		}
+
+		if($error!="")return $this->DB->makeJsonMsg(1,$error);
+		
+		$info['userId']=$this->DB->isLoggedIn;
+		$info['problemAddedDate']=$this->DB->date();
+		
+		$res=$this->DB->pushData("problems","insert",$info,"true");
+		return $res;
+	}
+
+	public function deleteProblem($problemId){
+		$info=array();
+		$info['problemId']=$problemId;	
+		$res=$this->DB->pushData("problems","delete",$info,"true");
+		return $res;
+	}
+
+	public function problemStat($problemId,$json=false){
+		$data=array();
+		$sql="select count(*) as totalModerator from problem_moderator where problemId=$problemId;";
+		$result=$this->DB->getData($sql);
+		$data['totalModerator']=$result[0]['totalModerator'];
+
+		$sql="select count(*) as totalTestCase from test_case where problemId=$problemId";
+		$result=$this->DB->getData($sql);
+		$data['totalTestCase']=$result[0]['totalTestCase'];
+
+		$sql="select count(*) as totalSubmission from submissions where problemId=$problemId";
+		$result=$this->DB->getData($sql);
+		$data['totalSubmission']=$result[0]['totalSubmission'];
+
+		return ($json)?json_encode($data):$data;
+	}
+
 	public function getModeratorProblemList($json=false){
 		if(!$this->DB->isLoggedIn)
 			return;
@@ -88,6 +133,32 @@ class Problem {
  		}
  		$this->DB->pushData("problems","update",$info);
  	}
+
+ 	public function updateProblemSetting($info){
+ 		return $this->DB->pushData("problems","update",$info,"true");
+ 	}
+
+ 	public function checkJudgeProblemList($pid){
+		$sql="select * from judge_problem_list where problemId=$pid";
+		$data=$this->DB->getData($sql);
+		return (isset($data[0]))?$data[0]['status']:-1;
+	}
+
+	public function reqJudgeProblemList($problemId){
+		$data=array();
+		$data['problemId']=$problemId;
+		return $this->DB->pushData("judge_problem_list","insert",$data,"true");
+	}
+
+	public function addJudgeProblemList($data){
+		return $this->DB->pushData("judge_problem_list","update",$data,"true");
+	}
+
+	public function delJudgeProblemList($problemId){
+		$data=array();
+		$data['problemId']=$problemId;
+		return $this->DB->pushData("judge_problem_list","delete",$data,"true");
+	}
 
 
 }

@@ -1,7 +1,7 @@
 <script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
 <?php
 
-	$problem_data=$Problem->getProblemInfo(1,true);
+	$problem_data=$Problem->getProblemInfo($problemId,true);
 	//$problem_format->add_math_script();
 
 	$problem_data=base64_encode($problem_data);

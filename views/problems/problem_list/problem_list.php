@@ -1,3 +1,5 @@
+<a href="/contests/ncpc-2017/submissions/for?user=ncpc_2017_team15&amp;problem=A"><div class="label label-success"><div class="fa fa-check"></div></div><div class="label label-default">1 (12)</div></a>
+
 <table id="datatable" class="table table-striped table-bordered" style="border: 1px solid #DDDDDD" cellspacing="0" width="100%">
     				<thead>
 						<tr>
