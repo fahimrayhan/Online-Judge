@@ -45,6 +45,12 @@ class Problem {
 		return $res;
 	}
 
+	public function checkProblemInProblemSet($problemId){
+		$sql="select count(*) as total from problems where problemId=$problemId;";
+		$result=$this->DB->getData($sql);
+		return $result[0]['total'];
+	}
+
 	public function problemStat($problemId,$json=false){
 		$data=array();
 		$sql="select count(*) as totalModerator from problem_moderator where problemId=$problemId;";

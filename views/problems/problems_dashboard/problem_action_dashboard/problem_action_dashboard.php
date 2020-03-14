@@ -3,13 +3,19 @@
     $ok=0;
     $problemId;
     $pageActionName="";
+
+
+
     if(isset($_GET['id'])){
         $ok=1;
         $problemId=$_GET['id'];
     }
     if($ok==1){
+        $checkProblemInProblemSet=$Problem->checkProblemInProblemSet($problemId);
+        if($checkProblemInProblemSet==0)$ok=0;
         $problemRoles=$Problem->checkProblemModeratorRoles($problemId);
         if($problemRoles==-1)$ok=0;
+
     }
 
     if($ok==0){
