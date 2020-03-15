@@ -27,6 +27,10 @@ class Site
         
         return base64_encode($page_name == "" ? "index.php" : $page_name);
     }
+
+    public function redirectPage($url){
+        echo "<script>window.location.replace('$url');</script>";
+    }
     
     public function createFile($url, $file_name, $txt)
     {
