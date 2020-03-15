@@ -36,7 +36,7 @@ class Database
 
     public function setUserRole(){  
         if($this->isLoggedIn==0){
-            $this->userRole=0;
+            $this->userRole=100;
             return;
         } 
         $userId=$this->isLoggedIn;  
