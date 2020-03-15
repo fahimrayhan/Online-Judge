@@ -35,7 +35,10 @@ class Database
     } 
 
     public function setUserRole(){  
-        if($this->isLoggedIn==0)return; 
+        if($this->isLoggedIn==0){
+            $this->userRole=0;
+            return;
+        } 
         $userId=$this->isLoggedIn;  
         $sql="select userRoles from users where userId=$userId";    
         $data=$this->getData($sql); 
