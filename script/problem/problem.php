@@ -79,14 +79,11 @@ class Problem {
 
 	public function checkProblemModeratorRoles($problemId){
 		$userId=$this->DB->isLoggedIn;
-		if($userId==0)return -1;
-		$sql="select userRoles from users where userId=$userId";
-		$data=$this->DB->getData($sql);
-		if($data[0]['userRoles']<=20)return 1;
-		if($data[0]['userRoles']==40)return -1;
+		if($this->DB->userRole>=35)return -1;
 		$role=$this->checkProblemModerator($problemId,$userId);
 		if($role==10)return 1;
 		if($role==20)return 2;
+		if($this->DB->userRole<=20)return 3;
 		return -1;
 	}
 	 

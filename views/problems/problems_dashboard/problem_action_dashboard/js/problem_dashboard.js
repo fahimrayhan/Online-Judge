@@ -1,5 +1,6 @@
 var dashboard_action_url="problem_dashboard_action.php";
 var moderatorsList;
+var previousActive;
 
 // page ready event ------------------------------------------
 
@@ -13,6 +14,7 @@ $( document ).ready(function() {
 function displayPage(){
 	if(pageActionName!="edit" && pageActionName!="viewProblem" )
 		changeOption(pageActionName);
+	else setOptionActive(pageActionName);
 }
 
 function changeUrl(actionName,pageName=""){
@@ -22,7 +24,17 @@ function changeUrl(actionName,pageName=""){
 }
 
 function setHeaderName(headerName){
-	$("#box_dashboard_header").html(headerName);
+	//$("#box_dashboard_header").html(headerName);
+}
+
+function setOptionActive(optionName){
+	if(previousActive!=""){
+		$('#'+previousActive).removeClass("problemNavTab problemNavTabActive");
+		$('#'+previousActive).addClass("problemNavTab");
+	}
+	$('#'+optionName).addClass("problemNavTab problemNavTabActive");
+	
+	previousActive=optionName;
 }
 
 function loadPage(pageName,divName="option_box_body"){
@@ -35,34 +47,41 @@ function loadPage(pageName,divName="option_box_body"){
 function changeOption(optionName){
 	if(optionName=="testCase"){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		setHeaderName("Test Case");
 		loadPage("loadTestCasePage");
 	}
 	else if(optionName=='edit'){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		location.reload();
 	}
 	else if(optionName=='moderators'){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		setHeaderName("Moderators");
 		loadModeratorsPage();
 	}
 	else if(optionName=='testing'){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		setHeaderName('Testing Problem');
 		loadTestingPage();
 	}
 	else if(optionName=='setting'){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		setHeaderName('Setting');
 		loadSettingPage();
 	}
 	else if(optionName=='viewProblem'){
 		changeUrl(optionName);
+		setOptionActive(optionName);
 		location.reload();
 	}
 	else{
 		changeUrl("overview");
+		setOptionActive(optionName);
 		setHeaderName("Problem Overview");
 		loadPage("loadOverviewPage");
 	}
