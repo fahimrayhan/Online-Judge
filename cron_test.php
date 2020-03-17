@@ -2,6 +2,8 @@
 <div id='response'></div>
 
 <script type="text/javascript">
+	//callServer();
+
 	setInterval(function(){ 
 		callServer();
 	}, 1000);

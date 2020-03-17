@@ -1,6 +1,6 @@
 
 <?php
-	include "config/config.php";
+	include "script.php";
 	include "script/judge/judge.php";
 
 	$Judge1=new Judge(0);
