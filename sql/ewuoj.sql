@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 17, 2020 at 03:49 AM
+-- Generation Time: Mar 17, 2020 at 09:00 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -91,7 +91,8 @@ CREATE TABLE `problems` (
 INSERT INTO `problems` (`problemId`, `problemName`, `problemDescription`, `inputDescription`, `outputDescription`, `constraintDescription`, `inputExample`, `outputExample`, `notes`, `cpuTimeLimit`, `memoryLimit`, `userId`, `problemAddedDate`) VALUES
 (1, 'Alice and Bob', '<p>Since childhood Abir loved to play with numbers, one day he was counting numbers from 1 to 100 and he found out that there were 10 numbers that had 0 as its last digit. The numbers are 10, 20, 30, 40, 50, 60, 70, 80, 90, 100. He wants you to find how many numbers that have 0 as last digit from 1 to N.</p>\n', 'You will be given an integer&nbsp;<strong>T</strong>&nbsp;(1 &le; T &le; 17) in the first line. In next T lines there will be an integer&nbsp;<strong>N</strong>&nbsp;(1 &le; N &le; 109).', 'For each test case, print the&nbsp;<strong>number of trailing zeroes</strong>&nbsp;in your result.', '<span class=\"equation\">\\(1&lt;N &lt; 10^5\\)</span><br />\n<span class=\"equation\">\\(1 &lt; T &lt;10^6\\)</span>', '6<br />\nLRU<br />\nDURLDRUDRULRDURDDL<br />\nLRUDDLRUDRUL<br />\nLLLLRRRR<br />\nURDUR<br />\nLLL', '2<br />\nLR<br />\n14<br />\nRUURDDDDLLLUUR<br />\n12<br />\nULDDDRRRUULL<br />\n2<br />\nLR<br />\n2<br />\nUD<br />\n7', '<p>There are only two possible answers in the first test case: &quot;LR&quot; and &quot;RL&quot;.</p>\n\n<p>The picture corresponding to the second test case:</p>\n<img src=\"https://espresso.codeforces.com/b8d040c328a3c50a5e36b8d6da86a6e5f2b67b52.png\" /><br />\n&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Note that the direction of traverse does not matter\n<p>Another correct answer to the third test case: &quot;URDDLLLUURDR&quot;.</p>\n', 1.2, 128000, 1, '2020-01-24 00:00:00'),
 (3, 'hey', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 128000, 7, '2020-02-27 16:44:11'),
-(10, 'Bangladesh Play', '<p>Finding large prime numbers is an essential part of the mechanisms involved in Internet security and privacy. And not just prime numbers, sometimes you need to perform various calculations on numbers that are specifically not prime. There are also uses of methods you have familiarized yourself with during your childhood, such as greatest common divisor (GCD) and least common multiple (LCM).</p>\n\n<p>Based on these, in 1763 Carl Friedrich Gauss solved this interesting problem:</p>\n\n<blockquote>\n<p>If you are given a number N, you have to determine how many integers between 1 and N have a GCD of 1 with N.</p>\n</blockquote>\n\n<p>Finding large prime numbers is an essential part of the mechanisms involved in Internet security and privacy. And not just prime numbers, sometimes you need to perform various calculations on numbers that are specifically not prime. There are also uses of methods you have familiarized yourself with during your childhood, such as greatest common divisor (GCD) and least common multiple (LCM).</p>\n\n<p>Based on these, in 1763 Carl Friedrich Gauss solved this interesting problem:</p>\n\n<blockquote>\n<p>If you are given a number N, you have to determine how many integers between 1 and N have a GCD of 1 with N.</p>\n</blockquote>\n\n<p>Later in this tutorial we will see that the solution of this problem can be written as. Knowing how Sieve of Eratosthenes works and this tutorial we will solve this about 250 years old problem.</p>\n\n<h2>&nbsp;</h2>\n\n<p>\\N-N)=N&minus;1</p>\n\n<p>&nbsp;</p>\n', 'nbvm', 'bnm', 'bnm', 'bnm', '', '', 2, 128000, 1, '2020-03-01 23:19:11');
+(10, 'Bangladesh Play', '<p>Finding large prime numbers is an essential part of the mechanisms involved in Internet security and privacy. And not just prime numbers, sometimes you need to perform various calculations on numbers that are specifically not prime. There are also uses of methods you have familiarized yourself with during your childhood, such as greatest common divisor (GCD) and least common multiple (LCM).</p>\n\n<p>Based on these, in 1763 Carl Friedrich Gauss solved this interesting problem:</p>\n\n<blockquote>\n<p>If you are given a number N, you have to determine how many integers between 1 and N have a GCD of 1 with N.</p>\n</blockquote>\n\n<p>Finding large prime numbers is an essential part of the mechanisms involved in Internet security and privacy. And not just prime numbers, sometimes you need to perform various calculations on numbers that are specifically not prime. There are also uses of methods you have familiarized yourself with during your childhood, such as greatest common divisor (GCD) and least common multiple (LCM).</p>\n\n<p>Based on these, in 1763 Carl Friedrich Gauss solved this interesting problem:</p>\n\n<blockquote>\n<p>If you are given a number N, you have to determine how many integers between 1 and N have a GCD of 1 with N.</p>\n</blockquote>\n\n<p>Later in this tutorial we will see that the solution of this problem can be written as. Knowing how Sieve of Eratosthenes works and this tutorial we will solve this about 250 years old problem.</p>\n\n<h2>&nbsp;</h2>\n\n<p>\\N-N)=N&minus;1</p>\n\n<p>&nbsp;</p>\n', 'nbvm', 'bnm', 'bnm', 'bnm', '', '', 3, 12800, 1, '2020-03-01 23:19:11'),
+(11, 'Sum Two Number', '', '', '', '', '17', '128<br />\n132<br />\n144', '', 2, 128000, 1, '2020-03-17 11:58:59');
 
 --
 -- Triggers `problems`
@@ -125,7 +126,8 @@ INSERT INTO `problem_moderator` (`problemModeratorId`, `userId`, `problemId`, `m
 (1, 1, 1, 10),
 (56, 7, 3, 10),
 (68, 1, 10, 10),
-(72, 7, 1, 20);
+(72, 7, 1, 20),
+(73, 1, 11, 10);
 
 -- --------------------------------------------------------
 
@@ -464,7 +466,39 @@ INSERT INTO `submissions` (`submissionId`, `submissionType`, `problemId`, `sourc
 (325, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.019, 20076, 0.019, 20076, 1, '2020-03-17 08:41:32', 3, 1, 1, 2, 2, 89050),
 (326, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.019, 18860, 0.019, 18860, 1, '2020-03-17 08:41:39', 3, 1, 1, 2, 2, 32718),
 (327, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.021, 24944, 0.021, 24944, 1, '2020-03-17 08:46:41', 3, 1, 1, 2, 2, 76506),
-(328, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.02, 25108, 0.02, 25108, 1, '2020-03-17 08:48:33', 3, 1, 1, 2, 2, 25866);
+(328, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.02, 25108, 0.02, 25108, 1, '2020-03-17 08:48:33', 3, 1, 1, 2, 2, 25866),
+(329, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.017, 25204, 0.017, 25204, 1, '2020-03-17 08:53:23', 3, 1, 1, 2, 2, 58284),
+(330, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 1.879, 22412, 1.879, 22412, 1, '2020-03-17 08:54:27', 4, 1, 1, 3, 3, 59340),
+(331, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 3.909, 17708, 3.909, 17708, 1, '2020-03-17 08:55:32', 5, 1, 1, 3, 3, 58590),
+(332, 1, 10, 'n=int(input())\nprint n', 71, 'Python (3.8.1)', 0.026, 3372, 0.026, 3372, 1, '2020-03-17 08:59:37', 11, 1, 1, 1, 3, 36931),
+(333, 1, 10, 'n=int(input())\nprint n;', 71, 'Python (3.8.1)', 0.029, 3128, 0.029, 3128, 1, '2020-03-17 09:00:08', 11, 1, 1, 1, 3, 2399),
+(334, 1, 10, 'n=int(input());\nprint(n);', 71, 'Python (3.8.1)', 0.038, 5760, 0.038, 5760, 1, '2020-03-17 09:01:19', 3, 1, 1, 3, 3, 97348),
+(335, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 4.05, 29568, 4.05, 29568, 1, '2020-03-17 09:01:44', 5, 1, 1, 3, 3, 18283),
+(336, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 4.036, 23380, 4.036, 23380, 1, '2020-03-17 09:02:28', 4, 1, 1, 3, 3, 2571),
+(337, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nlong long t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.017, 25312, 0.017, 25312, 1, '2020-03-17 09:03:06', 5, 1, 1, 3, 3, 70482),
+(338, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 1.916, 22068, 1.916, 22068, 1, '2020-03-17 09:04:01', 3, 1, 1, 3, 3, 83255),
+(339, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.021, 27688, 0.021, 27688, 1, '2020-03-17 09:08:01', 3, 1, 1, 2, 2, 97319),
+(340, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 1.909, 28604, 1.909, 28604, 1, '2020-03-17 09:12:16', 3, 1, 1, 3, 3, 73236),
+(341, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-17 11:21:24', 13, 1, 1, 1, 3, 19558),
+(342, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-17 11:22:20', 6, 1, 1, 1, 3, 41780),
+(343, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-17 11:25:44', 6, 1, 1, 1, 1, 93039),
+(344, 1, 10, '#include <iostream>\n\nint main() {\n    std::cout << \"hello, world\" << std::endl;\n    return 0;\n}\n', 54, 'C++ (GCC 9.2.0)', 0.023, 12800, 0.023, 12800, 1, '2020-03-17 11:29:32', 3, 1, 1, 1, 1, 43779),
+(345, 1, 10, '#include <iostream>\nusing namespace std;\n\nint main() {\n   int n;\n   cin >> n;\n   cout <<n << \"\\n\";\n    return 0;\n}\n', 54, 'C++ (GCC 9.2.0)', 0.017, 12800, 0.017, 12800, 1, '2020-03-17 11:31:25', 3, 1, 1, 2, 2, 13978),
+(346, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-17 11:32:12', 6, 1, 1, 1, 2, 69457),
+(347, 1, 10, '#include<iostream>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.031, 12800, 0.031, 12800, 1, '2020-03-17 11:32:40', 3, 1, 1, 2, 2, 59665),
+(348, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-17 11:32:57', 6, 1, 1, 1, 2, 24130),
+(349, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 53, 'C++ (GCC 8.3.0)', 0.048, 12800, 0.048, 12800, 1, '2020-03-17 11:35:41', 6, 1, 1, 2, 2, 59161),
+(350, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 52, 'C++ (GCC 7.4.0)', 0, 0, 0, 0, 1, '2020-03-17 11:36:29', 6, 1, 1, 1, 2, 76770),
+(351, 1, 10, '#include<iostream>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.045, 12800, 0.045, 12800, 1, '2020-03-17 11:36:54', 3, 1, 1, 2, 2, 17457),
+(352, 1, 11, 'ok', 53, 'C++ (GCC 8.3.0)', 0, 0, 0, 0, 1, '2020-03-18 00:11:31', 3, 1, 1, 1, 0, 45454),
+(353, 1, 11, 'no test case', 52, 'C++ (GCC 7.4.0)', 0, 0, 0, 0, 1, '2020-03-18 00:12:45', 3, 1, 1, 1, 0, 55591),
+(354, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.023, 32144, 0.023, 32144, 1, '2020-03-18 00:16:34', 3, 1, 1, 2, 2, 6726),
+(355, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.026, 29000, 0.026, 29000, 1, '2020-03-18 00:32:05', 3, 1, 1, 2, 2, 28737),
+(356, 2, 1, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t;\ncin>>t;\nint arr[t];\nint i;\nint n,q,p,x;\nif(t>100)cout << \"hey\";\nfor(i=0;i<t;i++)\ncin>>arr[i];\n \nfor(i=0;i<t;i++)\n{\nn=arr[i];\nq=n;\np=1;\nfor(int j=0;j<n;j++)\n{\nx=(2*q)-2;\nfor(int k=0;k<p;k++)\ncout<<\"*\";\nfor(int k=0;k<x;k++)\ncout<<\"#\";\nfor(int k=0;k<p;k++)\ncout<<\"*\";\ncout<<endl;\np++;\nq--;\n \n}\n \ncout<<endl;\n}\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.026, 26216, 0.026, 26216, 1, '2020-03-18 00:33:44', 3, 1, 1, 2, 2, 3675),
+(357, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.039, 12800, 0.039, 12800, 1, '2020-03-18 00:34:37', 3, 1, 1, 2, 2, 3992),
+(358, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.056, 12800, 0.056, 12800, 1, '2020-03-18 01:54:43', 4, 1, 1, 4, 4, 79723),
+(359, 1, 10, '#include<bits/stdc++.h>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0, 0, 0, 0, 1, '2020-03-18 01:58:26', 6, 1, 1, 1, 4, 95055),
+(360, 1, 10, '#include<iostream>\nusing namespace std;\n \nint main()\n{\nint t,i;\ncin >> t;\nfor(i=1; i<t; i++){}\ncout << t << \"\\n\";\n\nreturn 0;\n \n}', 54, 'C++ (GCC 9.2.0)', 0.035, 12800, 0.035, 12800, 1, '2020-03-18 01:59:01', 3, 1, 1, 4, 4, 5819);
 
 -- --------------------------------------------------------
 
@@ -476,7 +510,7 @@ CREATE TABLE `submissions_on_test_case` (
   `submissionTestCaseId` int(11) NOT NULL,
   `submissionId` int(11) NOT NULL,
   `testCaseSerialNo` int(11) NOT NULL,
-  `testCaseId` int(11) NOT NULL,
+  `testCaseId` int(11) DEFAULT NULL,
   `testCaseToken` varchar(100) DEFAULT NULL,
   `judgeStatus` int(11) NOT NULL DEFAULT -1,
   `verdict` int(11) NOT NULL DEFAULT 0,
@@ -1380,7 +1414,83 @@ INSERT INTO `submissions_on_test_case` (`submissionTestCaseId`, `submissionId`, 
 (913, 327, 1, 91, '37d66d8a-a255-4de5-8dca-909f76c43fa0', 1, 3, 0.011, 20268, NULL),
 (914, 327, 2, 92, '180cdc37-bfba-4e5b-bc51-6fdf87d57782', 1, 3, 0.021, 24944, NULL),
 (915, 328, 1, 91, 'e395a6d5-6780-48e9-9511-6d2940806116', 1, 3, 0.009, 25108, NULL),
-(916, 328, 2, 92, '6730e940-408e-4b25-8e9e-0245c3ec2046', 1, 3, 0.02, 18492, NULL);
+(916, 328, 2, 92, '6730e940-408e-4b25-8e9e-0245c3ec2046', 1, 3, 0.02, 18492, NULL),
+(917, 329, 1, 91, '7dcee3c7-b1ee-4d25-9309-d3796becb0c2', 1, 3, 0.011, 25204, NULL),
+(918, 329, 2, 92, 'facc072e-4be0-487b-99e4-78924afed315', 1, 3, 0.017, 22800, NULL),
+(919, 330, 1, 106, '971f899e-ebf2-4899-952a-46bc9232eb41', 1, 3, 0.01, 22412, NULL),
+(920, 330, 2, 107, 'b3118051-0477-4623-b888-3a2dd4c671c6', 1, 3, 0.011, 15172, NULL),
+(921, 330, 3, 108, '5addf321-bd2f-45cf-b1af-6143dc2098ce', 1, 4, 1.879, 19316, NULL),
+(922, 331, 1, 106, '671240fe-9137-45c8-bc7f-05a2e1433a14', 1, 3, 0.011, 17708, NULL),
+(923, 331, 2, 107, '07e4ec92-de16-4237-9cb2-f4ddf58791e0', 1, 3, 0.014, 15372, NULL),
+(924, 331, 3, 108, '285c5da6-38e2-4cf2-b092-62298ac81648', 1, 5, 3.909, 11276, NULL),
+(925, 332, 1, 106, 'aa21613e-26a2-4f54-b485-5cbf5fb89aff', 1, 11, 0.026, 3372, NULL),
+(926, 332, 2, 107, NULL, -1, 0, 0, 0, NULL),
+(927, 332, 3, 108, NULL, -1, 0, 0, 0, NULL),
+(928, 333, 1, 106, '09200697-8701-413e-8d05-6a69ffcc6bfa', 1, 11, 0.029, 3128, NULL),
+(929, 333, 2, 107, NULL, -1, 0, 0, 0, NULL),
+(930, 333, 3, 108, NULL, -1, 0, 0, 0, NULL),
+(931, 334, 1, 106, 'a1c20be7-ead1-4c35-95e8-8fb40d3e6dac', 1, 3, 0.038, 5760, NULL),
+(932, 334, 2, 107, 'fb35fff9-3d8f-4e31-8afd-54c2028da1e5', 1, 3, 0.031, 3244, NULL),
+(933, 334, 3, 108, 'e946575d-f47c-4f85-b264-638267df5509', 1, 3, 0.03, 3212, NULL),
+(934, 335, 1, 106, 'f08cfb12-4f99-4dbc-83af-069fac334d87', 1, 3, 0.011, 29568, NULL),
+(935, 335, 2, 107, '3b680dfe-3c82-4ca3-9595-0e946f8333be', 1, 3, 0.01, 21888, NULL),
+(936, 335, 3, 108, '2aedc17d-b4db-4a23-a27b-9b32e2f9ab10', 1, 5, 4.05, 18424, NULL),
+(937, 336, 1, 106, '8ec47d11-4aaa-4763-9c0f-dffcabbff181', 1, 3, 0.01, 23208, NULL),
+(938, 336, 2, 107, 'a6085e0a-36d1-4805-b3f0-eb094bcf49f8', 1, 3, 0.01, 23052, NULL),
+(939, 336, 3, 108, '595165d8-ee02-450d-9d42-8727ae4dea84', 1, 4, 4.036, 23380, NULL),
+(940, 337, 1, 106, '1c9350ff-e3db-4e54-9a01-cd4a9b13dce3', 1, 3, 0.017, 21484, NULL),
+(941, 337, 2, 107, '9a9f3497-f83a-4d83-aa1b-7c5600fb37a7', 1, 3, 0.013, 20216, NULL),
+(942, 337, 3, 108, 'bc4f2c74-5058-4e45-818c-a2dd95f936e4', 1, 5, 0, 25312, NULL),
+(943, 338, 1, 106, '7764c278-69a5-485c-bf76-40c2048e8c22', 1, 3, 0.012, 22068, NULL),
+(944, 338, 2, 107, '8a72f780-d0ba-4a1e-a371-653634f3e5ef', 1, 3, 0.012, 21976, NULL),
+(945, 338, 3, 108, '108df9ec-c304-4373-a0d3-dd3d9d32e9a1', 1, 3, 1.916, 18244, NULL),
+(946, 339, 1, 91, 'c46c2d50-2541-4fec-94ec-4e3e5419e204', 1, 3, 0.011, 27688, NULL),
+(947, 339, 2, 92, '2737a577-8b80-4de4-a610-0cca4b23f977', 1, 3, 0.021, 22388, NULL),
+(948, 340, 1, 106, 'ad4ffbfb-22c0-427e-a412-37fb1aca4a9f', 1, 3, 0.014, 28604, NULL),
+(949, 340, 2, 107, 'c5fa160d-962e-4495-8471-8d5e6dc8aa6a', 1, 3, 0.015, 14516, NULL),
+(950, 340, 3, 108, '9c79d2dd-aabd-4812-8125-76a5ed7a7397', 1, 3, 1.909, 15280, NULL),
+(951, 341, 1, 106, 'ce865a34-b7ba-4126-8384-ae00a5eb06c0', 1, 13, 0, 0, NULL),
+(952, 341, 2, 107, NULL, -1, 0, 0, 0, NULL),
+(953, 341, 3, 108, NULL, -1, 0, 0, 0, NULL),
+(954, 342, 1, 106, '985e05ce-4754-4b15-8bb1-cdb910d4131d', 1, 6, 0, 0, NULL),
+(955, 342, 2, 107, NULL, -1, 0, 0, 0, NULL),
+(956, 342, 3, 108, NULL, -1, 0, 0, 0, NULL),
+(957, 343, 1, 106, '6529b229-cf5a-4623-aef4-bc2c30f902a2', 1, 6, 0, 0, NULL),
+(958, 344, 1, 106, 'e095a0c4-8307-4b7f-93d8-a4558a5aeead', 1, 3, 0.023, 12800, NULL),
+(959, 345, 1, 106, '80c4b694-1788-4261-b586-e3f604857d18', 1, 3, 0.017, 12800, NULL),
+(960, 345, 2, 109, 'f78a5f59-f138-44d2-927d-6049b42185ac', 1, 3, 0.008, 11268, NULL),
+(961, 346, 1, 106, 'fe0f6ba8-3b7f-4b54-bc12-f77f957fa724', 1, 6, 0, 0, NULL),
+(962, 346, 2, 109, NULL, -1, 0, 0, 0, NULL),
+(963, 347, 1, 106, '36f9f612-5554-44d2-9a78-50e9077a34eb', 1, 3, 0.031, 12800, NULL),
+(964, 347, 2, 109, 'a593ab2d-9b65-42cd-bf6e-c4308c1533ec', 1, 3, 0.016, 12800, NULL),
+(965, 348, 1, 106, '75e6332f-e452-4970-801e-19aa430cc449', 1, 6, 0, 0, NULL),
+(966, 348, 2, 109, NULL, -1, 0, 0, 0, NULL),
+(967, 349, 1, 106, 'e2c7f5b9-ab92-4e2f-8752-c4e312cead85', 1, 3, 0.048, 12800, NULL),
+(968, 349, 2, 109, '00e4acff-45b6-4b49-8717-0e6bd65599b5', 1, 6, 0, 0, NULL),
+(969, 350, 1, 106, 'ce0203df-206a-4d05-911a-a0687bbc395a', 1, 6, 0, 0, NULL),
+(970, 350, 2, 109, NULL, -1, 0, 0, 0, NULL),
+(971, 351, 1, 106, 'a20098da-4d32-4a27-83e1-21ea8ee3ee2d', 1, 3, 0.045, 12800, NULL),
+(972, 351, 2, 109, 'e0aacd74-1265-48d9-b3bb-07a6863f6ea2', 1, 3, 0.029, 12800, NULL),
+(973, 354, 1, 91, 'e3a3a480-e81d-4d80-a24f-0f913e22621d', 1, 3, 0.008, 32144, NULL),
+(974, 354, 2, 92, '3e9e3b44-49f6-4e18-87df-9a3ba0a1d2b7', 1, 3, 0.023, 18372, NULL),
+(975, 355, 1, 91, 'db841d62-e47e-49c6-9917-d1f5e66606b1', 1, 3, 0.008, 21004, NULL),
+(976, 355, 2, 92, '6ebc84df-bdd7-4551-a204-b5038f0eb8ee', 1, 3, 0.026, 29000, NULL),
+(977, 356, 1, 91, '0bf2d916-c3b8-4601-a746-22bd70127b22', 1, 3, 0.015, 26216, NULL),
+(978, 356, 2, 92, 'b8b7a7d7-147d-4987-adfd-2fc776679810', 1, 3, 0.026, 21796, NULL),
+(979, 357, 1, 106, 'ee3e756a-1e33-43d6-b22c-76dd7b112f27', 1, 3, 0.033, 12800, NULL),
+(980, 357, 2, 109, 'fe753eac-f288-4f53-b35f-0ab33f5479da', 1, 3, 0.039, 12800, NULL),
+(981, 358, 1, 106, 'b1de09e9-a91f-49b6-a7d4-bab9c7a1b7b2', 1, 3, 0.044, 12800, NULL),
+(982, 358, 2, 109, '42ce6e15-4c3b-49a7-a39a-36f712bea030', 1, 3, 0.033, 12800, NULL),
+(983, 358, 3, 112, '841cdc85-de62-44ef-abc9-9a78f2761422', 1, 3, 0.056, 12800, NULL),
+(984, 358, 4, 113, 'eb64cb1b-2260-4950-8687-dfc73aeb7bc5', 1, 4, 0.046, 12800, NULL),
+(985, 359, 1, NULL, 'a00b88d1-5b5b-4f07-8a28-042548204eab', 1, 6, 0, 0, NULL),
+(986, 359, 2, NULL, 'cca8f5cd-6682-4665-89ae-d343e1989e00', -1, 0, 0, 0, NULL),
+(987, 359, 3, NULL, 'c82e7ddb-b6fe-40f2-af63-bccd72334d21', -1, 0, 0, 0, NULL),
+(988, 359, 4, NULL, '85f434a5-bf37-441a-a97c-9d31b9a300bf', -1, 0, 0, 0, NULL),
+(989, 360, 1, NULL, '8c40a93b-1d71-4bc7-9989-201f580ce6b0', 1, 3, 0.035, 12800, NULL),
+(990, 360, 2, NULL, '8f2ebd86-29e8-4d10-acb5-fce717b26549', 1, 3, 0.019, 12800, NULL),
+(991, 360, 3, NULL, 'e53dc8e3-90f6-4b2c-9348-df1463300be2', 1, 3, 0.008, 9880, NULL),
+(992, 360, 4, NULL, '63e9385c-524a-4117-b228-be5a85a47c08', 1, 3, 0.01, 1332, NULL);
 
 -- --------------------------------------------------------
 
@@ -1404,7 +1514,11 @@ INSERT INTO `test_case` (`testCaseId`, `testCaseIdHash`, `problemId`, `testCaseA
 (91, 'f1a276233b43fade30fd73b9d69c13e0ef3444bbccfffa7266c4561f45a90ec3', 1, '2020-02-17 17:34:49', 1),
 (92, '57deca365723608d75800f590ffc703d56821a413e3a69b2614e5e21006d8d7e', 1, '2020-02-17 20:09:45', 1),
 (106, '0c06fcb8bafb56dce685732640682fe314457172d833da583390c2bc6d710229', 10, '2020-03-17 06:41:43', 1),
-(107, '5e5c05db2fb09b2158c0c4cd872726493403bcf74633cb121dc17c5502f4f963', 10, '2020-03-17 06:42:54', 1);
+(109, '1daa979e251d705a8379ac492fd34d673c046dfaf4e0bbc19e17c3cac5388d67', 10, '2020-03-17 11:30:32', 1),
+(110, 'e2fa1909928352ff646220ac4d41455d5f2e85868820866c91d00183424b06f1', 11, '2020-03-18 01:53:47', 1),
+(111, 'b033b80e79f1d058fb03ebc09ea82d5bafd1776894631427d9afde956b828f77', 11, '2020-03-18 01:53:57', 1),
+(112, '10fe58556cb50a5041cc505667bdd06c81a37684a8c339905ec96b367cf7fed1', 10, '2020-03-18 01:54:30', 1),
+(113, 'bd17a3b3658007e11e2246a39941b7c0a34574b0ba0b086ce8d8316ff5a3e0bb', 10, '2020-03-18 01:54:36', 1);
 
 -- --------------------------------------------------------
 
@@ -1527,31 +1641,31 @@ ALTER TABLE `judge_setting`
 -- AUTO_INCREMENT for table `problems`
 --
 ALTER TABLE `problems`
-  MODIFY `problemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `problemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `problem_moderator`
 --
 ALTER TABLE `problem_moderator`
-  MODIFY `problemModeratorId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `problemModeratorId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `submissionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+  MODIFY `submissionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
 
 --
 -- AUTO_INCREMENT for table `submissions_on_test_case`
 --
 ALTER TABLE `submissions_on_test_case`
-  MODIFY `submissionTestCaseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=917;
+  MODIFY `submissionTestCaseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=993;
 
 --
 -- AUTO_INCREMENT for table `test_case`
 --
 ALTER TABLE `test_case`
-  MODIFY `testCaseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `testCaseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `users`

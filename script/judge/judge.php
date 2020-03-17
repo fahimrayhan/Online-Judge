@@ -12,8 +12,6 @@ class Judge {
 
  	public function __construct($serverNo){
      	$this->DB=new Database();
-     	$this->Site=new Site();
-     	$this->SiteHash=new SiteHash();
      	$this->conn=$this->DB->conn;
      	$this->setServer($serverNo);
  	}
@@ -29,14 +27,9 @@ class Judge {
  		$sql="select * from submissions natural join submissions_on_test_case where
  		(submissionId % 9 = $serverNo1 or submissionId % 9 = $serverNo2 or submissionId % 9 = $serverNo3 ) and runOnTest = testCaseSerialNo and judgeStatus = -1 and testCaseReady = 1 and judgeComplete=0";
 
-
  		$data=$this->DB->getData($sql);
 
- 		echo "<pre>";
  		print_r($data);
- 		echo "</pre>";
-
- 		echo "$sql";
 
  		if(isset($data[0])){
  			$this->submissionData=$data[0];
@@ -63,92 +56,6 @@ class Judge {
  		$this->DB->pushData("submissions_on_test_case","update",$data);
  	}
 
- 	//create test case
-
- 	public function createTestCaseToken(){
-		if($this->isPending==0)
- 			return;
-		$testCaseId=$this->submissionData['testCaseId'];
-		$testCaseHashId=$this->SiteHash->testCaseHash($testCaseId);
-		$token=$this->sendTestCasePostRequest($testCaseHashId);
-		if($token!=""){
-			$this->submissionData['testCaseToken']=$token;
-			$data=array();
- 			$data['submissionTestCaseId']=$this->submissionData['submissionTestCaseId'];
- 			$data['testCaseToken']=$this->submissionData['testCaseToken'];
- 			$this->DB->pushData("submissions_on_test_case","update",$data);
-		}
-	}
-
-	public function sendTestCasePostRequest($testCaseHashId){
- 		
- 		/*******************************************************************************
-		*	@ get source code, input, output and convert base64 for processing api call.
- 		********************************************************************************/
-
- 		$problemId=$this->submissionData['problemId'];
- 		$sql="select cpuTimeLimit,memoryLimit from problems where problemId=$problemId";
- 		$problemData=$this->DB->getData($sql);
- 		$problemData=$problemData[0];
-
- 		$data=array();
- 		
-    	$data['source_code']=base64_encode($this->submissionData['sourceCode']);
- 		$data['stdin']=base64_encode($this->Site->readFile("test_case/input/".$testCaseHashId.'.txt'));
- 		$data['expected_output']=base64_encode($this->Site->readFile("test_case/output/".$testCaseHashId.'.txt'));
-
- 		$data['language_id']=$this->submissionData['languageId'];
- 		$data['cpu_time_limit']=$problemData['cpuTimeLimit'];
- 		$data['memory_limit']=$problemData['memoryLimit'];
-        
-        print_r($data);
-
-        $token=$this->sendCurlRequestForToken(json_encode($data));
- 		//$token="asfsdafsa0";
-
- 		return $token;
- 	}
-
-	public function sendCurlRequestForToken($data){
- 		
- 		/*******************************************************************************
-		*	@ this function use for only send post request api for token.
- 		********************************************************************************/
-
-        $curl = curl_init();
-
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => "https://api.judge0.com/submissions/?base64_encoded=true&wait=false",
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS => $data,
-			CURLOPT_HTTPHEADER => array(
-				"accept: application/json",
-				"content-type: application/json"
-			),
-		));
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-		curl_close($curl);
-		
-		if ($err) return "";
-		$token=json_decode($response,true);
-		if(!isset($token['token']))
-			return "";	
-		return $token['token'];
- 	}
-
-
-
-
- 	//process data
-
 	public function sendCurlRequest($url){
 		//$data='{"stdout":"2\n","time":"0.2","memory":1470,"stderr":null,"token":"87499552-56fd-4bb4-8bbc-cc24fa4ccc61","compile_output":null,"message":null,"status":{"id":3,"description":"WA"}}';
 		//$data=file_get_contents($url);
@@ -163,7 +70,6 @@ class Judge {
 		return $data;
 	}
 
-	
  	public function getApiData(){
  		if($this->isPending==0)
  			return;
@@ -253,23 +159,13 @@ class Judge {
 
 
  	public function judgeSubmission(){
- 	  
+ 	    echo "hello\n";
  		$this->getSubmissionTestCase();
- 		if($this->isPending==0)
- 			return;
- 		
  		$this->setProcessingSubmissionTestCase();
- 			if($this->submissionData['testCaseToken']==""){
- 				$this->createTestCaseToken();
- 				$this->isQueue=1;
- 			}
- 			else if($this->submissionData['testCaseToken']!=""){
- 				//if token is not null
- 				$this->getApiData();
- 				$this->analysisApiData();
- 				$this->processData();
- 				$this->saveData();
- 			}
+ 		$this->getApiData();
+ 		$this->analysisApiData();
+ 		$this->processData();
+ 		$this->saveData();
  		$this->resetProcessingSubmissionTestCase();
  		$this->clearData();
  	}
