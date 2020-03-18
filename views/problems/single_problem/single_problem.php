@@ -2,8 +2,10 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="views/problems/single_problem/js/problem.js"></script>
 <script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
+
+
 <script>
-	var problemId=1;
+	var problemId=<?php echo "$problemId"; ?>;
 window.onload = function () {
 
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -49,16 +51,13 @@ chart.render();
 				<table width="100%">
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-time"></span> Time Limit</td>
-						<td class="problem_info_td1">120 s</td>
+						<td class="problem_info_td1"><?php echo $problemData['cpuTimeLimit']; ?> s</td>
 					</tr>
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-inbox"></span> Memory Limit</td>
-						<td class="problem_info_td1">120 s</td>
+						<td class="problem_info_td1"><?php echo $problemData['memoryLimit']; ?> KB</td>
 					</tr>
-					<tr>
-						<td class="problem_info_td"><span class="glyphicon glyphicon-user"></span> Problem Setter</td>
-						<td class="problem_info_td1">Amir Hamza</td>
-					</tr>
+					
 				</table>
 			</div>
 		</div>
@@ -71,9 +70,45 @@ chart.render();
 		<div class="box none_border">
 			<div class="box_header">Submit</div>
 			<div class="box_body" style="text-align: center;">
-				<button onclick="loadSubmiProblemPage()">Submit Your Solution</button>
+				<?php 
+					if($DB->isLoggedIn==0)echo "<b>Please <a href='login.php?back=$page'>Login</a> For Submission.</b>";
+					else echo "<button onclick='loadSubmiProblemPage()'>Submit Your Solution</button>";
+				?>
 			</div>
 		</div>
+
+		<div class="box none_border">
+			<div class="box_body" style="text-align: center;">
+				
+				<?php 
+					$data=array();
+					$data['submissionType']=2;
+					$data['problemId']=$problemId;
+					$data['userId']=$DB->isLoggedIn;
+					$submissionList=$Submission->getSubmissionList(json_encode($data));
+
+				?>
+
+				<table width="100%">
+					
+					<?php 
+						$c=0;
+						foreach ($submissionList as $key => $value) {
+							$submissionId=$value['submissionId'];
+							$submissionTime=$value['submissionTime'];
+							$ago=$Site->dateToAgo($submissionTime);
+							$c++;
+							if($c>5)break;
+					?>
+					<tr style="border: 1px solid #E7ECF1;border-width: 0px 0px 1px 0px;">
+						<td style="padding: 7px 0px 7px 0px;"><a title="<?php echo $submissionTime; ?>" href="submission.php?id=<?php echo $submissionId; ?>"><?php echo $ago; ?></a></td>
+						<td style="padding: 7px 0px 7px 0px;"><?php echo $value['judgeStatus']; ?></td>
+					</tr>
+					<?php } ?>
+				</table>
+			</div>
+		</div>
+
 	</div>
 </div>
 

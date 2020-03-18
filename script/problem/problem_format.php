@@ -21,22 +21,35 @@ class ProblemFormat {
  	$memory=isset($info['memoryLimit'])?$info['memoryLimit']:"";
  	
  	$this->addMathScript();
-
+    echo "<div>";
  	if(isset($info['problemName']))
  		echo $this->addProblemNameArea($problemName,$cpu,$memory);
 
  	echo $description;
- 	echo  $this->addOptionBreak("Input");
- 	echo $input_description;
- 	echo  $this->addOptionBreak("Constraints");
- 	echo $constraint_description;
- 	echo  $this->addOptionBreak("Output");
- 	echo $output_description;
+ 	if($input_description!=""){
+        echo  $this->addOptionBreak("Input");
+        echo $input_description;
+    }
+
+    if($constraint_description!=""){
+        echo  $this->addOptionBreak("Constraints");
+        echo $constraint_description;
+    }
+
+    if($output_description!=""){
+        echo  $this->addOptionBreak("Output");
+        echo $output_description;
+    }
+
  	echo  $this->addOptionBreak("Example");
  	echo $this->addExample($input_example,$output_example);
- 	echo  $this->addOptionBreak("Notes");
- 	echo $notes;
  	
+    if($notes!=""){
+        echo  $this->addOptionBreak("Notes");
+        echo $notes;
+    }
+
+ 	echo "</div>";
 
  }
 

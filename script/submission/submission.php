@@ -10,20 +10,47 @@ class Submission {
      	$this->loggedIn=$this->DB->isLoggedIn;
  	}
 
- 	public function getSubmissionList($requestData,$json=false){
+ 	public function getSubmissionList($requestData,$limit=50,$json=false){
  		$requestData=($requestData=="")?"{}":$requestData;
 
  		$info=json_decode($requestData,true);
+ 		
+ 		$limit=50;
+ 		if(isset($info['filter'])){
+ 			$filter=$info['filter'];
+ 			if(isset($filter['limit']))$limit=$filter['limit'];
+ 		}
+ 		
+ 		$whereInfo=array();
+ 		if(isset($info['where']))$whereInfo=$info['where'];
+ 		
  		$sql="";
- 		foreach ($info as $key => $value) {
+ 		foreach ($whereInfo as $key => $value) {
  			$sql.=($sql!="")?" and ":"";
  			$sql.= "submissions.$key=$value";
  		}
  		$sql=($sql!="")?" where ".$sql:"";
- 		$sql="select submissions.*,users.userHandle,problems.problemName from submissions join users on users.userId=submissions.userId join problems on problems.problemId=submissions.problemId $sql order by submissionId desc limit 100";
+ 		$sql="select submissions.*,users.userHandle,problems.problemName from submissions join users on users.userId=submissions.userId join problems on problems.problemId=submissions.problemId $sql order by submissionId desc limit $limit";
  		$data=$this->DB->getData($sql);
  		$data=$this->processSubmissionData($data);
  		return $json?json_encode($data):$data;
+ 	}
+
+ 	public function checkSubmissionAuth($submissionId){
+ 		$sql="select * from submissions where submissionId=$submissionId";
+ 		$data=$this->DB->getData($sql);
+ 		if(!isset($data[0]))return -1;
+ 		if($this->DB->userRole<=20)return 1;
+
+ 		if($data[0]['submissionType']==2){
+ 			$userId=$this->DB->isLoggedIn;
+ 			$problemId=$data[0]['problemId'];
+ 			$sql="select * from problem_moderator where problemId=$problemId and userId=$userId";
+ 			$data=$this->DB->getData($sql);
+ 			if(isset($data[0]))return 1;
+ 		}
+
+ 		return 0;
  	}
 
  	public function getJudgeStatusFromId($jsonDataIdList,$json=false){
@@ -88,7 +115,7 @@ class Submission {
  			$verdictClass="info";
  		}
  		else if($verdictId==2){
- 			$verdictName="Running";
+ 			$verdictName="<span class='spinner-border'></span> Running";
  			if($testCaseRun>-1)$verdictName.=" On Test $testCaseRun";
  			$verdictClass="primary";
  		}
@@ -167,7 +194,7 @@ class Submission {
  		$submissionId=$info['submissionId'];
  		$data=array();
  		$json_data=array();
- 		$json_data['submissionId']=$submissionId;
+ 		$json_data['where']['submissionId']=$submissionId;
  		$submissionInfo=$this->getSubmissionList(json_encode($json_data));
  		$data['submissionInfo']=$submissionInfo[0];
  		$data['submissionTestCase']=$this->getSubmissionTestCase($submissionId,$submissionInfo[0]['judgeComplete'],$submissionInfo[0]['runOnTest']);

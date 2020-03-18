@@ -1,5 +1,5 @@
 <?php
-	$problemData=$Problem->getProblemInfo(1);
+	$problemData=$Problem->getProblemInfo($problemId);
 	$ProblemFormat->buildProblemFormat($problemData);
 	
 ?>

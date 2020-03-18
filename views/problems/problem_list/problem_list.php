@@ -6,17 +6,24 @@
 								<div class="pull-left">Problem Name</div>
 								<div class="pull-right">Tags</div>
 							</th>
-							<th class="td_list1">User Solved/Tried</td>
-							<th class="td_list1">Accepted/Total</th>
+							<!-- <th class="td_list1">User Solved/Tried</td> -->
+							<!-- <th class="td_list1">Accepted/Total</th> -->
                         </tr>
 					</thead>
 
 					<tbody>
-					<?php for($i=10000; $i<10020; $i++){ ?>			
+					<?php 
+						$problemList=$Problem->getAllJudgeProblemList("problems.problemId=3 and status=1");
+						//print_r($problemList);
+						foreach ($problemList as $key => $value) {
+							$problemId=$value['problemId'];
+							$problemName=$value['problemName'];
+
+					?>			
 						<tr>
-							<td class="td_list2" style="width: 10%"><a href='p.php?id=<?php echo $i; ?>'><?php echo $i; ?></a></td>
+							<td class="td_list2" style="width: 10%"><a href='p.php?id=<?php echo $problemId; ?>'><?php echo $problemId; ?></a></td>
 							<td class="td_list2" style="width: 60%;text-align: left;padding-left: 10px!important">
-								<div class="pull-left"><a href='p.php?id=<?php echo $i; ?>'>System Architect</a>
+								<div class="pull-left"><a href='p.php?id=<?php echo $problemId; ?>'><?php echo "$problemName"; ?></a>
 								</div>
 								<div class="pull-right">
 								<span style="text-align: right;">
@@ -32,7 +39,7 @@
 								$sl=rand(1,$stotal);
 								$parcent1=($sl*100)/$stotal;
 							?>
-							<td class="td_list2" style="width: 15%">
+							<!--<td class="td_list2" style="width: 15%">
 								<span class="percentcont">
 									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
 									<div class="pertext">
@@ -44,13 +51,13 @@
 								$sl=rand(1,$stotal);
 								$parcent1=($sl*100)/$stotal;
 							?>
-							<td class="td_list2" style="width: 15%">
+							 <td class="td_list2" style="width: 15%"> 
 								<span class="percentcont">
 									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
 									<div class="pertext">
 										<?php echo "$sl / $stotal"; ?>								</div>
 								</span>
-							</td>
+							</td>-->
 						</tr>
 					<?php } ?>	
 					</tbody>

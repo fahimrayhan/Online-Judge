@@ -2,15 +2,28 @@
 
 
 <?php
+
+    $ok=-1;
+
+    if(isset($_GET['id'])){
+        $submissionId=$_GET['id'];
+        $ok=$Submission->checkSubmissionAuth($submissionId);
+    }
+
+    if($ok==-1){
+        include "404.php";
+        return;
+    }
+
     
     $info=array();
-    $info['submissionId']=$_GET['id'];
+    $info['submissionId']=$submissionId;
     $submissionAllInfo=$Submission->getSubmissionAllInfo($info);
     
     $submissionInfo=$submissionAllInfo['submissionInfo'];
     $submissionTestCase=$submissionAllInfo['submissionTestCase'];
 
-    $sourceCodePermission=1;
+    $sourceCodePermission=$ok;
     $testCaseAreaCol=$sourceCodePermission==1?6:12;
 
 

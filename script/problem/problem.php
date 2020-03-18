@@ -17,7 +17,18 @@ class Problem {
  		return $json?json_encode($data[0]):$data[0];
 	}
 
-	
+	public function  getAllJudgeProblemList($where="",$json=false){
+		$where=($where=="")?"":"where ".$where;
+		$sql="select judge_problem_list.*,problems.problemName from judge_problem_list join problems on problems.problemId=judge_problem_list.problemId $where";
+		$data=$this->DB->getData($sql);
+ 		return $json?json_encode($data):$data;
+	}
+
+	public function checkProblemInJudgeList($problemId){
+		$sql="select * from judge_problem_list where problemId=$problemId and status=1";
+		$data=$this->DB->getData($sql);
+		return isset($data[0])?1:0;
+	}	
 
 	public function addProblem($info){
 		$error="";
