@@ -13,7 +13,7 @@
 
 					<tbody>
 					<?php 
-						$problemList=$Problem->getAllJudgeProblemList("problems.problemId=3 and status=1");
+						$problemList=$Problem->getAllJudgeProblemList("status=1");
 						//print_r($problemList);
 						foreach ($problemList as $key => $value) {
 							$problemId=$value['problemId'];

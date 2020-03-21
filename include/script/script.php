@@ -32,7 +32,4 @@
 	include "script/judge/judge_process.php";
 	$JudgeProcess=new JudgeProcess();
 
-	include "script/judge_setting/judge_setting.php";
-	$judgeSetting=new judgeSetting();
-
 ?>

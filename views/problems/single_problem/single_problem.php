@@ -5,6 +5,9 @@
 
 
 <script>
+	<?php
+		$problemId=10;
+	?>
 	var problemId=<?php echo "$problemId"; ?>;
 window.onload = function () {
 
