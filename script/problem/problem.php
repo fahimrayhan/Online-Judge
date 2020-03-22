@@ -20,7 +20,6 @@ class Problem {
 	public function  getAllJudgeProblemList($where="",$json=false){
 		$where=($where=="")?"":"where ".$where;
 		$sql="select judge_problem_list.*,problems.problemName from judge_problem_list join problems on problems.problemId=judge_problem_list.problemId $where";
-		echo "$sql";
 		$data=$this->DB->getData($sql);
  		return $json?json_encode($data):$data;
 	}

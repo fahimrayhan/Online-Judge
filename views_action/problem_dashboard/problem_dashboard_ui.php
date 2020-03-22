@@ -184,7 +184,7 @@
 			echo "<tr>
 			<td class='td2'><a href='submission.php?id=$submissionId' target='_blank'>$submissionId</a></td>
 			<td class='td2'>$submissionTime</td>
-			<td class='td2'>$userHandle</td>
+			<td class='td2'><a href='profile.php?id=$userId'>$userHandle</a></td>
 			<td class='td2'>$languageId</td>
 			<td class='td2'>$judgeStatus</td>
 			<td class='td2'>$time s</td>
