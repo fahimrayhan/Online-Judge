@@ -76,7 +76,7 @@ class Judge {
  		$tokenId=$this->submissionData['testCaseToken'];
 
  		//$tokenId="87499552-56fd-4bb4-8bbc-cc24fa4ccc61";
- 		$url="https://api.judge0.com/submissions/$tokenId?base64_encoded=true";
+ 		$url="https://api.judge0.com/submissions/$tokenId?base64_encoded=true&fields=time,memory,status";
  		$data=$this->sendCurlRequest($url);
  		$this->apiData=($data=="")?"{}":$data;
  		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
