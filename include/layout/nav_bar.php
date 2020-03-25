@@ -26,6 +26,7 @@
           <li><a class="navbar_style2" style="color: #ced6e0;" href="register.php?back=<?php echo $page; ?>"><i class='fas span_icon'>&#xf234;</i> REGISTER</a></li>
           <li><a class="navbar_style2" style="color: #ced6e0;" href="login.php?back=<?php echo $page; ?>"><span class="glyphicon glyphicon-log-in span_icon"></span> LOGIN</a></li>
         <?php } else{ ?>
+            <li><a class="navbar_style2" style="color: #ced6e0;" href="profile.php?id=<?php echo $DB->isLoggedIn; ?>"><img src="<?php echo $loggedInUserInfo['userPhoto']; ?>" class="navProfileImage"><?php echo strtoupper($loggedInUserInfo['userHandle']); ?></a></li>
             <li><a class="navbar_style2" style="color: #ced6e0;" href="logout.php?back=<?php echo $page; ?>"><span class="glyphicon glyphicon-log-in span_icon"></span> LOGOUT</a></li>
         <?php } ?>
 

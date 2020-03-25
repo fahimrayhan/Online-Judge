@@ -4,6 +4,7 @@
 	$DB=new Database();
 
 	$isLoggedIn=(isset($_SESSION['oj_login_handle_id']))?1:0;
+	
 
 	include "script/hash/hash.php";
 	$SiteHash=new SiteHash();
@@ -31,5 +32,11 @@
 
 	include "script/judge/judge_process.php";
 	$JudgeProcess=new JudgeProcess();
+
+	$loggedInUserInfo=array();
+	if($isLoggedIn){
+		$loggedInUserInfo=$User->getSingleUserInfo($DB->isLoggedIn);
+		$loggedInUserInfo=$loggedInUserInfo[0];
+	}
 
 ?>

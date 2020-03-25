@@ -53,3 +53,10 @@ a.navbar_style2{
 .nav_logo{
     font-family: "Arial Black", Gadget, sans-serif;
 }
+.navProfileImage{
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    border: 1px solid #CED6E0;
+    margin-right: 5px;
+}

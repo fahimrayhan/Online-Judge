@@ -45,6 +45,7 @@ class SiteEnter {
  		$info['userRegistrationDate']=$this->db->date();
  		$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
  		$info['userPassword']=$this->Hash->userPasswordHash($info['userPassword']);
+ 		$info['userPhoto']='file/user_photo/avatar.jpg';
  		$this->db->pushData("users","insert",$info);
  		$msg="Registration Is Sucessfully Compleated.";
  	}
