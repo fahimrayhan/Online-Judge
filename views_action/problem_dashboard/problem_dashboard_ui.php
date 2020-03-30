@@ -52,6 +52,7 @@
 		echo "<center><button onclick='addTestCase()'>Add Test Case</button></center>";
 	}
 
+
 	else if(isset($_POST['loadEditTestCasePage'])){
 		$hashId=$_POST['loadEditTestCasePage'];
 		$info=$TestCase->getTestCaseData($hashId);

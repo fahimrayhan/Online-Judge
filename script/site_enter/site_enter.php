@@ -4,8 +4,8 @@ class SiteEnter {
 //starting connection
  public function __construct(){
      
-     $this->db=new database();
-     $this->conn=$this->db->conn;
+     $this->DB=new database();
+     $this->conn=$this->DB->conn;
      $this->Hash=new SiteHash();
  }
 
@@ -13,12 +13,12 @@ class SiteEnter {
  	$handle=$info['handle'];
  	$password=$this->Hash->userPasswordHash($info['password']);
  	$sql="select userId from users where userHandle='$handle' and userPassword='$password'";
- 	$data=$this->db->getData($sql);
+ 	$data=$this->DB->getData($sql);
  	$error=isset($data[0])?0:1;
  	if($error==0)
  		$_SESSION['oj_login_handle_id']=$data[0]['userId'];
  	$msg=isset($data[0])?"<li>Login Sucessfully</li>":"<li>Your Handle OR Password is Wrong</li>";
- 	return $this->db->makeJsonMsg($error,$msg);
+ 	return $this->DB->makeJsonMsg($error,$msg);
  }
 
  public function register($info){
@@ -42,15 +42,44 @@ class SiteEnter {
 
  	if($error==0){
  		unset($info['userCpassword']);
- 		$info['userRegistrationDate']=$this->db->date();
+ 		$info['userRegistrationDate']=$this->DB->date();
  		$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
  		$info['userPassword']=$this->Hash->userPasswordHash($info['userPassword']);
  		$info['userPhoto']='file/user_photo/avatar.jpg';
- 		$this->db->pushData("users","insert",$info);
+ 		$this->DB->pushData("users","insert",$info);
  		$msg="Registration Is Sucessfully Compleated.";
  	}
 
- 	return $this->db->makeJsonMsg($error,$msg);
+ 	return $this->DB->makeJsonMsg($error,$msg);
+ }
+
+
+ public function updatePassword($info){
+ 	$oldPass=$info['oldPass'];
+ 	$newPass=$info['newPass'];
+ 	$hashOldPass=$this->Hash->userPasswordHash($oldPass);
+ 	$userId=$this->DB->isLoggedIn;
+ 	$error=1;
+ 	$msg="";
+ 	if(!$userId){
+ 		$msg="User Is Not LoggedIn";
+ 	}
+ 	if($msg==""){
+ 		$sql="select userPassword from users where userId=$userId";
+ 		$data=$this->DB->getData($sql);
+ 		$msg="";
+ 		if($data['0']['userPassword']!=$hashOldPass)$msg="Old Password Is Not Correct.";
+ 	}
+ 	if($msg=="")$msg=$this->passwordValidator($newPass,$newPass);
+ 	if($msg==""){
+ 		$data=array();
+ 		$data['userId']=$userId;
+ 		$data['userPassword']=$this->Hash->userPasswordHash($newPass);
+ 		$this->DB->pushData("users","update",$data);
+ 		$msg="Sucessfully Password Update.";
+ 		$error=0;
+ 	}
+ 	return $this->DB->makeJsonMsg($error,$msg);
  }
 
  public function passwordValidator($pass,$cpass){
@@ -75,7 +104,7 @@ class SiteEnter {
  		return "Handle Is Not Valid";
  	
  	$sql="select userId from users where userHandle='$handle'";
- 	$data=$this->db->getData($sql);
+ 	$data=$this->DB->getData($sql);
  	if(isset($data[0]))
  		return "Handle Is Already Used.";
  }
@@ -85,7 +114,7 @@ class SiteEnter {
  	if (!filter_var($email, FILTER_VALIDATE_EMAIL))
  		return "Email Is Not Valid";
  	$sql="select userId from users where userEmail='$email'";
- 	$data=$this->db->getData($sql);
+ 	$data=$this->DB->getData($sql);
  	if(isset($data[0]))
  		return "Email Is Already Used";
  }
@@ -97,7 +126,7 @@ class SiteEnter {
  	$semister=(int)$info['semister'];
  	$id=(int)$info['serial'];
 
- 	$curr_date=$this->db->date();
+ 	$curr_date=$this->DB->date();
  	$curr_year=date('Y', strtotime($curr_date));
  	$curr_semister=date('m', strtotime($curr_date));
  	$curr_semister=(int)$curr_semister;
