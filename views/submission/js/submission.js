@@ -21,8 +21,16 @@ function getSubmissionAllInfo(){
 		setSubmissionInfo();
 		setTestCaseInfo();
 	});
-
 }
+
+function rejudgeSubmission(){
+	var ok=confirm('Are You Want To Rejudge Submission.');
+	if(!ok)return;
+	$.post(url,buildData("rejudgeSubmission",submissionId),function(response){
+		location.reload();
+	});
+}
+
 
 function setSubmissionInfo(){
 	$("#submission_cpu").html(submissionInfo.maxTimeLimit+" s");
@@ -69,6 +77,7 @@ function setEditorLanguage(language){
     });
 
 }
+
 
 
 setInterval(function(){ 

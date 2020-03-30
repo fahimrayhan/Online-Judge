@@ -169,6 +169,33 @@ class Submission {
  		return json_encode($data);
  	}
 
+ 	public function rejudgeSubmission($submissionId){
+ 		$sql="select submissionTestCaseId from submissions_on_test_case where submissionId=$submissionId";
+ 		$data=$this->DB->getData($sql);
+ 		foreach ($data as $key => $value) {
+ 			$testCase=array();
+ 			$testCase['submissionTestCaseId']=$value['submissionTestCaseId'];
+ 			$this->DB->pushData("submissions_on_test_case","delete",$testCase);
+ 			print_r($testCase);
+ 		}
+ 		$submissionData=array();
+ 		$submissionData['submissionId']=$submissionId;
+ 		$submissionData['maxTimeLimit']=0;
+ 		$submissionData['maxMemoryLimit']=0;
+ 		$submissionData['runOnMaxTime']=0;
+ 		$submissionData['runOnMaxMemory']=0;
+
+ 		$submissionData['submissionVerdict']=1;
+ 		$submissionData['testCaseReady']=-1;
+ 		$submissionData['judgeComplete']=0;
+ 		$submissionData['runOnTest']=1;
+ 		$submissionData['totalTestCase']=0;
+ 		$submissionData['threadId']=0;
+ 		print_r($submissionData);
+ 		$this->DB->pushData("submissions","update",$submissionData);
+
+ 	}
+
  	public function getSubmissionTestCase($submissionId,$submissionFinish,$runOnTest){
  		$sql="select testCaseToken,submissionTestCaseId,testCaseSerialNo, verdict ,totalTime,totalMemory from submissions_on_test_case where submissionId=$submissionId";
  		$data=$this->DB->getData($sql);

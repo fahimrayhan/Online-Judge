@@ -45,7 +45,8 @@
         	<div class="box_header">Submission</div>
            	<div class="box_body">
                 <div id="result"></div>
-           		<table width="100%" id="submission_table" class="table">
+           		<div style="position: left"><button onclick="rejudgeSubmission()">Rejudge</button></div>
+                <table width="100%" id="submission_table" class="table">
                 	<tr>
                 		<td class="td1">#</td>
                 		<td class="td1">Author</td>
@@ -75,12 +76,15 @@
     		<div class="box_header">Test Cases</div>
     		<div class="box_body">
     			<table width="100%" id="testCaseTable">
-                	<tr>
+                	<thead>
+                    <tr>
                 		<td class="td1">#</td>
                 		<td class="td1">CPU</td>
                 		<td class="td1">Time</td>
                 		<td class="td1">Verdict</td>
                 	</tr>
+                    </thead>
+                    <tbody>
                 	<?php 
                         $c=0;
                     foreach ($submissionTestCase as $key => $value) { 
@@ -93,6 +97,7 @@
                 		<td class="td2" id="<?php echo $c ?>_verdict"><?php echo $value['judgeStatus']; ?></td>
                 	</tr>
                 	<?php } ?>
+                    </tbody>
                 </table>
     		</div>
     	</div>
