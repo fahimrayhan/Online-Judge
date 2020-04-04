@@ -94,6 +94,8 @@ class Problem {
 		$role=$this->checkProblemModerator($problemId,$userId);
 		if($role==10)return 1;
 		if($role==20)return 2;
+		//role=10->admin
+		//role=20->moderator
 		if($this->DB->userRole<=20)return 3;
 		return -1;
 	}
@@ -172,6 +174,17 @@ class Problem {
 		$data=array();
 		$data['problemId']=$problemId;
 		return $this->DB->pushData("judge_problem_list","delete",$data,"true");
+	}
+
+	public function problemVerdictStat($problemId,$json=false){
+		$sql="select submissionVerdict,count(*) from submissions where problemId=$problemId and submissionType=2 group by submissionVerdict";
+		$getData=$this->DB->getData($sql);
+		$data=array();
+		foreach ($getData as $key => $value) {
+			$data[$value['submissionVerdict']]=$value['count(*)'];
+		}
+
+		return $json==true?json_encode($data):$data;
 	}
 
 

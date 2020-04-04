@@ -40,15 +40,17 @@ class Submission {
  		$sql="select * from submissions where submissionId=$submissionId";
  		$data=$this->DB->getData($sql);
  		if(!isset($data[0]))return -1;
+ 		
  		if($this->DB->userRole<=20)return 1;
-
- 		if($data[0]['submissionType']==2){
- 			$userId=$this->DB->isLoggedIn;
- 			$problemId=$data[0]['problemId'];
- 			$sql="select * from problem_moderator where problemId=$problemId and userId=$userId";
- 			$data=$this->DB->getData($sql);
- 			if(isset($data[0]))return 1;
- 		}
+ 		if($data[0]['userId']=$this->DB->isLoggedIn)return 1;
+ 		$submissionType=$data[0]['submissionType'];
+ 		//check moderator
+ 		$userId=$this->DB->isLoggedIn;
+ 		$problemId=$data[0]['problemId'];
+ 		$sql="select * from problem_moderator where problemId=$problemId and userId=$userId";
+ 		$data=$this->DB->getData($sql);
+ 		if(isset($data[0]))return 1;
+ 		if($submissionType==1)return -1;
 
  		return 0;
  	}
@@ -125,8 +127,11 @@ class Submission {
  		}
  		else if($verdictId==4)$verdictName="Wrong answer";
  		else if($verdictId==5)$verdictName="Time limit exceeded";
- 		else $verdictName="Compailer Error";
-        
+ 		else if($verdictId==6) $verdictName="Compailer Error";
+ 		else if($verdictId>=7 && $verdictId<=12) $verdictName="Runtime Error";
+ 		else if($verdictId==13) $verdictName="Memory Limit Exceeded";
+ 		else if($verdictId==14) $verdictName="Exec Format Error";
+ 		else $verdictName="Failed";
  		$verdictClass="label label-$verdictClass";
 
  		return "<span class='$verdictClass'>$verdictName</span>";

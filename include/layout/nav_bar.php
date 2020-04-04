@@ -1,5 +1,5 @@
   <?php $page=$Site->getBackPageUrl(); ?>
-  <nav class="navbar navbar-default navbar-fixed-top navbar_style" style="">
+  <nav class="navbar navbar-default navbar-fixed-top navbar_style" style="border-color: var(--bg-color)">
 
   <div class="container-fluid"> 
     <div class="navbar-header">

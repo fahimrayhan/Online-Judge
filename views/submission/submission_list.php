@@ -9,7 +9,9 @@
 			<td class='td1'>Memory</td>
 			</tr>
 		<?php 
-		$info=$Submission->getSubmissionList('{"status: 2"}');
+		$info=array();
+		$info['where']['submissionType']=2;
+		$info=$Submission->getSubmissionList(json_encode($info,true));
 		foreach ($info as $key => $value) {
 			$submissionId=$value['submissionId'];
 			$languageId=$value['languageName'];

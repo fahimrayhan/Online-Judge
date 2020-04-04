@@ -97,7 +97,7 @@
 	else if(isset($_POST['loadModeratorsPage'])){
 		$problemId=$_POST['loadModeratorsPage'];
 		$moderatorList=$Problem->getProblemModeratorList($problemId,false);
-		$problemRoles=$Problem->checkProblemModeratorRoles($problemId);
+		$problemRoles=$Problem->checkProblemModeratorRoles($problemId); 
 		
 		echo "
 		<div class='row'>	

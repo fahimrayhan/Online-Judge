@@ -26,6 +26,7 @@ function getSubmissionAllInfo(){
 function rejudgeSubmission(){
 	var ok=confirm('Are You Want To Rejudge Submission.');
 	if(!ok)return;
+	btnOff("rejudgeBtn","Rejudging....")
 	$.post(url,buildData("rejudgeSubmission",submissionId),function(response){
 		location.reload();
 	});

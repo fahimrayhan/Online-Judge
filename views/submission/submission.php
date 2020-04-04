@@ -45,7 +45,7 @@
         	<div class="box_header">Submission</div>
            	<div class="box_body">
                 <div id="result"></div>
-           		<div style="position: left"><button onclick="rejudgeSubmission()">Rejudge</button></div>
+           		<div style="position: left"><button id="rejudgeBtn" onclick="rejudgeSubmission()">Rejudge</button></div>
                 <table width="100%" id="submission_table" class="table">
                 	<tr>
                 		<td class="td1">#</td>

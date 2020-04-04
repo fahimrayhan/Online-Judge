@@ -6,7 +6,10 @@ function updateProfileInfoForm(){
 	$.post(userActionUrl,buildData("updateProfileInfoForm",userId),function(response){
 		$("#modal_md_body").html(response);
 	});
+}
 
+function saveProfileInfo(){
+	
 }
 
 function updatePasswordForm(){
