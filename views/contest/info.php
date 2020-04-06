@@ -8,7 +8,7 @@
 		margin-top: -22px;
 	}
 	.BannerTitle{
-		background-color:url("https://images.wallpaperscraft.com/image/code_letters_screen_blur_colorful_136706_3840x2400.jpg");
+		background: #2C3542;
 	  	text-align: center;
 	  	font-size: 45px;
 	  	color: #ffffff;

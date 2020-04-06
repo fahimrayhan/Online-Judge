@@ -42,10 +42,10 @@
 <div class='row'>
     <div class='col-md-12'>
         <div class="box">
-        	<div class="box_header">Submission</div>
-           	<div class="box_body">
+        	<div class="box_header">Submission <button id="rejudgeBtn" onclick="rejudgeSubmission()">Rejudge</button></div>
+           	<div class="box_body" style="overflow-x: scroll;">
                 <div id="result"></div>
-           		<div style="position: left"><button id="rejudgeBtn" onclick="rejudgeSubmission()">Rejudge</button></div>
+           		<div style="position: left"></div>
                 <table width="100%" id="submission_table" class="table">
                 	<tr>
                 		<td class="td1">#</td>

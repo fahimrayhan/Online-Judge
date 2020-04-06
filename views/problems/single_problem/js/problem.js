@@ -6,7 +6,7 @@ function loadSubmiProblemPage(){
 	loader("modal_md_body");
 	$.post(url,buildData("loadSubmiProblemPage"),function(response){
 		$("#modal_md_body").html(response);
-		setTimeout(function(){ setEditor(); }, 100);
+		//setTimeout(function(){ setEditor(); }, 100);
 	});
 }
 
@@ -58,8 +58,8 @@ function selectLanguage(){
 		'Java': 'JAVA',
 		'Python': 'Python'
 	}
-	if (languageName.indexOf("GCC") >= 0)setEditor("CPP");
-	else if (languageName.indexOf("Java") >= 0)setEditor("Javascript");
-	else if (languageName.indexOf("Python") >= 0)setEditor("Python");
-	else setEditor("XML");
+	//if (languageName.indexOf("GCC") >= 0)setEditor("CPP");
+	//else if (languageName.indexOf("Java") >= 0)setEditor("Javascript");
+	//else if (languageName.indexOf("Python") >= 0)setEditor("Python");
+	//else setEditor("XML");
 }
