@@ -83,7 +83,7 @@ class Problem {
 		if(!$this->DB->isLoggedIn)
 			return;
 		$userId=$this->DB->isLoggedIn;
-		$sql="select problem_moderator.*,problems.problemName,problems.cpuTimeLimit,problems.memoryLimit from problem_moderator join problems on problems.problemId=problem_moderator.problemId where problem_moderator.userId=$userId";
+		$sql="select problem_moderator.*,problems.problemName,problems.cpuTimeLimit,problems.memoryLimit from problem_moderator join problems on problems.problemId=problem_moderator.problemId where problem_moderator.userId=$userId order by problem_moderator.problemModeratorId DESC";
 		$data=$this->DB->getData($sql);
 		return ($json)?json_encode($data):$data;
 	}

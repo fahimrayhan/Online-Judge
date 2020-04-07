@@ -171,7 +171,9 @@
 			<td class='td1'>Time</td>
 			<td class='td1'>Memory</td>
 			</tr>";
-		$info=$Submission->getSubmissionList('{"problemId":'.$problemId.'}');
+		$info=array();
+		$info['where']['problemId']=$problemId;
+		$info=$Submission->getSubmissionList(json_encode($info));
 		foreach ($info as $key => $value) {
 			$submissionId=$value['submissionId'];
 			$languageId=$value['languageName'];

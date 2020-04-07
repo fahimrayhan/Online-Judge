@@ -28,36 +28,14 @@
 								<div class="pull-right">
 								<span style="text-align: right;">
 								<?php 
-								$val=rand(1,4);
-								for($j=1; $j<=$val; $j++)echo "<span class='label label-default problem_tags'>solved</span> ";
+								
+								echo "<span class='label label-success problem_tags'><i class='fas fa-users'></i> 117</span> ";
 								?>
 								</span>
 								</div>
 							</td>
-							<?php
-								$stotal=rand(1,1000);
-								$sl=rand(1,$stotal);
-								$parcent1=($sl*100)/$stotal;
-							?>
-							<!--<td class="td_list2" style="width: 15%">
-								<span class="percentcont">
-									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
-									<div class="pertext">
-										<?php echo "$sl / $stotal"; ?>								</div>
-								</span>
-							</td>
-							<?php
-								$stotal=rand(1,1000);
-								$sl=rand(1,$stotal);
-								$parcent1=($sl*100)/$stotal;
-							?>
-							 <td class="td_list2" style="width: 15%"> 
-								<span class="percentcont">
-									<div class="perfill" style="width: <?php echo "$parcent1"; ?>%;"></div>
-									<div class="pertext">
-										<?php echo "$sl / $stotal"; ?>								</div>
-								</span>
-							</td>-->
+							
+							
 						</tr>
 					<?php } ?>	
 					</tbody>
