@@ -187,6 +187,26 @@ class Problem {
 		return $json==true?json_encode($data):$data;
 	}
 
+	public function problemListStat($problemId,$json=false){
+		$sql="select count(distinct(userId)) as totalSolved from submissions where problemId=$problemId and submissionType=2 and submissionVerdict=3";
+		$data=$this->DB->getData($sql);
+		$info=array();
+		$info['totalSolved']=$data[0]['totalSolved'];
+		$info['userVerdict']=-1;
+		if($this->DB->isLoggedIn){
+			$userId=$this->DB->isLoggedIn;
+			$sql="select count(*) as totalSolved from submissions where problemId=$problemId and userId=$userId";
+			$data=$this->DB->getData($sql);
+			if(isset($data[0]))$info['userVerdict']=$data[0]['totalSolved']!=0?0:-1;
+			if($info['userVerdict']==0){
+				$sql="select count(*) as totalSolved from submissions where problemId=$problemId and submissionType=2 and submissionVerdict=3 and userId=$userId";
+				$data=$this->DB->getData($sql);
+				if(isset($data[0]))$info['userVerdict']=$data[0]['totalSolved']==0?0:1;
+			}
+		}
+		return $json==true?json_encode($info):$info;
+	}
+
 
 }
 ?>

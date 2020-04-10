@@ -15,7 +15,7 @@
 
 	function callServer() {
   		process=1;
-  		$.get("judge_server_one.php",function(response) { 
+  		$.get("test_judge_server.php",function(response) { 
     		$("#response").html(response);
   			process=0;
   		});

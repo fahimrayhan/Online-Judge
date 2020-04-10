@@ -13,8 +13,10 @@
 		}
 		if($page!="info.php")include "views/contest/contest_header.php";
 		$page=$path.$page;
+
 	}
 	include "$page";
+	if($page!="info.php")include "views/contest/contest_footer.php";
 
 
 ?>

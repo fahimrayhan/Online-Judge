@@ -9,7 +9,7 @@
 	}, 1000);
 //working script
 	function callServer() {
-  		$.get("process_server.php",function(response) { 
+  		$.get("test_process_server.php",function(response) { 
     		$("#response").html(response);
   		});
 	}

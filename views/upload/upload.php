@@ -1,11 +1,3 @@
-<?php
-
-	include "script.php";
-	include "views_action/user/user_action.php";
-
-
-?>
-
 <title>Upload - CoderOJ</title>
 <script type="text/javascript" src="views/upload/js/upload.js"></script>
 
@@ -36,7 +28,7 @@
 				<a href="https://paloimages.prothom-alo.com/contents/cache/images/640x358x1/uploads/media/2020/04/07/277b115a0c69d1f89bc170ceb31e56ef-5e8bec411ad02.jpg"  target="_blank"><img class="uploadImage img-thumbnail" src="https://paloimages.prothom-alo.com/contents/cache/images/640x358x1/uploads/media/2020/04/07/277b115a0c69d1f89bc170ceb31e56ef-5e8bec411ad02.jpg"></a>
 				<div class="btnArea">
 					<p style="display: none" id="<?php echo $i; ?>"><?php echo $i; ?></p>
-					<button id="btnCopy_<?php echo $i; ?>" onclick="copyUrl(<?php echo $i; ?>)" class="btn-sm btn-primary"><i class='fas fa-copy'></i> Copy Url</button>
+					<button  onclick="copyUrl(<?php echo $i; ?>)" class="btn-sm btn-primary"><i class='fas fa-copy'></i> Copy Url</button>
 					<button class="btn-sm btn-danger"><i class="fas fa-trash"></i> Delete Image</button>
 				</div>
 			</div>

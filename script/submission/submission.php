@@ -42,8 +42,9 @@ class Submission {
  		if(!isset($data[0]))return -1;
  		
  		if($this->DB->userRole<=20)return 1;
- 		if($data[0]['userId']=$this->DB->isLoggedIn)return 1;
+ 		if($data[0]['userId']==$this->DB->isLoggedIn)return 1;
  		$submissionType=$data[0]['submissionType'];
+ 		
  		//check moderator
  		$userId=$this->DB->isLoggedIn;
  		$problemId=$data[0]['problemId'];

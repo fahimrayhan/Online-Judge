@@ -1,7 +1,7 @@
 
 
  </div>
-
+<title>CoderOJ - Competitive Programming Platform</title>
 <!-- Footer start -->
 <title>EWUPSC Online Judge</title>
 <div class="col-sm-12" style="padding-top: 80px;">

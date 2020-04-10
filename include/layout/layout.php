@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="" type="image/gif" sizes="16x16">
-    <title>CoderOJ - Competitive Programming Platform</title>
+    
     <link rel="icon" href="file/site_metarial/favicon.png" type="image/gif" sizes="16x16">
 
     <!-- CSS Javascript Libery -->

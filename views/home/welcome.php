@@ -71,7 +71,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="padding: 15px 70px 30px 70px;">
+		<div style="padding: 15px 10px 15px 15px;">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="box_body welcomeFeature">

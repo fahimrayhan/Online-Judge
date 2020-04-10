@@ -6,8 +6,6 @@
 								<div class="pull-left">Problem Name</div>
 								<div class="pull-right">Tags</div>
 							</th>
-							<!-- <th class="td_list1">User Solved/Tried</td> -->
-							<!-- <th class="td_list1">Accepted/Total</th> -->
                         </tr>
 					</thead>
 
@@ -18,6 +16,11 @@
 						foreach ($problemList as $key => $value) {
 							$problemId=$value['problemId'];
 							$problemName=$value['problemName'];
+							$problemStat=$Problem->problemListStat($problemId);
+							$totalSolved=$problemStat['totalSolved'];
+							$label="default";
+							if($problemStat['userVerdict']==1)$label="success";
+							else if($problemStat['userVerdict']==0)$label="danger";
 
 					?>			
 						<tr>
@@ -29,7 +32,7 @@
 								<span style="text-align: right;">
 								<?php 
 								
-								echo "<span class='label label-success problem_tags'><i class='fas fa-users'></i> 117</span> ";
+								echo "<span class='label label-$label problem_tags'><i class='fas fa-users'></i> $totalSolved</span> ";
 								?>
 								</span>
 								</div>
