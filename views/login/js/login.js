@@ -24,6 +24,7 @@ function login(){
 		$("#"+login_div).html(response.msg);
 		if(response.error==0)
 			location.reload();
-		btnOn("btn_login","Login Your ID");
+		else btnOn("btn_login","Login Your ID");
+
 	});
 }

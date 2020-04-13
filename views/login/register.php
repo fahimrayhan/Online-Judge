@@ -21,13 +21,10 @@
                 </div>
 
                	<label for="username">Email <b style="color: #EA2027">*</b></label>
-               	<input type="text" placeholder="Enter Your Handle" autocomplete="off" id="userEmail">
+               	<input type="text" placeholder="Enter Your Email" autocomplete="off" id="userEmail">
                 
-                <label for="username">Your EWU ID</label>
-               	<input type="text" placeholder="Enter Your Handle" autocomplete="off" id="userEwuId">
-                <div class="register_notice">
-                  <li>Enter Valid Your EWU ID or Blank This Field</b></li>
-                </div>
+                <label for="username">Your Institute Name</label>
+               	<input type="text" placeholder="Enter Your Institute Name" autocomplete="off" id="instituteName">
                                 
                 <label for="password">Password <b style="color: #EA2027">*</b></label><br>
                 <input type="password" name="password" placeholder="Enter Your Password" id="userPassword">

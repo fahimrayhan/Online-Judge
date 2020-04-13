@@ -30,7 +30,7 @@ class SiteEnter {
  	array_push($error_msg, $this->fullNameValidator($info['userFullName']));
  	array_push($error_msg, $this->handleValidator($info['userHandle']));
  	array_push($error_msg, $this->emailValidator($info['userEmail']));
- 	array_push($error_msg, $this->ewuIdValidaor($info['userEwuId']));
+ 	//array_push($error_msg, $this->ewuIdValidaor($info['userEwuId']));
  	array_push($error_msg, $this->passwordValidator($info['userPassword'],$info['userCpassword']));
 
  	$msg="";
@@ -43,7 +43,7 @@ class SiteEnter {
  	if($error==0){
  		unset($info['userCpassword']);
  		$info['userRegistrationDate']=$this->DB->date();
- 		$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
+ 		//$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
  		$info['userPassword']=$this->Hash->userPasswordHash($info['userPassword']);
  		$info['userPhoto']='file/user_photo/avatar.jpg';
  		$this->DB->pushData("users","insert",$info);

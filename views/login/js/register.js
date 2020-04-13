@@ -9,7 +9,7 @@ function register(){
 	var data = {
         'userFullName': $("#userFullName").val(),
         'userEmail': $("#userEmail").val(),
-        'userEwuId': $("#userEwuId").val(),
+        'instituteName': $("#instituteName").val(),
         'userHandle': $("#userHandle").val(),
         'userCpassword': $("#userCpassword").val(),
         'userPassword': $("#userPassword").val()
