@@ -35,6 +35,7 @@ function register(){
             $("#userCpassword").val("");
             $("#userPassword").val("");
         }
+        if(response.error==0)alert(response.msg);
         btnOn("btn_register","Create Your Account");
     });
 }

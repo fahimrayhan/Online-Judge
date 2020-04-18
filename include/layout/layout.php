@@ -21,11 +21,5 @@
          ?>
     </head>
 
-    <?php
-        if($isLoggedIn)
-            echo "<script>setTimeout(function(){ update_site_status(); }, 500);</script>";
-
-    ?>
-
 	<body class="theme-blue">
 	   <div class="container" style="height: 100%; margin-top: 90px;">  

@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12">
         <div class="box" style="border-radius: 0px;border-width: 1px;">
@@ -18,17 +17,9 @@
         </div>
         <div class="box" style="margin-top: -5px">
             <div class="box_body" style="background-color: #ffffff" id="option_box_body">
-                <?php
-                    if($pageActionName=="edit")
-                        include "$path/problem_edit.php";
-                    else if($pageActionName=="viewProblem")
-                        include "$path/view_problem.php";
-                ?>
+               
             </div>
         </div>
     </div>
 
 </div>
-<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
-
-<script type="text/javascript" src="views/problems/problems_dashboard/problem_action_dashboard/js/problem_dashboard.js"></script>

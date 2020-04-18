@@ -109,13 +109,13 @@ class Problem {
 
  	public function getProblemModeratorList($problemId,$json=false){
  		$sql="select userId,userHandle,userPhoto,moderatorRoles from problem_moderator natural join users where problemId=$problemId";
- 		$data=$this->processModeratorData($this->DB->getData($sql));
+ 		$data=$this->DB->getData($sql);
  		return ($json)?json_encode($data):$data;
  	}
 
  	public function getNonProblemModeratorList($problemId,$json=false){
 		$sql="(select userId,userHandle,userPhoto from users where userRoles<=30) EXCEPT (select userId,userHandle,userPhoto from problem_moderator natural join users where problemId=$problemId)";
- 		$data=$this->processModeratorData($this->DB->getData($sql));
+ 		$data=$this->DB->getData($sql);
  		return ($json)?json_encode($data):$data;
  	}
 

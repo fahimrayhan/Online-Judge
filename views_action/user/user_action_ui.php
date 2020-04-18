@@ -4,6 +4,18 @@
 		echo "info form";
 	}
 
+	if(isset($_POST['updateProfilePhotoForm'])){ ?>
+   		<center>
+      	<span id="uploaded_image">
+      		<img id="add_profile_pic" class="img-thumbnail userImage" src="<?php echo $loggedInUserInfo['userPhoto']; ?>">
+      	</span>
+      	<div style="margin-top: 5px"></div>
+      	<input type="file" name="file" id="file" onchange="loadFile(event)"  />
+      	<button id="updateProfilePhotoBtn" style="margin-top: 10px;width: 100%" onclick="uploadProfilePhoto()" id="">Upload Profile Photo</button>
+      	</center>	
+
+	<?php }
+
 	if(isset($_POST['updatePasswordForm'])){
 		 echo "<div class='label label-success' style='padding: 5px' id='errorLog'></div><div></div><label for='password'>Old Password <b style='color: #EA2027'>*</b></label><br>
                 <input type='password' id='oldPass' placeholder='Enter Your Old Password' id='userPassword'>

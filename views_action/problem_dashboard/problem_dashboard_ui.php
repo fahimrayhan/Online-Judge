@@ -98,7 +98,7 @@
 		$problemId=$_POST['loadModeratorsPage'];
 		$moderatorList=$Problem->getProblemModeratorList($problemId,false);
 		$problemRoles=$Problem->checkProblemModeratorRoles($problemId); 
-		
+
 		echo "
 		<div class='row'>	
 			<div class='col-md-7'>
@@ -132,7 +132,7 @@
 						<div class='pull-right'>
 							$delBtn
 						</div>
-						<a href=''>$userHandle</a><br/>
+						<a href='profile.php?id=$userId'>$userHandle</a><br/>
 						<span class='userPermission'>$roleName</span>
 					</div>
 				</div>

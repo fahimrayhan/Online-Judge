@@ -4,29 +4,30 @@ class User {
 //starting connection
  public function __construct(){
      
-     $this->db=new Database();
-     $this->conn=$this->db->conn;
+     $this->DB=new Database();
+     $this->conn=$this->DB->conn;
  }
  
  public function getUserInfo(){
 
  	$sql="select * from users";
- 	$data=$this->db->getData($sql);
+ 	$data=$this->DB->getData($sql);
  	print_r($data);
  }
 
  public function getSingleUserInfo($userId){
  	$sql="select * from users where userId=$userId";
- 	$data=$this->db->getData($sql);
+ 	$data=$this->DB->getData($sql);
  	return $data;
  }
 
- public function updateUserStatus(){
- 	if($this->db->isLoggedIn){
- 		$data['userId']=$this->db->isLoggedIn;
- 		$data['userLastLoginInfo']=mysqli_real_escape_string($this->db->conn, $this->getUserStatus());
- 		$this->db->pushData("users","update",$data);
- 	}
+ public function updateUserStatus($info){
+ 	if(!$this->DB->isLoggedIn)return;
+ 	$data=$this->getUserStatus();
+ 	$data['userId']=$this->DB->isLoggedIn;
+ 	$data['lastLoginUrl']=$info['url'];
+ 	print_r($data);
+ 	$this->DB->pushData("users","update",$data);
  }
 
  public function getUserStatus(){
@@ -39,11 +40,10 @@ class User {
 	else
     	$ip_address = $_SERVER['REMOTE_ADDR'];
 
- 	$info['ip']=$ip_address;
- 	$info['url']=$_SERVER['REQUEST_URI'];
- 	$info['time']=$this->db->date();
+ 	$info['lastLoginIp']=$ip_address;
+ 	$info['lastLoginTime']=$this->DB->date();
 
- 	return json_encode($info);
+ 	return $info;
  }
 
 }

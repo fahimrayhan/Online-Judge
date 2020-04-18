@@ -31,6 +31,7 @@
 
  <script type="text/javascript">
 
+  setInterval(function(){ updateSiteStatus("<?php echo $_SERVER['REQUEST_URI']; ?>"); }, 2000);
   var myVar = setInterval(myTimer, 1000);
   function myTimer() {
     var d = new Date();

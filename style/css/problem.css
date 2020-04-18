@@ -133,3 +133,44 @@
 	        -webkit-animation: spinner-border .60s linear infinite;
 	        animation: spinner-border .75s linear infinite;
     	}
+
+  /*problem dashboard css*/
+
+ .problemPanel{
+
+    }
+
+    .problemPanelHeader{
+
+    }
+
+    .problemNavStyle{
+        background-color: #000000;
+        border-radius: 4px;
+        padding: 10px;
+    }
+    .problemNavTab{
+        padding: 15px;
+        border: 1px solid #D4D5D8;
+        border-width: 0px 1px 0px 0px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 0px;
+
+    }
+    .problemNavTab:hover{
+        border-bottom-width: 3px;
+        border-bottom-color: #F0943D;
+        border-top-width: 3px;
+        border-top-color: #F0943D;
+        color: #FFA14C; 
+    }
+    .problemNavTabActive{
+        border-bottom-width: 3px;
+        border-bottom-color: #FFA14C;
+        border-top-width: 3px;
+        border-top-color: #FFA14C;
+        font-weight: bold;
+        margin-bottom: -15px;
+        color: #FFA14C;
+    }

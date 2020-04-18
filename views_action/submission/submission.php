@@ -1,9 +1,6 @@
 <?php
 
-	if(!$isLoggedIn){
-		include "404.php";
-		return;
-	}
+	
 	
 	if(isset($_POST['createSubmission'])){
 		echo $Submission->createSubmission($_POST['createSubmission'],2);

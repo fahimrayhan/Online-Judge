@@ -7,6 +7,6 @@
 	}
 
 	if($ok==0)$Site->redirectPage("index.php");
-	else include "views/profile/profile_layout.php";
+	else include "views/profile/profile1.php";
 
 ?>

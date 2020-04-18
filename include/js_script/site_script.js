@@ -24,18 +24,18 @@ function loader(divId,size=130){
   	$("#"+divId).html(img);
 }
 
-function update_site_status(){
-  $.post('site_action.php',buildData("update_site_status"),function(response){
-    $("#view_profile").html(response);
-    update_site_status();
+function updateSiteStatus(url){
+  
+  var data = {
+    'url': url
+  }
+
+  $.post('site_action.php',buildData("updateSiteStatus",data),function(response){
+      //console.log(response);
   });
 }
 
-function setTest(){
-  $.post('site_action.php',buildData("update_site_status"),function(response){
-    setTest();
-  });
-}
+
 
 // ===================================================
 
