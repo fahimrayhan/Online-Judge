@@ -24,3 +24,6 @@
         <td class="userInfoTd2"><?php echo $DB->dateToString($userInfo['userRegistrationDate']); ?></td>
     </tr>
 </table>
+<div class="box_body" style="margin-top: 15px;">
+    <?php include "views/profile/user_graph.php"; ?>
+</div>

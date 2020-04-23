@@ -106,7 +106,6 @@
         padding: 1px;
         font-weight: bold;
         text-align: center; 
-
     }
 
 </style>

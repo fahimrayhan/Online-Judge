@@ -1,25 +1,19 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="box" style="border-radius: 0px;border-width: 1px;">
-        <div class="box_body" style="padding: 0px;margin-bottom: 20px;background-color: #F5F6F7;text-align: center;"><center>
-            <ul class="nav nav-tabs userNavStyle" style="border-bottom:0px; ">
-                <li id="overview" class="problemNavTab" onclick="changeOption('overview')"><i class="fa fa-dashboard"></i> OverView</li>
-                <li id="viewProblem" onclick="changeOption('viewProblem')" class="problemNavTab"><i class="fas fa-eye"></i> View Problem</li>
-                <li id="setting" class="problemNavTab" onclick="changeOption('setting')"><i class="fas fa-cogs"></i> Setting</li>
-                <li id="edit" class="problemNavTab" onclick="changeOption('edit')"><i class="fa fa-pencil"></i> Edit Problem</li>
-                <li id="testCase" onclick="changeOption('testCase')" class="problemNavTab"><i class="fas fa-th-list"></i> Test Case</li>
-                <li id="moderators" onclick="changeOption('moderators')" class="problemNavTab"><i class="fas fa-user-plus"></i> Moderators</li>
-                <li id="testing" onclick="changeOption('testing')" class="problemNavTab"><i class="fas fa-gavel"></i> Testing</li>
-                <li id="" class="problemNavTab"><i class="fas fa-list-alt"></i> Submission</li>
-            </ul>
-        </center>
-        </div>
-        </div>
-        <div class="box" style="margin-top: -5px">
-            <div class="box_body" style="background-color: #ffffff" id="option_box_body">
-               
-            </div>
-        </div>
-    </div>
 
+<style type="text/css">
+    .dashboard{
+        margin: -22px -15px 0px -15px;
+         /*background-color: #000000;*/
+         overflow-x: hidden;
+    }
+    .container{
+        width: 100%;
+    }
+</style>
+
+<div class="dashboard">
+    <div class="row ">
+        <div class="col-md-2 nopadding" style="padding-right: 0px;"><?php include "views/admin/left_bar.php"; ?></div>
+        <div class="col-md-8 nopadding" style="padding: 0px;"><?php include "views/admin/home_dashboard.php"; ?></div>
+        <div class="col-md-2 nopadding" style="padding-left: 0px;"><?php include "views/admin/right_bar.php"; ?></div>
+    </div>
 </div>

@@ -7,7 +7,6 @@
 		echo "<tr>
 			<td class='td1'>#</td>
 			<td class='td1'>When</td>
-			<td class='td1'>Who</td>
 			<td class='td1'>Problem Name</td>
 			<td class='td1'>Lang</td>
 			<td class='td1'>Verdict</td>
@@ -34,7 +33,6 @@
 			echo "<tr>
 			<td class='td2'><a href='submission.php?id=$submissionId' target='_blank'>$submissionId</a></td>
 			<td class='td2'>$submissionTime</td>
-			<td class='td2'><a href='profile.php?id=$userId'>$userHandle</a></td>
 			<td class='td2'><a href='p.php?id=$problemId'>$problemName</a></td>
 			<td class='td2'>$languageId</td>
 			<td class='td2'>$judgeStatus</td>

@@ -61,6 +61,7 @@
 	}
 
 </style>
+
 <div class="box">
 	<div class="box_body" style="padding: 15px 15px 20px 15px;">
 		<div class="logoTitle">Welcome To Coder Online Judge (CoderOJ) </div>
@@ -77,9 +78,6 @@
 				</div>
 			</div>
 		</div>
-		
-		
-		
 	</div>
 </div>
 

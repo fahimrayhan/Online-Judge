@@ -4,8 +4,8 @@
 		echo $SiteEnter->updateUserPhoto($_FILES);
 	}
 
-	if(isset($_POST['saveUserInfo'])){
-
+	if(isset($_POST['updateProfileInfo'])){
+		echo $User->updateProfileInfo($_POST['updateProfileInfo']);
 	}
 
 	else if(isset ($_POST['UpdatePassword'])){

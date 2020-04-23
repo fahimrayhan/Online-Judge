@@ -156,6 +156,7 @@ function addProblemModerator(userId){
 	}
 	$.post(dashboard_action_url,buildData("addProblemModerator",data),function(response){
 		loadModeratorsPage();
+		toast.success("Successfully Add Moderator");
 	});
 }
 
@@ -169,6 +170,7 @@ function deleteProblemModerator(userId){
 	$.post(dashboard_action_url,buildData("deleteProblemModerator",data),function(response){
 		//console.log(response);
 		loadModeratorsPage();
+		toast.success("Successfully Delete Moderator");
 	});
 }
 
@@ -290,6 +292,7 @@ function addTestCase(){
 		//$("#modal_md_body").html(response);
 		loadPage("loadTestCasePage");
 		modal_action("md","Add Test Case","close");
+		toast.success("Successfully Add Test Case");
 	});
 }
 
@@ -316,6 +319,7 @@ function updateTestCase(){
 		//$("#modal_md_body").html(response);
 		loadTestCasePage();
 		modal_action("md","Add Test Case","close");
+		toast.success("Successfully Edit Test Case");
 	});
 }
 
@@ -327,6 +331,7 @@ function deleteTestCase(btn_sl){
 	loader("option_box_body");
 	$.post(dashboard_action_url,buildData("deleteTestCase",hashId),function(response){
 		loadTestCasePage();
+		toast.success("Successfully Delete Test Case");
 	});
 }
 

@@ -23,7 +23,7 @@ var loadFile = function(event) {
 function uploadProfilePhoto(){
 
 	if (profilePhotoInfo == -1) {
-        alert("Please Select Photo");
+        toast.danger("Please Select Photo")
         return;
     }
 
@@ -32,7 +32,7 @@ function uploadProfilePhoto(){
     var ext = name.split('.').pop().toLowerCase();
 
     if (jQuery.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-        alert("Invalid Image File");
+        toast.danger("Invalid Image File");
         return;
     }
 
@@ -42,7 +42,7 @@ function uploadProfilePhoto(){
     var fsize = f.size || f.fileSize;
 
     if (fsize > 2000000) {
-        alert("Image File Size is very big");
+        toast.danger("Image File Size is very big");
         return;
     }
 
@@ -62,8 +62,8 @@ function uploadProfilePhoto(){
         },
 
         success: function(data) {
-           console.log(data);
-           alert("Successfully Update Profile Picture");
+           //console.log(data);
+           toast.success("Successfully Update Profile Picture");
            window.location.href = "";
 
         }
@@ -82,17 +82,31 @@ function updateProfilePhotoForm(){
 }
 
 function updateProfileInfoForm(){
-	modal_action("md","Add Test Case");
-	loader("modal_md_body");
+	modal_action("sm","Update Profile Info");
+	loader("modal_sm_body");
 	$.post(userActionUrl,buildData("updateProfileInfoForm"),function(response){
-		$("#modal_md_body").html(response);
+		$("#modal_sm_body").html(response);
 	});
 }
 
 
 
-function saveProfileInfo(){
-	
+function updateProfileInfo(){
+    var userFullName=$("#userFullName").val();
+    if(userFullName==""){
+        toast.danger("Please Enter Your Full Name");
+        return;
+    }
+	var data={
+        'userFullName': userFullName,
+        'instituteName': $("#instituteName").val()
+    }
+    btnOff("updatePassBtn","Saving");
+    $.post(userActionUrl,buildData("updateProfileInfo",data),function(response){
+        //$("#modal_sm_body").html(response);
+        toast.success("Profile Successfully Update.");
+        window.location.href = "";
+    });
 }
 
 function updatePasswordForm(){
@@ -109,22 +123,19 @@ function updatePassword(){
 		'newPass': $("#newPass").val()
 	}
 	btnOff("updatePassBtn","Saving");
-	$("#errorLog").hide();
+	
 	$.post(userActionUrl,buildData("UpdatePassword",data),function(response){
-		$("#errorLog").show();
+		
 		//$("#errorLog").html(response);
 		//console.log(response);
 		response=JSON.parse(response); 
 		if(response.error==1){
-			$('#errorLog').removeClass('label-success').addClass('label-danger');
-			$("#errorLog").show();
-			$("#errorLog").html(response.msg);
+			
+            toast.danger(response.msg);
 			btnOn("updatePassBtn","Update Password");
 		}
 		else{
-			$('#errorLog').removeClass('label-danger').addClass('label-success');
-			$("#errorLog").show();
-			$("#errorLog").html(response.msg);
+            toast.success(response.msg);
 			btnOn("updatePassBtn","Update Password");
 		}
 			

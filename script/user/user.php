@@ -21,12 +21,18 @@ class User {
  	return $data;
  }
 
+ public function updateProfileInfo($data){
+ 	if(!$this->DB->isLoggedIn)return;
+ 	$data['userId']=$this->DB->isLoggedIn;
+ 	$this->DB->pushData("users","update",$data);
+ }
+
  public function updateUserStatus($info){
  	if(!$this->DB->isLoggedIn)return;
  	$data=$this->getUserStatus();
  	$data['userId']=$this->DB->isLoggedIn;
  	$data['lastLoginUrl']=$info['url'];
- 	print_r($data);
+ 	//print_r($data);
  	$this->DB->pushData("users","update",$data);
  }
 
