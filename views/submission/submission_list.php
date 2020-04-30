@@ -1,3 +1,9 @@
+
+<div class="box">
+<div class="box_header">
+	Submission
+</div>
+<div class="box_body">
 <div class='table-responsive'><table width='100%'><tr>
 			<td class='td1'>#</td>
 			<td class='td1'>When</td>
@@ -37,4 +43,5 @@
 			</tr>";
 		}
 		?>
-		</table></div>
+		</table></div></div>
+</div>

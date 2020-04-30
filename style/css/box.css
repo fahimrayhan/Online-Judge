@@ -17,6 +17,25 @@
 	border-radius: 5px;
 }
 
+.boxHeader{
+	background-color: #ffffff;
+	color: #2F353B;
+	padding: 15px 10px 15px 10px;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 5px;
+	margin-bottom: 1px;
+	border: 1px solid  #E7ECF1;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.boxBody{
+	background-color: #ffffff;
+	border: 1px solid #E7ECF1;
+	padding: 10px;
+	border-radius: 5px;
+}
+
 .box{
 	margin-bottom: 20px;
 	box-shadow: 2px 2px 2px 2px #aaaaaa;

@@ -12,7 +12,7 @@ $( document ).ready(function() {
 //site info---------------------------------
 
 function displayPage(){
-	if(pageActionName!="edit" && pageActionName!="viewProblem" )
+	if(pageActionName!="viewProblem" )
 		changeOption(pageActionName);
 	else setOptionActive(pageActionName);
 }
@@ -54,7 +54,8 @@ function changeOption(optionName){
 	else if(optionName=='edit'){
 		changeUrl(optionName);
 		setOptionActive(optionName);
-		location.reload();
+		loadPage("loadEditPage");
+		//location.reload();
 	}
 	else if(optionName=='moderators'){
 		changeUrl(optionName);

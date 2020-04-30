@@ -1,3 +1,4 @@
+
 function buildData(keyName,val=0){
   var data={};
   data[keyName]=val;
@@ -24,10 +25,11 @@ function loader(divId,size=130){
   	$("#"+divId).html(img);
 }
 
-function updateSiteStatus(url){
+function updateSiteStatus(url,setPageViewData=0){
   
   var data = {
-    'url': url
+    'url': url,
+    'insertPageViewData': setPageViewData
   }
 
   $.post('site_action.php',buildData("updateSiteStatus",data),function(response){

@@ -57,8 +57,20 @@
 .contestNav{
 	background: #ffffff;
 	box-shadow: 2px 2px 2px 2px #888888;
+	margin-top: -18px;
+	
 }
- .contestNavBtn:hover{
+
+@media only screen and (min-width: 600px) {
+  .contestNav{
+  	position: -webkit-sticky;
+  	position: sticky;
+  	top: 60px;
+  	z-index: 99999!important;
+  }
+}
+
+.contestNavBtn:hover{
 	background: var(--bg-color);
 	color: #ffffff;
 }
@@ -73,28 +85,25 @@
 	padding: 0px 20px 0px 20px;
 }
 .contestTitle{
-	font-size: 25px;
+	font-size: 20px;
 	color: #3E3F3A;
-	font-weight: bold;
+
  	font-family: "Lucida Console", Monaco, monospace;
  	margin-bottom: 5px;
 }
 .contestTime{
-	font-size: 20px;
+	font-size: 18px;
 	color: #52544e;
-	font-weight: bold;
+ 	
  	font-family: "Lucida Console", Monaco, monospace;
 }
 </style>
-<div>
-<div class="row contestNav">
-	<a href="contest.php?id=4&p=dashboard"><div class="col-md-3 col-sm-3 contestNavBtn contestNavBtnActive"><i class="fas fa-trophy"></i> DASHBOARD</div></a>
-	<a href="daf"><div class="col-md-3 col-sm-3 contestNavBtn"><i class="fas fa-alert"></i> CLARIFICATIONS</div></a>
-	<a href="contest.php?id=4&p=ranklist"><div class="col-md-3 col-sm-3 contestNavBtn"><i class="fas fa-trophy"></i> STANDINGS</div></a>
-	<a href="daf"><div class="col-md-3 col-sm-3 contestNavBtn" style="border-width: 0px"><i class="fas fa-list"></i> SUBMISSIONS</div></a>
-</div>
-<div class="contestTitleArea">
-	<div class="contestTitle">UITS INTER UNIVERSITY PROGRAMMING CONTEST, 2019</div>
-	<div class="contestTime">04:04:53<br/>Contest Is Running</div>
 
+
+<div class="row contestNav">
+	<a href="contest.php?id=4&p=dashboard"><div class="col-md-3 col-sm-6 contestNavBtn contestNavBtnActive"><i class="fas fa-trophy"></i> DASHBOARD</div></a>
+	<a href="daf"><div class="col-md-3 col-sm-6 contestNavBtn"><i class="fas fa-alert"></i> CL</div></a>
+	<a href="contest.php?id=4&p=ranklist"><div class="col-md-3 col-sm-3 contestNavBtn"><i class="fas fa-trophy"></i> STAN</div></a>
+	<a href="daf"><div class="col-md-3 col-sm-3 contestNavBtn" style="border-width: 0px"><i class="fas fa-list"></i> SUBM</div></a>
 </div>
+<div style="margin-bottom: 20px"></div>

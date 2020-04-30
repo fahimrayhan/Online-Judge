@@ -66,9 +66,14 @@ th{
 
 </style>
 
+<div class="contestTitleArea">
+    <div class="contestTitle">UITS INTER UNIVERSITY PROGRAMMING CONTEST, 2019</div>
+    <div class="contestTime">04:04:53<br/>Contest Is Running</div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
-    	<div class="box">
+    	<div class="boxx">
     	<div class="box_header">Rank List</div>
         <div class="box_body">
             <div class="table-responsive">

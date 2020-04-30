@@ -1,7 +1,19 @@
 var constraintsEditor, inputEditor, outputExEditor, descriptionEditor, inputExEditor, outputExEditor;
 var noteEditor;
 
-function setUpEditor() {
+function setUpEditor(){
+  
+  setUpEditorFunation();
+
+  setTimeout(function(){ 
+    $("#problemEditBodyLoader").hide();
+    $("#problemEditBody").show();
+  }, 1000);
+
+
+}
+
+function setUpEditorFunation() {
 
   //define editor variable
   descriptionEditor = CKEDITOR.replace('descriptionEditor');
@@ -15,7 +27,7 @@ function setUpEditor() {
   //set global data
   CKEDITOR.config.height = 100;
   CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
-  CKEDITOR.config.extraPlugins = 'mathjax,autogrow';
+  CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify';
   CKEDITOR.config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
   CKEDITOR.config.mathJaxClass = 'equation';
   CKEDITOR.config.codeSnippet_theme = 'pojoaque';
@@ -23,7 +35,6 @@ function setUpEditor() {
   CKEDITOR.config.disableObjectResizing = false;
   CKEDITOR.config.autoGrow_minHeight = 100;
   CKEDITOR.config.autoGrow_maxHeight = 300;
-
   //set eidtor toolbar function
   setEditorToolbar();
 
@@ -103,17 +114,28 @@ function getEditorData() {
   return editorData;
 }
 
+function uploadImage(){
+  modal_action("lg", "Upload Image");
+  loader("modal_lg_body");
+  $.post(dashboard_action_url, buildData("uploadImage", getEditorData()), function (response) {
+    $("#modal_lg_body").html(response);
+  });
+}
+
 function previewProblem() {
   modal_action("lg", "Problem Preview");
   loader("modal_lg_body");
   $.post(dashboard_action_url, buildData("previewProblem", getEditorData()), function (response) {
-    $("#modal_lg_body").html(response);
+    
+    $("#modal_lg_body").empty().append("<p>"+response+"</p>");
+    MathJax.typeset(["#modal_lg_body"]);
   });
 }
 
 function updateProblem() {
   btnOff("btn_update_problem", "Saving....");
   $.post(dashboard_action_url, buildData("updateProblem", getEditorData()), function (response) {
-    location.reload();
+    toast.success("Problem Update Successfully");
+    btnOn("btn_update_problem","Save Change");
   });
 }

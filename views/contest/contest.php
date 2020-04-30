@@ -11,12 +11,13 @@
 			else if($name=="submission")$page="submission.php";
 			else if($name=="overview")$page="overview.php";
 		}
+		echo '<div class="" style="padding: 15px;margin-top: -20px;background: url("file/site_metarial/geometry.png")!important">';
 		if($page!="info.php")include "views/contest/contest_header.php";
 		$page=$path.$page;
 
 	}
 	include "$page";
 	if($page!="info.php")include "views/contest/contest_footer.php";
-
+	echo "</div>";
 
 ?>

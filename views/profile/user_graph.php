@@ -1,8 +1,6 @@
 <?php 
 
 	$lastSubmissionData=array();
-	for ($days = 9; $days >= 0; $days--){ print_r( date('Y, m, d',strtotime(date('d-m-Y').' -'.$days.' days'))." "); }
-
 ?>
 
 <script>

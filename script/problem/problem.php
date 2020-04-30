@@ -7,8 +7,10 @@ class Problem {
      	$this->conn=$this->DB->conn;
  	}
  
- 	public function getProblemList(){
-
+ 	public function getProblemList($json=false){
+ 		$sql="select * from problems";
+ 		$data=$this->DB->getData($sql);
+ 		return $json?json_encode($data[0]):$data[0];
  	}
 
  	public function getProblemInfo($id,$json=false){
@@ -160,9 +162,11 @@ class Problem {
 		return (isset($data[0]))?$data[0]['status']:-1;
 	}
 
-	public function reqJudgeProblemList($problemId){
+	public function reqJudgeProblemList($problemId,$status=0){
 		$data=array();
 		$data['problemId']=$problemId;
+		$data['status']=$status;
+		$data['addedDate']=$this->DB->date();
 		return $this->DB->pushData("judge_problem_list","insert",$data,"true");
 	}
 

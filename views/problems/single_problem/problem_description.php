@@ -53,7 +53,7 @@ chart.render();
 <div class="row">
 	<div class="col-md-9">
 		<div class="box sm_border">
-			<div class="box_body">
+			<div class="box_body" style="overflow-x: scroll;">
 				 <?php include "views/problems/single_problem/problem_stat.php"; ?>
 			</div>
 		</div>

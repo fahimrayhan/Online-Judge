@@ -2,11 +2,11 @@ var dashboard_action_url="problem_dashboard_action.php";
 
 
 function loadProblemAddPage(){
-	modal_action("md","Add Problem");
-	loader("modal_md_body");
+	modal_action("sm","Add Problem");
+	loader("modal_sm_body");
 	
 	$.post(dashboard_action_url,buildData("loadProblemAddPage"),function(response){
-		$("#modal_md_body").html(response);
+		$("#modal_sm_body").html(response);
 	});
 }
 
@@ -44,7 +44,7 @@ function deleteProblem(problemId){
     
     response=JSON.parse(response); 
 	if(response.error==1){
-		alert(response.error_msg);
+		toast.danger("You Can Not Delete This Problem.");
 	}
 	else
 		location.reload();

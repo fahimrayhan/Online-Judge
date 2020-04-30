@@ -1,7 +1,7 @@
 <style type="text/css">
 	.problemListBox{
-		margin-top: 4px;
-		padding: 10px;
+		margin-top: 3px;
+		padding: 15px 10px 15px 10px;
 		border: 1px solid #EEEEEE;
 	}
 	.problemNo{
@@ -19,6 +19,36 @@
   		border-color: #E7ECF1;
   		font-size: 18px;
   		margin-bottom: 5px;
+  	}
+  	.contestInfoRight{
+  		text-align: center;
+  		color: #000000;
+  		position: -webkit-sticky;
+  		position: sticky;
+  		top: 118px;
+  		font-weight: bold;
+  		z-index: 99999!important;
+  		
+
+  	}
+  	.contestInfoRightTitle{
+  		border: 1px solid #E7ECF1;
+  		border-width: 0px 0px 1px 0px;
+  		padding-bottom: 10px;
+  		margin-bottom: 10px;
+  		color: #2F353B;
+  	}
+  	.contestTimeRight{
+  		text-align: center;
+  	}
+  	.contestTimeRightSpan{
+  		color: #ffffff;
+  		background: var(--bg-color);
+  		border-radius: 10px;
+  		padding: 6px;
+  		
+  		margin-right: 1px;
+  		font-size: 17px;
   	}
 </style>
 
@@ -51,11 +81,11 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="box">
-			<div class="box_header"></div>
-			<div class="box_body" style="height: 180px;">
-			</div>
+	<div class="col-md-3 contestInfoRight">
+		<div class="box box_body" style="padding-left: 3px; padding-right: 3px;">
+			<div class="contestInfoRightTitle">UITS INTER UNIVERSITY PROGRAMMING CONTEST, 2019</div>
+			<div class="contestTimeRight"><span class="contestTimeRightSpan">04</span><span class="contestTimeRightSpan">04</span><span class="contestTimeRightSpan">53</span><br/>Contest Is Running</div>
+			
 		</div>
 	</div>
 </div>

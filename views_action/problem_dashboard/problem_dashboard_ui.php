@@ -1,4 +1,15 @@
 <?php
+
+	if(isset($_POST['loadEditPage'])){
+		$problemId=$_POST['loadEditPage'];
+		include "views/problems/problems_dashboard/problem_action_dashboard/problem_edit.php";
+	}
+
+	if(isset($_POST['loadviewProblemPage'])){
+		$problemId=$_POST['loadviewProblemPage'];
+		include "views/problems/problems_dashboard/problem_action_dashboard/view_problem.php";
+	}
+
 	if(isset($_POST['loadTestCasePage'])){
 		$problemId=$_POST['loadTestCasePage'];
 		echo "<div style='text-align: right; margin-bottom: 10px;'><button onclick='loadAddTestCasePage()'><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>";
@@ -219,6 +230,9 @@
 		echo "<br/><center><button id='updateProblem' onclick='updateProblemSetting()'>Update Problem Problem</button></center>";
 		echo "</div><div class='col-md-6'><center>$arcive</center></div>";
 		echo "</div>";
+	}
+	if(isset($_POST['uploadImage'])){
+		include "views/upload/upload.php";
 	}
 
 

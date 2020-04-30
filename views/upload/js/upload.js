@@ -18,16 +18,15 @@ function copyUrl(containerid){
             document.getElementById(containerid).select();
             document.execCommand("copy");
         }else{
-            debug("hello");
+            //debug("hello");
             var range_ = document.createRange();
-            debug(range_);
+            //debug(range_);
             range_.selectNode(document.getElementById(containerid));
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range_);
             document.execCommand("copy");
     }
     }
-    return;
     var btnTxt="#btnCopy_"+containerid;
     $(btnTxt).toggleClass('btn-primary btn-success');
     $(btnTxt).html("<i class='fas fa-clipboard-check'></i> Copied");
@@ -39,6 +38,14 @@ function copyUrl(containerid){
 
 }
 
-function debug(txt){
-	console.log(txt);
+function debug(){
+	$.getScript( "views/upload/js/test_fun.js", function( data, textStatus, jqxhr ) {
+        console.log( data ); // Data returned
+        console.log( textStatus ); // Success
+        console.log( jqxhr.status ); // 200
+        console.log( "Load was performed." );
+        testFun();
+        toast.success("Working");
+    });
 }
+

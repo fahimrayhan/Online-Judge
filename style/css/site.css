@@ -267,6 +267,7 @@ a {
   display: inline;
   position: relative;
   margin-top: 0px;
+  max-width: 300px;
 
 }
 .top-alert .alert .close {

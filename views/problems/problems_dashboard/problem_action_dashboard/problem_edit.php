@@ -1,4 +1,4 @@
-<script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
+
 <?php
 
 	$problem_data=$Problem->getProblemInfo($problemId,true);
@@ -33,10 +33,16 @@
 		border-width: 0px 0px 1px 0px;
 		padding-bottom: 15px;
 	}
+	.problemEditBodyLoader{
+		text-align: center;
+	}
+	
 </style>
 <div>
 
 <div id="preview_problem"></div>
+<div class="problemEditBodyLoader" id="problemEditBodyLoader"><img class="editorLoaderImg" src="file/site_metarial/loader2.gif"></div>
+<div id="problemEditBody" style="display: none;">
 <div class="option_devide">
 	<div class="row">
 		<div class="col-md-3"><div class="option_name">Problem Description</div></div>
@@ -85,10 +91,11 @@
 		<div class="col-md-9"><textarea name="noteEditor"></textarea></div>
 	</div>
 </div>
-
+</div>
 </div>
 
 <div class="footer navbar-fixed-bottom footer_save">
+	<button onclick="uploadImage()">Upload Image</button>
 	<button onclick="previewProblem()">Preview Challenge</button>
 	<button id="btn_update_problem" onclick="updateProblem()">Save Changes</button>
 </div>

@@ -18,6 +18,9 @@
 	include "script/user/user.php";
 	$User=new User();
 
+	include "script/admin/admin.php";
+	$Admin=new Admin();
+
 	include "script/problem/problem.php";
 	$Problem=new Problem();
 
