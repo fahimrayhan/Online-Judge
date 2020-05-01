@@ -14,6 +14,9 @@ class SiteHash {
 
      	$this->hashPrefix['userProfilePhoto']="#user&&&&&&Profile@@@@@";
      	$this->hashPostfix['userProfilePhoto']="#useruser%Photo";
+
+     	$this->hashPrefix['userUplaodFile']="#user&&&&&&Upload@@@@@";
+     	$this->hashPostfix['userUplaodFile']="#useruser%File%$";
      	
  	}
  
@@ -47,6 +50,9 @@ class SiteHash {
 		return $this->generateHashVal1("userProfilePhoto",$userId);
 	}
 
+	public function  userUplaodFile($fileId){
+		return $this->generateHashVal1("userUplaodFile",$fileId);
+	}
 
  
 //end dabtabase connection

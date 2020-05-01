@@ -36,6 +36,9 @@
 	include "script/judge/judge_process.php";
 	$JudgeProcess=new JudgeProcess();
 
+	include "script/file/file.php";
+	$File=new File();
+
 	$loggedInUserInfo=array();
 	if($isLoggedIn){
 		$loggedInUserInfo=$User->getSingleUserInfo($DB->isLoggedIn);

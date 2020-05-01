@@ -25,6 +25,15 @@ function loader(divId,size=130){
   	$("#"+divId).html(img);
 }
 
+function loader1(divId,size=300){
+  imgSize="";
+  if(size!=0)imgSize="height: "+size+"px; width:"+size+"px";
+    imgUrl="src='file/site_metarial/loader2.gif'";
+    imgStyle="style='margin-top:35px"+imgSize+"'";
+    img="<center><img "+imgStyle+imgUrl+" /></center>";
+    $("#"+divId).html(img);
+}
+
 function updateSiteStatus(url,setPageViewData=0){
   
   var data = {

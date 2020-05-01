@@ -1,4 +1,11 @@
-<title>Upload - CoderOJ</title>
+
+<?php 
+	if($DB->userRole>30){
+		include "404.php";
+		return;
+	}
+?>
+
 <script type="text/javascript" src="views/upload/js/upload.js"></script>
 
 <style type="text/css">
@@ -9,31 +16,48 @@
 	.uploadImgBox{
 		margin-bottom: 15px;
 		border-radius: 0px;
-		background: #E7ECF1;
+		background: #ffffff;
 		border: 1px solid #d5e0ea;
 	}
-	.btnArea{
+	.uploadBtnArea{
 		text-align: center;
 		margin-top: 10px;
 	}
+
+	.uploadPanelTab{
+        background-color: #ffffff;
+        border: 1px solid #E7ECF1;
+        min-width: 120px;
+        padding: 12px;
+        font-weight: bold;
+        text-align: center; 
+        margin-right: 2px;
+    }
+    .uploadPanelTab:hover{
+    	cursor: pointer;
+        background: #f5f5f5;
+    }
+    .welcomeInfo{
+        font-family: New Century Schoolbook, serif;
+    }
+
 </style>
-<div class="box">
-	<div class="box_header"><i class="fas fa-upload"></i> Upload List <button onclick="debug()">Upload Image</button></div>
-	<div class="box_body">
-		<div class="row">
-			<?php for($i=1; $i<20; $i++){?>
-			<div class="col-md-4">
-			<div class="box_body uploadImgBox">
-				<a href="https://paloimages.prothom-alo.com/contents/cache/images/640x358x1/uploads/media/2020/04/07/277b115a0c69d1f89bc170ceb31e56ef-5e8bec411ad02.jpg"  target="_blank"><img class="uploadImage img-thumbnail" src="https://paloimages.prothom-alo.com/contents/cache/images/640x358x1/uploads/media/2020/04/07/277b115a0c69d1f89bc170ceb31e56ef-5e8bec411ad02.jpg"></a>
-				<div class="btnArea">
-					<p style="display: none" id="<?php echo $i; ?>"><?php echo $i; ?></p>
-					<button  onclick="copyUrl(<?php echo $i; ?>)" class="btn-sm btn-primary"><i class='fas fa-copy'></i> Copy Url</button>
-					<button class="btn-sm btn-danger"><i class="fas fa-trash"></i> Delete Image</button>
-				</div>
-			</div>
-			</div>
-			<?php } ?>
-		</div>
-	</div>
+
+<div class="row">
+	<div class="col-md-12">
+        <div class="welcomeInfo">
+        <ul class="nav nav-tabs">
+            <li class="nav-item uploadPanelTab" onclick="loadUploadPhotoArea()">
+                   Upload Photo
+            </li>
+            <li class="nav-item uploadPanelTab" onclick="loadImageList()">
+                Photo Gallery
+            </li>
+        </ul>
+        <div id="uploadPhotoArea" class="box box_body" style="min-height: 480px;border-radius: 0px">
+        </div>
+        </div>
+    </div>
 </div>
+
 
