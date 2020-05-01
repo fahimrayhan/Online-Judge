@@ -27,7 +27,7 @@ function setUpEditorFunation() {
   //set global data
   CKEDITOR.config.height = 100;
   CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
-  CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify';
+  CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify,image2';
   CKEDITOR.config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
   CKEDITOR.config.mathJaxClass = 'equation';
   CKEDITOR.config.codeSnippet_theme = 'pojoaque';

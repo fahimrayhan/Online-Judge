@@ -28,6 +28,6 @@
 
 </div>
 <script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
-<script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
+<script src="style/lib/ckeditor/4.13.1/ckeditor.js"></script>
 <script type="text/javascript" src="views/problems/problems_dashboard/problem_action_dashboard/js/problem_dashboard.js"></script>
 
