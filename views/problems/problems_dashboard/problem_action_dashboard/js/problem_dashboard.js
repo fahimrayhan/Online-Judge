@@ -6,7 +6,19 @@ var previousActive;
 
 $( document ).ready(function() {
     displayPage();
+     if (window.history && window.history.pushState) {
+    	window.history.pushState('forward', null, window.location.search);
+    	$(window).on('popstate', function() {
+      		backPageUrl();
+    	});
+  	}
 });
+
+function backPageUrl(){
+	var queryString = window.location.search;
+    var backPageAction=getAllUrlParams(queryString).action;
+    changeOption(backPageAction,1);
+}
 
 
 //site info---------------------------------
@@ -44,45 +56,36 @@ function loadPage(pageName,divName="option_box_body"){
 	});
 }
 
-function changeOption(optionName){
-	if(optionName=="testCase"){
+function changeOption(optionName,fromBack=0){
+	
+	if(fromBack==0)
 		changeUrl(optionName);
-		setOptionActive(optionName);
+	setOptionActive(optionName);
+
+	if(optionName=="testCase"){
 		setHeaderName("Test Case");
 		loadPage("loadTestCasePage");
 	}
 	else if(optionName=='edit'){
-		changeUrl(optionName);
-		setOptionActive(optionName);
 		loadPage("loadEditPage");
 		//location.reload();
 	}
 	else if(optionName=='moderators'){
-		changeUrl(optionName);
-		setOptionActive(optionName);
 		setHeaderName("Moderators");
 		loadModeratorsPage();
 	}
 	else if(optionName=='testing'){
-		changeUrl(optionName);
-		setOptionActive(optionName);
 		setHeaderName('Testing Problem');
 		loadTestingPage();
 	}
 	else if(optionName=='setting'){
-		changeUrl(optionName);
-		setOptionActive(optionName);
 		setHeaderName('Setting');
 		loadSettingPage();
 	}
 	else if(optionName=='viewProblem'){
-		changeUrl(optionName);
-		setOptionActive(optionName);
 		location.reload();
 	}
 	else{
-		changeUrl("overview");
-		setOptionActive(optionName);
 		setHeaderName("Problem Overview");
 		loadPage("loadOverviewPage");
 	}
