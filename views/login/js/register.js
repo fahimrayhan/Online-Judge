@@ -27,15 +27,21 @@ function register(){
         var login_div=(response.error==0)?"register_success":"register_failed";
         $("#"+login_div).show();
         $("#"+login_div).html(response.msg);
-        if(response.error==0){
-            $("#userFullName").val("");
-            $("#userEmail").val("");
-            $("#userEwuId").val("");
-            $("#userHandle").val("");
-            $("#userCpassword").val("");
-            $("#userPassword").val("");
+        //if(response.error==0){
+           // $("#userFullName").val("");
+           // $("#userEmail").val("");
+            //$("#userEwuId").val("");
+            //$("#userHandle").val("");
+            //$("#userCpassword").val("");
+           // $("#userPassword").val("");
+        //}
+        if(response.error==1){
+            toast.danger("Enter Fill Form Properly.");
         }
-        if(response.error==0)alert(response.msg);
-        btnOn("btn_register","Create Your Account");
+        if(response.error==0){
+            toast.success(response.msg);
+            setTimeout(function(){ location.reload(); }, 500);
+        }
+        else btnOn("btn_register","Create Your Account");
     });
 }

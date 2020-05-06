@@ -107,7 +107,7 @@ class ProblemFormat {
  	}
  	echo "</select>";
  	echo "<div style='margin-top: 10px;'></div>";
- 	echo "<textarea id='sourceCodeEditor' style='height: 250px; width: 100%;'></textarea>";
+ 	echo "<textarea id='sourceCodeEditor' style='height: 350px; width: 100%;'></textarea>";
  	echo "<div id='submission_error' style='display: none' class='alert alert-danger'></div>";
 	echo "<center><button id='btnCreateSubmit' onclick='$jsFunctionName()'>Submit</button></center>";
  }

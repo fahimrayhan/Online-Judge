@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style/lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="style/lib/font-awesome/css/font-awesome.css">
 	<script type="text/javascript" src="style/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
 
 	
 
@@ -20,4 +21,5 @@
 
 	<!-- Custom Script -->
 	<script type="text/javascript" src="include/js_script/site_script.js"></script>
+	<script type="text/javascript" src="include/js_script/global_script.js"></script>
 

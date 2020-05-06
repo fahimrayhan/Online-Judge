@@ -57,6 +57,10 @@
 		echo $Problem->reqJudgeProblemList($_POST['reqJudgeProblemList']);
 	}
 
+	else if(isset($_POST['sendProblemSetterRequest'])){
+		echo $User->changeUserRole($DB->isLoggedIn,35);
+	}
+
 	else 
 		include "views_action/problem_dashboard/problem_dashboard_ui.php";
 

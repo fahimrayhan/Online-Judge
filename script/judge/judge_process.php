@@ -139,8 +139,8 @@ class JudgeProcess {
  		$data=array();
  		
     	$data['source_code']=base64_encode($this->submissionInfo['sourceCode']);
- 		$data['stdin']=base64_encode($this->Site->readFile("test_case/input/".$testCaseHashId.'.txt'));
- 		$data['expected_output']=base64_encode($this->Site->readFile("test_case/output/".$testCaseHashId.'.txt'));
+ 		$data['stdin']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
+ 		$data['expected_output']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
 
  		$data['language_id']=$this->submissionInfo['languageId'];
  		$data['cpu_time_limit']=$this->submissionInfo['cpuTimeLimit'];

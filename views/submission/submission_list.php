@@ -32,14 +32,14 @@
 
 
 			echo "<tr>
-			<td class='td2'><a href='submission.php?id=$submissionId' target='_blank'>$submissionId</a></td>
+			<td class='td2'><a onclick='viewSubmissionById($submissionId)'>$submissionId</a></td>
 			<td class='td2'>$submissionTime</td>
-			<td class='td2'>$userHandle</td>
+			<td class='td2'><a href='profile.php?id=$userId'>$userHandle</a></td>
 			<td class='td2'><a href='p.php?id=$problemId'>$problemName</a></td>
 			<td class='td2'>$languageId</td>
-			<td class='td2'>$judgeStatus</td>
-			<td class='td2'>$time s</td>
-			<td class='td2'>$memory kb</td>
+			<td class='td2' id='submissionGlobalVerdictStatus_$submissionId'>$judgeStatus</td>
+			<td class='td2' id='submissionGlobalVerdictTime_$submissionId'>$time s</td>
+			<td class='td2' id='submissionGlobalVerdictMemory_$submissionId'>$memory kb</td>
 			</tr>";
 		}
 		?>

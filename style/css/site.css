@@ -13,7 +13,9 @@ th{
 a {
 	color: #2156D2;
 }
-
+a:hover{
+    cursor: pointer;
+}
 
 .td1{
 	background-color: #F4F6F8;

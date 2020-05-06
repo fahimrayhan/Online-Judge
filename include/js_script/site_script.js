@@ -34,23 +34,17 @@ function loader1(divId,size=300){
     $("#"+divId).html(img);
 }
 
-function updateSiteStatus(url,setPageViewData=0){
-  
-  var data = {
-    'url': url,
-    'insertPageViewData': setPageViewData
-  }
-
-  $.post('site_action.php',buildData("updateSiteStatus",data),function(response){
-      //console.log(response);
-  });
-}
 
 
 
 // ===================================================
 
 // Start Modal Script
+
+var modal = {
+  open : function(msg){makeToast("success",msg)},
+  close  : function(msg){makeToast("danger",msg)},
+};
 
 function modalOpen(type="md",header="Header"){
   $("#modal_"+type).modal("show");

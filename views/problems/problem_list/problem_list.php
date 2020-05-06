@@ -4,8 +4,8 @@
 							<th class="td_list1"><b>#ID</b></th>
 							<th class="td_list1">
 								<div class="pull-left">Problem Name</div>
-								<div class="pull-right">Tags</div>
 							</th>
+							<th class="td_list1">Solved</th>
                         </tr>
 					</thead>
 
@@ -25,17 +25,13 @@
 					?>			
 						<tr>
 							<td class="td_list2" style="width: 10%"><a href='p.php?id=<?php echo $problemId; ?>'><?php echo $problemId; ?></a></td>
-							<td class="td_list2" style="width: 60%;text-align: left;padding-left: 10px!important">
+							<td class="td_list2" style="width: 80%;text-align: left;padding-left: 10px!important">
 								<div class="pull-left"><a href='p.php?id=<?php echo $problemId; ?>'><?php echo "$problemName"; ?></a>
 								</div>
-								<div class="pull-right">
-								<span style="text-align: right;">
-								<?php 
-								
+							</td>
+							<td class="td_list2"><?php 
 								echo "<span class='label label-$label problem_tags'><i class='fas fa-users'></i> $totalSolved</span> ";
-								?>
-								</span>
-								</div>
+								?>	
 							</td>
 							
 							

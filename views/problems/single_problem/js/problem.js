@@ -2,13 +2,22 @@
 var url="submission_action.php";
 
 function loadSubmiProblemPage(){
-	modalOpen("md","Submit Solution");
-	loader("modal_md_body");
+	modalOpen("lg","Submit Solution");
+	loader("modal_lg_body");
 	$.post(url,buildData("loadSubmiProblemPage"),function(response){
-		$("#modal_md_body").html(response);
+		$("#modal_lg_body").html(response);
 		//setTimeout(function(){ setEditor(); }, 100);
 	});
 }
+
+function viewSubmissionById(submissionId){
+    modal_action("lg","View Submission");
+    loader("modal_lg_body");
+    $.post("submission_action.php",buildData("viewSubmission",submissionId),function(response){
+        $("#modal_lg_body").html(response);
+    });
+}
+
 
 function createSubmission(){
 	btnOff("btnCreateSubmit", "Processing");
@@ -30,7 +39,14 @@ function createSubmission(){
 		}
 		else{
 			msg=JSON.parse(response.msg);
-		 	window.open("submission.php?id="+msg.insert_id, '_self');
+		 	//modal_action("md","","close");
+		 	toast.success("Successfully Submission");
+    		$.post("submission_action.php",buildData("viewSubmission",msg.insert_id),function(response){
+        		$("#modal_lg_body").html(response);
+    		});
+		 	//setTimeout(function(){ viewSubmissionById(msg.insert_id); }, 500);
+		 	//window.open("submission.php?id="+msg.insert_id, '_self');
+		 	
 		}
 
 		//$("#modal_md_body").html(response);
@@ -39,7 +55,7 @@ function createSubmission(){
 	});
 }
 
-function setEditor(language="CPP"){
+function settEditor(language="CPP"){
 	editAreaLoader.init({
         id: "sourceCodeEditor",  
         start_highlight: true,

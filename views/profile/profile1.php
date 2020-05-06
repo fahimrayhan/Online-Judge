@@ -175,10 +175,10 @@
                 <div class="welcomeInfo">
                 <ul class="nav nav-tabs">
                     <li class="nav-item userProfileTab">
-                            <a class="nav-link active" href="profile.php?id=<?php echo $userId; ?>">Info</a>
+                            <a class="nav-link active mixBackground" href="profile.php?id=<?php echo $userId; ?>">Info</a>
                     </li>
                     <li class="nav-item userProfileTab">
-                        <a class="nav-link" href="profile.php?id=<?php echo $userId; ?>&action=submission">Submission</a>
+                        <a class="nav-link mixBackground" href="profile.php?id=<?php echo $userId; ?>&action=submission">Submission</a>
                     </li>
                     
                 </ul>

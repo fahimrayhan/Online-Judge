@@ -20,8 +20,8 @@ class TestCase {
  		$data=$this->db->getData($sql);
  		foreach ($data as $key => $value) {
  			$hashId=$value['testCaseIdHash'];
- 			$value['inputUrl']="test_case/input/".$hashId.'.txt';
- 			$value['outputUrl']="test_case/output/".$hashId.'.txt';
+ 			$value['inputUrl']="file/test_case/input/".$hashId.'.txt';
+ 			$value['outputUrl']="file/test_case/output/".$hashId.'.txt';
  			$value['inputFileSize']=filesize($value['inputUrl']);
  			$value['outputFileSize']=filesize($value['outputUrl']);
  			$data[$key]=$value;
@@ -37,23 +37,23 @@ class TestCase {
  		if(!isset($data[0]))return;
  		$data=$data[0];
  		$this->db->pushData("test_case","delete",$data);
- 		unlink("test_case/input/".$hashId.'.txt');
- 		unlink("test_case/output/".$hashId.'.txt');
+ 		unlink("file/test_case/input/".$hashId.'.txt');
+ 		unlink("file/test_case/output/".$hashId.'.txt');
  		
  	}
 
  	public function getTestCaseData($hashId){
  		$data=array();
- 		$data['input']=$this->Site->readFile("test_case/input/".$hashId.'.txt');
- 		$data['output']=$this->Site->readFile("test_case/output/".$hashId.'.txt');
+ 		$data['input']=$this->Site->readFile("file/test_case/input/".$hashId.'.txt');
+ 		$data['output']=$this->Site->readFile("file/test_case/output/".$hashId.'.txt');
 		return $data;
  	}
 
 
  	public function updateTestCase($info){
  		$hashId=$info['hashId'];
- 		file_put_contents("test_case/input/$hashId.txt", $info['input']);
- 		file_put_contents("test_case/output/$hashId.txt", $info['output']);
+ 		file_put_contents("file/test_case/input/$hashId.txt", $info['input']);
+ 		file_put_contents("file/test_case/output/$hashId.txt", $info['output']);
  	}
 
 
@@ -82,8 +82,8 @@ class TestCase {
  	public function addInputOutput($test_case_hashId,$input,$output){
  		$file_name=$test_case_hashId.".txt";
  		echo "$file_name";
- 		$this->Site->createFile("test_case/input/",$file_name,$input);
- 		$this->Site->createFile("test_case/output/",$file_name,$output);
+ 		$this->Site->createFile("file/test_case/input/",$file_name,$input);
+ 		$this->Site->createFile("file/test_case/output/",$file_name,$output);
  	}
 
  	public function getTestCaseHashId($testCaseId){

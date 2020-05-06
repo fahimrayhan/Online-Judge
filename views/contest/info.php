@@ -1,3 +1,10 @@
+<?php
+
+include "views/contest/info1.php";
+
+return;
+?>
+
 <style type="text/css">
 	.contestBanner{
 		width: 100%;

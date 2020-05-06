@@ -2,6 +2,7 @@ var url="submission_action.php";
 var submissionInfo;
 var submissionTestCaseInfo;
 var loadData=1;
+var openToggleSourceCode=false;
 getSubmissionAllInfo();
 
 
@@ -39,15 +40,15 @@ function setSubmissionInfo(){
 	$("#submission_verdict").html(submissionInfo.judgeStatus);
 }
 
-function setTestCaseInfo(){
+function setTestCaseInfo(){ 
 	if(testCaseReady!=1){
 		$.each( submissionTestCaseInfo, function( key, value ) {
 			var sl=value.testCaseSerialNo;
-  			td_sl="<td class='td2' id='"+sl+"_sl'>"+value.testCaseSerialNo+"</td>";
-  			td_cpu="<td class='td2' id='"+sl+"_cpu'>"+value.totalTime+" s</td>";
-  			td_memory="<td class='td2' id='"+sl+"_memory'>"+value.totalMemory+" KB</td>";
-  			td_verdict="<td class='td2' id='"+sl+"_verdict'>"+value.judgeStatus+"</td>";
-  			tr_build="<tr>"+td_sl+td_cpu+td_memory+td_verdict+"</tr>";
+  			td_sl="<td class='td2 submissionTd submissionTd2' id='"+sl+"_sl'>"+value.testCaseSerialNo+"</td>";
+  			td_cpu="<td class='td2 submissionTd submissionTd2' id='"+sl+"_cpu'>"+value.totalTime+" s</td>";
+  			td_memory="<td class='td2 submissionTd submissionTd2' id='"+sl+"_memory'>"+value.totalMemory+" KB</td>";
+  			td_verdict="<td class='td2 submissionTd submissionTd2 submissionVerdictTd' id='"+sl+"_verdict'>"+value.judgeStatus+"</td>";
+  			tr_build="<tr class='submissionTr'>"+td_sl+td_cpu+td_memory+td_verdict+"</tr>";
   			$('#testCaseTable tr:last').after(tr_build);
 		});
 		testCaseReady=submissionInfo.testCaseReady;
@@ -62,25 +63,24 @@ function setTestCaseInfo(){
 	}	
 }
 
-function setEditor(language_name){
-	setEditorLanguage("CPP");
+function copySourceCode(){
+	openToggleSourceCode=false;
+	toggleSourceCode();
+  	var copyText = document.getElementById("sourceCodeTextArea");
+  	copyText.select();
+  	copyText.setSelectionRange(0, 99999)
+  	document.execCommand("copy");
+  	toast.info("Copied Source Code");
 }
-
-function setEditorLanguage(language){
-	editAreaLoader.init({
-        id: "sourceCodeEditor",  
-        start_highlight: true,
-        allow_resize: "both",
-        allow_toggle: false,
-        word_wrap: true,
-        language: "en",
-        syntax: language  
-    });
-
+function toggleSourceCode(){
+	var openToggleDiv=openToggleSourceCode?"sourceCodeText":"sourceCodeTextArea";
+	var closeToggleDiv=openToggleSourceCode?"sourceCodeTextArea":"sourceCodeText";
+	$("#"+openToggleDiv).show();
+	$("#"+closeToggleDiv).hide();
+	openToggleSourceCode^=1;
 }
-
 
 
 setInterval(function(){ 
 	getSubmissionAllInfo();
-}, 1000);
+}, 2000);

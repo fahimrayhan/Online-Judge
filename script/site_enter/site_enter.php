@@ -46,9 +46,15 @@ class SiteEnter {
  		//$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
  		$info['userPassword']=$this->Hash->userPasswordHash($info['userPassword']);
  		$info['userPhoto']='file/user_photo/avatar.jpg';
- 		$this->DB->pushData("users","insert",$info);
+ 		$response=$this->DB->pushData("users","insert",$info,true);
  		$msg="Registration Is Sucessfully Compleated.";
+        $response=json_decode($response,true);
  	}
+
+    // make session
+    if($error==0){
+        $_SESSION['oj_login_handle_id']=$response['insert_id'];
+    }
 
  	return $this->DB->makeJsonMsg($error,$msg);
  }

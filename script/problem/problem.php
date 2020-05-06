@@ -14,7 +14,7 @@ class Problem {
  	}
 
  	public function getProblemInfo($id,$json=false){
- 		$sql="select * from problems where problemId=$id";
+ 		$sql="select problems.*,users.userHandle from problems join users on users.userId=problems.userId where problemId=$id";
  		$data=$this->DB->getData($sql);
  		return $json?json_encode($data[0]):$data[0];
 	}

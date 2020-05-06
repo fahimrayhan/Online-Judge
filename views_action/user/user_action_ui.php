@@ -1,4 +1,6 @@
 <?php
+  
+  
 
 	if(isset($_POST['updateProfileInfoForm'])){
 		$userId=$DB->isLoggedIn;

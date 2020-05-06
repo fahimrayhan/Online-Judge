@@ -212,10 +212,10 @@ setInterval(function(){
 }, 1000);
 
 function loadCreateSubmissionPage(){
-	modalOpen("md","Create Submission");
-	loader("modal_md_body");
+	modalOpen("lg","Create Submission");
+	loader("modal_lg_body");
 	$.post(dashboard_action_url,buildData("loadCreateSubmissionPage",problemId),function(response){
-		$("#modal_md_body").html(response);
+		$("#modal_lg_body").html(response);
 		setTimeout(function(){ setEditor(); }, 100);
 	});
 }
@@ -240,7 +240,11 @@ function createSubmission(){
 		}
 		else{
 			msg=JSON.parse(response.msg);
-		 	window.open("submission.php?id="+msg.insert_id, '_self');
+			toast.success("Successfully Submission");
+    		$.post("submission_action.php",buildData("viewSubmission",msg.insert_id),function(response){
+        		$("#modal_lg_body").html(response);
+    		});
+		 	//window.open("submission.php?id="+msg.insert_id, '_self');
 		}
 
 		//$("#modal_md_body").html(response);

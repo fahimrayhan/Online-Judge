@@ -10,7 +10,7 @@ class Submission {
      	$this->loggedIn=$this->DB->isLoggedIn;
  	}
 
- 	public function getSubmissionList($requestData,$limit=50,$json=false){
+ 	public function getSubmissionList($requestData,$json=false){
  		$requestData=($requestData=="")?"{}":$requestData;
 
  		$info=json_decode($requestData,true);

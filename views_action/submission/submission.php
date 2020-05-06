@@ -17,6 +17,13 @@
 		$Submission->rejudgeSubmission($_POST['rejudgeSubmission']);
 	}
 
+	else if(isset($_POST['updateSubmissionVerdictAllPage'])){
+		$info=array();
+		$info['filter']['limit']=50;
+		$info=$Submission->getSubmissionList(json_encode($info,true),true);
+		echo "$info";
+	}
+
 
 	else include "views_action/submission/submission_ui.php";
 

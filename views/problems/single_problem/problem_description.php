@@ -1,7 +1,7 @@
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="views/problems/single_problem/js/problem.js"></script>
-<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
+
 <?php
 	$info=$Problem->problemVerdictStat($problemId);
 	$AC=(isset($info[3]))?$info[3]:0;
@@ -50,6 +50,9 @@ chart.render();
 
 }
 </script>
+
+
+
 <div class="row">
 	<div class="col-md-9">
 		<div class="box sm_border">
@@ -58,11 +61,16 @@ chart.render();
 			</div>
 		</div>
 	</div>
+
 	<div class="col-md-3">
 		<div class="box none_border">
 			<div class="box_header">Problem Info</div>
 			<div class="box_body">
 				<table width="100%">
+					<tr>
+						<td class="problem_info_td"><i class="fa fa-info-circle"></i> Problem ID</td>
+						<td class="problem_info_td1"> <?php echo $problemData['problemId']; ?></td>
+					</tr>
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-time"></span> Time Limit</td>
 						<td class="problem_info_td1"><?php echo $problemData['cpuTimeLimit']; ?> s</td>
@@ -70,6 +78,10 @@ chart.render();
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-inbox"></span> Memory Limit</td>
 						<td class="problem_info_td1"><?php echo $problemData['memoryLimit']; ?> KB</td>
+					</tr>
+					<tr>
+						<td class="problem_info_td"><i class="fa fa-user"></i> Author</td>
+						<td class="problem_info_td1"> <a href="profile.php?id=<?php echo $problemData['userId'] ?>"> <?php echo $problemData['userHandle']; ?></a></td>
 					</tr>
 					
 				</table>
@@ -116,8 +128,8 @@ chart.render();
 							if($c>5)break;
 					?>
 					<tr style="border: 1px solid #E7ECF1;border-width: 0px 0px 1px 0px;">
-						<td style="padding: 7px 0px 7px 0px;"><a title="<?php echo $submissionTime; ?>" href="submission.php?id=<?php echo $submissionId; ?>"><?php echo $ago; ?></a></td>
-						<td style="padding: 7px 0px 7px 0px;"><?php echo $value['judgeStatus']; ?></td>
+						<td style="padding: 7px 0px 7px 0px;"><a href="javascript:viewSubmissionById(<?php echo $submissionId; ?>)"><?php echo $ago; ?></a></td>
+						<td style="padding: 7px 0px 7px 0px;" id="submissionGlobalVerdictStatus_<?php echo $submissionId; ?>"><?php echo $value['judgeStatus']; ?></td>
 					</tr>
 					<?php } ?>
 				</table>

@@ -10,10 +10,7 @@
     }
 
     if($DB->userRole>30){
-        echo "<center>";
-        if($DB->userRole==40)echo "You Can Not Permit This Page.If You Want To Problem Setter Please Send Request.<br/><button onclick='sendRequest()'>Send Request</button>";
-        else echo "Your Request is Processiong.Please Waiting for Accepted.";
-        echo "</center>";
+        include "views/problems/problems_dashboard/problem_action_dashboard/dashboard_permission.php";
         return;
     }
 
