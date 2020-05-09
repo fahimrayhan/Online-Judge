@@ -37,10 +37,11 @@
 <div class="leftMenuList">
     <div class="list-group">
         <li href="#" class="list-group-item">Dashboard</li>
+        <li href="#" class="list-group-item" onclick="siteStatus()">Status</li>
          <li href="#" class="list-group-item" onclick="judgeProblemList()">Judge Problem List</li>
         <li href="#" class="list-group-item" onclick="pendingJudgeProblemList()">Pending Judge Problem List</li>
-        <li href="#" class="list-group-item" onclick="moderatorList()">Moderator List</li>
-        <li href="#" class="list-group-item">Pending Moderator List</li>
+
+        <li href="#" class="list-group-item" onclick="judgeModeratorList()">Moderator List</li>
         
     </div> 
 </div>

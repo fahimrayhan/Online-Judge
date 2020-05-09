@@ -1,6 +1,6 @@
 <?php
 	
-	if(isset($_POST['adminDashboard'])){
+	if(isset($_POST['siteStatus'])){
 		$info=$User->getPageViewList();
 		$colorList=array();
 		array_push($colorList, "#8e44ad");
@@ -26,7 +26,7 @@
 					</thead><tbody>';
 		foreach ($info as $key => $value) {
 			$mod=$value['pageViewId']%7;
-			$color=$colorList[$mod];
+			$color="#ffffff";
 			echo '<tr style="background-color: '.$color.'">
 							<td class="td_list2" style="text-align: center">
 								'.$value['userId'].'
@@ -101,8 +101,8 @@
 
 	}
 
-	if(isset($_POST['judgePendingProblemList'])){
-		
+	if(isset($_POST['judgeModeratorList'])){
+		include "views/admin/dashboard/moderator_list.php";
 	}
 
 ?>

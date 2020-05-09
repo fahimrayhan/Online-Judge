@@ -16,7 +16,7 @@ class User
         
         $sql  = "select * from users";
         $data = $this->DB->getData($sql);
-        print_r($data);
+        return $data;
     }
     
     public function changeUserRole($userId,$userRole)

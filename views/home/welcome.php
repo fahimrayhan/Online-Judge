@@ -1,7 +1,7 @@
 <style type="text/css">
 	.welcomeBanner{
 		width: 100%;
-		height: 100%;
+		height: 250px;
 	}
 	.bannerArea{
 		text-align: center;
@@ -25,22 +25,22 @@
   		-webkit-text-stroke-color: var(--bg-color);
 	}
 	.welcomeInfo{
-		font-size: 1.27em;
+		font-size: 1.26em;
 		text-align: justify;
 		font-family: New Century Schoolbook, serif;
-		margin-top: 50px;
+		margin-top: 60px;
 
 	}
 
 	.bannerImg{
-		height: 170px;
+		height: 180px;
 		width: 100%;
 	}
 	.welcomeFeature{
 		height: 200px;
 		margin-top: 10px;
 		text-align: center;
-		box-shadow: 3px 3px 3px 1px #888888;
+		box-shadow: 0 0 5px 3px #aaaaaa;
 	}
 	.featureIcon{
 		font-size: 5.5em;
@@ -57,7 +57,7 @@
 	.welcomeFeature:hover{
 		cursor: pointer;
 		font-size: 15px;
-		background: #f5f5f5;
+		background: url('file/site_metarial/geometry.png');
 	}
 
 </style>
@@ -66,10 +66,10 @@
 	<div class="box_body" style="padding: 15px 15px 20px 15px;">
 		<div class="logoTitle">Welcome To Coder Online Judge (CoderOJ) </div>
 		
-		<div class="row" style="background: url('https://static.toph.co/assets/images/geometry.png')">
+		<div class="row" style="background: url('file/site_metarial/geometry.png');">
 			<div class="col-md-4">
 				<div class="bannerArea">
-					<img class="welcomeBanner" src="https://alpha.sustcseoj.com/_Others/home-pic.png">
+					<img class="welcomeBanner" src="file/site_metarial/home-pic.png">
 				</div>
 			</div>
 			<div class="col-md-8">
@@ -84,25 +84,25 @@
 
 		<div class="row">
 			<div class="col-md-3">
-				<div class="box_body welcomeFeature">
+				<div class="box_body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
 					<div class="featureName">Organize a Contest</div>
 					<i class="fas fa-trophy featureIcon"></i>
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="box_body welcomeFeature">
+				<div class="box_body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
 					<div class="featureName">Solve Problem</div>
 					<i class="fas fa-list featureIcon"></i>
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="box_body welcomeFeature">
+				<div class="box_body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
 					<div class="featureName">Create Problem</div>
 					<i class="fas fa-random featureIcon"></i>
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="box_body welcomeFeature">
+				<div class="box_body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
 					<div class="featureName">Progress Skill</div>
 					<i class="fas fa-network-wired featureIcon"></i>
 				</div>

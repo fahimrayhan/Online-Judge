@@ -23,6 +23,10 @@
 		$info=$Submission->getSubmissionList(json_encode($info,true),true);
 		echo "$info";
 	}
+	else if(isset($_POST['submissionListFilter'])){
+		$filterData=$_POST['submissionListFilter'];
+		include "views/submission/submission_list_table.php";
+	}
 
 
 	else include "views_action/submission/submission_ui.php";

@@ -1,47 +1,67 @@
 
+<style type="text/css">
+	.submissionFilter{
+		text-align: center;
+		padding-bottom: 10px;
+	}
+	.filter_td1{
+		background-color: #eeeeee;
+		padding: 6px 10px 6px 10px;
+		border: 1px solid #ffffff;
+		text-align: center;
+	}
+	.filter_td2{
+		padding: 6px 10px 6px 10px;
+		border: 1px solid #f5f5f5;
+		text-align: center;
+	}
+</style>
+
 <div class="box">
 <div class="box_header">
 	Submission
 </div>
 <div class="box_body">
-<div class='table-responsive'><table width='100%'><tr>
-			<td class='td1'>#</td>
-			<td class='td1'>When</td>
-			<td class='td1'>Who</td>
-			<td class='td1'>Problem Name</td>
-			<td class='td1'>Lang</td>
-			<td class='td1'>Verdict</td>
-			<td class='td1'>Time</td>
-			<td class='td1'>Memory</td>
+<div class="submissionFilter">
+	<center>
+		<table style="">
+
+			<tr>
+				<td class="filter_td2"><input id="filterUserId" class="form-control" type="number" placeholder="User ID" name=""></td>
+				<td class="filter_td2"><input id="filterProblemId" class="form-control" type="number" placeholder="Problem ID" name=""></td>
+				<td class="filter_td2">
+					<select id="filterLanguageId" class="form-control">
+						<option value="-1">Any Language</option>
+						<?php  
+							$languageList=$Submission->getJudgeLanguageList();
+							foreach ($languageList as $key => $value) {
+								echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+							}
+						?>
+					</select>
+				</td>
+				<td class="filter_td2">
+					<select id="filterVerdict" class="form-control">
+						<option value="-1">Any Verdict</option>
+						<?php  
+							$verdictList=$Submission->getJudgeVerdictList();
+							foreach ($verdictList as $key => $value) {
+								echo '<option value="'.$value['id'].'">'.$value['description'].'</option>';
+							}
+						?>
+					</select>
+				</td>
+				<td class="filter_td2"><button id="submissionFilterBtn" onclick="loadSubmissionListTable()" style="width: 120px;" class="btn-md">Filter</button></td>
 			</tr>
-		<?php 
-		$info=array();
-		$info['where']['submissionType']=2;
-		$info=$Submission->getSubmissionList(json_encode($info,true));
-		foreach ($info as $key => $value) {
-			$submissionId=$value['submissionId'];
-			$languageId=$value['languageName'];
-			$userId=$value['userId'];
-			$userHandle=$value['userHandle'];
-			$submissionTime=$value['submissionTime'];
-			$judgeStatus=$value['judgeStatus'];
-			$time=$value['maxTimeLimit'];
-			$memory=$value['maxMemoryLimit'];
-			$problemName=$value['problemName'];
-			$problemId=$value['problemId'];
-
-
-			echo "<tr>
-			<td class='td2'><a onclick='viewSubmissionById($submissionId)'>$submissionId</a></td>
-			<td class='td2'>$submissionTime</td>
-			<td class='td2'><a href='profile.php?id=$userId'>$userHandle</a></td>
-			<td class='td2'><a href='p.php?id=$problemId'>$problemName</a></td>
-			<td class='td2'>$languageId</td>
-			<td class='td2' id='submissionGlobalVerdictStatus_$submissionId'>$judgeStatus</td>
-			<td class='td2' id='submissionGlobalVerdictTime_$submissionId'>$time s</td>
-			<td class='td2' id='submissionGlobalVerdictMemory_$submissionId'>$memory kb</td>
-			</tr>";
-		}
-		?>
-		</table></div></div>
+		</table>
+	</center>
 </div>
+
+<div id="submissionListTable">
+	<?php include "views/submission/submission_list_table.php"; ?>
+</div>
+
+
+</div>
+</div>
+<script type="text/javascript" src="views/submission/js/submission_list.js"></script>

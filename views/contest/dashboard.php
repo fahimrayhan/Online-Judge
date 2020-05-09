@@ -82,10 +82,6 @@
 		</div>
 	</div>
 	<div class="col-md-3 contestInfoRight">
-		<div class="box box_body" style="padding-left: 3px; padding-right: 3px;">
-			<div class="contestInfoRightTitle">UITS INTER UNIVERSITY PROGRAMMING CONTEST, 2019</div>
-			<div class="contestTimeRight"><span class="contestTimeRightSpan">04</span><span class="contestTimeRightSpan">04</span><span class="contestTimeRightSpan">53</span><br/>Contest Is Running</div>
-			
-		</div>
+		
 	</div>
 </div>

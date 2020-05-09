@@ -1,21 +1,7 @@
 <link rel="stylesheet" type="text/css" href="style/css/problem.css">
 <link rel="stylesheet" type="text/css" href="style/css/color.css">
 <link rel="stylesheet" type="text/css" href="style/lib/bootstrap/css/bootstrap.min.css">
-<?php
-set_include_path(get_include_path() . PATH_SEPARATOR . "style/lib/dompdf");
 
-require_once "dompdf_config.inc.php";
-
-$dompdf = new DOMPDF();
-
-$html = "hello";
-
-$dompdf->load_html($html);
-$dompdf->render();
-
-$dompdf->stream("hello.pdf");
-
-?>
 
 <style type="text/css">
 	.problemSet{
@@ -28,7 +14,9 @@ $dompdf->stream("hello.pdf");
 		padding-bottom: 10px;
 	}
 	.logo{
-		width: 300px;
+		font-size: 30px;
+		font-weight: bold;
+		text-align: center;
 	}
 </style>
 
@@ -37,11 +25,11 @@ $dompdf->stream("hello.pdf");
 <div class="col-md-8">
 <div class="problemSet">
 <div class="logoArea">
-	<img class="logo" src="https://sta.codeforces.com/s/19784/images/codeforces-logo-with-telegram.png">
+	<div class="logo">CoderOJ</div>
 </div>
 <?php
 	include "script.php";
-	$problemId=10;
+	$problemId=isset($_GET['id'])?$_GET['id']:10;
 	$problemData=$Problem->getProblemInfo($problemId);
 	$problemData['problemName']=$problemData['problemId'].". ".$problemData['problemName'];
 	$ProblemFormat->buildProblemFormat($problemData);

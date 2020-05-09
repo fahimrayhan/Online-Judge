@@ -25,8 +25,9 @@
 
 .box{
 	margin-bottom: 20px;
-	box-shadow: 2px 2px 2px 2px #aaaaaa;
+	/*box-shadow: 2px 2px 2px 2px #aaaaaa;*/
 	border-radius: 5px;
+    box-shadow: 0 0 5px 3px #aaaaaa;
 }
 
 

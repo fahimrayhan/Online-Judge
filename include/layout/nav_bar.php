@@ -8,7 +8,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <b class="navbar-brand nav_logo"><strong style="color: #ffffff;">CoderOJ<strong color="#ced6e0;"><sup>&alpha;</sup></strong></strong></b>
+      <style type="text/css">.delHoverA:hover{text-decoration: none;}</style>
+      <b class="navbar-brand nav_logo"><strong style="color: #ffffff;"><a href="index.php" class="delHoverA" style="color: #ffffff">CoderOJ<strong color="#ced6e0;"><sup>&alpha;</sup></strong></strong></a></b>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
     <div class="nevbar_fontstyle">
@@ -18,8 +19,9 @@
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="problems.php"><span class="glyphicon glyphicon-list span_icon"></span>PROBLEMS</a></li>
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="submissions.php"><i class="fas fa-random span_icon"></i>JUDGE STATUS</a></li>
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="rank_list.php"><i class="fas fa-trophy span_icon"></i>RANK LIST</a></li>
-        <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="about.php"><span class="glyphicon glyphicon-info-sign span_icon"></span>ABOUT</a></li>
-        
+       <?php if($DB->userRole<=20){ ?>
+        <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="admin_dashboard.php"><span class="glyphicon glyphicon-dashboard span_icon"></span>ADMIN DASHBOARD</a></li>
+       <?php } ?> 
       </ul>
        <ul class="nav navbar-nav navbar-right">
         <?php if(!$isLoggedIn){ ?>

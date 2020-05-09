@@ -13,6 +13,10 @@
 		echo $Problem->addJudgeProblemList($data);
 		
 	}
+	if(isset($_POST['userRoleChange'])){
+		$data=$_POST['userRoleChange'];
+		$User->changeUserRole($data['userId'],$data['userRoles']);
+	}
 	else include "views_action/admin/admin_action_ui.php";
 
 ?>

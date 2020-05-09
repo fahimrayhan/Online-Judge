@@ -63,8 +63,8 @@
 
 @media only screen and (min-width: 600px) {
   .contestNav{
-  	position: -webkit-sticky;
-  	position: sticky;
+  	/*position: -webkit-sticky;*/
+  	/*position: sticky;*/
   	top: 60px;
   	z-index: 99999!important;
   }
@@ -97,10 +97,24 @@
  	
  	font-family: "Lucida Console", Monaco, monospace;
 }
+.contestBanner{
+	background: #2B9B9F;
+	margin-left: -100px;
+	margin-right: -100px;
+	height: 300px;
+	margin-top: -30px;
+	color: #ffffff;
+	font-size: 40px;
+	text-align: center;
+}
 </style>
 
 
-<div class="row contestNav">
+<div class="contestBanner">
+	<div style="top: 50%">BDYP & Duoblogger Home Quarantine Contest</div>
+</div>
+
+<div class="row contestNav" style="margin-top: -50px;">
 	<a href="contest.php?id=4&p=dashboard"><div class="col-md-3 col-sm-6 contestNavBtn contestNavBtnActive"><i class="fas fa-trophy"></i> DASHBOARD</div></a>
 	<a href="daf"><div class="col-md-3 col-sm-6 contestNavBtn"><i class="fas fa-alert"></i> CL</div></a>
 	<a href="contest.php?id=4&p=ranklist"><div class="col-md-3 col-sm-3 contestNavBtn"><i class="fas fa-trophy"></i> STAN</div></a>

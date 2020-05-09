@@ -36,6 +36,17 @@ class Submission {
  		return $json?json_encode($data):$data;
  	}
 
+ 	public function submissonRankList($json=false){
+ 		$sql="select users.userId,users.userHandle,users.userPhoto, users.instituteName, COUNT(distinct problemId) 	as totalSolved
+			from submissions
+			join users on users.userId=submissions.userId
+			where submissions.submissionType=2
+			and submissions.submissionVerdict=3
+			GROUP by users.userId ORDER BY totalSolved DESC";
+		$data=$this->DB->getData($sql);
+		return $json?json_encode($data):$data;
+ 	}
+
  	public function checkSubmissionAuth($submissionId){
  		$sql="select * from submissions where submissionId=$submissionId";
  		$data=$this->DB->getData($sql);
@@ -95,6 +106,13 @@ class Submission {
  		return $data;
  	}
 
+ 	public function getJudgeLanguageList(){
+ 		$sql="select languageList from judge_setting where judgeSettingId=1";
+ 		$data=$this->DB->getData($sql);
+ 		$data=json_decode($data[0]['languageList'],true);
+ 		return $data;
+ 	}
+
  	public function submissionLanguageList($json=false){
  		$sql="select languageList from judgeSetting";
  		$data=$this->DB->getData($sql);
@@ -136,6 +154,13 @@ class Submission {
  		$verdictClass="label label-$verdictClass";
 
  		return "<span class='$verdictClass'>$verdictName</span>";
+	 }
+
+	 public function getJudgeVerdictList(){
+	 	$sql="select judgeVerdictList from judge_setting where judgeSettingId=1";
+ 		$data=$this->DB->getData($sql);
+ 		$data=json_decode($data[0]['judgeVerdictList'],true);
+ 		return $data;
 	 }
 
 
