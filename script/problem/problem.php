@@ -199,7 +199,7 @@ class Problem {
 		$info['userVerdict']=-1;
 		if($this->DB->isLoggedIn){
 			$userId=$this->DB->isLoggedIn;
-			$sql="select count(*) as totalSolved from submissions where problemId=$problemId and userId=$userId";
+			$sql="select count(*) as totalSolved from submissions where problemId=$problemId and userId=$userId and submissionType=2";
 			$data=$this->DB->getData($sql);
 			if(isset($data[0]))$info['userVerdict']=$data[0]['totalSolved']!=0?0:-1;
 			if($info['userVerdict']==0){
