@@ -138,15 +138,17 @@ class JudgeProcess {
 
  		$data=array();
  		
-    	$data['source_code']=base64_encode($this->submissionInfo['sourceCode']);
- 		$data['stdin']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
- 		$data['expected_output']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
+    	$data['sourceCode']=base64_encode($this->submissionInfo['sourceCode']);
+ 		$data['input']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
+ 		$data['expectedOutput']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
 
- 		$data['language_id']=$this->submissionInfo['languageId'];
- 		$data['cpu_time_limit']=$this->submissionInfo['cpuTimeLimit'];
- 		$data['memory_limit']=$this->submissionInfo['memoryLimit'];
-        
-        $token=$this->sendCurlRequest(json_encode($data));
+ 		$data['languageId']=$this->submissionInfo['languageId'];
+ 		$data['timeLimit']=$this->submissionInfo['cpuTimeLimit'];
+ 		$data['memoryLimit']=$this->submissionInfo['memoryLimit'];
+       
+
+        $token=$this->sendCurlRequest($data);
+
  		//$token="asfsdafsa0";
 
  		return $token;
@@ -159,29 +161,25 @@ class JudgeProcess {
 		*	@ this function use for only send post request api for token.
  		********************************************************************************/
 
-        $curl = curl_init();
+ 		//print_r($data);
 
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => "https://api.judge0.com/submissions/?base64_encoded=true&wait=false",
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "POST",
-			CURLOPT_POSTFIELDS => $data,
-			CURLOPT_HTTPHEADER => array(
-				"accept: application/json",
-				"content-type: application/json"
-			),
-		));
+ 		$postRequest = array(
+    		'createSubmission' => json_encode($data),
+		);
+
+		$url = "http://tserm.com/judge_server/api.php";
+
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
 		curl_close($curl);
 		
 		if ($err) return "";
+		echo "$response";
+		$token=array();
 		$token=json_decode($response,true);
 		if(!isset($token['token']))
 			return "";	

@@ -101,8 +101,8 @@ class ProblemFormat {
 
  	echo "<select class='form-control' id='selectLanguage' onclick='selectLanguage()'><option value='-1'>Select Language</option>";
  	foreach ($data as $key => $value) {
- 		$languageId=$value['id'];
- 		$languageName=$value['name'];
+ 		$languageId=$value['languageId'];
+ 		$languageName=$value['languageName'];
  		echo "<option value='$languageId'>$languageName</option>";
  	}
  	echo "</select>";

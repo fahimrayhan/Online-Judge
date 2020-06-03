@@ -11,7 +11,7 @@
 			else if($name=="submission")$page="submission.php";
 			else if($name=="overview")$page="overview.php";
 		}
-		echo '<div class="box" style="padding: 15px;margin-top: -20px;background: url("file/site_metarial/geometry.png")!important">';
+		echo '<div class="boxx" style="padding: 15px;margin-top: -20px;background: url("file/site_metarial/geometry.png")!important">';
 		if($page!="info.php")include "views/contest/contest_header.php";
 		$page=$path.$page;
 

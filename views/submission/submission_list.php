@@ -35,7 +35,7 @@
 						<?php  
 							$languageList=$Submission->getJudgeLanguageList();
 							foreach ($languageList as $key => $value) {
-								echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+								echo '<option value="'.$value['languageId'].'">'.$value['languageName'].'</option>';
 							}
 						?>
 					</select>

@@ -147,9 +147,11 @@ class Submission {
  		else if($verdictId==4)$verdictName="Wrong answer";
  		else if($verdictId==5)$verdictName="Time limit exceeded";
  		else if($verdictId==6) $verdictName="Compailer Error";
- 		else if($verdictId>=7 && $verdictId<=12) $verdictName="Runtime Error";
+ 		else if($verdictId==7 && $verdictId<=12) $verdictName="Runtime Error";
  		else if($verdictId==13) $verdictName="Memory Limit Exceeded";
  		else if($verdictId==14) $verdictName="Exec Format Error";
+ 		else if($verdictId==15) $verdictName="Output Limit Exceeded";
+ 		else if($verdictId==16) $verdictName="Internal Error";
  		else $verdictName="Failed";
  		$verdictClass="label label-$verdictClass";
 
