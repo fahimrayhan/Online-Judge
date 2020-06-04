@@ -9,8 +9,9 @@
 	var process=0;
 	//callServer();
 	setInterval(function(){ 
-		if(process==0)
+		if(process==0){
 			callServer();
+		}
 	}, 1000);
 
 	function callServer() {

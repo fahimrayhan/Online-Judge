@@ -111,7 +111,7 @@ class JudgeProcess {
  		********************************************************************************/
 
  		$problemId=$this->submissionInfo['problemId'];
- 		$sql="select testCaseIdHash from test_case where problemId=$problemId order by testCaseId ASC";
+ 		$sql="select testCaseId from test_case where problemId=$problemId order by testCaseId ASC";
  		$info=$this->DB->getData($sql);
  		
  		$this->testCaseReady=1;
@@ -119,73 +119,13 @@ class JudgeProcess {
  		$testCaseList=array();
 
  		foreach ($info as $key => $value) {
- 			$token=$this->sendTestCasePostRequest($value['testCaseIdHash']);
- 			if($token==""){
- 				$this->testCaseReady=0;
- 				break;
- 			}
- 			array_push($testCaseList, $token);
+ 			array_push($testCaseList, $value['testCaseId']);
  		}
  		$this->testCaseList=$testCaseList;
  	}
 
 
- 	public function sendTestCasePostRequest($testCaseHashId){
- 		
- 		/*******************************************************************************
-		*	@ get source code, input, output and convert base64 for processing api call.
- 		********************************************************************************/
-
- 		$data=array();
- 		
-    	$data['sourceCode']=base64_encode($this->submissionInfo['sourceCode']);
- 		$data['input']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
- 		$data['expectedOutput']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
-
- 		$data['languageId']=$this->submissionInfo['languageId'];
- 		$data['timeLimit']=$this->submissionInfo['cpuTimeLimit'];
- 		$data['memoryLimit']=$this->submissionInfo['memoryLimit'];
-       
-
-        $token=$this->sendCurlRequest($data);
-
- 		//$token="asfsdafsa0";
-
- 		return $token;
- 	}
-
-
- 	public function sendCurlRequest($data){
- 		
- 		/*******************************************************************************
-		*	@ this function use for only send post request api for token.
- 		********************************************************************************/
-
- 		//print_r($data);
-
- 		$postRequest = array(
-    		'createSubmission' => json_encode($data),
-		);
-
-		$url = "http://tserm.com/judge_server/api.php";
-
-		$curl = curl_init($url);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-		curl_close($curl);
-		
-		if ($err) return "";
-		echo "$response";
-		$token=array();
-		$token=json_decode($response,true);
-		if(!isset($token['token']))
-			return "";	
-		return $token['token'];
- 	}
-
+ 	
  	public function saveDatabaseTestCase(){
 
  		/*******************************************************************************
@@ -206,7 +146,7 @@ class JudgeProcess {
  		foreach ($this->testCaseList as $key => $value) {
  			$c++;
  			$data['testCaseSerialNo']=$c;
- 			$data['testCaseToken']=$value;
+ 			$data['testCaseId']=$value;
  			$res=$this->DB->pushData("submissions_on_test_case","insert",$data);
  		}
  	}
