@@ -19,7 +19,10 @@ var loadFile = function(event) {
         output.src = reader.result;
         
     };
-    reader.readAsDataURL(event.target.files[0]);
+    if(event.target.files[0]){
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    
 };
 
 function copyFilePath(filePath) {

@@ -1,6 +1,7 @@
 <?php
 	if(isset($_POST['loadSubmiProblemPage'])){
-		$ProblemFormat->getSubmissionArea('createSubmission');
+		include "views/editor/editor.php";
+		//$ProblemFormat->getSubmissionArea('createSubmission');
 	}
 
 	if(isset($_POST['viewSubmission'])){

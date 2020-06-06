@@ -96,7 +96,7 @@ class Submission {
  				$status=$this->getVerdict(1);
  			else if($testCaseReady==1){
  				if($judgeComplete==0)
- 					$status=$this->getVerdict(2,$runOnTest);
+ 					$status=$this->getVerdict(2,"(".$runOnTest."/".$value['totalTestCase'].")");
  				else
  					$status=$this->getVerdict($submissionVerdict);
  			}
@@ -182,11 +182,11 @@ class Submission {
  		$data['msg']="";
  		if($info['sourceCode']==''){
  			$data['error']=1;
- 			$data['msg']='<li>Source Code Is Empty</li>';
+ 			$data['msg']='Source Code Is Empty';
  		}
  		if($info['languageId']==-1){
  			$data['error']=1;
- 			$data['msg'].='<li>Please Select Language</li>';
+ 			$data['msg'].='Please Select Language';
  		}
 
  		if($data['error']==1)

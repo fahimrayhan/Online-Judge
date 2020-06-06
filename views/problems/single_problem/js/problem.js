@@ -20,11 +20,17 @@ function viewSubmissionById(submissionId){
 
 
 function createSubmission(){
+	
+	sourceCode = sourceCodeEditor.getValue("sourceCodeEditor");
+	if(sourceCode.length>=20000){
+		toast.danger("Source Code Length Is Very Large "+sourceCode.length);
+		return;
+	}
 	btnOff("btnCreateSubmit", "Processing");
-	$("#submission_error").hide();
+	//$("#submission_error").hide();
 	var data = {
 		'languageId': $("#selectLanguage").val(),
-		'sourceCode': btoa(editAreaLoader.getValue("sourceCodeEditor")),
+		'sourceCode': btoa(sourceCode),
 		'problemId': problemId,
 		'languageName': $("#selectLanguage option:selected" ).text()
 	}
@@ -33,8 +39,9 @@ function createSubmission(){
 		response=JSON.parse(response);
 		console.log(response);
 		if(response.error==1){
-			$("#submission_error").show();
-			$("#submission_error").html(response.msg);
+			//$("#submission_error").show();
+			//$("#submission_error").html(response.msg);
+			toast.danger(response.msg);
 			btnOn("btnCreateSubmit","Submit");
 		}
 		else{
@@ -55,16 +62,27 @@ function createSubmission(){
 	});
 }
 
-function settEditor(language="CPP"){
-	editAreaLoader.init({
-        id: "sourceCodeEditor",  
-        start_highlight: true,
-        allow_resize: "both",
-        allow_toggle: false,
-        word_wrap: true,
-        language: "en",
-        syntax: language  
-    });
+function setEditor(language="CPP"){
+	var editor = ace.edit("sourceCodeEditor");
+                    editor.setOption("maxLines", "Infinity");                    
+                    editor.setOption("minLines", 20);                    
+                    editor.setReadOnly(false);
+                    var lang = "cpp";
+                    if (lang.startsWith("cpp")) {
+                        editor.getSession().setMode("ace/mode/c_cpp");
+                    }
+                    if (lang.startsWith("java")) {
+                        editor.getSession().setMode("ace/mode/java");
+                    }
+                    if (lang.startsWith("pypy3")) {
+                        editor.getSession().setMode("ace/mode/python");
+                    }
+                    if (lang.startsWith("rust")) {
+                        editor.getSession().setMode("ace/mode/rust");
+                    }
+                    if (lang.startsWith("d")) {
+                        editor.getSession().setMode("ace/mode/d");
+                    }
 }
 
 function selectLanguage(){

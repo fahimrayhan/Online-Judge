@@ -11,7 +11,7 @@ class Judge {
 	public $saveSubmissionTestData=array();
 	public $recursionStartTime;
 	public $isPreviousData = 0;
-	public $apiUrl="http://tserm.com/judge_server/api.php";
+	public $apiUrl="http://judge-server.somokoon.com/api.php";
 
  	public function __construct($serverNo){
      	$this->DB=new Database();
@@ -35,6 +35,8 @@ class Judge {
         $this->judgeSubmission();
 
         if($this->isPreviousData==0)sleep(1);
+        //sleep(1);
+        else usleep(100000);//sleep 0.1 second for cron job database problem
         $this->judgeMultipleSubmission(false);
 
 	    return;

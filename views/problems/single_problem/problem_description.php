@@ -50,6 +50,7 @@ chart.render();
 
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
 
 
 
@@ -152,3 +153,4 @@ chart.render();
 		font-size: 12px;
 	}
 </style>
+
