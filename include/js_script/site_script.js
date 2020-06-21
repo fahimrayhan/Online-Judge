@@ -1,16 +1,19 @@
 
-function buildData(keyName,val=0){
+function buildData(keyName,val){
+  val=!val?0:val;
   var data={};
   data[keyName]=val;
   return data;
 }
 
-function btnOff(btnId,txt=""){
+function btnOff(btnId,txt){
+  txt = !txt?"":txt;
 	$("#"+btnId).attr("disabled", true);
 	$("#"+btnId).html("<i class='fa fa-refresh fa-spin fa-1x fa-fw'></i> "+txt);
 }
 
-function btnOn(btnId,txt=""){
+function btnOn(btnId,txt){
+  txt = !txt?"":txt;
 	$("#"+btnId).removeAttr("disabled");
 	if(txt!="")
 		$("#"+btnId).html(txt);

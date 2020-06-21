@@ -9,9 +9,11 @@ function login(){
 		'handle': $("#handle").val(),
 		'password': $("#password").val()
 	}
+
 	btnOff("btn_login","Login Process");
 	$("#login_success").hide();
 	$("#login_failed").hide();
+	
 	$.post("site_enter_action.php",buildData("login",data),function(response){
 		
 		// debug----------------
