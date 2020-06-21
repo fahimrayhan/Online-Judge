@@ -19,6 +19,24 @@ class SiteHash {
      	$this->hashPostfix['userUplaodFile']="#useruser%File%$";
      	
  	}
+
+ 	public function getRandomString($len=15){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $randomString = "";
+        for ($i = 0; $i < $len; $i++) { 
+            $index = rand(0, strlen($characters) - 1); 
+            $randomString .= $characters[$index]; 
+        }
+        return $randomString;
+    }
+
+    public function getHash($hashId){
+        $randomString = $this->getRandomString(); 
+        $rendomId = uniqid();
+        $hashString = "$rendomId-@-$hashId-@-$randomString";
+        $hashVal = hash('sha256', $hashString);
+        return $hashVal;
+    }
  
 	public function commonHashFunction($hashVal){
 		return base64_encode(hash('sha256', $hashVal));

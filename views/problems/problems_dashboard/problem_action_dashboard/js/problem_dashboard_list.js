@@ -2,11 +2,11 @@ var dashboard_action_url="problem_dashboard_action.php";
 
 
 function loadProblemAddPage(){
-	modal_action("sm","Add Problem");
-	loader("modal_sm_body");
-	
+	modal.md.open("Add Problem");
+	loader(modal.md.body);
+
 	$.post(dashboard_action_url,buildData("loadProblemAddPage"),function(response){
-		$("#modal_sm_body").html(response);
+		modal.md.setBody(response);
 	});
 }
 
@@ -18,15 +18,12 @@ function addProblem(){
 	}
 
 	btnOff("addProblem","Saving");
-	$("#error_area").hide();
 
 	$.post(dashboard_action_url,buildData("addProblem",data),function(response){
 		console.log(response);
 		response=JSON.parse(response); 
 		if(response.error==1){
-			$('#error_area').removeClass('label-success').addClass('label-danger');
-			$("#error_area").show();
-			$("#error_area").html(response.msg);
+			toast.danger(response.msg);
 			btnOn("addProblem","Add Problem");
 		}
 		else{

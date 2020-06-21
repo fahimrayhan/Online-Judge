@@ -1,40 +1,27 @@
 <?php
-class Site
-{
-
+class Site {
     //starting connection
-    public function __construct()
-    {
-
+    public function __construct() {
         $this->DB = new Database();
-        $this->conn = $this
-            ->DB->conn;
+        $this->conn = $this->DB->conn;
     }
-
-    public function getBackPageUrl()
-    {
-
+    public function getBackPageUrl() {
         $main_url = $_SERVER['REQUEST_URI'];
-
         $url = explode('/', $main_url);
         $len = count($url);
         $page_name = $url[$len - 1];
-
         //check if login or register page then its back url is always same
         if (strpos($main_url, 'login.php') !== false) return (isset($_GET['back'])) ? $_GET['back'] : "index.php";
         if (strpos($main_url, 'register.php') !== false) return (isset($_GET['back'])) ? $_GET['back'] : "index.php";
-
         return base64_encode($page_name == "" ? "index.php" : $page_name);
     }
 
-    public function redirectPage($url)
-    {
+    public function redirectPage($url) {
         echo "<script>window.location.replace('$url');</script>";
     }
 
-    function sortBy($field, &$array, $direction = 'asc')
-    {
-      usort($array, create_function('$a, $b', '
+    function sortBy($field, &$array, $direction = 'asc') {
+        usort($array, create_function('$a, $b', '
         $a = $a["' . $field . '"];
         $b = $b["' . $field . '"];
 
@@ -43,21 +30,15 @@ class Site
             return 0;
         }
 
-        return ($a ' . ($direction == 'desc' ? '>' : '<') .' $b) ? -1 : 1;
+        return ($a ' . ($direction == 'desc' ? '>' : '<') . ' $b) ? -1 : 1;
       '));
-
-      return true;
+        return true;
     }
 
-
-    public function dateToAgo($timestamp)
-    {
+    public function dateToAgo($timestamp) {
         $time_ago = strtotime($timestamp);
-        $current_time = $this
-            ->DB
-            ->date();
+        $current_time = $this->DB->date();
         $current_time = strtotime($current_time);
-
         $time_difference = $current_time - $time_ago;
         $seconds = $time_difference;
         $minutes = round($seconds / 60); // value 60 is seconds
@@ -67,84 +48,82 @@ class Site
         $months = round($seconds / 2629440); //((365+365+365+365+366)/5/12)*24*60*60
         $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
         if ($seconds <= 60) return "Just Now";
-        else if ($minutes <= 60)
-        {
+        else if ($minutes <= 60) {
             if ($minutes == 1) return "1 minute ago";
             else return "$minutes minutes ago";
-        }
-        else if ($hours <= 24)
-        {
-            if ($hours == 1)
-            {
+        } 
+        else if ($hours <= 24) {
+            if ($hours == 1) {
                 return "an hour ago";
-            }
-            else
-            {
+            } 
+            else {
                 return "$hours hrs ago";
             }
         }
-        else if ($days <= 7)
-        {
-            if ($days == 1)
-            {
+        else if ($days <= 7) {
+            if ($days == 1) {
                 return "yesterday";
-            }
-            else
-            {
+            } 
+            else {
                 return "$days days ago";
             }
-        }
+        } 
         else if ($weeks <= 4.3) //4.3 == 52/12
-        
         {
-            if ($weeks == 1)
-            {
+            if ($weeks == 1) {
                 return "a week ago";
-            }
-            else
-            {
+            } 
+            else {
                 return "$weeks weeks ago";
             }
-        }
-        else if ($months <= 12)
-        {
-            if ($months == 1)
-            {
+        } else if ($months <= 12) {
+            if ($months == 1) {
                 return "a month ago";
-            }
-            else
-            {
+            } else {
                 return "$months months ago";
             }
-        }
-        else
-        {
-            if ($years == 1)
-            {
+        } else {
+            if ($years == 1) {
                 return "one year ago";
-            }
-            else
-            {
+            } else {
                 return "$years years ago";
             }
         }
     }
 
-    public function createFile($url, $file_name, $txt)
-    {
+    public function getFileData($url){
+
+        $ch = curl_init();
+        curl_setopt ($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
+    public function createFile($url, $file_name, $txt) {
         $new_file_name = $url . $file_name;
         $file = fopen($new_file_name, "w");
         fwrite($file, $txt);
         fclose($file);
     }
-
-    public function readFile($path)
-    {
+    PUBLIC function getBasePath($path) {
         $basePath = dirname(__FILE__);
-
         //problem for cpanel path cronjob need specefic file name otherwise its go to infinate loop
-        if (!strpos($basePath, 'wamp64') !== false)
-        {
+        if (!strpos($basePath, 'wamp64') !== false) {
+            $basePath = explode("/", $basePath);
+            array_pop($basePath);
+            array_pop($basePath);
+            $basePath = implode('/', $basePath);
+            $path = $basePath . '/' . $path;
+        }
+        return $path;
+    }
+    public function readFile($path) {
+        $basePath = dirname(__FILE__);
+        //problem for cpanel path cronjob need specefic file name otherwise its go to infinate loop
+        if (!strpos($basePath, 'wamp64') !== false) {
             $basePath = explode("/", $basePath);
             array_pop($basePath);
             array_pop($basePath);
@@ -152,14 +131,15 @@ class Site
             $path = $basePath . '/' . $path;
         }
         $data = "";
+        //check File is Exit Or Not
+        clearstatcache(); //clear catch
+        if (!file_exists($path)) return $data;
         $file = fopen($path, "r");
-        while (!feof($file))
-        {
-            $data .= fgets($file);
+        while (!feof($file)) {
+            $data.= fgets($file);
         }
         fclose($file);
         return $data;
     }
-
 }
 ?>

@@ -1,4 +1,3 @@
-
 <style type="text/css">
 	.pendingTxt,.notPermit{
 		text-align: center;

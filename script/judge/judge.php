@@ -35,7 +35,6 @@ class Judge {
         $this->judgeSubmission();
 
         if($this->isPreviousData==0)sleep(1);
-        //sleep(1);
         else usleep(100000);//sleep 0.1 second for cron job database problem
         $this->judgeMultipleSubmission(false);
 
@@ -91,9 +90,6 @@ class Judge {
  			$this->isPreviousData=0;
  		} 
  	}
-
- 	
- 
 
  	public function setProcessingSubmissionTestCase(){
  		if($this->isPending==0)
@@ -251,7 +247,6 @@ class Judge {
  			$this->saveSubmissionData['submissionVerdict']=$this->analysisData['verdict'];
  			$this->saveSubmissionData['maxTimeLimit']=max($this->analysisData['time'],$this->submissionData['runOnMaxTime']);
  			$this->saveSubmissionData['maxMemoryLimit']=max($this->analysisData['memory'],$this->submissionData['runOnMaxMemory']);
- 			
  		}
  		else{
  			$this->saveSubmissionData['runOnTest']=$this->submissionData['runOnTest']+1;

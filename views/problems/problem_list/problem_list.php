@@ -33,8 +33,6 @@
 								echo "<span class='label label-$label problem_tags'><i class='fas fa-users'></i> $totalSolved</span> ";
 								?>	
 							</td>
-							
-							
 						</tr>
 					<?php } ?>	
 					</tbody>

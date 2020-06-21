@@ -1,7 +1,7 @@
 
 <style type="text/css">
     .editorArea{
-        background-color: #F0F0F0;
+        background-color: #ffffff;
         border: 1px solid #D1D9E5;
         border-radius: 5px;
     }

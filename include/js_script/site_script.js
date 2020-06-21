@@ -35,23 +35,54 @@ function loader1(divId,size=300){
 }
 
 
+// ===================================================
 
+//start button
+
+var btn = {
+  off : function(btnId,txt){
+    txt = !txt?"":txt;
+    $("#"+btnId).attr("disabled", true);
+    $("#"+btnId).html("<i class='fa fa-refresh fa-spin fa-1x fa-fw'></i> "+txt);
+  },
+  on : function(btnId,txt){
+    $("#"+btnId).attr("disabled",false);
+    if(txt)$("#"+btnId).html(txt);
+  }
+};
 
 // ===================================================
 
 // Start Modal Script
 
 var modal = {
-  open : function(msg){makeToast("success",msg)},
-  close  : function(msg){makeToast("danger",msg)},
+  lg : {
+    open    : function(msg){modalOpen("lg",msg)},
+    close   : function(){modalClose("lg")},
+    body    : "modal_lg_body",
+    setBody : function(txt){$("#"+this.body).html(txt)}
+  },
+  md : {
+    open    : function(msg){modalOpen("md",msg)},
+    close   : function(){modalClose("md")},
+    body    : "modal_md_body",
+    setBody : function(txt){$("#"+this.body).html(txt)}
+  },
+  sm : {
+    open    : function(msg){modalOpen("sm",msg)},
+    close   : function(){modalClose("sm")},
+    body    : "modal_sm_body",
+    setBody : function(txt){$("#"+this.body).html(txt)}
+  }
 };
 
-function modalOpen(type="md",header="Header"){
+
+function modalOpen(type,header){
   $("#modal_"+type).modal("show");
   $("#modal_"+type+"_header").html(header);
 }
 
-function modalClose(type="md"){
+function modalClose(type){
   modal_action(type,"","close");
 }
 

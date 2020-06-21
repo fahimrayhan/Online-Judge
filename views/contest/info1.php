@@ -54,6 +54,7 @@
 
 	.contestInfoArea{
 		padding: 10px;
+
 	}
 	.contestInfoAreaBody{
 		font-size: 18px;
@@ -75,7 +76,6 @@
 		border-radius: 5px;
 	}
 
-
 </style>
 
 <div class="row">
@@ -85,14 +85,6 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="boxBody box contestTitle">BDYP & Duoblogger Home Quarantine Contest</div>
-	</div>
-	<div class="col-md-12">
-		<div class="boxBody box">
-			<div class="bannerArea">
-				<img class="bannerImg img-thumbnail" src="https://uploads.toph.co/xC7MWdo0m9C_HklI24T9ieaK4flAYYJB3SxV-yQT5II/resize:fill:1690:950:0/gravity:sm/czM6Ly90b3BoLXBsYXRmb3JtLXVwbG9hZHMvaW1hZ2VzLzE1ODczODg5MzY1MDU4MjI2MjMtMjEwODIzNDA0MDM4ODY5MjI4Ni04ODFiYjkzOWZlZTk0OTUyZjFhODg1YjIxZjBiZWUxMS5qcGc">
-			</div>
-		</div>
-		
 	</div>
 	<div class="col-md-12">
 		<div class="contestInfoArea boxBody box">
@@ -128,8 +120,17 @@
 		</div>
 	
 	</div>
+	<div class="col-md-12">
+		<div class="boxBody box">
+			<div class="bannerArea">
+				<img class="bannerImg img-thumbnail" src="https://s3.amazonaws.com/codechef_shared/download/small-banner/ITRX2016/1455946564.jpg">
+			</div>
+		</div>
+		
+	</div>
 	
-	<div class="col-md-9">
+	
+	<div class="col-md-12">
 		<div class="boxBody box">
 <h2>Schedule</h2>
 

@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+void solve()
+{
+    ll n,m,i,ans;
+    cin >> n;
+    ans=n/=2;
+    cout << ans << "\n";
+
+}
+
+int main()
+{
+    ll t;
+    cin >> t;
+    while(t--)solve();
+
+    return 0;
+}

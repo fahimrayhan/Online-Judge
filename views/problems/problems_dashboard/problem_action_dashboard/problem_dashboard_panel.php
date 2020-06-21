@@ -1,4 +1,33 @@
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML'></script>
+<script type="text/javascript">
+    
+</script>
+<style type="text/css">
+    .nav-tabs {
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.nav-tabs > li {
+  float: none;
+  display: inline-block;
+}
+
+.nav-tabs::-webkit-scrollbar {
+    height: 8px;
+}
+
+.nav-tabs::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 2px;
+}
+
+.nav-tabs::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+​
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="box" style="border-radius: 0px;border-width: 1px;">
@@ -12,6 +41,9 @@
                 <li id="moderators" onclick="changeOption('moderators')" class="problemNavTab"><i class="fas fa-user-plus"></i> Moderators</li>
                 <li id="testing" onclick="changeOption('testing')" class="problemNavTab"><i class="fas fa-gavel"></i> Testing</li>
                 <li id="" class="problemNavTab"><i class="fas fa-list-alt"></i> Submission</li>
+                <li id="export" onclick="changeOption('export')" class="problemNavTab"><i class="fa fa-upload"></i> Export</li>
+                <li id="import" onclick="changeOption('import')" class="problemNavTab"><i class="fa fa-download"></i> Import</li>
+
             </ul>
         </center>
         </div>

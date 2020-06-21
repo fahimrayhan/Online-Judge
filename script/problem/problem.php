@@ -39,7 +39,7 @@ class Problem {
 		if($info['cpuTimeLimit']=='')unset($info['cpuTimeLimit']);
 
 		if($info['problemName']==""){
-			$error.="<li>Problem Name Field Is Empty</li>";
+			$error.="Problem Name Field Is Empty";
 		}
 
 		if($error!="")return $this->DB->makeJsonMsg(1,$error);

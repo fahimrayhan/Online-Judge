@@ -1,27 +1,37 @@
 <?php
 class TestCase {
-   
+   	
+   	public $inputFilePath = "user_file/test_case/input/";
+   	public $outputFilePath = "user_file/test_case/output/";
 //starting connection
  	public function __construct(){
-     	$this->db=new Database();
-     	$this->conn=$this->db->conn;
+     	$this->DB=new Database();
+     	$this->conn=$this->DB->conn;
      	$this->SiteHash=new SiteHash();
      	$this->Site=new Site();
  	}
- 	
- 	public function getInputFileName($hashId){
 
+ 	public function getInputFilePath($testCaseHash){
+ 		return $this->inputFilePath.$testCaseHash.'.txt';
+ 	}
+
+ 	public function getOutputFilePath($testCaseHash){
+ 		return $this->outputFilePath.$testCaseHash.'.txt';
+ 	}
+
+ 	public function getTestCaseHashId($testCaseId){
+ 		return $this->SiteHash->getHash($testCaseId);;
  	}
 
  	public function getTestCaseList($problemId,$json=false){
- 		$sql="select testCaseId,userHandle,testCaseAddedDate,testCaseIdHash from test_case 
+ 		$sql="select testCaseId,userHandle,userId,testCaseAddedDate,testCaseIdHash from test_case 
  		natural join users
  		where problemId=$problemId";
- 		$data=$this->db->getData($sql);
+ 		$data=$this->DB->getData($sql);
  		foreach ($data as $key => $value) {
- 			$hashId=$value['testCaseIdHash'];
- 			$value['inputUrl']="file/test_case/input/".$hashId.'.txt';
- 			$value['outputUrl']="file/test_case/output/".$hashId.'.txt';
+ 			$testCaseHash=$value['testCaseIdHash'];
+ 			$value['inputUrl']=$this->getInputFilePath($testCaseHash);
+ 			$value['outputUrl']=$this->getOutputFilePath($testCaseHash);
  			$value['inputFileSize']=filesize($value['inputUrl']);
  			$value['outputFileSize']=filesize($value['outputUrl']);
  			$data[$key]=$value;
@@ -30,64 +40,74 @@ class TestCase {
  		return $json?json_encode($data):$data;
  	}
 
- 	public function deleteTestCase($hashId){
- 		if($this->db->isLoggedIn==0)return;
- 		$sql="select testCaseId from test_case where testCaseIdHash='$hashId'";
- 		$data=$this->db->getData($sql);
- 		if(!isset($data[0]))return;
- 		$data=$data[0];
- 		$this->db->pushData("test_case","delete",$data);
- 		unlink("file/test_case/input/".$hashId.'.txt');
- 		unlink("file/test_case/output/".$hashId.'.txt');
- 		
- 	}
-
- 	public function getTestCaseData($hashId){
- 		$data=array();
- 		$data['input']=$this->Site->readFile("file/test_case/input/".$hashId.'.txt');
- 		$data['output']=$this->Site->readFile("file/test_case/output/".$hashId.'.txt');
-		return $data;
- 	}
-
-
- 	public function updateTestCase($info){
- 		$hashId=$info['hashId'];
- 		file_put_contents("file/test_case/input/$hashId.txt", $info['input']);
- 		file_put_contents("file/test_case/output/$hashId.txt", $info['output']);
- 	}
-
-
  	public function addTestCase($info){
- 		if($this->db->isLoggedIn==0){
+ 		if($this->DB->isLoggedIn==0){
  			echo "User Is Not Logged In";
  			return;
  		}
- 		
+
+ 		$info['input'] = $this->getFieldTxtData($info['inputData']);
+ 		$info['output'] = $this->getFieldTxtData($info['outputData']);
+ 		//print_r($info);
+ 		//return;
  		$data=array();
  		$data['problemId']=$info['problemId'];
- 		$data['testCaseAddedDate']=$this->db->date();
- 		$data['userId']=$this->db->isLoggedIn;
- 		$responce=$this->db->pushData("test_case","insert",$data);
+ 		$data['testCaseAddedDate']=$this->DB->date();
+ 		$data['userId']=$this->DB->isLoggedIn;
+ 		$responce=$this->DB->pushData("test_case","insert",$data);
  		if($responce['error']==0){
- 			
- 			$this->addInputOutput($this->getTestCaseHashId($responce['insert_id']),$info['input'],$info['output']);
+ 			$testCaseHash = $this->getTestCaseHashId($responce['insert_id']);
+ 			$this->addInputOutput($testCaseHash,$info['input'],$info['output']);
  			$hash_data=array();
- 			$hash_data['testCaseIdHash']=$this->getTestCaseHashId($responce['insert_id']);
+ 			$hash_data['testCaseIdHash']=$testCaseHash;
  			$hash_data['testCaseId']=$responce['insert_id'];
- 			$this->db->pushData("test_case","update",$hash_data);
+ 			$this->DB->pushData("test_case","update",$hash_data);
  		}
  		print_r($responce);
  	}
 
- 	public function addInputOutput($test_case_hashId,$input,$output){
- 		$file_name=$test_case_hashId.".txt";
- 		echo "$file_name";
- 		$this->Site->createFile("file/test_case/input/",$file_name,$input);
- 		$this->Site->createFile("file/test_case/output/",$file_name,$output);
+ 	public function getFieldTxtData($info){
+ 		$txt = "";
+ 		if($info['editorType']=="editor" || $info['editorType']=='upload')$txt = $info['text'];
+ 		else if($info['editorType']=="url")
+ 			$txt = $this->Site->getFileData($info['url']);
+ 		return $txt;
  	}
 
- 	public function getTestCaseHashId($testCaseId){
- 		return $this->SiteHash->testCaseHash($testCaseId);
+ 	public function addInputOutput($testCaseHash,$input,$output){
+ 		$fileName=$testCaseHash.".txt";
+ 		//echo "$file_name";
+ 		$this->Site->createFile($this->inputFilePath,$fileName,$input);
+ 		$this->Site->createFile($this->outputFilePath,$fileName,$output);
  	}
+
+ 	public function updateTestCase($info){
+ 		$testCaseHashId=$info['testCaseHashId'];
+ 		$info['input'] = $this->getFieldTxtData($info['inputData']);
+ 		$info['output'] = $this->getFieldTxtData($info['outputData']);
+ 		file_put_contents($this->getInputFilePath($testCaseHashId), $info['input']);
+ 		file_put_contents($this->getOutputFilePath($testCaseHashId), $info['output']);
+ 	}
+
+
+ 	public function deleteTestCase($testCaseHash){
+ 		if($this->DB->isLoggedIn==0)return;
+ 		$sql="select testCaseId from test_case where testCaseIdHash='$testCaseHash'";
+ 		$data=$this->DB->getData($sql);
+ 		if(!isset($data[0]))return;
+ 		$data=$data[0];
+ 		$this->DB->pushData("test_case","delete",$data);
+ 		unlink($this->getInputFilePath($testCaseHash));
+ 		unlink($this->getOutputFilePath($testCaseHash));
+ 		
+ 	}
+
+ 	public function getTestCaseData($testCaseHash){
+ 		$data=array();
+ 		$data['input']=$this->Site->readFile($this->getInputFilePath($testCaseHash));
+ 		$data['output']=$this->Site->readFile($this->getOutputFilePath($testCaseHash));
+		return $data;
+ 	}
+ 	
 }
 ?>

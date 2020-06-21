@@ -51,9 +51,7 @@
 				</table>
 			</div>
 		</div>
-		
 	</div>
-
 </div>
 <style type="text/css">
 	.td_list1{

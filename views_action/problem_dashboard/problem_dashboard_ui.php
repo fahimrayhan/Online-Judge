@@ -11,56 +11,15 @@
 	}
 
 	if(isset($_POST['loadTestCasePage'])){
-		$problemId=$_POST['loadTestCasePage'];
-		echo "<div style='text-align: right; margin-bottom: 10px;'><button onclick='loadAddTestCasePage()'><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>";
-		echo "<table width='100%'>";
-		echo "<tr>
-			<td class='td1'>Order</td>
-			<td class='td1'>Input File</td>
-			<td class='td1'>Output File</td>
-			<td class='td1'>Added Date</td>
-			<td class='td1'>Added By</td>
-			<td class='td1'></td>
-			</tr>";
-		$info=$TestCase->getTestCaseList($problemId);
-
-		$c=0;
-		foreach ($info as $key => $value) {
-			$c++;
-			$date=$value['testCaseAddedDate'];
-			$handle=$value['userHandle'];
-			$inputUrl=$value['inputUrl'];
-			$inputSize=$value['inputFileSize'];
-			$outputUrl=$value['outputUrl'];
-			$outputSize=$value['outputFileSize'];
-			$hashId=$value['testCaseIdHash'];
-			echo "<tr>
-			<td class='td2'>$c</td>
-			<td class='td2'><a href='$inputUrl' target='_blank'>input-$c.txt ($inputSize Bytes)</a></td>
-			<td class='td2'><a href='$outputUrl' target='_blank'>output-$c.txt ($outputSize Bytes)</a></td>
-			<td class='td2'>$date</td>
-			<td class='td2'>$handle</td>
-			<td class='td2'> 
-				<button value='$hashId' class='btn-sm' id='btn_edit_$c' onclick='loadEditTestCasePage($c)'><span class='glyphicon glyphicon-pencil'></span></button>
-				<button id='btn_del_$c' onclick='deleteTestCase($c)' value='$hashId' class='btn-sm'><span class='glyphicon glyphicon-trash'></span></button>
-			</td>
-			</tr>";
-		}
-		echo "</table>";
+		include "views/test_case/test_case.php";
 	}
 
 	else if(isset($_POST['loadProblemAddPage'])){
-		echo "<div id='error_area' style='display: none' class='alert alert-danger'></div>";
-		echo "<b>Problem Name</b><input id='problemName' class='form-control' placeholder='Enter Problem Name'></input>";
-		echo "<br/><b>Time Limit</b> (Time limit unit is second and max time limit is 15 s)<input id='problemTimeLimit' type='number' max='4' class='form-control' placeholder='Enter Problem Time Limit'></input>";
-		echo "<br/><b>Memory Limit</b> (Memory Limit unit is KB)<input id='problemMemoryLimit' type='number' step='0.01' class='form-control' placeholder='Enter Problem Memory'></input>";
-		echo "<br/><center><button id='addProblem' onclick='addProblem()'>+Add Problem</button></center>";
+		include "views/problems/problems_dashboard/problem_action_dashboard/add_problem_page.php";
 	}
 
 	else if(isset($_POST['loadAddTestCasePage'])){
-		echo "<b style='font-size: 17px;'>Input</b><br/><textarea class='dashboard_input_text_area' id='inputValue'></textarea><br/>";
-		echo "<b style='font-size: 17px;'>Output</b><br/><textarea class='dashboard_input_text_area' id='outputValue'></textarea><br/>";
-		echo "<center><button onclick='addTestCase()'>Add Test Case</button></center>";
+		include "views/test_case/add_test_case.php";
 	}
 
 
