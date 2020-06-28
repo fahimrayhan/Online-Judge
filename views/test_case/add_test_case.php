@@ -1,5 +1,3 @@
-
-
 <style type="text/css">
 	.testCaseEditorArea{
 		height: 180px;

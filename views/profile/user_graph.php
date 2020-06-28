@@ -1,6 +1,8 @@
 <?php 
 
 	$lastSubmissionData=array();
+
+	return;
 ?>
 
 <script>

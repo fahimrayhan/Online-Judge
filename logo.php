@@ -24,26 +24,15 @@
 		width: 80px;
 		margin-top: -30px;
 	}
+	.cspan{
+		height: 20px;
+		padding: 0px!important;
+		background-color: #333333;
+		color: #ffffff;
+	}
 </style>
 
-<div class="row">
-<div class="col-md-2"></div>
-<div class="col-md-8">
-<div class="problemSet">
+
 <div class="logoArea">
-	<div class="logo"><img src="file/site_metarial/favicon.png" class="logoImg">oderOJ</div>
-</div>
-<?php
-	include "script.php";
-	$problemId=isset($_GET['id'])?$_GET['id']:10;
-	$problemData=$Problem->getProblemInfo($problemId);
-	$problemData['problemName']=$problemData['problemId'].". ".$problemData['problemName'];
-	$ProblemFormat->buildProblemFormat($problemData);
-
-
-?>
-
-</div>
-
-</div>
+	<div class="logo"><span class="cspan">C</span>oderOJ</div>
 </div>

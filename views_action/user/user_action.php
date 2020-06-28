@@ -1,7 +1,7 @@
 <?php
 	
 	if(isset($_FILES["file"]["name"])){
-		echo $SiteEnter->updateUserPhoto($_FILES);
+		echo $User->updateUserPhoto($_FILES);
 	}
 
 	if(isset($_POST['updateProfileInfo'])){

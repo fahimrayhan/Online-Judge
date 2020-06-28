@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
     <div class="nevbar_fontstyle">
       <ul class="nav navbar-nav navbar-left" >
-        <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;"  href="index.php"><span class="glyphicon glyphicon-home span_icon"></span>HOME</a></li> 
+        <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;"  href="index.php"><i class="fas fa-home span_icon"></i>HOME</a></li> 
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;"  href="contest_list.php"><i class="fas fa-trophy span_icon"></i>CONTEST</a></li> 
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="problems.php"><span class="glyphicon glyphicon-list span_icon"></span>PROBLEMS</a></li>
         <li class="li_nav"><a class="navbar_btn" style="color: #ced6e0;" href="submissions.php"><i class="fas fa-random span_icon"></i>JUDGE STATUS</a></li>

@@ -1,3 +1,4 @@
+<title>Problems | CoderOJ</title>
 <?php include "style/lib/data_table/data_table_lib.php"; ?>
 
 <script type="text/javascript">

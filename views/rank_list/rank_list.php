@@ -1,3 +1,4 @@
+<title>Rank List | CoderOJ</title>
 <style type="text/css">
 	.rankTop{
 		text-align: center;

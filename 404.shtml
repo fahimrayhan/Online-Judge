@@ -1,0 +1,51 @@
+
+<link href="https://fonts.googleapis.com/css?family=Exo 2" rel="stylesheet">
+
+<style type="text/css">
+body{
+	font-family: "Exo 2";
+}
+.coderOJLogo {
+    color: #000000;
+    font-weight: bold;
+    font-size: 9em !important;
+    cursor: pointer;
+}
+.errorMsg{
+	font-size: 23px;
+}
+
+.coderOJLogo:hover {
+    color: #000000;
+}
+.errorPage{
+	text-align: center;
+}
+.errorBtn{
+	margin-top: 15px;
+	font-size: 20px;
+	padding: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: "Exo 2";
+	border-radius: 5px;
+	border-width: 0px;
+}
+.errorBtn:hover{
+	font-size: 23px;
+}
+a{
+	color: #000000;
+	text-decoration: none;
+}
+</style>
+<div class="errorPage">
+	<div class="coderOJLogo"><a href="index.php">CoderOJ</a></div>
+	<div class="errorMsg">
+		The requested URL was not found on this server.
+	</div>
+	<a href="index.php"><button class="errorBtn">Back Home</button></a>
+</div>
+

@@ -1,7 +1,22 @@
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript" src="views/problems/single_problem/js/problem.js"></script>
+<style>
+.problem_body::-webkit-scrollbar {
+    width: 12px;
+    height: 7px;
+}
 
+.problem_body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+
+.problem_body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+</style>
 <?php
 	$info=$Problem->problemVerdictStat($problemId);
 	$AC=(isset($info[3]))?$info[3]:0;
@@ -57,7 +72,7 @@ chart.render();
 <div class="row">
 	<div class="col-md-9">
 		<div class="box sm_border">
-			<div class="box_body" style="overflow-x: scroll;">
+			<div class="problem_body box_body" style="overflow-x: scroll;">
 				 <?php include "views/problems/single_problem/problem_stat.php"; ?>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-
+<title>Judge Status | CoderOJ</title>
 <style type="text/css">
 	.submissionFilter{
 		text-align: center;

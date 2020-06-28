@@ -62,27 +62,27 @@ function createSubmission(){
 	});
 }
 
-function setEditor(language="CPP"){
-	var editor = ace.edit("sourceCodeEditor");
-                    editor.setOption("maxLines", "Infinity");                    
-                    editor.setOption("minLines", 20);                    
-                    editor.setReadOnly(false);
-                    var lang = "cpp";
-                    if (lang.startsWith("cpp")) {
-                        editor.getSession().setMode("ace/mode/c_cpp");
-                    }
-                    if (lang.startsWith("java")) {
-                        editor.getSession().setMode("ace/mode/java");
-                    }
-                    if (lang.startsWith("pypy3")) {
-                        editor.getSession().setMode("ace/mode/python");
-                    }
-                    if (lang.startsWith("rust")) {
-                        editor.getSession().setMode("ace/mode/rust");
-                    }
-                    if (lang.startsWith("d")) {
-                        editor.getSession().setMode("ace/mode/d");
-                    }
+function setEditor(language = "CPP") {
+    var editor = ace.edit("sourceCodeEditor");
+    editor.setOption("maxLines", "Infinity");
+    editor.setOption("minLines", 20);
+    editor.setReadOnly(false);
+    var lang = "cpp";
+    if (lang.startsWith("cpp")) {
+        editor.getSession().setMode("ace/mode/c_cpp");
+    }
+    if (lang.startsWith("java")) {
+        editor.getSession().setMode("ace/mode/java");
+    }
+    if (lang.startsWith("pypy3")) {
+        editor.getSession().setMode("ace/mode/python");
+    }
+    if (lang.startsWith("rust")) {
+        editor.getSession().setMode("ace/mode/rust");
+    }
+    if (lang.startsWith("d")) {
+        editor.getSession().setMode("ace/mode/d");
+    }
 }
 
 function selectLanguage(){

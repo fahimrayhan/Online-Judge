@@ -16,7 +16,7 @@ class Judge {
  	public function __construct($serverNo){
      	$this->DB=new Database();
      	$this->Site=new Site();
-     	$this->SiteHash=new SiteHash();
+     	$this->TestCase=new TestCase();
      	$this->conn=$this->DB->conn;
      	$this->setServer($serverNo);
  	}
@@ -115,7 +115,7 @@ class Judge {
 		if($this->isPending==0)
  			return;
 		$testCaseId=$this->submissionData['testCaseId'];
-		$testCaseHashId=$this->SiteHash->testCaseHash($testCaseId);
+		$testCaseHashId=$this->TestCase->getTestCaseHashId($testCaseId);
 		$token=$this->sendTestCasePostRequest($testCaseHashId);
 		echo '<br/>'.$token;
 		if($token!=""){
@@ -132,7 +132,7 @@ class Judge {
  		/*******************************************************************************
 		*	@ get source code, input, output and convert base64 for processing api call.
  		********************************************************************************/
-
+ 		//return;
 
  		$problemId=$this->submissionData['problemId'];
  		$sql="select cpuTimeLimit,memoryLimit from problems where problemId=$problemId";
@@ -143,9 +143,11 @@ class Judge {
  		
     	$data['sourceCode']=base64_encode($this->submissionData['sourceCode']);
  		echo "$testCaseHashId";
- 		
- 		$data['input']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
- 		$data['expectedOutput']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
+ 		$testCaseData = $this->TestCase->getTestCaseData($testCaseHashId);
+ 		$data['input'] =base64_encode($testCaseData['input']);
+ 		$data['expectedOutput'] =base64_encode($testCaseData['output']);
+ 		//$data['input']=base64_encode($this->Site->readFile("file/test_case/input/".$testCaseHashId.'.txt'));
+ 		//$data['expectedOutput']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
 
  		$data['languageId']=$this->submissionData['languageId'];
  		$data['timeLimit']=$problemData['cpuTimeLimit'];
@@ -261,9 +263,9 @@ class Judge {
  		$this->saveSubmissionTestData['totalTime']=$this->analysisData['time'];
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
 
- 		//$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
+ 		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;
- 		//print_r($this->saveSubmissionTestData);
+ 		print_r($this->saveSubmissionTestData);
  	}
 
  	public function saveData(){

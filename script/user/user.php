@@ -2,13 +2,14 @@
 
 class User
 {
-    
+    public $userPhotoPath = "user_file/user_photo/";
     //starting connection
     public function __construct()
     {
         
         $this->DB   = new Database();
         $this->conn = $this->DB->conn;
+        $this->Hash=new SiteHash();
     }
     
     public function getUserInfo()
@@ -32,6 +33,42 @@ class User
         $sql  = "select * from users where userId=$userId";
         $data = $this->DB->getData($sql);
         return $data;
+    }
+
+     public function updateUserPhoto($fileInfo){
+        $userId=$this->DB->isLoggedIn;
+        if($userId == 0)return;
+
+        $userInfo = $this->getSingleUserInfo($userId);
+        $userPhoto = $userInfo[0]['userPhoto'];
+        if($userPhoto!=$this->userPhotoPath."avatar.jpg"){
+            unlink($userPhoto);
+        }
+
+        $fileExplode     = explode('.', $fileInfo["file"]["name"]);
+        $fileExt      = end($fileExplode);
+        $fileName     = $this->Hash->userProfilePhotoHash($userId).".$fileExt";
+        $uploadLocation = $this->userPhotoPath.$fileName;
+        move_uploaded_file($fileInfo["file"]["tmp_name"], $uploadLocation);
+        $data=array();
+        $data['userId']=$userId;
+        $data['userPhoto']=$uploadLocation;
+        return $this->DB->pushData("users","update",$data,true);
+    }
+
+    public function updateUserPhotoPath(){
+        $userInfo = $this->getUserInfo();
+        $newPath = $this->userPhotoPath;
+        foreach ($userInfo as $key => $value) {
+            $photo = $value['userPhoto'];
+            $photo = explode('/', $photo);
+            $photoName = $photo[count($photo)-1];
+            $newPhotoName = $newPath.$photoName;
+            $updateData = array();
+            $updateData['userId'] = $value['userId'];
+            $updateData['userPhoto'] = $newPhotoName;
+            $this->DB->pushData("users", "update", $updateData);
+        }
     }
     
     public function updateProfileInfo($data)

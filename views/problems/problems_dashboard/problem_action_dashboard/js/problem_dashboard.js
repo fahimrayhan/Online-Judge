@@ -219,16 +219,44 @@ function loadCreateSubmissionPage(){
 	loader("modal_lg_body");
 	$.post(dashboard_action_url,buildData("loadCreateSubmissionPage",problemId),function(response){
 		$("#modal_lg_body").html(response);
-		setTimeout(function(){ setEditor(); }, 100);
+		//setTimeout(function(){ setEditor(); }, 100);
 	});
 }
 
+function setEditor(language = "CPP") {
+    var editor = ace.edit("sourceCodeEditor");
+    editor.setOption("maxLines", "Infinity");
+    editor.setOption("minLines", 20);
+    editor.setReadOnly(false);
+    var lang = "cpp";
+    if (lang.startsWith("cpp")) {
+        editor.getSession().setMode("ace/mode/c_cpp");
+    }
+    if (lang.startsWith("java")) {
+        editor.getSession().setMode("ace/mode/java");
+    }
+    if (lang.startsWith("pypy3")) {
+        editor.getSession().setMode("ace/mode/python");
+    }
+    if (lang.startsWith("rust")) {
+        editor.getSession().setMode("ace/mode/rust");
+    }
+    if (lang.startsWith("d")) {
+        editor.getSession().setMode("ace/mode/d");
+    }
+}
+
 function createSubmission(){
+	sourceCode = sourceCodeEditor.getValue("sourceCodeEditor");
+	if(sourceCode.length>=20000){
+		toast.danger("Source Code Length Is Very Large "+sourceCode.length);
+		return;
+	}
 	btnOff("btnCreateSubmit", "Processing");
-	$("#submission_error").hide();
+	//$("#submission_error").hide();
 	var data = {
 		'languageId': $("#selectLanguage").val(),
-		'sourceCode': btoa(editAreaLoader.getValue("sourceCodeEditor")),
+		'sourceCode': btoa(sourceCode),
 		'problemId': problemId,
 		'languageName': $("#selectLanguage option:selected" ).text()
 	}
@@ -237,17 +265,21 @@ function createSubmission(){
 		response=JSON.parse(response);
 		console.log(response);
 		if(response.error==1){
-			$("#submission_error").show();
-			$("#submission_error").html(response.msg);
+			//$("#submission_error").show();
+			//$("#submission_error").html(response.msg);
+			toast.danger(response.msg);
 			btnOn("btnCreateSubmit","Submit");
 		}
 		else{
 			msg=JSON.parse(response.msg);
-			toast.success("Successfully Submission");
+		 	//modal_action("md","","close");
+		 	toast.success("Successfully Submission");
     		$.post("submission_action.php",buildData("viewSubmission",msg.insert_id),function(response){
         		$("#modal_lg_body").html(response);
     		});
+		 	//setTimeout(function(){ viewSubmissionById(msg.insert_id); }, 500);
 		 	//window.open("submission.php?id="+msg.insert_id, '_self');
+		 	
 		}
 
 		//$("#modal_md_body").html(response);
@@ -256,17 +288,7 @@ function createSubmission(){
 	});
 }
 
-function setEditor(language="CPP"){
-	editAreaLoader.init({
-        id: "sourceCodeEditor",  
-        start_highlight: true,
-        allow_resize: "both",
-        allow_toggle: false,
-        word_wrap: true,
-        language: "en",
-        syntax: language  
-    });
-}
+
 
 //start test case function
 

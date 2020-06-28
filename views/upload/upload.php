@@ -4,6 +4,7 @@
 		include "404.php";
 		return;
 	}
+
 ?>
 
 <script type="text/javascript" src="views/upload/js/upload.js"></script>

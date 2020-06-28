@@ -1,6 +1,7 @@
 <?php
 class File {
    
+    public $userUploadFilePath = "user_file/user_upload/";
  	public function __construct(){
      	$this->DB=new Database();
      	$this->conn=$this->DB->conn;
@@ -28,7 +29,7 @@ class File {
  		$fileExplode     = explode('.', $fileInfo["file"]["name"]);
     	$fileExt      = end($fileExplode);
     	$fileName     = $this->Hash->userUplaodFile($fileId).".$fileExt";
-    	$uploadLocation = 'file/user_file/' . $fileName;
+    	$uploadLocation = $this->userUploadFilePath.$fileName;
     	move_uploaded_file($fileInfo["file"]["tmp_name"], $uploadLocation);
     	$data=array();
     	$data['fileUploadId']=$fileId;
@@ -38,6 +39,21 @@ class File {
     	$data['fileSize']=$fileInfo['file']['size'];
     	return $this->DB->pushData("file_upload","update",$data,true);
  	}
+
+    public function updateUserUploadFilePath(){
+        $userInfo = $this->getUserFileList();
+        $newPath = $this->userUploadFilePath;
+        foreach ($userInfo as $key => $value) {
+            $filePath = $value['filePath'];
+            $filePath = explode('/', $filePath);
+            $fileName = $filePath[count($filePath)-1];
+            $newFileName = $newPath.$fileName;
+            $updateData = array();
+            $updateData['fileUploadId'] = $value['fileUploadId'];
+            $updateData['filePath'] = $newFileName;
+            $this->DB->pushData("file_upload", "update", $updateData);
+        }
+    }
 
  	public function deleteFile($filePath){
  		$data=array();

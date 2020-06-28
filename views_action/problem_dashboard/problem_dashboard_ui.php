@@ -168,7 +168,7 @@
 	}
 
 	if(isset($_POST['loadCreateSubmissionPage'])){
-		$ProblemFormat->getSubmissionArea('createSubmission');
+		include "views/editor/editor.php";
 	}
 
 	if(isset($_POST['loadSettingPage'])){

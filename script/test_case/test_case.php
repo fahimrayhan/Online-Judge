@@ -19,8 +19,15 @@ class TestCase {
  		return $this->outputFilePath.$testCaseHash.'.txt';
  	}
 
- 	public function getTestCaseHashId($testCaseId){
+ 	public function createTestCaseHashId($testCaseId){
  		return $this->SiteHash->getHash($testCaseId);;
+ 	}
+
+ 	public function getTestCaseHashId($testCaseId){
+ 		$sql = "select testCaseIdHash from test_case where testCaseId = $testCaseId";
+ 		$data=$this->DB->getData($sql);
+ 		if(isset($data[0]))return $data[0]['testCaseIdHash'];
+ 		return "";
  	}
 
  	public function getTestCaseList($problemId,$json=false){
@@ -56,7 +63,7 @@ class TestCase {
  		$data['userId']=$this->DB->isLoggedIn;
  		$responce=$this->DB->pushData("test_case","insert",$data);
  		if($responce['error']==0){
- 			$testCaseHash = $this->getTestCaseHashId($responce['insert_id']);
+ 			$testCaseHash = $this->createTestCaseHashId($responce['insert_id']);
  			$this->addInputOutput($testCaseHash,$info['input'],$info['output']);
  			$hash_data=array();
  			$hash_data['testCaseIdHash']=$testCaseHash;

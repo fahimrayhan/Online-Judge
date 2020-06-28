@@ -30,7 +30,6 @@ class SiteEnter {
  	array_push($error_msg, $this->fullNameValidator($info['userFullName']));
  	array_push($error_msg, $this->handleValidator($info['userHandle']));
  	array_push($error_msg, $this->emailValidator($info['userEmail']));
- 	//array_push($error_msg, $this->ewuIdValidaor($info['userEwuId']));
  	array_push($error_msg, $this->passwordValidator($info['userPassword'],$info['userCpassword']));
 
  	$msg="";
@@ -43,15 +42,13 @@ class SiteEnter {
  	if($error==0){
  		unset($info['userCpassword']);
  		$info['userRegistrationDate']=$this->DB->date();
- 		//$info['userEwuId']=$this->getEwuIdJson($info['userEwuId']);
  		$info['userPassword']=$this->Hash->userPasswordHash($info['userPassword']);
- 		$info['userPhoto']='file/user_photo/avatar.jpg';
+ 		$info['userPhoto']='user_file/user_photo/avatar.jpg';
  		$response=$this->DB->pushData("users","insert",$info,true);
  		$msg="Registration Is Sucessfully Compleated.";
         $response=json_decode($response,true);
  	}
 
-    // make session
     if($error==0){
         $_SESSION['oj_login_handle_id']=$response['insert_id'];
     }
@@ -59,20 +56,7 @@ class SiteEnter {
  	return $this->DB->makeJsonMsg($error,$msg);
  }
 
- public function updateUserPhoto($fileInfo){
 
- 	$userId=$this->DB->isLoggedIn;
-
- 	$fileExplode     = explode('.', $fileInfo["file"]["name"]);
-    $fileExt      = end($fileExplode);
-    $fileName     = $this->Hash->userProfilePhotoHash($userId).".$fileExt";
-    $uploadLocation = 'file/user_photo/' . $fileName;
-    move_uploaded_file($fileInfo["file"]["tmp_name"], $uploadLocation);
-    $data=array();
-    $data['userId']=$userId;
-    $data['userPhoto']=$uploadLocation;
-    return $this->DB->pushData("users","update",$data,true);
- }
 
 
  public function updatePassword($info){
