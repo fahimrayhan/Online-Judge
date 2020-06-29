@@ -1,12 +1,22 @@
 
 input[type=text], input[type=password] {
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px 12px;
     margin: 8px 0;
     display: inline-block;
 	background-color: #F5F3F3;
     border: 1px solid #ccc;
 	border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.inputClass{
+    padding: 10px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    background-color: #F5F3F3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     box-sizing: border-box;
 }
 

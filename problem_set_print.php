@@ -1,3 +1,6 @@
+
+
+
 <link rel="stylesheet" type="text/css" href="style/css/problem.css">
 <link rel="stylesheet" type="text/css" href="style/css/color.css">
 <link rel="stylesheet" type="text/css" href="style/lib/bootstrap/css/bootstrap.min.css">
@@ -31,7 +34,7 @@
 <div class="col-md-8">
 <div class="problemSet">
 <div class="logoArea">
-	<div class="logo"><img src="file/site_metarial/favicon.png" class="logoImg">oderOJ</div>
+	<div class="logo">CoderOJ</div>
 </div>
 <?php
 	include "script.php";
@@ -39,8 +42,6 @@
 	$problemData=$Problem->getProblemInfo($problemId);
 	$problemData['problemName']=$problemData['problemId'].". ".$problemData['problemName'];
 	$ProblemFormat->buildProblemFormat($problemData);
-
-
 ?>
 
 </div>

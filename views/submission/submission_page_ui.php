@@ -132,6 +132,7 @@
                 		<td class="td1 submissionTd1 submissionTd">#</td>
                 		<td class="td1 submissionTd1 submissionTd">CPU</td>
                 		<td class="td1 submissionTd1 submissionTd">Memory</td>
+                        <td class="td1 submissionTd1 submissionTd">Point</td>
                 		<td class="td1 submissionTd1 submissionTd"></td>
                 	</tr>
                     </thead>
@@ -145,6 +146,7 @@
                 		<td class="td2 submissionTd submissionTd2" id="<?php echo $c ?>_sl"><?php echo $c; ?></td>
                 		<td class="td2 submissionTd submissionTd2" id="<?php echo $c ?>_cpu"><?php echo $value['totalTime']; ?> s</td>
                 		<td class="td2 submissionTd submissionTd2" id="<?php echo $c ?>_memory"><?php echo $value['totalMemory']; ?> KB</td>
+                        <td class="td2 submissionTd submissionTd2" id="<?php echo $c ?>_point"><?php echo $value['point']; ?></td>
                 		<td class="td2 submissionTd submissionTd2 submissionVerdictTd" id="<?php echo $c ?>_verdict"><?php echo $value['judgeStatus']; ?></td>
                 	</tr>
                 	<?php } ?>

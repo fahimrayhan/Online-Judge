@@ -27,6 +27,7 @@
 	}
 
 	if(isset($_POST['createSubmission'])){
+		$_POST['createSubmission']['submissionJudgeType']="partial";
 		echo $Submission->createSubmission($_POST['createSubmission'],1);
 	}
 	else if(isset($_POST['getModeratorsList'])){

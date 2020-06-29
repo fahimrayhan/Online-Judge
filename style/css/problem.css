@@ -188,3 +188,8 @@
 	margin-bottom: -15px;
 	color: #FFA14C;
 }
+
+.label-partial-passed{
+	background-color: #F47B3C;
+	color: #ffffff;
+}

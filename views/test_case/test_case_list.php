@@ -8,6 +8,7 @@
 		<td class='td1'>Order</td>
 		<td class='td1'>Input File</td>
 		<td class='td1'>Output File</td>
+		<td class='td1'>Points</td>
 		<td class='td1'>Added Date</td>
 		<td class='td1'>Added By</td>
 		<td class='td1'></td>
@@ -26,12 +27,14 @@
 			$outputUrl=$value['outputUrl'];
 			$outputSize=$value['outputFileSize'];
 			$hashId=$value['testCaseIdHash'];
+			$point=$value['testCasePoint'];
 		?>
 
 		<tr>
 			<td class='td2'><?php echo "$c"; ?></td>
 			<td class='td2'><a href='<?php echo $inputUrl; ?>' target='_blank'><?php echo "input-$c.txt ($inputSize Bytes)"; ?></a> | <a title="Download Input File" href="download.php?file=<?php echo $inputUrl; ?>"><i class="fa fa-download"></i></a></td>
 			<td class='td2'><a href='<?php echo $outputUrl; ?>' target='_blank'><?php echo "output-$c.txt ($outputSize Bytes)"; ?></a> | <a title="Download Output File" href="download.php?file=<?php echo $outputUrl; ?>"><i class="fa fa-download"></i></a></td>
+			<td class='td2'><?php echo "$point"; ?></td>
 			<td class='td2'><?php echo "$date"; ?></td>
 			<td class='td2'><a href="profile.php?id=<?php echo $userId ?>"><?php echo "$handle"; ?></a></td>
 			<td class='td2'> 

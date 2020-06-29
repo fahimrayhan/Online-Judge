@@ -47,8 +47,9 @@ function setTestCaseInfo(){
   			td_sl="<td class='td2 submissionTd submissionTd2' id='"+sl+"_sl'>"+value.testCaseSerialNo+"</td>";
   			td_cpu="<td class='td2 submissionTd submissionTd2' id='"+sl+"_cpu'>"+value.totalTime+" s</td>";
   			td_memory="<td class='td2 submissionTd submissionTd2' id='"+sl+"_memory'>"+value.totalMemory+" KB</td>";
+  			td_point="<td class='td2 submissionTd submissionTd2' id='"+sl+"_point'>"+value.point+"</td>";
   			td_verdict="<td class='td2 submissionTd submissionTd2 submissionVerdictTd' id='"+sl+"_verdict'>"+value.judgeStatus+"</td>";
-  			tr_build="<tr class='submissionTr'>"+td_sl+td_cpu+td_memory+td_verdict+"</tr>";
+  			tr_build="<tr class='submissionTr'>"+td_sl+td_cpu+td_memory+td_point+td_verdict+"</tr>";
   			$('#testCaseTable tr:last').after(tr_build);
 		});
 		testCaseReady=submissionInfo.testCaseReady;
@@ -59,6 +60,7 @@ function setTestCaseInfo(){
 			$("#"+sl+"_verdict").html(value.judgeStatus);
   			$("#"+sl+"_cpu").html(value.totalTime+" s");
   			$("#"+sl+"_memory").html(value.totalMemory+" KB");	
+  			$("#"+sl+"_point").html(value.point);	
 		});
 	}	
 }

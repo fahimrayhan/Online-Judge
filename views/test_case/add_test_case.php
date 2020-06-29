@@ -67,6 +67,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-12">
+		<div style="margin-top: 15px;"></div>
+		<b style='font-size: 17px;'>Point</b> 
+		<input type="number" name="" id="testCasePoint" class="inputClass" value="1" placeholder="Enter Test Case Point">
+	</div>
 </div>
 <div style="margin-top: 15px;"></div>
 <center><button id="addTestCase" onclick='problemTestCase.saveTestCase()'>Add Test Case</button></center>

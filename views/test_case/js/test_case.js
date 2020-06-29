@@ -130,6 +130,7 @@ var problemTestCase = {
 		
 		var inputFilterData = this.filterTestCaseData(this.inputEditorType,"Input");
 		var outputFilterData = this.filterTestCaseData(this.outputEditorType,"Output");
+		var testCasePoint = $("#testCasePoint").val();
 
 		if(inputFilterData.error !=""){
 			toast.danger(inputFilterData.error);
@@ -139,11 +140,16 @@ var problemTestCase = {
 			toast.danger(outputFilterData.error);
 			return;
 		}
+		if(testCasePoint==""){
+			toast.danger("Enter Test Case Point");
+			return;
+		}
 
 		var data = {
 			problemId : this.problemId,
 			inputData : inputFilterData.data,
-			outputData : outputFilterData.data
+			outputData : outputFilterData.data,
+			testCasePoint : testCasePoint
 		}
 		//console.log(filterInputData['data']);
 		btn.off("addTestCase","Saving");
@@ -159,6 +165,7 @@ var problemTestCase = {
 	updateTestCase : function(e){
 		var inputFilterData = this.filterTestCaseData(this.inputEditorType,"Input");
 		var outputFilterData = this.filterTestCaseData(this.outputEditorType,"Output");
+		var testCasePoint = $("#testCasePoint").val();
 
 		if(inputFilterData.error !=""){
 			toast.danger(inputFilterData.error);
@@ -168,11 +175,16 @@ var problemTestCase = {
 			toast.danger(outputFilterData.error);
 			return;
 		}
+		if(testCasePoint==""){
+			toast.danger("Enter Test Case Point");
+			return;
+		}
 
 		var data = {
 			testCaseHashId : e.value,
 			inputData : inputFilterData.data,
-			outputData : outputFilterData.data
+			outputData : outputFilterData.data,
+			testCasePoint : testCasePoint
 		}
 		//console.log(filterInputData['data']);
 		btn.off("updateTestCase","Saving");

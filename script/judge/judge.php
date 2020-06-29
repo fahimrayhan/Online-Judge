@@ -241,27 +241,44 @@ class Judge {
 
  	}
 
- 	public function processData(){
- 		if($this->isQueue==1 || $this->isPending==0)
- 			return;
- 		if($this->submissionData['totalTestCase']==$this->submissionData['runOnTest'] || $this->analysisData['verdict']!=3){
+ 	public function setNextJudge(){
+ 		$judgeFinish = 0;
+ 		if($this->submissionData['totalTestCase']==$this->submissionData['runOnTest'])$judgeFinish=1;
+ 		else if($this->submissionData['submissionJudgeType']=="full") {
+ 			if($this->analysisData['verdict']!=3)$judgeFinish=1;
+ 		}
+ 		if($judgeFinish==1){
  			$this->saveSubmissionData['judgeComplete']=1;
  			$this->saveSubmissionData['submissionVerdict']=$this->analysisData['verdict'];
  			$this->saveSubmissionData['maxTimeLimit']=max($this->analysisData['time'],$this->submissionData['runOnMaxTime']);
  			$this->saveSubmissionData['maxMemoryLimit']=max($this->analysisData['memory'],$this->submissionData['runOnMaxMemory']);
  		}
- 		else{
- 			$this->saveSubmissionData['runOnTest']=$this->submissionData['runOnTest']+1;
- 		}
+ 		else $this->saveSubmissionData['runOnTest']=$this->submissionData['runOnTest']+1;
+ 	}
 
+ 	public function processData(){
+ 		if($this->isQueue==1 || $this->isPending==0)
+ 			return;
+ 		
+ 		$testCaseId=$this->submissionData['testCaseId'];
+ 		$testCasePoint = $this->TestCase->getTestCasePoint($testCaseId);
+ 		$passedPoint = $this->analysisData['verdict']==3?$testCasePoint:0;
+ 		
+ 		$this->setNextJudge();
+ 		
+ 		//store submission data
  		$this->saveSubmissionData['submissionId']=$this->submissionData['submissionId'];
+ 		$this->saveSubmissionData['passedPoint']=$this->submissionData['passedPoint']+$passedPoint;
+ 		$this->saveSubmissionData['totalPoint'] = $this->submissionData['totalPoint']+$testCasePoint;
  		$this->saveSubmissionData['runOnMaxTime']=max($this->analysisData['time'],$this->submissionData['runOnMaxTime']);
  		$this->saveSubmissionData['runOnMaxMemory']=max($this->analysisData['memory'],$this->submissionData['runOnMaxMemory']);
 
+ 		//store test case data
  		$this->saveSubmissionTestData['submissionTestCaseId']=$this->submissionData['submissionTestCaseId'];
  		$this->saveSubmissionTestData['verdict']=$this->analysisData['verdict'];
  		$this->saveSubmissionTestData['totalTime']=$this->analysisData['time'];
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
+ 		$this->saveSubmissionTestData['point']=$passedPoint;
 
  		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;

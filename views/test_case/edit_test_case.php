@@ -47,6 +47,7 @@
 	$outputLen = strlen($output);
 	$inputDisplay = $inputLen>=5000?"none":"block";
 	$outputDisplay = $outputLen>=5000?"none":"block";
+	$point = $testCaseData['testCasePoint'];
 ?>
 
 <div id="response"></div>
@@ -101,6 +102,11 @@
 				<input type="text" id="testCaseOutputUrl" placeholder="Enter Output URL">
 			</div>
 		</div>
+	</div>
+	<div class="col-md-12">
+		<div style="margin-top: 15px;"></div>
+		<b style='font-size: 17px;'>Point</b> 
+		<input type="number" name="" id="testCasePoint" class="inputClass" value="<?php echo $point; ?>" placeholder="Enter Test Case Point">
 	</div>
 </div>
 <div style="margin-top: 15px;"></div>

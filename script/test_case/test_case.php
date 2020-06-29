@@ -30,8 +30,15 @@ class TestCase {
  		return "";
  	}
 
+ 	public function getTestCasePoint($testCaseId){
+ 		$sql = "select testCasePoint from test_case where testCaseId = $testCaseId";
+ 		$data=$this->DB->getData($sql);
+ 		if(isset($data[0]))return $data[0]['testCasePoint'];
+ 		return 0;
+ 	}
+
  	public function getTestCaseList($problemId,$json=false){
- 		$sql="select testCaseId,userHandle,userId,testCaseAddedDate,testCaseIdHash from test_case 
+ 		$sql="select testCaseId,userHandle,userId,testCaseAddedDate,testCaseIdHash,testCasePoint from test_case 
  		natural join users
  		where problemId=$problemId";
  		$data=$this->DB->getData($sql);
@@ -61,6 +68,7 @@ class TestCase {
  		$data['problemId']=$info['problemId'];
  		$data['testCaseAddedDate']=$this->DB->date();
  		$data['userId']=$this->DB->isLoggedIn;
+ 		$data['testCasePoint']=$info['testCasePoint'];
  		$responce=$this->DB->pushData("test_case","insert",$data);
  		if($responce['error']==0){
  			$testCaseHash = $this->createTestCaseHashId($responce['insert_id']);
@@ -90,6 +98,16 @@ class TestCase {
 
  	public function updateTestCase($info){
  		$testCaseHashId=$info['testCaseHashId'];
+ 		
+ 		if($this->DB->isLoggedIn==0)return;
+ 		$sql="select testCaseId from test_case where testCaseIdHash='$testCaseHashId'";
+ 		$data=$this->DB->getData($sql);
+ 		if(!isset($data[0]))return;
+ 		$data=$data[0];
+ 		$data['testCasePoint']=$info['testCasePoint'];
+ 		$this->DB->pushData("test_case","update",$data);
+
+ 		
  		$info['input'] = $this->getFieldTxtData($info['inputData']);
  		$info['output'] = $this->getFieldTxtData($info['outputData']);
  		file_put_contents($this->getInputFilePath($testCaseHashId), $info['input']);
@@ -110,10 +128,14 @@ class TestCase {
  	}
 
  	public function getTestCaseData($testCaseHash){
- 		$data=array();
- 		$data['input']=$this->Site->readFile($this->getInputFilePath($testCaseHash));
- 		$data['output']=$this->Site->readFile($this->getOutputFilePath($testCaseHash));
-		return $data;
+ 		$sql="select testCasePoint from test_case where testCaseIdHash='$testCaseHash'";
+ 		$data=$this->DB->getData($sql);
+ 		if(!isset($data[0]))return;
+ 		$retData=array();
+ 		$retData['input']=$this->Site->readFile($this->getInputFilePath($testCaseHash));
+ 		$retData['output']=$this->Site->readFile($this->getOutputFilePath($testCaseHash));
+ 		$retData['testCasePoint']=$data[0]['testCasePoint'];
+		return $retData;
  	}
  	
 }
