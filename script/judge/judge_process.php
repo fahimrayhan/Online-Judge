@@ -7,6 +7,8 @@ class JudgeProcess {
    	public $testCaseReady;
    	public $submissionInfo=array();
    	public $testCaseList=array();
+   	public $recursionStartTime;
+	public $isPreviousData = 0;
  	
  	public function __construct(){
      	$this->DB=new Database();
@@ -40,21 +42,30 @@ class JudgeProcess {
  		}
  	}
 
- 	public function processMultipleSubmission($totalProcess=1){
+ 	public function processMultipleSubmission($isStart=true){
 
  		/*******************************************************************************
 		*	@ process multiple submission. total submission execute in this function is 50
 		* 	@ 50 times call single submission function 
  		********************************************************************************/
+ 		if($isStart)$this->recursionStartTime = strtotime($this->DB->date());
+        $now = strtotime($this->DB->date());
+        if(($now-$this->recursionStartTime)>=55)return;
 
  		$this->processSingleSubmission();
 	    
-	    if($totalProcess<=45){
-	        sleep(1);
-	        $this->processMultipleSubmission($totalProcess+1);
-	    }
+	    if($this->isPreviousData==0)sleep(1);
+        else usleep(100000);//sleep 0.1 second for cron job database problem
+        $this->processMultipleSubmission(false);
 
 	    return;
+ 	}
+
+ 	public function getTotalRunningSubmission(){
+ 		$sql="select count(*) as total from submissions where judgeComplete=0 and testCaseReady=1";
+ 		$info=$this->DB->getData($sql);
+ 		if(isset($info[0]))return $info[0]['total'];
+ 		return 0;
  	}
 
  	public function getSubmissionInQueue(){
@@ -65,6 +76,8 @@ class JudgeProcess {
 		*		-> 0 = processing this submission
 		*		-> 1 = ready for judge
  		********************************************************************************/
+ 		$totalRunning = $this->getTotalRunningSubmission();
+ 		if($totalRunning>6)return $this->submissionProcessId=-1;
 
  		$sql="select submissions.*,problems.cpuTimeLimit,problems.memoryLimit from submissions join problems on problems.problemId=submissions.problemId where testCaseReady=-1 limit 1";
  		$info=$this->DB->getData($sql);

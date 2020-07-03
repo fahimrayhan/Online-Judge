@@ -216,7 +216,9 @@ class Submission {
  		$info['submissionType']=$submissionType;
  		$info['userId']=$this->loggedIn;
  		$info['submissionTime']=$this->DB->date();
- 		$response=$this->DB->pushData("submissions","insert",$info,true);
+ 		for($i=1; $i<=15; $i++){
+ 			$response=$this->DB->pushData("submissions","insert",$info,true);
+ 		}
  		$data['msg']=$response;
  		return json_encode($data);
  	}
