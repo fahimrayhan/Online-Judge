@@ -5,6 +5,14 @@ class Site {
         $this->DB = new Database();
         $this->conn = $this->DB->conn;
     }
+
+    public function goRedirectPage($url,$alert=""){
+        
+        if($alert!=""){
+            echo "<script>alert('$alert')</script>";
+        }
+        //echo "<script>window.location.replace('$url');</script>";
+    }
     public function getBackPageUrl() {
         $main_url = $_SERVER['REQUEST_URI'];
         $url = explode('/', $main_url);

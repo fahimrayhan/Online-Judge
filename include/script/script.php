@@ -13,6 +13,8 @@
 	include "script/judge/judge_process.php";
 	include "script/file/file.php";
 	include "script/download/download.php";
+	include "script/contest/contest.php";
+	include "script/form_builder/form_builder.php";
 	$DB=new Database();
 
 	$isLoggedIn=(isset($_SESSION['oj_login_handle_id']))?1:0;
@@ -28,6 +30,8 @@
 	$Submission=new Submission();
 	$JudgeProcess=new JudgeProcess();
 	$Download=new Download();
+	$Contest=new Contest();
+	$FormBuilder=new FormBuilder();
 
 	$File=new File();
 

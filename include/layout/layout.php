@@ -15,11 +15,17 @@
     
     <head>
         <?php
-            include "include/layout/nav_bar.php"; 
+            $currentPageLink = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $isContestArena = strpos($currentPageLink, 'contest_arena.php') !== false;
+            //$isContestArena=0;
+            if($isContestArena==0)include "include/layout/nav_bar.php"; 
             include "include/layout/modal_lib.php"; 
 
          ?>
     </head>
 
-	<body class="theme-blue">
-	   <div class="container" style="height: 100%; margin-top: 90px;">  
+    <body class="theme-blue">
+       <?php 
+            if($isContestArena==0)echo '<div class="container" style="height: 100%; margin-top: 90px;">';
+            else echo '<div class="containerr">';
+       ?>  

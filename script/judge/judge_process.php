@@ -77,7 +77,7 @@ class JudgeProcess {
 		*		-> 1 = ready for judge
  		********************************************************************************/
  		$totalRunning = $this->getTotalRunningSubmission();
- 		if($totalRunning>6)return $this->submissionProcessId=-1;
+ 		if($totalRunning>=10)return $this->submissionProcessId=-1;
 
  		$sql="select submissions.*,problems.cpuTimeLimit,problems.memoryLimit from submissions join problems on problems.problemId=submissions.problemId where testCaseReady=-1 limit 1";
  		$info=$this->DB->getData($sql);

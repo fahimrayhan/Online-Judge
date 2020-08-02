@@ -11,7 +11,7 @@ class Judge {
 	public $saveSubmissionTestData=array();
 	public $recursionStartTime;
 	public $isPreviousData = 0;
-	public $apiUrl="http://judge-server.somokoon.com/api.php";
+	public $apiUrl="http://judge-server.coderoj.com/api.php";
 
  	public function __construct($serverNo){
      	$this->DB=new Database();
@@ -65,11 +65,20 @@ class Judge {
  	}
 
  	public function getSubmissionTestCase(){
- 		$serverNo1=$this->serverNo;
- 		$serverNo2=$serverNo1+3;
- 		$serverNo3=$serverNo1+6;
+ 		$totalJudgeServer = 5;
+ 		//server1->1,6,11,16,21
+ 		//server2->2,7,12,17,22
+ 		//server3->3,8,13,18,23
+ 		$serverSql = "";
+ 		$modServerVal=$totalJudgeServer*$totalJudgeServer;
+ 		for($i=0; $i<$totalJudgeServer; $i++){
+ 			$serverNo = $this->serverNo+($totalJudgeServer*$i);
+ 			$serverSql.="submissionId % $modServerVal = ".$serverNo;
+ 			if($i!=($totalJudgeServer-1))$serverSql.=" or ";
+ 		}
+ 		if($serverSql!="")$serverSql="(".$serverSql.")";
  		$sql="select * from submissions natural join submissions_on_test_case where
- 		(submissionId % 9 = $serverNo1 or submissionId % 9 = $serverNo2 or submissionId % 9 = $serverNo3 ) and runOnTest = testCaseSerialNo and judgeStatus = -1 and testCaseReady = 1 and judgeComplete=0";
+ 		$serverSql and runOnTest = testCaseSerialNo and judgeStatus = -1 and testCaseReady = 1 and judgeComplete=0";
 
 
  		$data=$this->DB->getData($sql);
@@ -135,7 +144,7 @@ class Judge {
  		//return;
 
  		$problemId=$this->submissionData['problemId'];
- 		$sql="select cpuTimeLimit,memoryLimit from problems where problemId=$problemId";
+ 		$sql="select checker,cpuTimeLimit,memoryLimit from problems where problemId=$problemId";
  		$problemData=$this->DB->getData($sql);
  		$problemData=$problemData[0];
 
@@ -152,6 +161,7 @@ class Judge {
  		$data['languageId']=$this->submissionData['languageId'];
  		$data['timeLimit']=$problemData['cpuTimeLimit'];
  		$data['memoryLimit']=$problemData['memoryLimit'];
+ 		$data['checker']=base64_encode($problemData['checker']);
 
 
         $token=$this->sendCurlRequestForToken($data);
@@ -234,6 +244,7 @@ class Judge {
  		$this->analysisData['verdict']=$data['status']['id'];
  		$this->analysisData['memory']=$data['memory']==null?0:$data['memory'];
  		$this->analysisData['time']=$data['time']==null?0:$data['time'];
+ 		$this->analysisData['checkerLog']=$data['checkerLog'];
 
  		$this->isQueue=0;
  		if($this->analysisData['verdict']<=2)
@@ -244,7 +255,7 @@ class Judge {
  	public function setNextJudge(){
  		$judgeFinish = 0;
  		if($this->submissionData['totalTestCase']==$this->submissionData['runOnTest'])$judgeFinish=1;
- 		else if($this->submissionData['submissionJudgeType']=="full") {
+ 		else if($this->submissionData['submissionJudgeType']=="binary") {
  			if($this->analysisData['verdict']!=3)$judgeFinish=1;
  		}
  		if($judgeFinish==1){
@@ -279,6 +290,7 @@ class Judge {
  		$this->saveSubmissionTestData['totalTime']=$this->analysisData['time'];
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
  		$this->saveSubmissionTestData['point']=$passedPoint;
+ 		$this->saveSubmissionTestData['checkerLog']=$this->DB->buildSqlString($this->analysisData['checkerLog']);
 
  		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;

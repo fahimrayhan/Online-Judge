@@ -22,6 +22,21 @@
 		include "views/test_case/add_test_case.php";
 	}
 
+	else if(isset($_POST['loadViewProblem'])){
+		$problemId=$_POST['loadViewProblem'];
+		include "views/problems/problems_dashboard/problem_action_dashboard/view_problem.php";
+	}
+
+	else if(isset($_POST['loadCheckerPage'])){
+		$problemId=$_POST['loadCheckerPage'];
+		include "views/problems/problems_dashboard/problem_action_dashboard/checker.php";
+	}
+
+	else if(isset($_POST['saveChecker'])){
+		$data = $_POST['saveChecker'];
+		$data['checker'] = base64_decode($data['checker']);
+		$Problem->updateProblem($data);
+	}
 
 	else if(isset($_POST['loadEditTestCasePage'])){
 		$hashId=$_POST['loadEditTestCasePage'];

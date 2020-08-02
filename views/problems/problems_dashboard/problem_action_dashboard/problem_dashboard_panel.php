@@ -40,7 +40,7 @@
                 <li id="testCase" onclick="changeOption('testCase')" class="problemNavTab"><i class="fas fa-th-list"></i> Test Case</li>
                 <li id="moderators" onclick="changeOption('moderators')" class="problemNavTab"><i class="fas fa-user-plus"></i> Moderators</li>
                 <li id="testing" onclick="changeOption('testing')" class="problemNavTab"><i class="fas fa-gavel"></i> Testing</li>
-                <li id="" class="problemNavTab"><i class="fas fa-list-alt"></i> Submission</li>
+                <li id="checker" class="problemNavTab" onclick="changeOption('checker')"><i class="fas fa-list-alt"></i> Checker</li>
                 <li id="export" onclick="changeOption('export')" class="problemNavTab"><i class="fa fa-upload"></i> Export</li>
                 <li id="import" onclick="changeOption('import')" class="problemNavTab"><i class="fa fa-download"></i> Import</li>
 
@@ -50,17 +50,14 @@
         </div>
         <div class="box" style="margin-top: -5px">
             <div class="box_body" style="background-color: #ffffff" id="option_box_body">
-                <?php
-                    if($pageActionName=="viewProblem")
-                        include "$path/view_problem.php";
-                ?>
+                
             </div>
         </div>
     </div>
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
-<script type="text/javascript" src="style/lib/editarea_0_8_2/edit_area/edit_area_full.js"></script>
 <script src="style/lib/ckeditor/4.13.1/ckeditor.js"></script>
 <script type="text/javascript" src="views/problems/problems_dashboard/problem_action_dashboard/js/problem_dashboard.js"></script>
+
 

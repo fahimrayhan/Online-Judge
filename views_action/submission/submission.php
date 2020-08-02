@@ -7,7 +7,8 @@
 	}
 
 	else if(isset($_POST['getSubmissionAllInfo'])){
-		echo $Submission->getSubmissionAllInfo($_POST['getSubmissionAllInfo'],true);
+		$data = $Submission->getSubmissionAllInfo($_POST['getSubmissionAllInfo']);
+		echo json_encode($data);
 	}
 
 	else if(isset($_POST['getSubmissionStatusInfo'])){

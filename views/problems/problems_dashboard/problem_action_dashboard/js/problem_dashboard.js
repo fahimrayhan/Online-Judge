@@ -1,12 +1,12 @@
 var dashboard_action_url="problem_dashboard_action.php";
 var moderatorsList;
 var previousActive;
-
+var checkerEditor;
 // page ready event ------------------------------------------
 
 $( document ).ready(function() {
     displayPage();
-     if (window.history && window.history.pushState) {
+    if (window.history && window.history.pushState) {
     	window.history.pushState('forward', null, window.location.search);
     	$(window).on('popstate', function() {
       		backPageUrl();
@@ -24,9 +24,7 @@ function backPageUrl(){
 //site info---------------------------------
 
 function displayPage(){
-	if(pageActionName!="viewProblem" )
-		changeOption(pageActionName);
-	else setOptionActive(pageActionName);
+	changeOption(pageActionName);
 }
 
 function changeUrl(actionName,pageName=""){
@@ -83,7 +81,12 @@ function changeOption(optionName,fromBack=0){
 		loadSettingPage();
 	}
 	else if(optionName=='viewProblem'){
-		location.reload();
+		setHeaderName('viewProblem');
+		loadViewProblem();
+	}
+	else if(optionName=='checker'){
+		setHeaderName('checker');
+		loadCheckerPage();
 	}
 	else{
 		setHeaderName("Problem Overview");
@@ -95,6 +98,15 @@ function changeOption(optionName,fromBack=0){
 //=======================================================
 
 //start setting page 
+
+
+function loadViewProblem(){
+	loader("option_box_body");
+	$.post(dashboard_action_url,buildData("loadViewProblem",problemId),function(response){
+		$("#option_box_body").html(response);
+		if(typeof MathJax !== 'undefined') {MathJax.Hub.Queue(["Typeset",MathJax.Hub]);}
+	});
+}
 
 function loadSettingPage(){
 	loader("option_box_body");
@@ -297,6 +309,35 @@ function loadTestCasePage(){
 
 	$.post(dashboard_action_url,buildData("loadTestCasePage",problemId),function(response){
 		$("#option_box_body").html(response);
+		
 	});
 }
 
+function loadCheckerPage(){
+	loader("option_box_body");
+	$.post(dashboard_action_url,buildData("loadCheckerPage",problemId),function(response){
+		$("#option_box_body").html(response);
+		//setCheckerEditor();
+	});
+}
+
+function setCheckerEditor() {
+    checkerEditor = ace.edit("checkerEditor");
+    checkerEditor.setOption("maxLines", 30);
+    checkerEditor.setOption("minLines", 30);
+    checkerEditor.setReadOnly(false);
+    checkerEditor.getSession().setMode("ace/mode/c_cpp");
+}
+
+function saveChecker(){
+	checkerCode = checkerEditor.getValue("checkerEditor");
+	var data = {
+		'problemId': problemId,
+		'checker': btoa(checkerCode)
+	}
+	btnOff("btnSaveChecker", "Saving");
+	$.post(dashboard_action_url,buildData("saveChecker",data),function(response){
+		toast.success("Successfully Update Checker");
+		btnOn("btnSaveChecker", "Save Checker");
+	});
+}

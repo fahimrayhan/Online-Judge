@@ -10,4 +10,10 @@
 
 	$Judge3=new Judge(2);
 	$Judge3->judgeSubmission();
+
+	$Judge4=new Judge(3);
+	$Judge4->judgeSubmission();
+
+	$Judge5=new Judge(4);
+	$Judge5->judgeSubmission();
 ?>

@@ -1,6 +1,6 @@
 <?php
 	include "header.php";
-	echo "<center>This Feature is Still Working</center>";
+	include "views/contest/contest_list/contest.php";
 	include "footer.php";
 
 

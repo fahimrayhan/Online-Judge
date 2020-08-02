@@ -49,7 +49,7 @@
     }
     .submissionTd1{
         border-width: 0px;
-        background-color: #f5f5f5!important;
+        background-color: #f8f8f8!important;
 
     }
     .submissionTd2{
@@ -91,7 +91,7 @@
 
 <div class='row'>
     <div class='col-md-12 col-sm-12'>
-        <div class="box">
+        <div class="boxx" style="margin-bottom: 20px">
         	<div class="box_header submissionHeader">Submission
             </div>
            	<div class="box_body subBody" style="overflow-x: scroll;scrollbar-width: none;">
@@ -123,7 +123,7 @@
         </div>
     </div>
     <div class='col-md-12 col-sm-12'>
-    	<div class="box">
+    	<div class="boxx" style="margin-bottom: 20px">
     		<div class="box_header submissionHeader">Test Cases</div>
     		<div class="box_body">
     			<table width="100%" id="testCaseTable">
@@ -141,6 +141,9 @@
                         $c=0;
                     foreach ($submissionTestCase as $key => $value) { 
                         $c=$value['testCaseSerialNo'];
+                        $checkerLog =$value['checkerLog'];
+                        $checkerLogTxt = strlen($checkerLog) > 30 ? substr($checkerLog,0,30)."..." : $checkerLog;
+                        $checkerLog = "<span title='$checkerLog'>$checkerLogTxt</span>";
                     ?>
                 	<tr  class="submissionTr">
                 		<td class="td2 submissionTd submissionTd2" id="<?php echo $c ?>_sl"><?php echo $c; ?></td>
@@ -160,7 +163,7 @@
   
     
     <div class='col-md-12'>
-        <div class="box">
+        <div class="boxx">
             <div class="box_header submissionHeader">Source Code</div>
             <div class="box_body" style="">
                 <div id="submissionSourceCodeEditorArea">
