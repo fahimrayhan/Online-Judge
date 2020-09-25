@@ -15,10 +15,9 @@
 	}, 1000);
 
 	function callServer() {
-  		process=1;
   		$.get("test_judge_server.php",function(response) { 
     		$("#response").html(response);
-  			process=0;
+  			//callServer();
   		});
 	}
 </script>

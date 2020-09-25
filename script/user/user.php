@@ -11,7 +11,40 @@ class User
         $this->conn = $this->DB->conn;
         $this->Hash=new SiteHash();
     }
+
+    public function login($loginInfo)
+    {
+        $handle   = $loginInfo['handle'];
+        $password = $this->Hash->userPasswordHash($loginInfo['password']);
+
+        $sql      = "select userId from users where userHandle='$handle' and userPassword='$password'";
+        $data     = $this->DB->getData($sql);
+
+        $error = !isset($data[0]);
+        $errorMsg = "";
+
+        if($error == 0)
+            $_SESSION['oj_login_handle_id'] = $data[0]['userId'];
+
+        $errorMsg = $error?"Your Handle OR Password is Wrong":"Login Sucessfully";
+
+        return [
+            'error'=> $error,
+            'errorMsg'=> $errorMsg
+        ];
+    }
     
+    public function createUser($registerInfo){
+        $registerInfo['userPassword'] = $this->Hash->userPasswordHash($registerInfo['userPassword']);
+        $registerInfo['userRegistrationDate'] = $this->DB->date();
+        $registerInfo['userPhoto']            = 'user_file/user_photo/avatar.jpg';
+        
+        $response  = $this->DB->pushData("users", "insert", $registerInfo);
+        
+        return $response;
+    }
+
+
     public function getUserInfo()
     {
         
@@ -19,6 +52,7 @@ class User
         $data = $this->DB->getData($sql);
         return $data;
     }
+
     
     public function changeUserRole($userId,$userRole)
     {
@@ -35,7 +69,7 @@ class User
         return $data;
     }
 
-     public function updateUserPhoto($fileInfo){
+    public function updateUserPhoto($fileInfo){
         $userId=$this->DB->isLoggedIn;
         if($userId == 0)return;
 

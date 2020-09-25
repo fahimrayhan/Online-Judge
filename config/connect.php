@@ -196,6 +196,8 @@ class Database
             $error['error_msg'] = $this->errorTypeFind(mysqli_error($this->conn));
         }
         
+        $error['errorMsg'] = $error['error_msg'];
+        
         return $json?json_encode($error):$error;
     }
 

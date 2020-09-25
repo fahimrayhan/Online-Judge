@@ -21,11 +21,19 @@
 	}
 
 	if(isset($_POST['saveData'])){
-		//print_r($_POST);
+		$registrationData = $_POST['saveData']['registrationData'];
+		$registrationData = urldecode($registrationData);
+		$registrationData = explode('&', $registrationData);
+		$registrationProcessData = array();
+		foreach ($registrationData as $key => $value) {
+			$value = explode('=', $value);
+			if(!isset($value[0]))continue;
+			$registrationProcessData[$value[0]] = isset($value[1])?$value[1]:"";
+		}
 		//print_r($_GET);
 		$formData = array();
-		parse_str($_POST['saveData']['registrationData'], $formData);
-		$data['registrationInfo'] = json_encode($formData);
+
+		$data['registrationInfo'] = json_encode($registrationProcessData);
 		$data['contestId'] = $_POST['saveData']['contestId'];
 		$Contest->contestRegistration($data);
 	}

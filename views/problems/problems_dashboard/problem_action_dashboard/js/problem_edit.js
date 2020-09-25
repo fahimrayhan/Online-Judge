@@ -116,7 +116,7 @@ var problemEditor = {
 function uploadImage(){
   modal_action("lg", "Upload Image");
   loader("modal_lg_body");
-  $.post(dashboard_action_url, buildData("uploadImage", problemEditor.getEditorData()), function (response) {
+  $.post(dashboard_action_url, buildProblemData("uploadImage", problemEditor.getEditorData()), function (response) {
     $("#modal_lg_body").html(response);
   });
 }
@@ -124,7 +124,7 @@ function uploadImage(){
 function previewProblem() {
   modal_action("lg", "Problem Preview");
   loader("modal_lg_body");
-  $.post(dashboard_action_url, buildData("previewProblem", problemEditor.getEditorData()), function (response) {
+  $.post(dashboard_action_url, buildProblemData("previewProblem", problemEditor.getEditorData()), function (response) {
     
       $("#modal_lg_body").empty().append("<p>"+response+"</p>");
   });
@@ -132,7 +132,7 @@ function previewProblem() {
 
 function updateProblem() {
   btnOff("btn_update_problem", "Saving....");
-  $.post(dashboard_action_url, buildData("updateProblem", problemEditor.getEditorData()), function (response) {
+  $.post(dashboard_action_url, buildProblemData("updateProblem", problemEditor.getEditorData()), function (response) {
     toast.success("Problem Update Successfully");
     btnOn("btn_update_problem","Save Change");
   });

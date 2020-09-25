@@ -26,14 +26,13 @@ optgroup
 
 </style>
 
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 <div class="boxHeader">Option Select</div>
 <div class="boxBody" style="margin-bottom: 20px;">
 
-<input type="text" placeholder="Title" onkeyup="changeOptionGlobal(this)" name="title" id="formOptionTitle" autocomplete="off">
+<input type="text"  placeholder="Title" onkeyup="changeOptionGlobal(this)" name="title" id="formOptionTitle" autocomplete="off">
 <textarea placeholder="Description" onkeyup="changeOptionGlobal(this)" name="description" id="formOptionMessage"></textarea>
-
+<input type="text"  placeholder="Question Hint" onkeyup="changeOptionGlobal(this)"  name="hint" id="questionHint" autocomplete="off">
 <select name="type" id="formType" onchange="selectInputType(this)">
 	<option value="">Select Input Type</option>
 	<optgroup ></optgroup>
@@ -41,78 +40,82 @@ optgroup
 		<option value="number">Number</option>
 		<option value="range">Range</option>
 		<option value="month">Month</option>
-	
+
 	<optgroup ></optgroup>
 	<option value="select">Select</option>
 	<option value="textarea">Textarea</option>
 	<option value="checkbox">Checkbox</option>
-	
+
 </select>
 
 </div>
 <div class="boxHeader">Preview Option</div>
 <div class="boxBody">
-	
+
 	<form action="" method="post" id="testFormOption">
 		<div id="previewFullArea">
 			<div id="previewTitle" class="formOptionTitle"></div>
 			<div id="previewDescription" class="formOptionDescription"></div>
 			<div id="previewArea">
-		
+
 			</div>
+			<small class="form-text text-muted" id="formQuestionHint"></small>
 			<button type="submit" style="margin-top: 15px;width: 100%">Test Option</button>
 		</div>
 	</form>
-			
+
 </div>
 <div class="boxBody" style="margin-top: 15px;">
 	<div id="previewJson">
-				
+
 	</div>
 </div>
 
 
 <script type="text/javascript">
-	
+
 	$(document).ready(function(){
   		$("#testFormOption").submit(function(event){
-    		event.preventDefault(); //prevent default action 
+    		event.preventDefault(); //prevent default action
     		var post_url = $(this).attr("action"); //get form action url
     		var formData = $(this).serializeArray();
     		alert("OK");
   		});
 
   		$("#addForm").submit(function(event){
-    	event.preventDefault(); //prevent default action 
-    	var post_url = $(this).attr("action"); //get form action url
-    	var formData = $(this).serializeArray(); //Encode form elements for submission
-    	var printFormData = {};
-    	$.each(formData, function( key, value ) {
-    		console.log(value);
-  			printFormData[value.name] = value.value;
-  			
-		});
+    		event.preventDefault(); //prevent default action
+    		var post_url = $(this).attr("action"); //get form action url
+    		var formData = $(this).serializeArray(); //Encode form elements for submission
 
-		//console.log(printFormData);
 
-    	var jsonData = JSON.stringify(printFormData);
-    	console.log(jsonData);
-    	//$("#previewJson").html(jsonData);
-    	var data = {
-    		'contestId': 3,
-    		'optionName': $("#optionName").val(),
-    		'formType': $("#formType").val(),
-    		'formOptionTitle': $("#formOptionTitle").val(),
-    		'formOptionMessage': $("#formOptionMessage").val(),
-    		'registrationData': formData
-    	}
-    	console.log(data);
+			formType = $("#formType").val();
 
-    		$.post( "contest_arena_action.php", {'addFormField':data}, function( response ) {
-      			alert(response);
+			var formData = Object.assign({}, formData);
+
+			if(formType == "select"){
+				formData.options = optionList;
+			}
+
+    		var data1 = {
+    			'formType': $("#formType").val(),
+    			'formQuestionTitle': $("#formOptionTitle").val(),
+    			'formQuestionDescription': $("#formOptionMessage").val(),
+    			'formQuestionHint': $("#questionHint").val(),
+    			'formQuestionInputData': formData
+    		}
+    		var data = {
+    			'formId': 1,
+    			'addQuestion': data1
+    		}
+
+    		console.log(data);
+
+    		$.post( "form_action.php", data , function( response ) {
+      			//alert(response);
+      			$("#previewJson").html(response);
     		});
   		});
 	});
-	
-	
+
+
 </script>

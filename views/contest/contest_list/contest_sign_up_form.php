@@ -128,18 +128,23 @@
   Please fill this form before starting this contest
 </div>
 <?php 
-    foreach ($contestSignUpForm as $key => $value) {
+  $contestId = 3;
+  $contestInfo = $Contest->getContestInfo($contestId);
+  $formId = $contestInfo['formId'];
+  $questionList = $Form->formQuestionList(array('formId'=>$formId));
+  foreach ($questionList as $key => $value) { 
+
      // print_r($value['formOption']);
   ?>
 <div class="boxBody" style="margin-bottom: 15px;">
   <div class="formOptionTitle">
-    <?php echo $value['formOptionTitle']; ?>
+    <?php echo $value['formQuestionTitle']; ?>
   </div>
   <div class="formOptionDescription">
-    <div class="contestFormInputMsg"><?php echo $value['formOptionMessage']; ?></div>
+    <div class="contestFormInputMsg"><?php echo $value['formQuestionDescription']; ?></div>
   </div>
   <div class="formOption">
-    <?php $FormBuilder->buildField($value['formOption']); ?>
+    <?php $FormBuilder->buildField(json_decode($value['formQuestionInputData'],true)); ?>
   </div>
 </div>
 <?php } ?>
@@ -150,7 +155,6 @@
 
 </form>
 </div>
-<input type="" autocomplete='off' name="">
 
 <script type="text/javascript">
   var contestId = <?php echo $contestId; ?>;

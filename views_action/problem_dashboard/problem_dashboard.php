@@ -5,6 +5,22 @@
 		return;
 	}
 
+	if(isset($_POST['problemId'])){
+		$problemId = $_POST['problemId'];
+		$ok = 1;
+
+		$checkProblemInProblemSet = $Problem->checkProblemInProblemSet($problemId);
+        if($checkProblemInProblemSet ==0 )$ok=0;
+
+        $problemRoles=$Problem->checkProblemModeratorRoles($problemId);
+        if($problemRoles == -1)$ok=0;
+        if($ok == 0){
+        	include "404.php";
+        	return;
+        }
+
+	}
+
 	
 	if(isset($_POST['previewProblem'])){
 		$ProblemFormat->buildProblemFormat($_POST['previewProblem']);

@@ -10,6 +10,7 @@
 </style>
 <div class="homeDashboard">
 	<div class="box">
+		<div id="dashboardCounter"></div>
 		<div class="box_body" id="dashboardArea">
 			
 		</div>

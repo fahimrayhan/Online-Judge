@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 02, 2020 at 07:36 PM
+-- Generation Time: Sep 02, 2020 at 12:45 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -37,13 +37,14 @@ CREATE TABLE `contest` (
   `contestBanner` text DEFAULT NULL,
   `contestStart` datetime NOT NULL,
   `contestDuration` int(11) NOT NULL DEFAULT 300,
-  `contestFreeze` enum('Enable','Disable') NOT NULL DEFAULT 'Disable',
+  `contestFreeze` enum('true','false') NOT NULL DEFAULT 'false',
   `contestFreezePeriod` int(11) NOT NULL DEFAULT 0,
-  `contestUnFreeze` enum('Yes','No') NOT NULL DEFAULT 'No',
-  `registrationButton` enum('Show','Hide') NOT NULL DEFAULT 'Hide',
+  `contestUnFreeze` enum('true','false') NOT NULL DEFAULT 'false',
+  `registrationClose` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `registrationAutoAccept` enum('true','false') NOT NULL DEFAULT 'false',
   `participateMainName` text NOT NULL,
   `participateSubName` text NOT NULL,
-  `contestPublish` enum('Yes','No') NOT NULL DEFAULT 'No',
+  `contestPublish` enum('true','false') NOT NULL DEFAULT 'false',
   `userId` int(11) NOT NULL,
   `contestAddedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -54,11 +55,6 @@ CREATE TABLE `contest` (
 DELIMITER $$
 CREATE TRIGGER `TG_InsertContestModerator` AFTER INSERT ON `contest` FOR EACH ROW INSERT INTO contest_moderator (contestId,userId,moderatorRoles)
 VALUES (NEW.contestId,new.userId,10)
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `TG_InsertContestSetting` AFTER INSERT ON `contest` FOR EACH ROW INSERT INTO contest_setting (contestId)
-VALUES (NEW.contestId)
 $$
 DELIMITER ;
 
@@ -84,7 +80,8 @@ CREATE TABLE `contest_moderator` (
 CREATE TABLE `contest_problem_set` (
   `contestProblemSetId` int(11) NOT NULL,
   `contestId` int(11) NOT NULL,
-  `problemId` int(11) NOT NULL
+  `problemId` int(11) NOT NULL,
+  `problemSerial` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -98,7 +95,7 @@ CREATE TABLE `contest_registration` (
   `contestId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `registrationInfo` text NOT NULL,
-  `registrationStatus` enum('Active','Pending') NOT NULL DEFAULT 'Pending',
+  `registrationStatus` enum('Accepted','Pending') NOT NULL DEFAULT 'Pending',
   `tempUser` enum('Yes','No') NOT NULL DEFAULT 'No',
   `tempUserPassword` text DEFAULT NULL,
   `registrationTime` datetime NOT NULL
@@ -118,20 +115,6 @@ CREATE TABLE `contest_registration_form` (
   `formOptionData` text NOT NULL,
   `formOptionMessage` text NOT NULL,
   `optionSerial` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contest_setting`
---
-
-CREATE TABLE `contest_setting` (
-  `contestSettingId` int(11) NOT NULL,
-  `contestId` int(11) NOT NULL,
-  `registrationButton` enum('Show','Hide') NOT NULL DEFAULT 'Hide',
-  `participateMainName` text DEFAULT NULL,
-  `participateSubName` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -187,7 +170,7 @@ CREATE TABLE `form_question` (
   `formQuestionId` int(11) NOT NULL,
   `formId` int(11) NOT NULL,
   `formQuestionHashId` text DEFAULT NULL,
-  `formQuestionName` varchar(40) NOT NULL,
+  `formQuestionKey` varchar(40) NOT NULL,
   `formQuestionTitle` text NOT NULL,
   `formQuestionDescription` text NOT NULL,
   `formQuestionInputData` text NOT NULL,
@@ -254,7 +237,7 @@ CREATE TABLE `problems` (
   `inputExample` text DEFAULT NULL,
   `outputExample` text DEFAULT NULL,
   `notes` text DEFAULT NULL,
-  `cpuTimeLimit` float NOT NULL DEFAULT 2,
+  `timeLimit` float NOT NULL DEFAULT 2,
   `memoryLimit` int(11) NOT NULL DEFAULT 128000,
   `checker` text DEFAULT NULL,
   `userId` int(11) NOT NULL,
@@ -299,10 +282,8 @@ CREATE TABLE `submissions` (
   `sourceCode` text NOT NULL,
   `languageId` int(11) NOT NULL,
   `languageName` text DEFAULT NULL,
-  `maxTimeLimit` float NOT NULL DEFAULT 0,
-  `maxMemoryLimit` int(11) NOT NULL DEFAULT 0,
-  `runOnMaxTime` float NOT NULL DEFAULT 0,
-  `runOnMaxMemory` int(11) NOT NULL DEFAULT 0,
+  `maxTime` float NOT NULL DEFAULT 0,
+  `maxMemory` int(11) NOT NULL DEFAULT 0,
   `userId` int(11) NOT NULL,
   `submissionTime` datetime NOT NULL,
   `submissionVerdict` int(11) NOT NULL DEFAULT 1,
@@ -332,7 +313,10 @@ CREATE TABLE `submissions_on_test_case` (
   `totalTime` float NOT NULL DEFAULT 0,
   `totalMemory` int(11) NOT NULL DEFAULT 0,
   `point` int(11) NOT NULL DEFAULT 0,
-  `checkerLog` text DEFAULT NULL,
+  `input` text NOT NULL DEFAULT '',
+  `output` text NOT NULL DEFAULT '',
+  `answer` text NOT NULL DEFAULT '',
+  `checkerLog` text NOT NULL DEFAULT '',
   `responseData` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`responseData`))
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -418,13 +402,6 @@ ALTER TABLE `contest_registration_form`
   ADD KEY `FK_ContestRegistrationFormContestId` (`contestId`);
 
 --
--- Indexes for table `contest_setting`
---
-ALTER TABLE `contest_setting`
-  ADD PRIMARY KEY (`contestSettingId`),
-  ADD KEY `FK_ContestSettingContestId` (`contestId`);
-
---
 -- Indexes for table `contest_submission`
 --
 ALTER TABLE `contest_submission`
@@ -451,7 +428,7 @@ ALTER TABLE `form`
 --
 ALTER TABLE `form_question`
   ADD PRIMARY KEY (`formQuestionId`),
-  ADD UNIQUE KEY `UC_FormQuestionFormIdFormName` (`formId`,`formQuestionName`);
+  ADD UNIQUE KEY `UC_FormQuestionFormIdFormName` (`formId`,`formQuestionKey`);
 
 --
 -- Indexes for table `judge_problem_list`
@@ -553,12 +530,6 @@ ALTER TABLE `contest_registration_form`
   MODIFY `contestRegistrationFormId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `contest_setting`
---
-ALTER TABLE `contest_setting`
-  MODIFY `contestSettingId` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `contest_submission`
 --
 ALTER TABLE `contest_submission`
@@ -650,40 +621,34 @@ ALTER TABLE `contest`
 -- Constraints for table `contest_moderator`
 --
 ALTER TABLE `contest_moderator`
-  ADD CONSTRAINT `FK_ContestModeratorContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`),
+  ADD CONSTRAINT `FK_ContestModeratorContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_ContestModeratorUserId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
 
 --
 -- Constraints for table `contest_problem_set`
 --
 ALTER TABLE `contest_problem_set`
-  ADD CONSTRAINT `FK_ContestProblemSetContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`),
+  ADD CONSTRAINT `FK_ContestProblemSetContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_ContestProblemSetProblemId` FOREIGN KEY (`problemId`) REFERENCES `problems` (`problemId`);
 
 --
 -- Constraints for table `contest_registration`
 --
 ALTER TABLE `contest_registration`
-  ADD CONSTRAINT `FK_ContestRegistrationContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`),
+  ADD CONSTRAINT `FK_ContestRegistrationContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_ContestRegistrationUserId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
 
 --
 -- Constraints for table `contest_registration_form`
 --
 ALTER TABLE `contest_registration_form`
-  ADD CONSTRAINT `FK_ContestRegistrationFormContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`);
-
---
--- Constraints for table `contest_setting`
---
-ALTER TABLE `contest_setting`
-  ADD CONSTRAINT `FK_ContestSettingContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`);
+  ADD CONSTRAINT `FK_ContestRegistrationFormContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `contest_submission`
 --
 ALTER TABLE `contest_submission`
-  ADD CONSTRAINT `FK_ContestSubmissionContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`),
+  ADD CONSTRAINT `FK_ContestSubmissionContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_ContestSubmissionSubmissionId` FOREIGN KEY (`submissionId`) REFERENCES `submissions` (`submissionId`);
 
 --

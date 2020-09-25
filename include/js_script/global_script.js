@@ -12,9 +12,9 @@ function updateSubmissionVerdictAllPage(){
 	$.post("submission_action.php",buildData("updateSubmissionVerdictAllPage"),function(response){
         response=JSON.parse(response);
         response.map(function(item){
-        	$("#submissionGlobalVerdictStatus_"+item.submissionId).html(item.judgeStatus);
-        	$("#submissionGlobalVerdictTime_"+item.submissionId).html(item.maxTimeLimit+ " s");
-        	$("#submissionGlobalVerdictMemory_"+item.submissionId).html(item.maxMemoryLimit+" kb");
+        	$("#submissionGlobalVerdictStatus_"+item.submissionId).html(item.judgeStatus.verdictLabel);
+        	$("#submissionGlobalVerdictTime_"+item.submissionId).html(item.maxTime+ " s");
+        	$("#submissionGlobalVerdictMemory_"+item.submissionId).html(item.maxMemory+" kb");
         });
     });
 }

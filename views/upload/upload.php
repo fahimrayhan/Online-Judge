@@ -55,7 +55,7 @@
                 Photo Gallery
             </li>
         </ul>
-        <div id="uploadPhotoArea" class="box box_body" style="min-height: 480px;border-radius: 0px">
+        <div id="uploadPhotoArea" class="boxx box_body" style="min-height: 480px;border-radius: 0px">
         </div>
         </div>
     </div>

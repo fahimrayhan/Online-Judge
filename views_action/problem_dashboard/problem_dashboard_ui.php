@@ -165,9 +165,9 @@
 			$userId=$value['userId'];
 			$userHandle=$value['userHandle'];
 			$submissionTime=$value['submissionTime'];
-			$judgeStatus=$value['judgeStatus'];
-			$time=$value['maxTimeLimit'];
-			$memory=$value['maxMemoryLimit'];
+			$judgeStatus=$value['judgeStatus']['verdictLabel'];
+			$time=$value['maxTime'];
+			$memory=$value['maxMemory'];
 			
 			echo "<tr>
 			<td class='td2'><a onclick='viewSubmissionById($submissionId)'>$submissionId</a></td>
@@ -189,7 +189,7 @@
 	if(isset($_POST['loadSettingPage'])){
 		$problemInfo=$Problem->getProblemInfo($_POST['loadSettingPage']);
 		$problemName=$problemInfo['problemName'];
-		$timeLimit=$problemInfo['cpuTimeLimit'];
+		$timeLimit=$problemInfo['timeLimit'];
 		$memoryLimit=$problemInfo['memoryLimit'];
 		$check=$Problem->checkJudgeProblemList($_POST['loadSettingPage']);
 		$arcive="<button id='reqArc' onclick='reqJudgeProblemList()'>Request For Add This Problem In Judge Problem List</button>";

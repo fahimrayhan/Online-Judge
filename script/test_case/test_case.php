@@ -20,7 +20,7 @@ class TestCase {
  	}
 
  	public function createTestCaseHashId($testCaseId){
- 		return $this->SiteHash->getHash($testCaseId);;
+ 		return $this->SiteHash->getHash($testCaseId);
  	}
 
  	public function getTestCaseHashId($testCaseId){

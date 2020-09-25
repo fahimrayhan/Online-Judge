@@ -29,14 +29,14 @@ class Problem {
 	public function checkProblemInJudgeList($problemId){
 		$sql="select * from judge_problem_list where problemId=$problemId and status=1";
 		$data=$this->DB->getData($sql);
-		return isset($data[0])?1:0;
+		return isset($data[0]);
 	}	
 
 	public function addProblem($info){
 		$error="";
 
 		if($info['memoryLimit']=='')unset($info['memoryLimit']);
-		if($info['cpuTimeLimit']=='')unset($info['cpuTimeLimit']);
+		if($info['timeLimit']=='')unset($info['timeLimit']);
 
 		if($info['problemName']==""){
 			$error.="Problem Name Field Is Empty";
@@ -85,7 +85,7 @@ class Problem {
 		if(!$this->DB->isLoggedIn)
 			return;
 		$userId=$this->DB->isLoggedIn;
-		$sql="select problem_moderator.*,problems.problemName,problems.cpuTimeLimit,problems.memoryLimit from problem_moderator join problems on problems.problemId=problem_moderator.problemId where problem_moderator.userId=$userId order by problem_moderator.problemModeratorId DESC";
+		$sql="select problem_moderator.*,problems.problemName,problems.timeLimit,problems.memoryLimit from problem_moderator join problems on problems.problemId=problem_moderator.problemId where problem_moderator.userId=$userId order by problem_moderator.problemModeratorId DESC";
 		$data=$this->DB->getData($sql);
 		return ($json)?json_encode($data):$data;
 	}

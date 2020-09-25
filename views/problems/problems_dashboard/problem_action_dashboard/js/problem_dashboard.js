@@ -49,7 +49,7 @@ function setOptionActive(optionName){
 
 function loadPage(pageName,divName="option_box_body"){
 	loader(divName);
-	$.post(dashboard_action_url,buildData(pageName,problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData(pageName,problemId),function(response){
 		$("#"+divName).html(response);
 	});
 }
@@ -100,9 +100,16 @@ function changeOption(optionName,fromBack=0){
 //start setting page 
 
 
+function buildProblemData(key,val){
+	var data = {};
+	data[key] = val;
+	data['problemId'] = problemId;
+	return data;
+}
+
 function loadViewProblem(){
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadViewProblem",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadViewProblem",problemId),function(response){
 		$("#option_box_body").html(response);
 		if(typeof MathJax !== 'undefined') {MathJax.Hub.Queue(["Typeset",MathJax.Hub]);}
 	});
@@ -110,7 +117,7 @@ function loadViewProblem(){
 
 function loadSettingPage(){
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadSettingPage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadSettingPage",problemId),function(response){
 		$("#option_box_body").html(response);
 	});
 }
@@ -119,13 +126,13 @@ function updateProblemSetting(){
 	var data={
 		'problemId': problemId,
 		"problemName": $("#problemName").val(),
-		'cpuTimeLimit': $("#problemTimeLimit").val(),
+		'timeLimit': $("#problemTimeLimit").val(),
 		'memoryLimit' : $("#problemMemoryLimit").val()
 	}
 	//console.log(data);
 	btnOff("updateProblem","Saving");
 	$("#error_area").hide();
-	$.post(dashboard_action_url,buildData("updateProblemSetting",data),function(response){
+	$.post(dashboard_action_url,buildProblemData("updateProblemSetting",data),function(response){
 		console.log(response);
 		response=JSON.parse(response); 
 		if(response.error==1){
@@ -140,7 +147,7 @@ function updateProblemSetting(){
 
 function reqJudgeProblemList(){
 	btnOff("reqArc","Sending..");
-	$.post(dashboard_action_url,buildData("reqJudgeProblemList",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("reqJudgeProblemList",problemId),function(response){
 		loadSettingPage();
 	});
 }
@@ -153,14 +160,14 @@ function reqJudgeProblemList(){
 
 function loadModeratorsPage(){
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadModeratorsPage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadModeratorsPage",problemId),function(response){
 		$("#option_box_body").html(response);
 		getModeratorsList();
 	});
 }
 
 function getModeratorsList(){
-	$.post(dashboard_action_url,buildData("getModeratorsList",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("getModeratorsList",problemId),function(response){
 		moderatorsList=JSON.parse(response);
 	});
 }
@@ -170,7 +177,7 @@ function addProblemModerator(userId){
 		'userId': userId,
 		'problemId': problemId
 	}
-	$.post(dashboard_action_url,buildData("addProblemModerator",data),function(response){
+	$.post(dashboard_action_url,buildProblemData("addProblemModerator",data),function(response){
 		loadModeratorsPage();
 		toast.success("Successfully Add Moderator");
 	});
@@ -183,7 +190,7 @@ function deleteProblemModerator(userId){
 		'userId': userId,
 		'problemId': problemId
 	}
-	$.post(dashboard_action_url,buildData("deleteProblemModerator",data),function(response){
+	$.post(dashboard_action_url,buildProblemData("deleteProblemModerator",data),function(response){
 		//console.log(response);
 		loadModeratorsPage();
 		toast.success("Successfully Delete Moderator");
@@ -217,7 +224,7 @@ function search_moderators(){
 function loadTestingPage(){
 
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadTestingPage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadTestingPage",problemId),function(response){
 		$("#option_box_body").html(response);
 	});
 }
@@ -229,7 +236,7 @@ setInterval(function(){
 function loadCreateSubmissionPage(){
 	modalOpen("lg","Create Submission");
 	loader("modal_lg_body");
-	$.post(dashboard_action_url,buildData("loadCreateSubmissionPage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadCreateSubmissionPage",problemId),function(response){
 		$("#modal_lg_body").html(response);
 		//setTimeout(function(){ setEditor(); }, 100);
 	});
@@ -273,7 +280,7 @@ function createSubmission(){
 		'languageName': $("#selectLanguage option:selected" ).text()
 	}
 	//console.log(data);
-	$.post(dashboard_action_url,buildData("createSubmission",data),function(response){
+	$.post(dashboard_action_url,buildProblemData("createSubmission",data),function(response){
 		response=JSON.parse(response);
 		console.log(response);
 		if(response.error==1){
@@ -286,7 +293,7 @@ function createSubmission(){
 			msg=JSON.parse(response.msg);
 		 	//modal_action("md","","close");
 		 	toast.success("Successfully Submission");
-    		$.post("submission_action.php",buildData("viewSubmission",msg.insert_id),function(response){
+    		$.post("submission_action.php",buildProblemData("viewSubmission",msg.insert_id),function(response){
         		$("#modal_lg_body").html(response);
     		});
 		 	//setTimeout(function(){ viewSubmissionById(msg.insert_id); }, 500);
@@ -307,7 +314,7 @@ function createSubmission(){
 function loadTestCasePage(){
 	loader("option_box_body");
 
-	$.post(dashboard_action_url,buildData("loadTestCasePage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadTestCasePage",problemId),function(response){
 		$("#option_box_body").html(response);
 		
 	});
@@ -315,7 +322,7 @@ function loadTestCasePage(){
 
 function loadCheckerPage(){
 	loader("option_box_body");
-	$.post(dashboard_action_url,buildData("loadCheckerPage",problemId),function(response){
+	$.post(dashboard_action_url,buildProblemData("loadCheckerPage",problemId),function(response){
 		$("#option_box_body").html(response);
 		//setCheckerEditor();
 	});
@@ -336,7 +343,7 @@ function saveChecker(){
 		'checker': btoa(checkerCode)
 	}
 	btnOff("btnSaveChecker", "Saving");
-	$.post(dashboard_action_url,buildData("saveChecker",data),function(response){
+	$.post(dashboard_action_url,buildProblemData("saveChecker",data),function(response){
 		toast.success("Successfully Update Checker");
 		btnOn("btnSaveChecker", "Save Checker");
 	});

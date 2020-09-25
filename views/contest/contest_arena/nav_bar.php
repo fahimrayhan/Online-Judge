@@ -37,9 +37,18 @@
   <div class="container">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="" href="index.php"><img src="http://coderoj.com/user_file/user_upload/2dd22fd594d515efd721e4918a52c1ee7605f979b446cdd58560b8d6d9dcf1b7.png" height="45px"></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <div style="color: #000000!important">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>     
+        </div>
+                       
+      </button>
+      <a class="" href="index.php"><img src="file/site_metarial/coderoj_logo.png" height="45px"></a>
     </div>
     <div class="pull-right">
+      <div class="collapse navbar-collapse" id="myNavbar">
         <a href="contest_arena.php?id=<?php echo $contestId; ?>&dashboard">
           <button class="btn navbar-btn contestNavBtn <?php echo $activeList['dashboard']; ?>"><i class="fa fa-dashboard"></i> Dashboard</button>
         </a>
@@ -56,6 +65,7 @@
         
         <button class="btn contestNavBtn" style="margin-left: 20px">amirhamza05</button>
         <button class="btn contestNavBtn">Logout</button>
+      </div>
     </div>
     
   </div>

@@ -17,7 +17,7 @@ class ProblemFormat {
  	$notes=$info['notes'];
  	$constraint_description=$info['constraintDescription'];
  	$problemName=isset($info['problemName'])?$info['problemName']:"---";
- 	$cpu=isset($info['cpuTimeLimit'])?$info['cpuTimeLimit']:"";
+ 	$cpu=isset($info['timeLimit'])?$info['timeLimit']:"";
  	$memory=isset($info['memoryLimit'])?$info['memoryLimit']:"";
  	
  	$this->addMathScript();
@@ -62,7 +62,7 @@ class ProblemFormat {
  	return "<div class='problem_name_area'>
  		<div class='problem_name'>$name</div>
  		<div class='problem_limit'>
- 			CPU: $cpu s<br/>
+ 			Time: $cpu s<br/>
 			Memory: $memory MB
 		</div>
 

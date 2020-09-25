@@ -1,5 +1,6 @@
 var optionList = {};
 var countOption = 0;
+var formId = 1;
 
 function selectInputType(e) {
     $("#formEditorOptionBody").html("");
@@ -14,21 +15,20 @@ function selectInputType(e) {
 }
 
 function setField(type) {
+    resetOptionList();
     previewOption(type);
     var formListData = formFieldListKey[type];
     $.each(formListData, function(key, value) {
         appendField(addInputTypeField(value));
     });
-
-    if(type == "select"){
+    if (type == "select") {
         addSelectField();
     }
 }
 
-function addSelectField(){
-	$("#formEditorOptionBody").append("<button style='margin-top: 15px;' type='button' onclick='addOptionList()' class='btn-success' title='Add Option'><i class='fa fa-plus'></i> Ad Option</button>");
+function addSelectField() {
+    $("#formEditorOptionBody").append("<button style='margin-top: 15px;' type='button' onclick='addOptionList()' class='btn-success' title='Add Option'><i class='fa fa-plus'></i> Ad Option</button>");
 }
-
 
 function appendField(data) {
     $("#formEditorOptionBody").append(makeField(data));
@@ -57,7 +57,7 @@ function addToogleField(data) {
 }
 
 function addInputBox(data) {
-    return "<input onkeyup='changeVal(this)' id='"+data.id+"' type='" + data.type + "' name='" + data.name + "'  value='" + data.value + "'placeholder='" + data.placeholder + "' autocomplete='off'>";
+    return "<input onkeyup='changeVal(this)' id='" + data.id + "' type='" + data.type + "' name='" + data.name + "'  value='" + data.value + "'placeholder='" + data.placeholder + "' autocomplete='off'>";
 }
 
 function changeVal(e) {
@@ -65,63 +65,61 @@ function changeVal(e) {
     if (e.name == "value") $("#previewInput").val(e.value);
     else if (e.name == "disabled" || e.name == "required") {
         $('#previewInput').prop(e.name, $('input[name=' + e.name + ']').is(':checked'));
-    } 
-    else if(e.name == "optionValue" || e.name == "optionText"){
-        if(e.name == "optionValue")optionList[e.id].value = e.value;
-        else if(e.name == "optionText")optionList[e.id].text = e.value;
-    	buildSelectOption();
+    } else {
+        var rmAttr = e.name == "pattern" && e.value == "";
+        if (rmAttr) $("#previewInput").removeAttr(e.name);
+        else $("#previewInput").attr(e.name, e.value);
     }
-    else {
-    	var rmAttr = e.name == "pattern" && e.value == "";
-    	if(rmAttr) $("#previewInput").removeAttr( e.name );
-    	else $("#previewInput").attr(e.name, e.value);
-    } 
-
 }
 
-function changeOptionGlobal(e){
-	if(e.name == "title"){
-		$("#previewTitle").html(e.value);
-	}
-	else if(e.name == "description"){
-		$("#previewDescription").html(e.value);
-	}
-
+function changeOptionGlobal(e) {
+    if (e.name == "title") {
+        $("#previewTitle").html(e.value);
+    } else if (e.name == "description") {
+        $("#previewDescription").html(e.value);
+    } else if (e.name == "hint") {
+        $("#formQuestionHint").html(e.value);
+    }
 }
 
-function deleteOption(e){
-    $( "#optionArea_"+e.value ).remove(); 
+function deleteOption(e) {
+    $("#optionArea_" + e.value).remove();
     delete optionList[e.value];
-
     buildSelectOption();
 }
 
-function addOptionList(){
-
-	countOption++;
-
-    optionId = "option_"+countOption;
-
-     optionValue = "Option "+countOption;
-
-    optionList[optionId] = {value: optionValue,text: optionValue};
-
-    var optionHtml = "<div id ='optionArea_"+optionId+"'>";
-    optionHtml += "<input style='margin-right:5px;width:43%!important' type='text' name='optionValue' id='"+optionId+"' onkeyup='changeVal(this)'  value='"+optionValue+"' placeholder='Option Value' autocomplete='off'>";
-    optionHtml += "<input style='margin-right:5px;width:43%!important' type='text' name='optionText' id='"+optionId+"' onkeyup='changeVal(this)'  value='"+optionValue+"' placeholder='Option Text' autocomplete='off'>";
-    optionHtml += "<button type='button' title='Delete This Option' onclick = 'deleteOption(this)' value ='"+optionId+"' class='btn-sm btn-danger'><i class='fa fa-trash-o'></i></button>"
-	optionHtml +="</div>";
-
-    $("#formEditorOptionBody").append(optionHtml);
-	buildSelectOption();
-
+function resetOptionList() {
+    optionList = {};
+    countOption = 0;
 }
 
-function buildSelectOption(){
+function changeOptionVal(e){
+    optionList[e.id].value = e.value;
+    optionList[e.id].text  = e.value;
+    buildSelectOption();
+}
+
+function addOptionList() {
+    countOption++;
+    optionId = "option_" + countOption;
+    optionValue = "Option " + countOption;
+    optionList[optionId] = {
+        value: optionValue,
+        text: optionValue
+    };
+    var optionHtml = "<div id ='optionArea_" + optionId + "'>";
+    optionHtml += "<input style='margin-right:5px;width:90%!important' type='text' id='" + optionId + "' onkeyup='changeOptionVal(this)'  value='" + optionValue + "' placeholder='Option Text' autocomplete='off'>";
+    optionHtml += "<button type='button' title='Delete This Option' onclick = 'deleteOption(this)' value ='" + optionId + "' class='btn-sm btn-danger'><i class='fa fa-trash-o'></i></button>"
+    optionHtml += "</div>";
+    $("#formEditorOptionBody").append(optionHtml);
+    buildSelectOption();
+}
+
+function buildSelectOption() {
     $('#previewInput').empty();
-    $.each(optionList, function(key, value) { 
+    $.each(optionList, function(key, value) {
         //console.log(value);
-        $('#previewInput').append($("<option></option>").attr("value", value.key).text(value.text)); 
+        $('#previewInput').append($("<option></option>").attr("value", value.key).text(value.text));
     });
 }
 
@@ -131,12 +129,10 @@ function previewOption(type) {
         htmlVal = "<textarea id='previewInput'></textarea>";
     } else if (type == "text" || type == "number" || type == "range" || type == "month") {
         htmlVal = "<input type ='" + type + "' id='previewInput'>";
-    }
-    else if(type == "select"){
-    	htmlVal = "<select id='previewInput'></select>";
+    } else if (type == "select") {
+        htmlVal = "<select id='previewInput'></select>";
     }
     $("#previewArea").html(htmlVal);
-
 }
 
 function addFormOption() {
@@ -183,6 +179,16 @@ var fieldInfo = {
             name: 'maxlength',
             value: '',
             placeholder: 'maxlength'
+        }
+    },
+    minlength: {
+        fieldTitle: "minlength",
+        fieldType: "input",
+        fieldParameter: {
+            type: 'number',
+            name: 'minlength',
+            value: '',
+            placeholder: 'minlength'
         }
     },
     max: {
@@ -245,11 +251,11 @@ var fieldInfo = {
     },
 }
 var formFieldList = {
-    textarea: ['value', 'placeholder', 'maxlength','disabled', 'required'],
-    text: ['placeholder', 'value', 'maxlength','pattern','required'],
-    number: ['max', 'min', 'step', 'value', 'placeholder','required'],
-    range: ['max', 'min', 'step', 'valueNumber', 'disabled','required'],
-    month: ['placeholder','required'],
+    textarea: ['value', 'placeholder', 'maxlength', 'disabled', 'required'],
+    text: ['placeholder', 'value', 'maxlength', 'minlength', 'pattern', 'required'],
+    number: ['max', 'min', 'step', 'value', 'placeholder', 'required'],
+    range: ['max', 'min', 'step', 'valueNumber', 'disabled', 'required'],
+    month: ['placeholder', 'required'],
     select: ['required'],
 }
 var fieldInfoKey = jQuery.makeArray(fieldInfo);

@@ -15,6 +15,7 @@
 	include "script/download/download.php";
 	include "script/contest/contest.php";
 	include "script/form_builder/form_builder.php";
+	include "script/form_builder/form.php";
 	$DB=new Database();
 
 	$isLoggedIn=(isset($_SESSION['oj_login_handle_id']))?1:0;
@@ -32,6 +33,7 @@
 	$Download=new Download();
 	$Contest=new Contest();
 	$FormBuilder=new FormBuilder();
+	$Form=new Form();
 
 	$File=new File();
 

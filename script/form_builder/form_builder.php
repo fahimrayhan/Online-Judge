@@ -1,4 +1,14 @@
 <?php
+/**
+    $select = [
+        'type' => "select",
+        'options' => [
+            'hey'       => 'hey',
+            'option 2'  => 'option 2',
+            'option 3'  => 'option 3',
+        ],
+    ];
+**/
 
 class FormBuilder
 {
@@ -18,6 +28,7 @@ class FormBuilder
         'maxlength'   => '',
         'minlength'   => '',
         'pattern'     => '',
+        'class'       => '',
         'autofocus'   => false,
         'checked'     => false,
         'selected'    => false,
@@ -31,7 +42,7 @@ class FormBuilder
     private $binaryField = array('autofocus', 'checked', 'required', 'disabled', 'readonly');
     private $textField   = array(
         'name', 'type', 'id', 'value', 'placeholder',
-        'min', 'max', 'step', 'pattern', 'maxlength', 'minlength', 'size',
+        'min', 'max', 'step', 'pattern', 'maxlength', 'minlength', 'size','class'
     );
     private $arrayField = array('options','selectedOptions');
 
@@ -128,7 +139,7 @@ class FormBuilder
     public function buildTextArea()
     {
         $textAreaFieldList = array(
-            'name', 'id', 'placeholder', 'maxlength', 'required', 'disabled', 'readonly',
+            'name', 'id', 'placeholder', 'maxlength', 'required', 'disabled', 'readonly','class'
         );
 
         $field = $this->getFieldOption($textAreaFieldList);
@@ -143,7 +154,7 @@ class FormBuilder
         $textAreaFieldList = array(
             'type', 'name', 'id', 'value', 'placeholder',
             'min', 'max', 'step', 'pattern', 'maxlength', 'minlength', 'size',
-            'required','disabled', 'readonly'
+            'required','disabled', 'readonly','class',
         );
 
         $field = $this->getFieldOption($textAreaFieldList);
@@ -155,7 +166,7 @@ class FormBuilder
     public function buildSelectField()
     {
     	$textAreaFieldList = array(
-            'name', 'id', 'required', 'disabled',
+            'name', 'id', 'required', 'disabled','class',
         );
 
         $field = $this->getFieldOption($textAreaFieldList);

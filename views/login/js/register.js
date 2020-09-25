@@ -20,8 +20,8 @@ function register(){
     $.post("site_enter_action.php",buildData("register",data),function(response){
        
         // debug----------------
-        //$("#register_failed").show();
-        //$("#register_failed").html(response);
+        $("#register_failed").show();
+        $("#register_failed").html(response);
 
         response=JSON.parse(response);
         var login_div=(response.error==0)?"register_success":"register_failed";

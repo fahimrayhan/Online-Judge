@@ -107,7 +107,7 @@ class Submission {
  							$status=$this->getVerdict(1,-1,"Passed ($passedPoint/$totalPoint)");
  						else if($passedPoint!=0) 
  							$status=$this->getVerdict(2,-1,"Passed ($passedPoint/$totalPoint)");
- 						else $status=$this->getVerdict(3,-1,"No Case Passed");
+ 						else $status=$this->getVerdict(3,-1,"Failed");
  							
  					}
  					
@@ -132,7 +132,7 @@ class Submission {
  		return $json?$date[0]:json_decode($data[0],true);
  	}
 
- 	public function getVerdict($verdictId,$testCaseRun=-1,$partial="",$checkerLog = ""){
+ 	public function getVerdict($verdictId,$testCaseRun=-1,$partial=""){
 
  		$verdictClass="danger";
  		$verdictName="";
@@ -174,7 +174,12 @@ class Submission {
  		else $verdictName="Failed";
  		$verdictClass="label label-$verdictClass";
 
- 		return "<span class='$verdictClass' title='$checkerLog'><b>$verdictName</b></span>";
+ 		$verdictLabel = "<span class='$verdictClass'><b>$verdictName</b></span>";
+ 		
+ 		return array(
+ 			'verdictName'=> $verdictName,
+ 			'verdictLabel' => $verdictLabel
+ 		);
 	 }
 
 	 public function getJudgeVerdictList(){
@@ -234,10 +239,8 @@ class Submission {
  		}
  		$submissionData=array();
  		$submissionData['submissionId']=$submissionId;
- 		$submissionData['maxTimeLimit']=0;
- 		$submissionData['maxMemoryLimit']=0;
- 		$submissionData['runOnMaxTime']=0;
- 		$submissionData['runOnMaxMemory']=0;
+ 		$submissionData['maxTime']=0;
+ 		$submissionData['maxMemory']=0;
 
  		$submissionData['submissionVerdict']=1;
  		$submissionData['testCaseReady']=-1;
@@ -251,13 +254,14 @@ class Submission {
  	}
 
  	public function getSubmissionTestCase($submissionId,$submissionFinish,$runOnTest){
- 		$sql="select checkerLog,testCaseToken,submissionTestCaseId,testCaseSerialNo, verdict, totalTime, totalMemory, point,submissions.submissionJudgeType as submissionJudgeType 
+ 		$sql="select input,output,answer,checkerLog,testCaseToken,submissionTestCaseId,testCaseSerialNo, verdict, totalTime, totalMemory, point,submissions.submissionJudgeType as submissionJudgeType 
  			from submissions_on_test_case 
  			join submissions on submissions.submissionId=submissions_on_test_case.submissionId
  			where submissions_on_test_case.submissionId=$submissionId";
  		$data=$this->DB->getData($sql);
  		$skip=0;
  		foreach ($data as $key => $value) {
+ 			$data[$key] = $this->processSubmissionTestCase($value);
  			$submissionJudgeType = $value['submissionJudgeType'];
  			if($skip==1)
  				$judgeStatus=$this->getVerdict(-1);
@@ -267,11 +271,19 @@ class Submission {
  			else{
  				if($value['verdict']>3)
  					$skip=$submissionJudgeType=="binary"?1:0;
- 				$judgeStatus=$this->getVerdict($value['verdict'],-1,"",$value['checkerLog']);
+ 				$judgeStatus=$this->getVerdict($value['verdict'],-1,"");
  			}
  			$data[$key]['judgeStatus']=$judgeStatus;
  		}
  		return $data;
+ 	}
+
+ 	public function processSubmissionTestCase($submissionData){
+ 		$submissionData['input'] = nl2br(htmlspecialchars($submissionData['input']));
+		$submissionData['output'] = nl2br(htmlspecialchars($submissionData['output']));
+		$submissionData['answer'] = nl2br(htmlspecialchars($submissionData['answer']));
+		$submissionData['checkerLog'] = nl2br(htmlspecialchars($submissionData['checkerLog']));
+		return $submissionData;
  	}
 
  	public function getSubmissionAllInfo($info,$json=false){

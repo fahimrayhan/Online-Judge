@@ -144,7 +144,7 @@ class Judge {
  		//return;
 
  		$problemId=$this->submissionData['problemId'];
- 		$sql="select checker,cpuTimeLimit,memoryLimit from problems where problemId=$problemId";
+ 		$sql="select checker,timeLimit,memoryLimit from problems where problemId=$problemId";
  		$problemData=$this->DB->getData($sql);
  		$problemData=$problemData[0];
 
@@ -159,7 +159,7 @@ class Judge {
  		//$data['expectedOutput']=base64_encode($this->Site->readFile("file/test_case/output/".$testCaseHashId.'.txt'));
 
  		$data['languageId']=$this->submissionData['languageId'];
- 		$data['timeLimit']=$problemData['cpuTimeLimit'];
+ 		$data['timeLimit']=$problemData['timeLimit'];
  		$data['memoryLimit']=$problemData['memoryLimit'];
  		$data['checker']=base64_encode($problemData['checker']);
 
@@ -244,12 +244,28 @@ class Judge {
  		$this->analysisData['verdict']=$data['status']['id'];
  		$this->analysisData['memory']=$data['memory']==null?0:$data['memory'];
  		$this->analysisData['time']=$data['time']==null?0:$data['time'];
- 		$this->analysisData['checkerLog']=$data['checkerLog'];
+ 		$this->analysisData['checkerLog']=base64_decode($data['checkerLog']);
+ 		$this->analysisData['input']=base64_decode($data['input']);
+ 		$this->analysisData['output']=base64_decode($data['output']);
+ 		$this->analysisData['answer']=base64_decode($data['answer']);
 
  		$this->isQueue=0;
  		if($this->analysisData['verdict']<=2)
  			$this->isQueue=1;
 
+ 	}
+
+ 	public function getSubmissionMaxLimit($submissionId){
+ 		$sql = "select max(totalTime) as maxTime,max(totalMemory) as maxMemory from submissions_on_test_case where submissionId = $submissionId";
+ 		$data=$this->DB->getData($sql);
+ 		if(!isset($data[0])){
+ 			$data['maxTime'] = 0;
+ 			$data['maxMemory'] = 0;
+ 		}
+ 		else $data = $data[0];
+ 		$data['maxTime'] = max($this->analysisData['time'],$data['maxTime']);
+ 		$data['maxMemory'] = max($this->analysisData['memory'],$data['maxMemory']);
+ 		return $data;
  	}
 
  	public function setNextJudge(){
@@ -261,8 +277,11 @@ class Judge {
  		if($judgeFinish==1){
  			$this->saveSubmissionData['judgeComplete']=1;
  			$this->saveSubmissionData['submissionVerdict']=$this->analysisData['verdict'];
- 			$this->saveSubmissionData['maxTimeLimit']=max($this->analysisData['time'],$this->submissionData['runOnMaxTime']);
- 			$this->saveSubmissionData['maxMemoryLimit']=max($this->analysisData['memory'],$this->submissionData['runOnMaxMemory']);
+
+ 			$mxLimit = $this->getSubmissionMaxLimit($this->submissionData['submissionId']);
+ 			
+ 			$this->saveSubmissionData['maxTime'] = $mxLimit['maxTime'];
+ 			$this->saveSubmissionData['maxMemory'] = $mxLimit['maxMemory'];
  		}
  		else $this->saveSubmissionData['runOnTest']=$this->submissionData['runOnTest']+1;
  	}
@@ -281,8 +300,6 @@ class Judge {
  		$this->saveSubmissionData['submissionId']=$this->submissionData['submissionId'];
  		$this->saveSubmissionData['passedPoint']=$this->submissionData['passedPoint']+$passedPoint;
  		$this->saveSubmissionData['totalPoint'] = $this->submissionData['totalPoint']+$testCasePoint;
- 		$this->saveSubmissionData['runOnMaxTime']=max($this->analysisData['time'],$this->submissionData['runOnMaxTime']);
- 		$this->saveSubmissionData['runOnMaxMemory']=max($this->analysisData['memory'],$this->submissionData['runOnMaxMemory']);
 
  		//store test case data
  		$this->saveSubmissionTestData['submissionTestCaseId']=$this->submissionData['submissionTestCaseId'];
@@ -291,6 +308,10 @@ class Judge {
  		$this->saveSubmissionTestData['totalMemory']=$this->analysisData['memory'];
  		$this->saveSubmissionTestData['point']=$passedPoint;
  		$this->saveSubmissionTestData['checkerLog']=$this->DB->buildSqlString($this->analysisData['checkerLog']);
+ 		$this->saveSubmissionTestData['input']=$this->DB->buildSqlString($this->analysisData['input']);
+ 		$this->saveSubmissionTestData['output']=$this->DB->buildSqlString($this->analysisData['output']);
+ 		$this->saveSubmissionTestData['answer']=$this->DB->buildSqlString($this->analysisData['answer']);
+ 		
 
  		$this->saveSubmissionTestData['responseData']=$this->DB->buildSqlString($this->apiData);
  		$this->saveSubmissionTestData['judgeStatus']=1;

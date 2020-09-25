@@ -42,10 +42,10 @@ a{
 }
 </style>
 <div class="errorPage">
-	<div class="coderOJLogo"><a href="index.php">CoderOJ</a></div>
+	<div class="coderOJLogo"><a href="coderoj.com">CoderOJ</a></div>
 	<div class="errorMsg">
 		The requested URL was not found on this server.
 	</div>
-	<a href="index.php"><button class="errorBtn">Back Home</button></a>
+	<a href="coderoj.com"><button class="errorBtn">Back Home</button></a>
 </div>
 

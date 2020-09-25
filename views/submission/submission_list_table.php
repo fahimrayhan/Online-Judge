@@ -27,9 +27,9 @@
 			$userId=$value['userId'];
 			$userHandle=$value['userHandle'];
 			$submissionTime=$value['submissionTime'];
-			$judgeStatus=$value['judgeStatus'];
-			$time=$value['maxTimeLimit'];
-			$memory=$value['maxMemoryLimit'];
+			$judgeStatus=$value['judgeStatus']['verdictLabel'];
+			$time=$value['maxTime'];
+			$memory=$value['maxMemory'];
 			$problemName=$value['problemName'];
 			$problemId=$value['problemId'];
 

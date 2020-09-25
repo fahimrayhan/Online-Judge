@@ -36,36 +36,53 @@ function rejudgeSubmission(){
 
 
 function setSubmissionInfo(){
-	$("#submission_cpu").html(submissionInfo.maxTimeLimit+" s");
-	$("#submission_memory").html(submissionInfo.maxMemoryLimit+" KB");
-	$("#submission_verdict").html(submissionInfo.judgeStatus);
+	$("#submission_cpu").html(submissionInfo.maxTime+" s");
+	$("#submission_memory").html(submissionInfo.maxMemory+" KB");
+	$("#submission_verdict").html(submissionInfo.judgeStatus.verdictLabel);
 }
 
 function setTestCaseInfo(){ 
 	if(testCaseReady!=1){
 		$.each( submissionTestCaseInfo, function( key, value ) {
 			var sl=value.testCaseSerialNo;
-  			td_sl="<td class='td2 submissionTd submissionTd2' id='"+sl+"_sl'>"+value.testCaseSerialNo+"</td>";
-  			td_cpu="<td class='td2 submissionTd submissionTd2' id='"+sl+"_cpu'>"+value.totalTime+" s</td>";
-  			td_memory="<td class='td2 submissionTd submissionTd2' id='"+sl+"_memory'>"+value.totalMemory+" KB</td>";
-  			td_point="<td class='td2 submissionTd submissionTd2' id='"+sl+"_point'>"+value.point+"</td>";
-  			td_checkerLog="";
-  			td_verdict="<td class='td2 submissionTd submissionTd2 submissionVerdictTd' id='"+sl+"_verdict'>"+value.judgeStatus+"</td>";
-  			tr_build="<tr class='submissionTr'>"+td_sl+td_cpu+td_memory+td_point+td_checkerLog+td_verdict+"</tr>";
-  			$('#testCaseTable tr:last').after(tr_build);
+			trBuild  = 	"<td class='td2 submissionTd submissionTd2'><span class='fa fa-angle-double-down' id='viewTest_"+value.testCaseSerialNo+"'></span></td>";
+			trBuild += 	"<td class='td2 submissionTd submissionTd2' id='"+sl+"_sl'>"+value.testCaseSerialNo+"</td>";
+			trBuild += 	"<td class='td2 submissionTd submissionTd2' id='"+sl+"_cpu'>"+value.totalTime+" s</td>";
+			trBuild += 	"<td class='td2 submissionTd submissionTd2' id='"+sl+"_memory'>"+value.totalMemory+" KB</td>";
+			trBuild += 	"<td class='td2 submissionTd submissionTd2' id='"+sl+"_point'>"+value.point+"</td>";
+			trBuild += 	"<td class='td2 submissionTd submissionTd2 submissionVerdictTd' id='"+sl+"_verdict'>"+value.judgeStatus.verdictLabel+"</td>";;
+  			trBuild	 =	"<tr onclick='testCaseDetail("+value.testCaseSerialNo+")' class='submissionTr'>"+trBuild+"</tr>";
+  			trBuild +=	"<tr><td colspan='6'><div class='testCaseDetailArea' id='testCaseDetailArea_"+value.testCaseSerialNo+"'></div></td></tr>";
+  			$('#testCaseTable tr:last').after(trBuild);
+
 		});
 		testCaseReady=submissionInfo.testCaseReady;
 	}
 	else{
 		$.each(submissionTestCaseInfo, function( key, value ) {
 			var sl=value.testCaseSerialNo;
-			$("#"+sl+"_verdict").html(value.judgeStatus);
+			$("#"+sl+"_verdict").html(value.judgeStatus.verdictLabel);
   			$("#"+sl+"_cpu").html(value.totalTime+" s");
   			$("#"+sl+"_memory").html(value.totalMemory+" KB");	
-  			$("#"+sl+"_point").html(value.point);	
-  			//$("#"+sl+"_checkerLog").html(value.checkerLog);	
+  			$("#"+sl+"_point").html(value.point);
+  			//$("#"+sl+"_checkerLog").html(value.checkerLog);
+  			setSubmissionDetails(value);	
 		});
 	}	
+}
+
+function setSubmissionDetails(data){
+	if(data.verdict < 3)return;
+	var sl=data.testCaseSerialNo;
+	submissionDetail = '<div class="testCaseDetailBodyArea"><div class="testCaseDetailHeader">Input</div>';
+	submissionDetail += '<div class="testCaseDetailBody">'+data.input+'</div></div>';
+	submissionDetail += '<div class="testCaseDetailBodyArea"><div class="testCaseDetailHeader">Output</div>';
+	submissionDetail += '<div class="testCaseDetailBody">'+data.output+'</div></div>';
+	submissionDetail += '<div class="testCaseDetailBodyArea"><div class="testCaseDetailHeader">Answer</div>';
+	submissionDetail += '<div class="testCaseDetailBody">'+data.answer+'</div></div>';
+	submissionDetail += '<div class="testCaseDetailBodyArea"><div class="testCaseDetailHeader">Checker Log</div>';
+	submissionDetail += '<div class="testCaseDetailBody">'+data.checkerLog+'</div></div>';
+    $("#testCaseDetailArea_"+sl).html(submissionDetail);                         
 }
 
 function copySourceCode(){

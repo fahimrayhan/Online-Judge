@@ -1,7 +1,5 @@
 <script type="text/javascript" src="views/form_builder/js/add_script.js"></script>
 
-
-
 <div class="row">
 	<div class="col-md-6">
 		
@@ -21,7 +19,6 @@
 				</div>
 			</table>
 			<hr/>
-			<input type="text" id="optionName" autocomplete="off" placeholder="Enter Option Name">
 			<button type="submit" style="margin-top: 10px;" class="contestFormSubmitBtn">Save Form</button>
 			</div>
 			</form>

@@ -13,7 +13,7 @@ function loadProblemAddPage(){
 function addProblem(){
 	var data={
 		'problemName': $("#problemName").val(),
-		'cpuTimeLimit': $("#problemTimeLimit").val(),
+		'timeLimit': $("#problemTimeLimit").val(),
 		'memoryLimit': $("#problemMemoryLimit").val()
 	}
 

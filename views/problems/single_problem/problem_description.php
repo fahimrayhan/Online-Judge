@@ -16,6 +16,10 @@
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+
+.box{
+	box-shadow: 1px 1px 3px #DADADA;
+}
 </style>
 <?php
 	$info=$Problem->problemVerdictStat($problemId);
@@ -71,7 +75,7 @@ chart.render();
 
 <div class="row">
 	<div class="col-md-9">
-		<div class="box sm_border">
+		<div class="box sm_border" style="">
 			<div class="problem_body box_body" style="overflow-x: scroll;">
 				 <?php include "views/problems/single_problem/problem_stat.php"; ?>
 			</div>
@@ -89,7 +93,7 @@ chart.render();
 					</tr>
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-time"></span> Time Limit</td>
-						<td class="problem_info_td1"><?php echo $problemData['cpuTimeLimit']; ?> s</td>
+						<td class="problem_info_td1"><?php echo $problemData['timeLimit']; ?> s</td>
 					</tr>
 					<tr>
 						<td class="problem_info_td"><span class="glyphicon glyphicon-inbox"></span> Memory Limit</td>
@@ -145,7 +149,7 @@ chart.render();
 					?>
 					<tr style="border: 1px solid #E7ECF1;border-width: 0px 0px 1px 0px;">
 						<td style="padding: 7px 0px 7px 0px;"><a href="javascript:viewSubmissionById(<?php echo $submissionId; ?>)"><?php echo $ago; ?></a></td>
-						<td style="padding: 7px 0px 7px 0px;" id="submissionGlobalVerdictStatus_<?php echo $submissionId; ?>"><?php echo $value['judgeStatus']; ?></td>
+						<td style="padding: 7px 0px 7px 0px;" id="submissionGlobalVerdictStatus_<?php echo $submissionId; ?>"><?php echo $value['judgeStatus']['verdictLabel']; ?></td>
 					</tr>
 					<?php } ?>
 				</table>
