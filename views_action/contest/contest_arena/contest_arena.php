@@ -8,7 +8,7 @@
 	}
 
 	if(isset($_POST['createContestSubmission'])){
-		$retData = $Contest->createContestSubmission($_POST['createContestSubmission']);
+		$retData = $ContestAreana->createContestSubmission($_POST['createContestSubmission']);
 		echo json_encode($retData);
 	}
 	if(isset($_POST['loadSubmitProblem'])){

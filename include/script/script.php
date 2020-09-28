@@ -14,6 +14,7 @@
 	include "script/file/file.php";
 	include "script/download/download.php";
 	include "script/contest/contest.php";
+	include "script/contest/contest_areana.php";
 	include "script/form_builder/form_builder.php";
 	include "script/form_builder/form.php";
 	$DB=new Database();
@@ -32,6 +33,7 @@
 	$JudgeProcess=new JudgeProcess();
 	$Download=new Download();
 	$Contest=new Contest();
+	$ContestAreana=new ContestAreana();
 	$FormBuilder=new FormBuilder();
 	$Form=new Form();
 

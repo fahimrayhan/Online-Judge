@@ -143,7 +143,7 @@
                 		<td class="td2 submissionTd submissionTd2"><?php echo $submissionInfo['languageName']; ?></td>
                 		<td class="td2 submissionTd submissionTd2" id="submission_cpu"><?php echo $submissionInfo['maxTime']; ?> s</td>
                 		
-                		<td class="td2 submissionTd submissionTd2 submissionVerdictTd" id="submission_verdict"><?php echo $submissionInfo['judgeStatus']; ?></td>
+                		<td class="td2 submissionTd submissionTd2 submissionVerdictTd" id="submission_verdict"><?php echo $submissionInfo['judgeStatus']['verdictLabel']; ?></td>
                 	</tr>
             	</table>
            	</div>

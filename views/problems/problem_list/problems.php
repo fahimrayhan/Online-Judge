@@ -1,5 +1,5 @@
 <title>Problems | CoderOJ</title>
-<?php include "style/lib/data_table/data_table_lib.php"; ?>
+<?php include "style/lib/datatable/datatable_lib.php"; ?>
 
 <script type="text/javascript">
 	$(document).ready(function() {

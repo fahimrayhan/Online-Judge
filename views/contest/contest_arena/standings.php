@@ -88,7 +88,16 @@ th{
     background-color: #E35B5A!important;
 }
 </style>
+<?php 
+    $rankList = $ContestAreana->getRankList($contestId);
+    $solvedProblemStat = $rankList['solvedProblemStat'];
+    $attemptedProblemStat = $rankList['attemptedProblemStat'];
+    unset($rankList['solvedProblemStat']);
+    unset($rankList['attemptedProblemStat']);
+    $problemList = $Contest->getContestProblemList($contestId);
+    $contestParticipateList = $Contest->contestParticipateUserList($contestId);
 
+?>
 
 <div class="row">
     <div class="col-md-12">
@@ -103,117 +112,84 @@ th{
                             <th rowspan="2" style="vertical-align: middle;">Name</th>
                             <th rowspan="2" style="width: 64px;"></th>
                             <th rowspan="2" style="width: 24px;"></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/A">A</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/B">B</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/C">C</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/D">D</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/E">E</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/F">F</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/G">G</a></th>
-                            <th style="width: 64px;"><a href="/contests/awf-19/problems/H">H</a></th>
+                            <?php foreach ($problemList as $key => $value) { ?>
+                            <th style="width: 64px;"><a href="<?php echo "contest_arena.php?id=$contestId&problem=$key" ?>"><?php echo $key; ?></a></th>
+                          
+                            <?php } ?>
                             
                         </tr>
                         <tr>
-                            <th class="text-center">0/2</th>
-                            <th class="text-center">52/53</th>
-                            <th class="text-center">29/29</th>
-                            <th class="text-center">50/52</th>
-                            <th class="text-center">30/36</th>
-                            <th class="text-center">0/0</th>
-                            <th class="text-center">6/21</th>
-                            <th class="text-center">52/52</th>
+                        <?php 
+                        foreach ($problemList as $key => $value) { 
+                            $problemId = $value['problemId'];
+                            $solvedBy = isset($solvedProblemStat[$problemId])?$solvedProblemStat[$problemId]:0;
+                            $attemptedBy = isset($attemptedProblemStat[$problemId])?$attemptedProblemStat[$problemId]:0;
+                        ?>
+                        <th class="text-center"><?php echo $solvedBy."/".$attemptedBy; ?></th>
+                        <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
-                    	<?php for($i=5; $i<=20; $i++){ ?>
+                    	<?php 
+                        $rank = 0;
+
+                        foreach ($rankList as $key => $value) {
+                        $rank ++;
+                        $userId = $value['userId'];
+                        $totalSolved = $value['totalSolved'];
+                        $totalPanalty = $value['totalPanalty'];
+                        $displayName = $contestParticipateList[$userId]['displayName'];
+                        $displaySubName = $contestParticipateList[$userId]['displaySubName'];
+                        $submissionLink = "contest_arena.php?id=$contestId&submissions&user=$userId";
+                        ?>
                         <tr data-id="5e1e73d227f0ba0400c43465">
-                            <td>1</td>
+                            <td><?php echo "$rank"; ?></td>
                             <td style="min-width: 250px;">
-                                <a href="/users/awf19_53">
-                                    <div class="teamName">Sk. Amir Hamza</div>
+                                <a href="profile.php?id=<?php echo $userId; ?>">
+                                    <div class="teamName"><?php echo $displayName; ?></div>
                                 </a>
-                                <div class="teamNameSub">[EWU] [Spring 17]</div> 
+                                <div class="teamNameSub"><?php echo $displaySubName; ?></div> 
                             </td>
                             <td>
-                                <a  href="/contests/awf-19/submissions/for?user=awf19_53">
-                                    <div class="label label-info">10</div>
-                                    <div class="label label-default">1350</div>
+                                <a  href="<?php echo $submissionLink; ?>">
+                                    <div class="label label-info"><?php echo $totalSolved; ?></div>
+                                    <div class="label label-default"><?php echo $totalPanalty; ?></div>
                                 </a>
                                 <td style="width: 26px;"></td>
                             </td>
-                           
+                           <?php 
+                            foreach ($problemList as $key1 => $value1) {
+
+                           ?>
                             <td>
-                                 <?php 
-                                if(rand()%3==1){
+                                <?php 
+                                    $problemId = $value1['problemId'];
+                                    if(!isset($value['problems'][$problemId]))continue;
+                                    $verdict = $value['problems'][$problemId]['verdict'];
+                                    $labelClass = "";
+                                    if($verdict == 3){
+                                        $labelClass = "acLabel";
+                                        $iconLabel = "fa fa-check";
+                                    }
+                                    else {
+                                        $labelClass = "waLabel";
+                                        $iconLabel = "fa fa-times";
+                                    }
+                                    $attempted = $value['problems'][$problemId]['attempted'];
+                                    $panalty = $value['problems'][$problemId]['panalty'];
+                                    $point = $attempted.(($verdict == 3)?" ($panalty)":"");
+
+                                    $submissionLink = "contest_arena.php?id=$contestId&submissions&user=$userId&problem=$key1";
 
                                 ?>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=B">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
+                                <a href="<?php echo $submissionLink; ?>">
+                                    <div class="label <?php echo $labelClass; ?>">
+                                        <div class="<?php echo $iconLabel; ?>"></div>
                                     </div>
-                                    <div class="label label-default">1 (9)</div>
-                                </a>
-                                <?php } ?>
-                            </td>
-                            
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=B">
-                                    <div class="label waLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">1 (9)</div>
+                                    <div class="label label-default"><?php echo "$point"; ?></div>
                                 </a>
                             </td>
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=C">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">1 (113)</div>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=D">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">2 (52)</div>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=E">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">2 (119)</div>
-                                </a>
-                            </td>
-                            <td>
-                                 <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=B">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">1 (9)</div>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=G">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">2 (281)</div>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/contests/awf-19/submissions/for?user=awf19_53&amp;problem=H">
-                                    <div class="label acLabel">
-                                        <div class="fa fa-check"></div>
-                                    </div>
-                                    <div class="label label-default">1 (22)</div>
-                                </a>
-                            </td>
-
-                            
+                            <?php } ?>
                         </tr>
                         <?php } ?>
                         </tbody>

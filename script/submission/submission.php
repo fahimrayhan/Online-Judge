@@ -171,6 +171,10 @@ class Submission {
  		else if($verdictId==14) $verdictName="Exec Format Error";
  		else if($verdictId==15) $verdictName="Output Limit Exceeded";
  		else if($verdictId==16) $verdictName="Internal Error";
+ 		else if($verdictId == 17){
+ 			$verdictName="Frezen";
+ 			$verdictClass="warning";
+ 		}
  		else $verdictName="Failed";
  		$verdictClass="label label-$verdictClass";
 
@@ -219,7 +223,7 @@ class Submission {
  		$info['sourceCode']=base64_decode($info['sourceCode']);
  		$info['sourceCode']=$this->DB->buildSqlString($info['sourceCode']);
  		$info['submissionType']=$submissionType;
- 		$info['userId']=$this->loggedIn;
+ 		$info['userId']=isset($info['userId'])?$info['userId']:$this->loggedIn;
  		$info['submissionTime']=$this->DB->date();
  		for($i=1; $i<=1; $i++){
  			$response=$this->DB->pushData("submissions","insert",$info,true);

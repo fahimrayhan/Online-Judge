@@ -12,6 +12,20 @@ function storeAnnouncementList(){
 	});
 }
 
+function fiterSubmission(){
+	user = $("#filterUser").val();
+	language = $("#filterLanguage").val();
+	verdict = $("#filterVerdict").val();
+	problem = $("#filterProblem").val();
+	getUrl = "contest_arena.php?id="+contestId+"&submissions";
+	if(user != "")getUrl += "&user="+user;
+	if(language != -1)getUrl += "&language="+language;
+	if(verdict != -1)getUrl += "&verdict="+verdict;
+	if(problem != -1)getUrl += "&problem="+problem;
+	window.location.href = getUrl;
+}
+
+
 function getContestAnnouncement(){
 	$.post(contestArenaUrl,buildData("getContestAnnouncement",contestId),function(response){
 		//response = JSON.parse(response);
@@ -48,7 +62,7 @@ function timeConvert(timeDiffrent){
 function setContestTimer(){
 	if(contestFinishStatus == 1)return;
 	var data = timeConvert(contestTimerTime);
-	$("#contestTimer").html(data.hour+":"+data.minute+":"+data.second);
+	$("#contestTimer").html(data.hour+" : "+data.minute+" : "+data.second);
 	if(contestTimerTime<=0 && contestFinishStatus==0){
 		$("#contestTimer").hide();
 		$("#contestStatusTxt").html("Contest Is Finish");
@@ -83,28 +97,21 @@ function createSubmission(){
 	}
 	//console.log(data);
 	$.post(contestArenaUrl,buildData("createContestSubmission",data),function(response){
-		console.log(response);
+		//console.log(response);
 		btnOn("btnCreateSubmit","Submit");
-		return;
-
 		response=JSON.parse(response);
-		console.log(response);
 
-		if(response.error==1){
-			//$("#submission_error").show();
-			//$("#submission_error").html(response.msg);
-			toast.danger(response.msg);
-			btnOn("btnCreateSubmit","Submit");
-		}
-		else{
-			msg=JSON.parse(response.msg);
-		 	//modal_action("md","","close");
-		 	
-    		$.post("submission_action.php",buildData("viewSubmission",msg.insert_id),function(response){
+		if(response.error == 0){
+			
+			$.post("submission_action.php",buildData("viewSubmission",response.submissionId),function(response){
         		$("#modal_lg_body").html(response);
         		toast.success("Successfully Submission");
     		});
-		 	
+			
+		}
+		else{
+		 	toast.danger(response.errorMsg);
+			btnOn("btnCreateSubmit","Submit");
 		}
 	});
 }

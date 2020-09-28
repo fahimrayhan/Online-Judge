@@ -52,8 +52,8 @@
         <a href="contest_arena.php?id=<?php echo $contestId; ?>&dashboard">
           <button class="btn navbar-btn contestNavBtn <?php echo $activeList['dashboard']; ?>"><i class="fa fa-dashboard"></i> Dashboard</button>
         </a>
-        <a href="">
-          <button class="btn contestNavBtn">Clarifications (4)</button>
+        <a href="contest_arena.php?id=<?php echo $contestId; ?>&clearifications">
+          <button class="btn contestNavBtn <?php echo $activeList['clearifications']; ?>">Clarifications (4)</button>
         </a>
         
         <a href="contest_arena.php?id=<?php echo $contestId; ?>&standings">

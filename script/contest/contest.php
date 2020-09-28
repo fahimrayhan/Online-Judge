@@ -10,6 +10,7 @@ class Contest
         $this->Problem    = new Problem();
         $this->Form       = new Form();
         $this->User       = new User();
+        $this->SiteHash   = new SiteHash();
 
     }
 
@@ -69,21 +70,25 @@ class Contest
         return 1;
     }
 
-    public function getContestProblemList($contestId)
+    
+
+    //contest problem
+
+    public function getContestProblemList($contestId,$idxKey = "number")
     {
         $sql               = "select * from contest_problem_set natural join problems natural join users where contestId=$contestId order by problemSerial";
         $data              = $this->DB->getData($sql);
         $problemNumberList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $problemData       = array();
         foreach ($data as $key => $value) {
-            $problemNumber                                = $problemNumberList[$key];
-            $problemData[$problemNumber]                  = $value;
-            $problemData[$problemNumber]['problemNumber'] = $problemNumber;
+            $problemKey = ($idxKey == "number")?$problemNumberList[$key]:$value['problemId'];
+            $problemNumber                             = $problemNumberList[$key];
+            $problemData[$problemKey]                  = $value;
+            $problemData[$problemKey]['problemNumber'] = $problemNumber;
         }
         return $problemData;
     }
 
-    //contest problem
     public function addProblem($contestId, $problemId)
     {
         $error          = array();
@@ -144,6 +149,19 @@ class Contest
 
     //start registration area ---------------------------
 
+    public function contestParticipateUserList($contestId){
+        $data = $this->getContestRegistrationData($contestId);
+        $userList = array();
+        foreach ($data as $key => $value) {
+            $userList[$value['userId']] = [
+                'displayName' => $value['displayName'],
+                'displaySubName' => $value['displaySubName'],
+                'registrationStatus' => $value['registrationStatus']
+            ];
+        }
+        return $userList;
+    }
+
     public function getRegistrationOptionList($contestId)
     {
         $contestInfo  = $this->getContestInfo($contestId);
@@ -153,6 +171,7 @@ class Contest
             'action'                => '',
             'contestRegistrationId' => 'Registration Id',
             'userHandle'            => 'Handle',
+            'userId'            => 'User Id',
             'displayName'           => 'Display Name',
             'displaySubName'        => 'Display Sub Name',
             'registrationStatus'    => 'Registration Status',
@@ -388,47 +407,96 @@ class Contest
         ];
     }
 
+
+    public function registrationButtonStatus($contestId){
+
+    }
+
     //end contest registration area -----------------------------------
 
+
+    //start clearification
+
+    public function getClearificationList($filterData){
+        $whereInfo=array();
+        if(isset($filterData['where']))$whereInfo=$filterData['where'];
+        $where = "";
+        foreach ($whereInfo as $key => $value) {
+            $where.=($where!="")?" and ":"";
+            $where.= "contest_clearification.$key=$value";
+        }
+
+        $where = ($where !="")?" where ".$where:"".$where;
+
+        $sql = "select * from contest_clearification $where";
+        $data   = $this->DB->getData($sql);
+        return $data;
+    }
+
+    public function addClearification($data){
+        //$data['contestClearificationHash'] = 1;
+        //$data['contestClea']
+    }
+
+    public function updateClearification($data){
+
+    }
+
+    public function deleteClearification($data){
+
+    }
+
+    //end clearification
+
+    //start contest participation auth
     public function checkContestParticipate($contestId)
     {
         $userId = $this->DB->isLoggedIn;
-        $sql    = "select * from contest_registration where contestId = $contestId and userId = $userId";
+        $sql    = "select * from contest_registration where contestId = $contestId and userId = $userId and registrationStatus = 'Accepted'";
         $data   = $this->DB->getData($sql);
         return isset($data[0]);
     }
 
-    public function checkContestAuth($contestId)
-    {
+    public function checkContestInfoPage($contestId){
         $contestData = $this->getSingleContestInfo($contestId);
-
         $error = "";
+
         if (!isset($contestData['contestId'])) {
-            $error = "Contest Id Is Not Valid";
-            return $error;
+            $error = "Contest Id Is Not Valid";;
         }
-
-        if ($contestData['contestPublish'] == "No") {
+        else if ($contestData['contestPublish'] == "false") {
             $error = "Contest Is Not Publish";
-            return $error;
         }
 
-        if ($contestData['contestStatus'] == -1) {
-            $error = "Contest Is Not Start";
-            return $error;
-        }
-
-        $checkParticipate = $this->checkContestParticipate($contestId);
-        //if contest is public then user can go to contest areana
-        if ($checkParticipate == 0) {
-            if ($contestData['contestVisibility'] != "Public") {
-                $error = "You Can Not Participate This Contest";
-                return $error;
-            }
-        }
-
-        return $error;
+        return [
+            'error' => $error != "",
+            'errorMsg' => $error
+        ];
     }
+
+    public function checkEnterContestAreana($contestId){
+        //check contest id
+        //contest publish
+        //contest status
+
+        //contest participants
+        //contest  
+    }
+
+    public function checkContestParticipateAuth($contestId)
+    {
+        $participateList = $this->contestParticipateUserList($contestId);
+        $userId = $this->DB->isLoggedIn;
+        $ret = array();
+        $registrationStatus = "";
+        if(isset($participateList[$userId])){
+            $registrationStatus = $participateList[$userId]['registrationStatus'];
+        }
+
+        return $registrationStatus;
+    }
+
+    //end contest participation auth
 
     public function getSingleContestInfo($contestId)
     {
@@ -465,6 +533,15 @@ class Contest
             $contestTimerTime = strtotime($contestInfo['contestEnd']) - strtotime($nowTime);
         }
 
+
+        //frozen time
+        $contestTimeDiff = strtotime($nowTime) - strtotime($contestInfo['contestStart']);
+        $frozenTimeStart = 1&$contestInfo['contestFreeze']=='true';
+        $frozenTimeStart &= $contestTimeDiff >= ($contestInfo['contestFreezePeriod']*60);
+        $frozenTimeStart &= $contestInfo['contestUnFreeze']=='false';
+
+        $contestInfo['frozenHourStart']     = $frozenTimeStart;
+
         $contestInfo['contestStatus']       = $contestStatus;
         $contestInfo['contestStatusTxt']    = $contestStatusTxt;
         $contestInfo['contestTimerTime']    = $contestTimerTime;
@@ -495,7 +572,7 @@ class Contest
             $second = "0" . $second;
         }
 
-        return $hour . ":" . $minute . ":" . $second;
+        return $hour . " : " . $minute . " : " . $second;
     }
 
     public function getContestCommentList($contestId, $commentType = "", $sortType = "asc")
@@ -506,62 +583,7 @@ class Contest
         return $data;
     }
 
-    public function createContestSubmission($data)
-    {
-        $contestId     = $data['contestId'];
-        $problemNumber = $data['problemNumber'];
-        $errorMsg      = "";
-        $retData       = array();
-
-        $checkAuth = $this->checkContestAuth($contestId) == "" & $this->checkContestParticipate($contestId);
-        if (!$checkAuth) {
-            $errorMsg = "You Can Not Participate This Contest";
-        }
-
-        $problemList = $this->getContestProblemList($contestId);
-        if (!isset($problemList[$problemNumber])) {
-            $errorMsg = "Problem Is Not Found";
-        }
-
-        if ($errorMsg != "") {
-            $retData['error']    = 1;
-            $retData['errorMsg'] = $errorMsg;
-            return $retData;
-        }
-
-        $problemId = $problemList[$problemNumber]['problemId'];
-
-        $submissionData               = array();
-        $submissionData['sourceCode'] = $data['sourceCode'];
-        $submissionData['languageId'] = $data['languageId'];
-        $submissionData['problemId']  = $problemId;
-
-        $submissionResponse = $this->Submission->createSubmission($submissionData, 3);
-        $submissionResponse = json_decode($submissionResponse, true);
-
-        print_r($submissionResponse);
-
-        if ($submissionResponse['error'] == 1) {
-            $retData['error']    = 1;
-            $retData['errorMsg'] = $submissionResponse['msg'];
-            return $retData;
-        }
-
-        $submissionInfo = json_decode($submissionResponse['msg'], true);
-
-        $submissionId = $submissionInfo['insert_id'];
-
-        $contestSubmissionData                 = array();
-        $contestSubmissionData['contestId']    = $contestId;
-        $contestSubmissionData['submissionId'] = $submissionId;
-
-        $this->DB->pushData("contest_submission", "insert", $contestSubmissionData, true);
-
-        $retData['error']        = 0;
-        $retData['submissionId'] = $submissionId;
-
-        return $retData;
-    }
+    
 
     public function getContestSubmissionList($contestId)
     {

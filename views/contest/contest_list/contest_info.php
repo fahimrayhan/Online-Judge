@@ -4,11 +4,11 @@
 
 	if(isset($_GET['id'])){
 		$contestId = $_GET['id'];
-		$contestOk = $Contest->checkContest($contestId)&$Contest->checkContestPublish($contestId);
+		$response = $Contest->checkContestInfoPage($contestId);
 	}
 
-	if($contestOk == 0){
-		include "views/contest/contest_list/contest_list.php";
+	if($response['error'] == 1){
+		include "404.php";
 		return;
 	}
 
@@ -21,6 +21,13 @@
 	$contestStart = $DB->dateToString($contestInfo['contestStart']);
 	$contestEnd = 	$DB->dateToString($contestInfo['contestEnd']);
 
+	$problemList = $Contest->getContestProblemList($contestId);
+	$totalProblem = count($problemList);
+
+	$checkAuth = $Contest->checkContestParticipateAuth($contestId);
+	if($checkAuth == "Accepted")$registrationTxt = "You can participate this contest";
+	else if($checkAuth == "Pending")$registrationTxt = "Your registration is pending";
+	else $registrationTxt = "You can not participate this contest. Please registration for participate this contest.";
 ?>
 
 
@@ -93,15 +100,15 @@
 			<img class="bannerImg" src="<?php echo $contestBanner;?>">
 			<div style="padding: 10px;">
 				<h3 style="font-size: 18px;margin: 10px 0px 10px 0px;"><?php echo $contestInfo['contestName']; ?></h3>
-				<span class="label label-success contestLabel"><i class="fas fa-trophy"></i> ICPC</span>
-				<span class="label label-danger contestLabel"><i class="fa fa-lock"></i> Private</span>
+				<span class="label label-success contestLabel"><i class="fas fa-trophy"></i> <?php echo $contestInfo['contestFormat']; ?></span>
+				<span class="label label-info contestLabel"> <?php echo $contestInfo['contestVisibility']; ?></span>
 				<hr style="margin: 10px 0px 10px 0px;">
 				<table>
 					<tr>
 						<td class="contestInfoTd"><i class="fas fa-hourglass listIcon"></i></td>
 						<td class="contestInfoTd">
-                            <div class="listTitle">34 : 33 : 17</div> 
-                            <div class="listLabel">Before Contest</div>       
+                            <div class="listTitle"><?php echo $contestInfo['contestTimerTimeTxt']; ?></div> 
+                            <div class="listLabel"><?php echo $contestInfo['contestStatusTxt']; ?></div>       
                         </td>
 					</tr>
 					<tr>
@@ -114,14 +121,14 @@
 					<tr>
 						<td class="contestInfoTd"><i class="fas fa-clock listIcon"></i></td>
 						<td class="contestInfoTd">
-                            <div class="listTitle">5 Hours</div> 
+                            <div class="listTitle"><?php echo $contestInfo['contestDuration']; ?> Minutes</div> 
                             <div class="listLabel">Length</div>       
                         </td>
 					</tr>
 					<tr>
 						<td class="contestInfoTd"><i class="fas fa-dice-d20	listIcon"></i></td>
 						<td class="contestInfoTd">
-                            <div class="listTitle">10</div> 
+                            <div class="listTitle"><?php echo $totalProblem; ?></div> 
                             <div class="listLabel">Problems</div>       
                         </td>
 					</tr>
@@ -137,9 +144,20 @@
 			<?php echo $contestInfo['contestDescription']; ?>
 			<hr>
 			<div style="padding-bottom: 5px">
+				<?php 
+					if($contestInfo['contestStatus'] != -1){
+
+				?>
 				<a href="contest_arena.php?id=<?php echo "$contestId"; ?>&p=dashboard"><button class="btn-success" style="width: 100px;margin-bottom: 3px">Enter Arena</button></a>
 				<button class="btn-info" style="width: 100px;margin-bottom: 3px">Standings</button>
+			<?php } ?>
+			<?php
+				if($contestInfo['contestStatus'] != 1){
+			?>
 				<button style="width: 100px;margin-bottom: 3px" onclick="signUpContestForm()">Sign-Up</button>
+			<?php } ?>
+			<br/>
+			* <?php echo $registrationTxt; ?>
 			</div>
 		</div>
 	</div>

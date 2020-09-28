@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 02, 2020 at 12:45 AM
+-- Generation Time: Sep 28, 2020 at 04:57 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -41,6 +41,7 @@ CREATE TABLE `contest` (
   `contestFreezePeriod` int(11) NOT NULL DEFAULT 0,
   `contestUnFreeze` enum('true','false') NOT NULL DEFAULT 'false',
   `registrationClose` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `formId` int(11) NOT NULL,
   `registrationAutoAccept` enum('true','false') NOT NULL DEFAULT 'false',
   `participateMainName` text NOT NULL,
   `participateSubName` text NOT NULL,
@@ -57,6 +58,42 @@ CREATE TRIGGER `TG_InsertContestModerator` AFTER INSERT ON `contest` FOR EACH RO
 VALUES (NEW.contestId,new.userId,10)
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contest_clearification`
+--
+
+CREATE TABLE `contest_clearification` (
+  `contestClearificationId` int(11) NOT NULL,
+  `contestId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `contestClearificationHash` text DEFAULT NULL,
+  `contestClearificationType` enum('Resources','Announcement','Clearification') NOT NULL,
+  `contestClearificationProblem` text DEFAULT NULL,
+  `contestClearificationTitle` text NOT NULL,
+  `contestClearificationDescription` text DEFAULT NULL,
+  `contestClearificationReply` text DEFAULT NULL,
+  `contestClearificationTime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contest_comment`
+--
+
+CREATE TABLE `contest_comment` (
+  `contestCommentId` int(11) NOT NULL,
+  `contestId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `contestCommentType` enum('Resources','Announcement','Clearification') NOT NULL,
+  `contestCommentTitle` text NOT NULL,
+  `contestCommentDescription` text NOT NULL,
+  `contestCommentReply` text DEFAULT NULL,
+  `contestCommentTime` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -170,10 +207,11 @@ CREATE TABLE `form_question` (
   `formQuestionId` int(11) NOT NULL,
   `formId` int(11) NOT NULL,
   `formQuestionHashId` text DEFAULT NULL,
-  `formQuestionKey` varchar(40) NOT NULL,
-  `formQuestionTitle` text NOT NULL,
+  `formQuestionTitle` varchar(40) NOT NULL,
   `formQuestionDescription` text NOT NULL,
+  `formQuestionHint` text DEFAULT NULL,
   `formQuestionInputData` text NOT NULL,
+  `formQuestionRequired` enum('true','false') NOT NULL DEFAULT 'false',
   `formQuestionSerial` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -343,11 +381,10 @@ CREATE TABLE `test_case` (
 
 CREATE TABLE `users` (
   `userId` int(11) NOT NULL,
-  `userFullName` text NOT NULL,
-  `userHandle` varchar(15) NOT NULL,
+  `userFullName` text DEFAULT NULL,
+  `userHandle` varchar(40) NOT NULL,
   `userEmail` text NOT NULL,
   `userPhoto` text DEFAULT NULL,
-  `userEwuId` text DEFAULT NULL,
   `instituteName` text DEFAULT NULL,
   `userPassword` varchar(150) NOT NULL,
   `userRoles` int(11) NOT NULL DEFAULT 40,
@@ -368,7 +405,16 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `contest`
   ADD PRIMARY KEY (`contestId`),
-  ADD KEY `FK_ContestUserId` (`userId`);
+  ADD KEY `FK_ContestUserId` (`userId`),
+  ADD KEY `FK_ContestFormId` (`formId`);
+
+--
+-- Indexes for table `contest_clearification`
+--
+ALTER TABLE `contest_clearification`
+  ADD PRIMARY KEY (`contestClearificationId`),
+  ADD KEY `FK_ContestClearificationContestId` (`contestId`),
+  ADD KEY `FK_ContestClearificationUserId` (`userId`);
 
 --
 -- Indexes for table `contest_moderator`
@@ -428,7 +474,7 @@ ALTER TABLE `form`
 --
 ALTER TABLE `form_question`
   ADD PRIMARY KEY (`formQuestionId`),
-  ADD UNIQUE KEY `UC_FormQuestionFormIdFormName` (`formId`,`formQuestionKey`);
+  ADD UNIQUE KEY `UC_FormQuestion` (`formId`,`formQuestionTitle`);
 
 --
 -- Indexes for table `judge_problem_list`
@@ -504,6 +550,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `contest`
   MODIFY `contestId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contest_clearification`
+--
+ALTER TABLE `contest_clearification`
+  MODIFY `contestClearificationId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `contest_moderator`
@@ -615,7 +667,15 @@ ALTER TABLE `users`
 -- Constraints for table `contest`
 --
 ALTER TABLE `contest`
+  ADD CONSTRAINT `FK_ContestFormId` FOREIGN KEY (`formId`) REFERENCES `form` (`formId`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_ContestUserId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+
+--
+-- Constraints for table `contest_clearification`
+--
+ALTER TABLE `contest_clearification`
+  ADD CONSTRAINT `FK_ContestClearificationContestId` FOREIGN KEY (`contestId`) REFERENCES `contest` (`contestId`),
+  ADD CONSTRAINT `FK_ContestClearificationUserId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
 
 --
 -- Constraints for table `contest_moderator`

@@ -7,14 +7,24 @@
 	}
 
 	$contestId = $_GET['id'];
-	$error = $Contest->checkContestAuth($contestId);
+
+	$checkContestInfo = $Contest->checkContestInfoPage($contestId);
+
+	//$error = $Contest->checkContestAuth($contestId);
 	
-	if($error != ""){
-		$Site->goRedirectPage("index.php",$error);
+	if($checkContestInfo['error'] == 1){
+		$Site->goRedirectPage("index.php",$checkContestInfo['errorMsg'] );
+		include "404.php";
 		return;
 	}
 
 	$contestInfo = $Contest->getSingleContestInfo($contestId);
+
+	if($contestInfo['contestStatus'] == -1){
+		$Site->goRedirectPage("index.php","Contest Is Not Start");
+		include "404.php";
+		return;
+	}
 	
 	$pageList = array(
 		"dashboard","problem","standings","submissions","clearifications"
