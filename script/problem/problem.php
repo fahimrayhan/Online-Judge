@@ -5,6 +5,7 @@ class Problem {
  	public function __construct(){
      	$this->DB=new Database();
      	$this->conn=$this->DB->conn;
+     	$this->TestCase = new TestCase();
  	}
  
  	public function getProblemList($json=false){
@@ -16,7 +17,11 @@ class Problem {
  	public function getProblemInfo($id,$json=false){
  		$sql="select problems.*,users.userHandle from problems join users on users.userId=problems.userId where problemId=$id";
  		$data=$this->DB->getData($sql);
- 		return $json?json_encode($data[0]):$data[0];
+ 		if(!isset($data[0]))return $json?json_encode($data):$data;
+ 		$data = $data[0];
+ 		$data['testCaseSampleList'] = $this->TestCase->getSampleTestCase($id);
+ 		
+ 		return $json?json_encode($data):$data;
 	}
 
 	public function  getAllJudgeProblemList($where="",$json=false){

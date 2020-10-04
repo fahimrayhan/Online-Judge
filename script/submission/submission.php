@@ -219,7 +219,7 @@ class Submission {
 
  		if($data['error']==1)
  			return json_encode($data);
-
+ 		
  		$info['sourceCode']=base64_decode($info['sourceCode']);
  		$info['sourceCode']=$this->DB->buildSqlString($info['sourceCode']);
  		$info['submissionType']=$submissionType;

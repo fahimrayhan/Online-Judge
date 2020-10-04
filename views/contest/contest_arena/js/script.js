@@ -97,8 +97,7 @@ function createSubmission(){
 	}
 	//console.log(data);
 	$.post(contestArenaUrl,buildData("createContestSubmission",data),function(response){
-		//console.log(response);
-		btnOn("btnCreateSubmit","Submit");
+		console.log(response);
 		response=JSON.parse(response);
 
 		if(response.error == 0){
@@ -107,6 +106,7 @@ function createSubmission(){
         		$("#modal_lg_body").html(response);
         		toast.success("Successfully Submission");
     		});
+    		btnOn("btnCreateSubmit","Submit");
 			
 		}
 		else{

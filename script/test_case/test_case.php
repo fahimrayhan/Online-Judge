@@ -37,8 +37,30 @@ class TestCase {
  		return 0;
  	}
 
+ 	public function getSampleTestCase($problemId){
+ 		$sql="select testCaseIdHash from test_case where problemId=$problemId and testCaseSample=1";
+ 		$data=$this->DB->getData($sql);
+ 		$testCaseList = array();
+
+ 		foreach ($data as $key => $value) {
+ 			$testCaseHash=$value['testCaseIdHash'];
+ 			$tmp = $this->getTestCaseData($testCaseHash);
+ 			unset($tmp['testCasePoint']);
+ 			$tmp['input'] = $this->compressTestCase($tmp['input']);
+ 			$tmp['output'] = $this->compressTestCase($tmp['output']);
+
+ 			array_push($testCaseList, $tmp);
+ 		}
+
+ 		return $testCaseList;
+ 	}
+
+ 	public function compressTestCase($case,$len = 100){
+ 		return strlen($case) >$len?substr($case, 0, $len):$case;
+ 	}
+
  	public function getTestCaseList($problemId,$json=false){
- 		$sql="select testCaseId,userHandle,userId,testCaseAddedDate,testCaseIdHash,testCasePoint from test_case 
+ 		$sql="select testCaseId,userHandle,userId,testCaseAddedDate,testCaseIdHash,testCasePoint,testCaseSample from test_case 
  		natural join users
  		where problemId=$problemId";
  		$data=$this->DB->getData($sql);
@@ -97,21 +119,37 @@ class TestCase {
  	}
 
  	public function updateTestCase($info){
- 		$testCaseHashId=$info['testCaseHashId'];
- 		
+
  		if($this->DB->isLoggedIn==0)return;
+
+ 		$testCaseHashId=$info['testCaseHashId'];
+ 		echo "$testCaseHashId";
+
  		$sql="select testCaseId from test_case where testCaseIdHash='$testCaseHashId'";
  		$data=$this->DB->getData($sql);
  		if(!isset($data[0]))return;
- 		$data=$data[0];
- 		$data['testCasePoint']=$info['testCasePoint'];
- 		$this->DB->pushData("test_case","update",$data);
 
- 		
- 		$info['input'] = $this->getFieldTxtData($info['inputData']);
- 		$info['output'] = $this->getFieldTxtData($info['outputData']);
- 		file_put_contents($this->getInputFilePath($testCaseHashId), $info['input']);
- 		file_put_contents($this->getOutputFilePath($testCaseHashId), $info['output']);
+ 		$data=$data[0];
+
+ 		if(isset($info['testCasePoint'])){
+ 			$data['testCasePoint']=$info['testCasePoint'];
+ 			$this->DB->pushData("test_case","update",$data);
+ 		}
+
+ 		if(isset($info['inputData'])){
+ 			$info['input'] = $this->getFieldTxtData($info['inputData']);
+ 			file_put_contents($this->getInputFilePath($testCaseHashId), $info['input']);
+ 		}
+
+ 		if(isset($info['outputData'])){
+ 			$info['output'] = $this->getFieldTxtData($info['outputData']);
+ 			file_put_contents($this->getOutputFilePath($testCaseHashId), $info['output']);
+ 		}
+
+ 		if(isset($info['testCaseSample'])){
+ 			$data['testCaseSample']=$info['testCaseSample'];
+ 			$this->DB->pushData("test_case","update",$data);
+ 		}
  	}
 
 

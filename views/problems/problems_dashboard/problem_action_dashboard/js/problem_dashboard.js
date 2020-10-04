@@ -311,12 +311,24 @@ function createSubmission(){
 
 //start test case function
 
+function changeProblemSample(e){
+	
+	checked = $('#'+e.id).is(':checked')?1:0;
+
+	var data = {
+		'testCaseHashId': e.value,
+		'testCaseSample': checked
+	};
+	$.post(dashboard_action_url,buildProblemData("changeProblemSample",data),function(response){
+		toast.success("Successfully "+(checked?"Added":"Remove")+" Sample");
+	});
+}
+
 function loadTestCasePage(){
 	loader("option_box_body");
 
 	$.post(dashboard_action_url,buildProblemData("loadTestCasePage",problemId),function(response){
 		$("#option_box_body").html(response);
-		
 	});
 }
 

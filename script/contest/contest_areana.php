@@ -8,7 +8,6 @@ class ContestAreana {
      	$this->Submission = new Submission();
  	}
 
-
  	// start submission area
 
  	public function createContestSubmission($data)
@@ -49,6 +48,10 @@ class ContestAreana {
         $submissionData['languageName'] = $data['languageName'];
         $submissionData['userId'] = $this->DB->isLoggedIn;
         $submissionData['problemId']  = $problemId;
+        
+        $submissionData['submissionVerdict']  = rand()%3+3;
+        $submissionData['judgeComplete']  = 1;
+        $submissionData['testCaseReady']  = 1;
 
         $submissionResponse = $this->Submission->createSubmission($submissionData, 3);
         $submissionResponse = json_decode($submissionResponse, true);
@@ -242,6 +245,5 @@ class ContestAreana {
 
  		return $rankList;
  	}
- 
 }
 ?>

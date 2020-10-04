@@ -17,15 +17,11 @@ var problemEditor = {
   inputEditor : "" , 
   outputExEdito : "", 
   descriptionEdito : "", 
-  inputExEdito : "", 
-  outputExEdito : "", 
   noteEditor : "" ,  
   setUpEditorFunation: function(){
     this.descriptionEditor = CKEDITOR.replace('descriptionEditor');
     this.inputEditor = CKEDITOR.replace('inputEditor');
-    this.inputExEditor = CKEDITOR.replace('inputExEditor');
     this.outputEditor = CKEDITOR.replace('outputEditor');
-    this.outputExEditor = CKEDITOR.replace('outputExEditor');
     this.noteEditor = CKEDITOR.replace('noteEditor');
     this.constraintsEditor = CKEDITOR.replace('constraintsEditor');
 
@@ -78,9 +74,6 @@ var problemEditor = {
         items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
       }];
 
-      this.inputExEditor.config.toolbar = toolbarInputExEditor;
-      this.outputExEditor.config.toolbar = toolbarInputExEditor;
-
       this.constraintsEditor.config.toolbar = toolbarConstraintsEditor;
       this.inputEditor.config.toolbar = toolbarConstraintsEditor;
       this.outputEditor.config.toolbar = toolbarConstraintsEditor;
@@ -92,8 +85,7 @@ var problemEditor = {
     CKEDITOR.instances.descriptionEditor.setData(problemData.problemDescription);
     CKEDITOR.instances.inputEditor.setData(problemData.inputDescription);
     CKEDITOR.instances.outputEditor.setData(problemData.outputDescription);
-    CKEDITOR.instances.inputExEditor.setData(problemData.inputExample);
-    CKEDITOR.instances.outputExEditor.setData(problemData.outputExample);
+
     CKEDITOR.instances.noteEditor.setData(problemData.notes);
     CKEDITOR.instances.constraintsEditor.setData(problemData.constraintDescription);
   },
@@ -103,8 +95,6 @@ var problemEditor = {
       'problemDescription': CKEDITOR.instances.descriptionEditor.getData(),
       'inputDescription': CKEDITOR.instances.inputEditor.getData(),
       'outputDescription': CKEDITOR.instances.outputEditor.getData(),
-      'inputExample': CKEDITOR.instances.inputExEditor.getData(),
-      'outputExample': CKEDITOR.instances.outputExEditor.getData(),
       'notes': CKEDITOR.instances.noteEditor.getData(),
       'constraintDescription': CKEDITOR.instances.constraintsEditor.getData()
     }

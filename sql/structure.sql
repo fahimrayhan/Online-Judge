@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 28, 2020 at 04:57 PM
+-- Generation Time: Oct 04, 2020 at 09:33 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -272,8 +272,6 @@ CREATE TABLE `problems` (
   `inputDescription` text DEFAULT NULL,
   `outputDescription` text DEFAULT NULL,
   `constraintDescription` text DEFAULT NULL,
-  `inputExample` text DEFAULT NULL,
-  `outputExample` text DEFAULT NULL,
   `notes` text DEFAULT NULL,
   `timeLimit` float NOT NULL DEFAULT 2,
   `memoryLimit` int(11) NOT NULL DEFAULT 128000,
@@ -369,6 +367,7 @@ CREATE TABLE `test_case` (
   `testCaseIdHash` varchar(150) DEFAULT NULL,
   `testCasePoint` int(11) NOT NULL DEFAULT 1,
   `problemId` int(11) NOT NULL,
+  `testCaseSample` enum('1','0') NOT NULL DEFAULT '0',
   `testCaseAddedDate` datetime NOT NULL,
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

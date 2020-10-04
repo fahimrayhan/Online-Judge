@@ -12,14 +12,13 @@ class ProblemFormat {
  	$description=$info['problemDescription'];
  	$input_description=$info['inputDescription'];
  	$output_description=$info['outputDescription'];
- 	$input_example=$info['inputExample'];
- 	$output_example=$info['outputExample'];
  	$notes=$info['notes'];
  	$constraint_description=$info['constraintDescription'];
  	$problemName=isset($info['problemName'])?$info['problemName']:"---";
  	$cpu=isset($info['timeLimit'])?$info['timeLimit']:"";
  	$memory=isset($info['memoryLimit'])?$info['memoryLimit']:"";
- 	
+ 	$testCaseSampleList = isset($info['testCaseSampleList'])?$info['testCaseSampleList']:array();
+
  	$this->addMathScript();
     echo "<div>";
  	if(isset($info['problemName']))
@@ -41,8 +40,13 @@ class ProblemFormat {
         echo $output_description;
     }
 
- 	echo  $this->addOptionBreak("Example");
- 	echo $this->addExample($input_example,$output_example);
+    if(!empty($testCaseSampleList)){
+        echo  $this->addOptionBreak("Examples");
+    }
+
+ 	foreach ($testCaseSampleList as $key => $value) {
+ 		echo $this->addExample($key+1,$value['input'],$value['output']);
+ 	}
  	
     if($notes!=""){
         echo  $this->addOptionBreak("Notes");
@@ -69,21 +73,25 @@ class ProblemFormat {
  	</div>";
  }
 
- public function addExample($input,$output){
+ public function addExample($sl,$input,$output){
+    $input = nl2br(htmlspecialchars($input));
+    $output = nl2br(htmlspecialchars($output));
+    $smInput = "problemSampleInput_$sl";
+    $smOutput = "problemSampleOutput_$sl";
  	return "<table class='table table-bordered'>
                 <thead>
                     <tr>
-                        <th class='th_input_ex' style='width: 50%'>Input</th>
-                        <th class='th_input_ex' style='width: 50%'>Output</th>
+                        <th class='th_input_ex' style='width: 50%'>Input <div class='pull-right'><button value='$smInput' class='btn-sm cpyBtn' onclick='copyTestCase(this)'>copy</button></div></th>
+                        <th class='th_input_ex' style='width: 50%'>Output<div class='pull-right'><button class='btn-sm cpyBtn' value='$smOutput' onclick='copyTestCase(this)'>copy</button></div></th>
                     </tr>
                 </thead>
                 <tbody style='background-color: #EFEFEF'>
                     <tr>
                         <td class='td_pre' style='width: 50%; padding: 0px;'>
-                           $input
+                        <div id='$smInput'>$input</div>  
                         </td>
                         <td style='padding:0px;' class='td_pre'>
-                            $output
+                            <div id='$smOutput'>$output</div>
                         </td>
                     </tr>
                 </tbody>

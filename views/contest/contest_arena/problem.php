@@ -6,6 +6,7 @@
 		return;
 	}
 	$problemData = $problemData[$problemNumber];
+	$problemData = $Problem->getProblemInfo($problemData['problemId']);
 	$problemData['problemName']="$problemNumber. ".$problemData['problemName'];
 
 	

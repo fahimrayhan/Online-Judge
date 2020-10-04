@@ -77,6 +77,9 @@
 	else if(isset($_POST['sendProblemSetterRequest'])){
 		echo $User->changeUserRole($DB->isLoggedIn,35);
 	}
+	else if(isset($_POST['changeProblemSample'])){
+		$TestCase->updateTestCase($_POST['changeProblemSample']);
+	}
 
 	else 
 		include "views_action/problem_dashboard/problem_dashboard_ui.php";

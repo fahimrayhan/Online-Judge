@@ -104,7 +104,7 @@
         padding: 3px;
         border: 1px solid #E7ECF1;
     }
-    .box{
+    .submissionBox{
         box-shadow: 1px 1px 3px #DADADA;
     }
 
@@ -119,7 +119,7 @@
 
 <div class='row'>
     <div class='col-md-12 col-sm-12'>
-        <div class="box" style="margin-bottom: 20px">
+        <div class="box submissionBox" style="margin-bottom: 20px">
         	<div class="box_header submissionHeader">Submission
             </div>
            	<div class="box_body subBody" style="overflow-x: scroll;scrollbar-width: none;">
@@ -150,7 +150,7 @@
         </div>
     </div>
     <div class='col-md-12 col-sm-12'>
-    	<div class="box" style="margin-bottom: 20px">
+    	<div class="box submissionBox" style="margin-bottom: 20px">
     		<div class="box_header submissionHeader">Test Cases</div>
     		<div class="box_body">
     			<table width="100%" id="testCaseTable">
@@ -229,11 +229,8 @@
     	</div>
     </div>
     <?php if($sourceCodePermission==1){ ?>
-    
-  
-    
     <div class='col-md-12'>
-        <div class="box">
+        <div class="box submissionBox">
             <div class="box_header submissionHeader">Source Code</div>
             <div class="box_body" style="">
                 <div id="submissionSourceCodeEditorArea">

@@ -84,13 +84,5 @@ sendTestPostReq();
 var countReq = 0;
 var slugSet = new Set(); 
 function sendTestPostReq(){
-	$.post("https://tiinify.herokuapp.com/url",{"url" : "https://www.google.com/"},function(response){
-		console.log(response);
-		countReq ++;
-		slugSet.add(response.slug);
-		$("#dashboardCounter").html(countReq +" "+ slugSet.size);
-		if(countReq%30 == 1) $(dashboard).html(response.slug+"<br/>");
-		else $(dashboard).append(response.slug+"<br/>");
-		sendTestPostReq();
-	});
+	
 }

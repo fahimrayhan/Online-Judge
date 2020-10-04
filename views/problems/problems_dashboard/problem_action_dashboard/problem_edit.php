@@ -73,20 +73,6 @@
 
 <div class="option_devide">
 	<div class="row">
-		<div class="col-md-3"><div class="option_name">Input Example</div></div>
-		<div class="col-md-9"><textarea name="inputExEditor"></textarea></div>
-	</div>
-</div>
-
-<div class="option_devide">
-	<div class="row">
-		<div class="col-md-3"><div class="option_name">Output Example</div></div>
-		<div class="col-md-9"><textarea name="outputExEditor"></textarea></div>
-	</div>
-</div>
-
-<div class="option_devide">
-	<div class="row">
 		<div class="col-md-3"><div class="option_name">Note</div></div>
 		<div class="col-md-9"><textarea name="noteEditor"></textarea></div>
 	</div>

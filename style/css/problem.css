@@ -36,8 +36,8 @@
 }
 
 .th_input_ex {
-	background-color: #ffffff;
-	padding: 10px !important;
+	background-color: #f8f8f8;
+	padding: 5px 10px 5px 10px !important;
 }
 
 .td_pre {
@@ -150,6 +150,22 @@
 }
 
 /*problem dashboard css*/
+.cpyBtn{
+	padding: 1px 5px 1px 5px;
+	font-size: 13px;
+	border: 1px solid #DDDDDD;
+	background-color: #f8f8f8;
+	font-weight: bold;
+	color: #A49A8F;
+}
+.cpyBtn:hover{
+	background-color: #f3f3f3;
+	color: #A49A8F;
+}
+.cpyBtn:focus{
+	background-color: #f2f2f2;
+	color: #A49A8F;
+}
 .problemPanel {
 }
 
