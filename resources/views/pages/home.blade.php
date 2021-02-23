@@ -2,7 +2,8 @@
 @section('title', 'Welcome TO Online Judge')
 
 @section('content')
-{{$layout}}
+{{url()->full()}}
+
 <div class="row">
    
    <div class="col-md-12">
@@ -75,7 +76,7 @@
          </div>
          <div class="col-md-8">
             <div class="welcomeInfo">
-               Coder Online Judge is an Online Programming Practice and Contest Platform. It is maintained by a group of competitive programmers from Dept. of Computer Science Engineering, East West University. It is still under development and running in α version. This judge still needs lots of improvement and feature. Any suggestion will be appreciated. Happy Coding...
+               Coder Online Judge is an Online Programming Practice and Contest Platform. It is maintained by a group of competitive programmers from Bangladesh. It is still under development and running in α version. This judge still needs lots of improvement and feature. Any suggestion will be appreciated. Happy Coding...
             </div>
          </div>
       </div>

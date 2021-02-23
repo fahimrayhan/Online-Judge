@@ -1,29 +1,32 @@
 @extends($layout)
-@section('title', 'Page Not Found')
+@section('title', $message)
 @section('content')
 	<style type="text/css">
 		.error{
+			font-family: "Exo 2";
 			text-align: center;
-			margin-top: 30px;
+			margin-top: 35px;
+			margin-bottom: 35px;
 		}
-		.error-img{
-			height: 150px;
-			width: 160px;
-		}
-		.error-code{
-			font-size: 12em;
-			font-weight: bold;
-			margin-top: -50px;
-		}
-		.error-details{
-			font-size: 2em;
-			font-weight: bold;
-			margin-top: -50px;
-		}
+
+.code{
+	-webkit-text-fill-color: #2C3542;
+	font-size: 15em;
+}
+.message{
+	-webkit-text-fill-color: #2C3542;
+    /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 0.07em;
+    -webkit-text-stroke-color: #2C3542;
+	font-size: 2.7em;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+
 	</style>
+	
 	<div class="error">
-		<img class="error-img" src="https://www.pngkey.com/png/full/54-543791_clipart-smiley-emoji-face-and-big-image-black.png">
-		<div class="error-code">404</div>
-		<div class="error-details">Page Not Found</div>
+		<div><span class="code">{{$statusCode}}</span></div>
+		<div style="margin-top: -50px"><span class="message">{{$message}}</span></div>
 	</div>
 @stop

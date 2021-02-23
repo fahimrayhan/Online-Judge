@@ -53,7 +53,7 @@ $(document).ready(function() {
             e.preventDefault();
             url.load(link,function(response){
                 // function we want to run
-                console.log(self.attr("callback"))
+                //console.log(self.attr("callback"))
                 if(self.link != url.get())$(window).scrollTop(0);
                 
                 if (self.attr("callback")){

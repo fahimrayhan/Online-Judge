@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Services\Exceptions\ExceptionService;
+//validation exception
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,11 +54,30 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($this->isHttpException($exception)) {
-            if ($exception->getStatusCode() == 404) {
-                return response()->view('error.error');
-            }
+        //call prepareException() function for get status code. because many common error status code not default set
+        $e = $this->prepareException($exception);
+        if (method_exists($e, 'getStatusCode')) {
+            return (new ExceptionService())->viewException($e);
         }
+
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Create a response object from the given validation exception.
+     *
+     * @param  \Illuminate\Validation\ValidationException  $e
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
+    {
+        if ($e->response) {
+            return $e->response;
+        }
+        return response()->json([
+            'message' => 'The given data was invalid.',
+            'errors' => $e->validator->errors()->messages(),
+        ],$e->status);
     }
 }

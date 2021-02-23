@@ -31,8 +31,6 @@ function Div(div) {
         var requestData = $.isPlainObject(this.data) ? this.data : {};
         requestData['ajax_layout_load'] = app.layoutkey;
 
-        console.log(requestData);
-
         $.get(this.url, requestData , function(response) {
             if(this.changeUrl)document.title = $(response).filter('title').text();
             self.div.html(response);
@@ -40,12 +38,11 @@ function Div(div) {
             if ($.isFunction(callback)) callback(response);
         }).fail(function(error) {
             if (error.status == 500) {
-                alert("Error Found\n------\n" + error.responseJSON.message);
-                window.location.href = error.responseJSON.debugUrl;
+                alert("Error Found\n");
+                location.reload();
             } else {
-                $("#topLoader").hide(100);
-                toast.danger(error.responseJSON.message);
-               // parent.history.back();
+                self.div.html(error.responseText);
+                toast.danger(error.status + " Error Found");
             }
         });
     }

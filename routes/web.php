@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/register', 'Auth\RegisterController@index')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
+
 Route::get('/', 'Profile\ProfileController@home')->name('home');
 Route::get('/contests', 'Problem\ProblemListController@show')->name('contests');
 Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
@@ -29,14 +32,6 @@ Route::get('/footer', function () {
     return view('includes.footer');
 });
 
-
- 
 Route::get('/login', function () {
-    //Session::flash('message', 'This is a message!'); 
-    //Session::flash('alert-class', 'alert-danger'); 
     return view('pages.auth.login');
 })->middleware('CheckLayoutKey')->name('login');
-
-Route::post('/login', function () {
-    echo "ok";
-})->name('login');

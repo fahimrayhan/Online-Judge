@@ -9,7 +9,7 @@
         'contest' => [
             'icon'  => 'glyphicon glyphicon-list',
             'name' => 'CONTEST',
-            'url' => route('contests'),
+            'url' => 'http://127.0.0.1:8000/login',
             'callback' => 'profile.afterLoad'
         ],
         'problems' => [
