@@ -16,7 +16,7 @@ class AuthService
         //dd($data);
         $data = request()->all();
         $data['password'] = bcrypt($data['password']);
-        $data['type'] = 'super_admin';
+        $data['type'] = 1;
         User::create($data);
     }
 

@@ -2,91 +2,169 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function Example()
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    public function postRoute(){
+        return route('register');
     }
 
     /**
-     * check_register_path
-     *
-     *
-     * @return void
-     */
-    public function check_register_path()
-    {
-        $this->post(route('register'))
-            ->assertStatus(200);
-    }
-
-    
-    /**
-     * Check invalid handle
-     * Handle is must required
-     * Handle only support (a-zA-Z_0-9)
-     * Handle length must be between 3-20
+     * Chek register request path is valid
      * @test
      * @group register
      * @return void
      */
-    public function user_can_not_register_when_handle_is_invalid()
+    public function check_register_path()
     {
-        $invalidHandleList = [
-            'required' => [
-                'message' => ['The handle field is required.'],
-                'handles' => [''],
-            ],
-            'min' => [
-                'message' => ['The handle must be at least 3 characters.'],
-                'handles' => [
-                    'a',
-                    'ha',
-                    '4s',
-                    '!',
-                    '1s',
+        $this->post($this->postRoute())
+            ->assertStatus(422);
+    }
+
+    /**
+     * User can not register without fill requried field
+     * Requried field are (handle,name,email,password)
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_can_not_login_without_fill_requried_field()
+    {
+
+        $this->post($this->postRoute())
+            ->assertStatus(422)
+            ->assertJson([
+                "errors" => [
+                    'handle' => ['The handle field is required.'],
+                    'name' => ['The name field is required.'],
+                    'email' => ['The email field is required.'],
+                    'password' => ['The password field is required.'],
                 ],
-            ],
-            'max' => [
-                'message' => ['The handle may not be greater than 20 characters.'],
-                'handles' => [
-                    Str::random(21),
-                    Str::random(22),
-                    Str::random(30),
-                ],
-            ],
-            'regex' => [
-                'message' => ['The handle format is invalid.'],
-                'handles' => [
-                    'abc-def',
-                    'abd ham',
-                    'abd 1 14',
-                    'ok ddde!',
-                    'dd ok dd 1111111',
-                ],
-            ],
+            ]);
+    }
+
+    /**
+     * User can not register when handle length is less then min length
+     * Limit handle min length is 3
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_can_not_register_when_handle_length_less_then_min_length()
+    {
+        $handles = [
+            'a',
+            'ha',
+            '4s',
+            '!',
+            '1s',
+            Str::random(1),
         ];
-        foreach ($invalidHandleList as $key => $data) {
-            foreach ($data['handles'] as $key => $value) {
-                $this->json('POST', route('register'), ['handle' => $value], ['Accept' => 'application/json'])
-                    ->assertStatus(422)
-                    ->assertJson([
-                        "errors" => [
-                            'handle' => $data['message'],
-                        ],
-                    ]);
-            }
+
+        foreach ($handles as $key => $handle) {
+            $this->post($this->postRoute(), ['handle' => $handle])
+                ->assertStatus(422)
+                ->assertJson([
+                    "errors" => [
+                        'handle' => ["The handle must be at least 3 characters."],
+                    ],
+                ]);
         }
     }
+
+    /**
+     * User can not register when handle length is greater then max length
+     * Limit of handle max length is 20
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_can_not_register_when_handle_length_greater_then_max_length()
+    {
+        $handles = [
+            "abcdefghijklmnopabcdefghijklmnopabcdefghijklmnop",
+        ];
+        for ($i = 21; $i <= 50; $i++) {
+            array_push($handles, Str::random($i));
+        }
+
+        foreach ($handles as $key => $handle) {
+            $this->post($this->postRoute(), ['handle' => $handle])
+                ->assertStatus(422)
+                ->assertJson([
+                    "errors" => [
+                        'handle' => ["The handle may not be greater than 20 characters."],
+                    ],
+                ]);
+        }
+    }
+
+    /**
+     * User can not register when user handle is wrong format
+     * Handle only support (a-zA-Z_0-9)
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_can_not_register_when_handle_is_invalid_format()
+    {
+        $handles = [
+            'abc-def',
+            'abd ham',
+            'abd 1 14',
+            'ok ddde!',
+            'dd ok dd 1111111',
+        ];
+
+        foreach ($handles as $key => $handle) {
+            $this->post($this->postRoute(), ['handle' => $handle])
+                ->assertStatus(422)
+                ->assertJson([
+                    "errors" => [
+                        'handle' => [
+                            "The handle format is invalid.",
+                        ],
+                    ],
+                ]);
+        }
+    }
+
+    /**
+     * user_can_not_register_when_handle_is_already_taken
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_can_not_register_when_handle_is_already_taken()
+    {
+        $user = $this->createUser();
+
+        $this->post($this->postRoute(), $user)
+            ->assertStatus(200);
+
+        $this->post($this->postRoute(), $user)
+            ->assertStatus(422)
+            ->assertJson([
+                "errors" => [
+                    'handle' => [
+                        "The handle has already been taken.",
+                    ],
+                ],
+            ]);
+    }
+
+
+    public function createUser(){
+        return [
+            'handle' => 'hamza',
+            'name' => 'sk.amirhamza',
+            'email' => 'sk.amirhamza@gmail.com',
+            'password' => '123456',
+        ];
+    }
+
 }
