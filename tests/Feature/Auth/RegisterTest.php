@@ -8,8 +8,8 @@ use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-
-    public function postRoute(){
+    public function postRoute()
+    {
         return route('register');
     }
 
@@ -134,17 +134,23 @@ class RegisterTest extends TestCase
     }
 
     /**
-     * user_can_not_register_when_handle_is_already_taken
+     * User can not register if email is already taken
      * @test
      * @group register
      * @return void
      */
     public function user_can_not_register_when_handle_is_already_taken()
     {
-        $user = $this->createUser();
+        $user = [
+            'handle' => 'hamza',
+            'name' => 'sk.amirhamza',
+            'email' => 'sk.amirhamza@gmail.com',
+            'password' => '123456',
+        ];
 
         $this->post($this->postRoute(), $user)
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJson([]);
 
         $this->post($this->postRoute(), $user)
             ->assertStatus(422)
@@ -153,18 +159,33 @@ class RegisterTest extends TestCase
                     'handle' => [
                         "The handle has already been taken.",
                     ],
+                    'email' => [
+                        "The email has already been taken.",
+                    ],
                 ],
             ]);
     }
-
-
-    public function createUser(){
-        return [
+    
+    /**
+     * User successfully created
+     * @test
+     * @group register
+     * @return void
+     */
+    public function user_create_success()
+    {
+        $user = [
             'handle' => 'hamza',
             'name' => 'sk.amirhamza',
             'email' => 'sk.amirhamza@gmail.com',
             'password' => '123456',
         ];
+
+        $this->post($this->postRoute(), $user)
+            ->assertStatus(200)
+            ->assertJson([
+                'message' => 'Account Successfully Created'
+            ]);
     }
 
 }
