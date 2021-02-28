@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Problem extends Model
 {
 
-  public function problemTestCases()
+  public function testCases()
   {
     return $this->hasMany(ProblemTestCase::class);
   }
