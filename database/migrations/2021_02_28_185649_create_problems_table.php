@@ -15,7 +15,7 @@ class CreateProblemsTable extends Migration
     {
         Schema::create('problems', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
+            $table->string('name');
             $table->text('problem_description')->nullable();
             $table->text('input_description')->nullable();
             $table->text('output_description')->nullable();
