@@ -52,5 +52,18 @@ class User extends Authenticatable
         });
     }
 
+    public function problems()
+    {
+      return $this->belongsTosMany(Problem::class,'problem_moderator');
+    }
+    public function acceptedProblems()
+    {
+      return $this->problems()->wherePivot('is_accepted',true);
+    }
+    public function pendingProblems()
+    {
+      return $this->problems()->wherePivot('is_accepted',false);
+    }
+
 
 }

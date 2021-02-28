@@ -24,7 +24,6 @@ class CreateProblemsTable extends Migration
             $table->float('time_limit')->default(2.0);
             $table->integer('memory_limit')->default(128000);
             $table->text('checker')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

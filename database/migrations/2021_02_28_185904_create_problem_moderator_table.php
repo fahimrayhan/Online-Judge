@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTestCasesTable extends Migration
+class CreateProblemModeratorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateTestCasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('test_cases', function (Blueprint $table) {
+        Schema::create('problem_moderator', function (Blueprint $table) {
             $table->id();
-            $table->string('id_hash',150)->nullable();
-            $table->integer('point')->default(1);
-            $table->foreignId('problem_id')->references('id')->on('problems')->onDelete('cascade');
-            $table->boolean('sample')->default(0);
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-
-
+            $table->integer('role')->default(20);
+            $table->boolean('is_accepted')->default(false);
             $table->timestamps();
+
+            $table->foreignId('problem_id')->references('id')->on('problems')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -33,6 +31,6 @@ class CreateTestCasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test_cases');
+        Schema::dropIfExists('problem_moderator');
     }
 }
