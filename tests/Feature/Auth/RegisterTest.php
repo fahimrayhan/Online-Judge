@@ -142,7 +142,7 @@ class RegisterTest extends TestCase
     public function user_can_not_register_when_handle_is_already_taken()
     {
         $user = [
-            'handle' => 'hamza',
+            'handle' => 'handleAlice',
             'name' => 'sk.amirhamza',
             'email' => 'sk.amirhamza@gmail.com',
             'password' => '123456',

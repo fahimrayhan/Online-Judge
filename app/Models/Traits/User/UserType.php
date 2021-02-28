@@ -18,7 +18,6 @@ trait UserType
             'member' => 40,
         ];
     }
-
     /**
      * Get User Type in integer
      * If user type is null then default type is 40 (member)
