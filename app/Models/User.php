@@ -49,6 +49,7 @@ class User extends Authenticatable
         // auto-sets values on creation
         static::creating(function ($user) {
            $user->type = $user->getUserType();
+           $user->password = bcrypt($user->password);
         });
     }
 
