@@ -1,13 +1,8 @@
 <?php
 
-namespace App\Models\Traits\Problem;
-use Auth;
+namespace App\Models\Traits\User;
 
-
-/**
- *@
- */
-trait ProblemTrait
+trait HasProblem
 {
   /**
    * Get all problems where problems are created or moderate(must accepted) by authenticate user
@@ -16,7 +11,7 @@ trait ProblemTrait
    */
   public function acceptedProblems()
   {
-    return Auth::user()->problems()->wherePivot('is_accepted',true);
+    return $this->problems()->wherePivot('is_accepted',true);
   }
 
   /**
@@ -26,12 +21,9 @@ trait ProblemTrait
    */
   public function pendingProblems()
   {
-    return Auth::user()->problems()->wherePivot('is_accepted',false);
+    return $this->problems()->wherePivot('is_accepted',false);
   }
 }
 
 
-
-
-
- ?>
+?>
