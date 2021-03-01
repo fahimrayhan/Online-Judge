@@ -46,11 +46,11 @@ class LoginController extends Controller
         $success = $this->authService->login($requset->all());
         if ($success) {
             return response()->json([
-                'message' => 'Successfully Login',
+                'message' => 'Successfully Login.',
             ]);
         }
         return response()->json([
-            'message' => 'Login is not correct',
-        ],419);
+            'message' => 'Login information is not correct.',
+        ],401);
     }
 }
