@@ -57,14 +57,7 @@ class User extends Authenticatable
     {
       return $this->belongsTosMany(Problem::class,'problem_moderator');
     }
-    public function acceptedProblems()
-    {
-      return $this->problems()->wherePivot('is_accepted',true);
-    }
-    public function pendingProblems()
-    {
-      return $this->problems()->wherePivot('is_accepted',false);
-    }
+    
 
 
 }
