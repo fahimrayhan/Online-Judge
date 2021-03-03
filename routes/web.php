@@ -37,3 +37,5 @@ Route::get('/footer', function () {
 Route::get('/loginn', function () {
     return view('pages.auth.login');
 })->middleware('CheckLayoutKey')->name('loginn');
+
+Route::resource('problems','Problem\ProblemController');
