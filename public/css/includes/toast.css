@@ -1,42 +1,15 @@
 /*start toast*/
-.top-alert {
+.toast {
     position: fixed;
-    top: 0px;
+    top: 60;
     width: 100%;
     z-index: 10000;
     left: 0;
     padding: 10px;
     display: inline-block;
-    text-align: center;
+    text-align: left;
 }
-.top-alert .alert {
-    width: auto !important;
-    height: 100%;
-    display: inline;
-    position: relative;
-    margin-top: 0px;
-    max-width: 400px;
-    min-width: 250px;
-}
-.top-alert .alert .close {
-    position: absolute;
-    top: 11px;
-    right: 2px;
-    padding-right: 6px;
-    color: #ffffff;
-}
-.toast-close {
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    font-size: 19px;
-    padding: 0px;
-    margin-left: 4px;
-}
-.toast-icon {
-    font-size: 1.3em;
-    margin-right: 7px;
-}
-.alert-info-alt, .alert-danger-alt, .alert-warning-alt, .alert-success-alt {
+.toast .alert-info-alt, .alert-danger-alt, .alert-warning-alt, .alert-success-alt {
     color: #fff;
     padding: 13px 10px 13px 7px;
     float: right;
@@ -45,6 +18,35 @@
     border-radius: 0px;
     border-width: 0px 0px 0px 7px !important;
 }
+.toast .alert {
+    width: auto !important;
+    height: 100%;
+    display: inline;
+    position: relative;
+    margin-top: 0px;
+    max-width: 400px;
+    min-width: 250px;
+}
+.toast .alert .close {
+    position: absolute;
+    top: 11px;
+    right: 2px;
+    padding-right: 6px;
+    color: #ffffff;
+}
+.toast .toast-close {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    font-size: 19px;
+    padding: 0px;
+    margin-left: 4px;
+    border-width: 0px;
+}
+.toast .toast-icon {
+    font-size: 1.3em;
+    margin-right: 7px;
+}
+
 .alert-purple {
     background: #694D9F;
     border-color: #694D9F;
@@ -68,4 +70,5 @@
 .alert a {
     color: gold;
 }
-/*end toast*/
+
+/*end toast*/ 
