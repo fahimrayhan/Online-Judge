@@ -2,8 +2,6 @@
 @section('title', 'Welcome TO Online Judge')
 
 @section('content')
-{{url()->full()}}
-
 <div class="row">
    
    <div class="col-md-12">
@@ -110,4 +108,11 @@
 </div>   </div>
 
 </div>
+
+<script type="text/javascript">
+   function fun(){
+      console.log("home function is working");
+   }
+</script>
+
 @stop
