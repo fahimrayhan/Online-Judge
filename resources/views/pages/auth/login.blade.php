@@ -62,39 +62,8 @@
     }
     </style>
 
-<form class="form-signup">
-      <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">The floating label template</h1>
-      </div>
-
-      <div class="form-label-group">
-        <input type="text" class="custom-form-input" id="label-name" placeholder="Enter your name" required autofocus>
-        <label for="label-name"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Full Name</label>
-      </div>
-
-      <div class="form-label-group">
-        <input type="email" id="label-email" value="sk." class="form-control" placeholder="Your Email" required autofocus>
-        <label for="label-email">Your Email<font color="red">*</font></label>
-      </div>
-
-      <div class="form-label-group">
-        <input type="password" id="label-password" class="form-control" placeholder="Enter Password" required>
-        <label for="label-password">Password</label>
-      </div>
-
-      
-
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit">Sign Up</button>
-    </form>
-
     <form action="{{route('login')}}" class="form" id="login" method="post">
         @csrf
-
         <div class="alert-area">
             <div class="alert alert-danger error-area">ok</div>
             <div class="alert alert-success success-area"></div>
@@ -117,8 +86,9 @@
             </div>
         </div>
         <div class='row'>
-            <div class="col-md-12">
-                <div style="text-align: right;">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div>
                     <button type="submit" class="btn submit-btn" onclick="auth.login()" style="margin-top: 15px;">Login</button>
                 </div>
             </div>

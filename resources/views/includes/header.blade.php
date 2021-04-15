@@ -49,7 +49,7 @@
             <style type="text/css">.delHoverA:hover{text-decoration: none;}</style>
             <b class="navbar-brand nav-logo">
             <strong>
-              <a href="/" class="delHoverA coderOJLogo" >
+              <a href="{{route('home')}}" class="delHoverA coderOJLogo" >
                 CoderOJ<strong color="#ced6e0;"><sup>&alpha;</sup></strong>
               </a>
             </strong>

@@ -78,7 +78,7 @@
                 <label> Your Name <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" class='form-control-input' name="login" placeholder="Enter Handle or Email">
+                <input type="text" class='form-control-input' value='{{auth()->user()->name}}' name="login" placeholder="Enter Handle or Email">
             </div>
         </div>
         <div class='row'>
