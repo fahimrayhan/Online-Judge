@@ -76,7 +76,7 @@ class Handler extends ExceptionHandler
             return $e->response;
         }
         return response()->json([
-            'message' => 'The given data was invalid.',
+            'message' => 'There were some problems with your input.',
             'errors' => $e->validator->errors()->messages(),
         ],$e->status);
     }

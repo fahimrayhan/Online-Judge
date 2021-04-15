@@ -20,7 +20,7 @@ var toast = {
         toastIconList['warning'] = 'exclamation-circle';
         toastIconList['info'] = 'info-circle';
         var toastIcon = toastIconList[toastType];
-        var dom = '<div class="top-alert"><div class="alert alert-' + toastType + '-alt alert-dismissable fade in " role="alert"><i class="fas fa-' + toastIcon + ' toast-icon"></i>' + toastMsg + '<button type="button" class="toast-close" data-dismiss="alert" aria-label="Close">×</button></div></div>';
+        var dom = '<div class="toast"><div class="alert alert-' + toastType + '-alt alert-dismissable fade in " role="alert"><i class="fas fa-' + toastIcon + ' toast-icon"></i>' + toastMsg + '<button type="button" class="toast-close" data-dismiss="alert" aria-label="Close">×</button></div></div>';
         var jdom = $(dom);
         jdom.hide();
         $("body").append(jdom);

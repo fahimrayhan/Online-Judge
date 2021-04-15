@@ -22,6 +22,7 @@ class Layout
 
     public static function get()
     {
-        return self::checkLayoutKey()?"layouts.ajax":"layouts.default";
+        return "layouts.default";
+       // return self::checkLayoutKey()?"layouts.ajax":"layouts.default";
     }
 }

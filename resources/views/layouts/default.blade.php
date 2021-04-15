@@ -7,6 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="app-name" content="{{ config('app.name') }}"/>
         <meta name="layout-key" content="{{ $layoutKey }}"/>
+        <link rel="icon" href="http://coderoj.com/file/site_metarial/favicon.png" type="image/gif" sizes="16x16">
         <title>@yield('title') - {{config('app.name')}}</title>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
         <script type="text/javascript" src="{{mix('js/app.js')}}"></script>

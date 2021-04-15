@@ -21,7 +21,7 @@
         'profile' => [
             'icon'  => 'fas fa-random',
             'name' => 'PROFILE',
-            'url' => route('profile'),
+            'url' => route('profile',['handle' => 'amirhamza05']),
             'callback' => 'profile.afterLoad()'
         ],
         'ranklist' => [
@@ -30,7 +30,7 @@
             'url' => route('ranklist'),
             'callback' => 'profile.afterLoad'
         ],
-        
+
     ];
 @endphp
 
@@ -38,22 +38,22 @@
     <div class="top-loader" style="display: none;" id="top-loader">
       <div class="bar"></div>
     </div>
-    <div class="container-fluid" style="margin-top: 5px;"> 
+    <div class="container-fluid" style="margin-top: 5px;">
         <div class="navbar-header">
-            
+
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span>
             </button>
             <style type="text/css">.delHoverA:hover{text-decoration: none;}</style>
             <b class="navbar-brand nav-logo">
-         		<strong>
-         			<a href="/" class="delHoverA coderOJLogo" >
-         				CoderOJ<strong color="#ced6e0;"><sup>&alpha;</sup></strong>
-         			</a>
-         		</strong>
-        	</b>
+            <strong>
+              <a href="{{route('home')}}" class="delHoverA coderOJLogo" >
+                CoderOJ<strong color="#ced6e0;"><sup>&alpha;</sup></strong>
+              </a>
+            </strong>
+          </b>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
@@ -66,27 +66,37 @@
                   </li>
                 @endforeach
              </ul>
+             <script>
+                 $(document).on('click', '.navbar-right .dropdown-menu', function (e) {
+                    e.stopPropagation();
+                });
+             </script>
             <ul class="nav navbar-nav navbar-right">
-                <button onclick="auth.loginPage(this)" url='/login' class="btn btn-custom btn-info">Login</button>
-                <button class="btn btn-custom btn-success">Registration</button>
-                <!-- <li class="dropdown">
-                    <a href="#" class="dropdown-toggle navbar-style2" data-toggle="dropdown">
-              			<img src="http://localhost/project/Online-Judge/user_file/user_photo/24fa9768400dcfc9a8bc9afb33832099459a055173880a36d5d8f32c60eb772b.jpg" class="navProfileImage">
-              			HAMZA05
-                        <span class="glyphicon glyphicon-chevron-down"></span>
-                    </a>
-                    <ul class="dropdown-menu">
+                @if(!auth()->check())
+                    <button onclick="auth.loginPage(this)" url="{{route('login')}}" class="btn btn-custom btn-info">Login</button>
+                    <button class="btn btn-custom btn-success" onclick="auth.registerPage(this)" url="{{route('register')}}">Register</button>
+                @endif
+
+                @if(auth()->check())
+                 <li class="dropdown">
+                    <button class="nav-profile-btn" data-toggle="dropdown">
+                    <img src="http://localhost/project/Online-Judge/user_file/user_photo/24fa9768400dcfc9a8bc9afb33832099459a055173880a36d5d8f32c60eb772b.jpg" >
+                    {{auth()->user()->handle}}
+                        <b><i class="fas fa-chevron-down"></i></b>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-custom" style="margin-top: -5px;">
+                        <span class="dropdown-menu-arrow"></span>
                         <li>
                             <div class="navbar-login">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-md-4" style="text-align: center">
                                         <img src="http://localhost/project/Online-Judge/user_file/user_photo/24fa9768400dcfc9a8bc9afb33832099459a055173880a36d5d8f32c60eb772b.jpg" style="height: 80px; width: 80px;">
                                     </div>
-                                    <div class="col-lg-8" style="color: #000000">
-                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
-                                        <p class="text-left small">correoElectronico@email.com</p>
+                                    <div class="col-md-8" style="color: #000000">
+                                        <strong>{{auth()->user()->handle}}</strong>
+                                        <p class="text-left small">{{auth()->user()->email}}</p>
                                         <p class="text-left">
-                                            <a href="#" class="btn btn-primary btn-block btn-sm">Actualizar Datos</a>
+                                            <a href="{{route('profile',['handle' => auth()->user()->handle])}}" class="btn btn-primary btn-block btn-sm">View Profile</a>
                                         </p>
                                     </div>
                                 </div>
@@ -98,14 +108,16 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                            <a href="#" class="btn btn-danger btn-block">Cerrar Sesion</a>
+                                            <a href="{{route('settings')}}" class="btn btn-success btn-block">Setting</a>
+                                            <button id="logout-btn" onclick="auth.logout(this)" url="{{route('logout')}}" class="btn btn-danger btn-block">Logout</button>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
-                </li> -->
+                </li>
+                @endif
             </ul>
         </div>
     </div>

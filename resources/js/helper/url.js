@@ -15,6 +15,7 @@ var url = {
             url: url,
             loader: "top",
             changeUrl: true,
+            scrapeArea: 'app-body'
         }, function(response) {
             document.title = $(response).filter('title').text();
             if ($.isFunction(callback)) callback(response);

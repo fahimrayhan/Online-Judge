@@ -15,16 +15,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/register', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');
-Route::get('/login', 'Auth\RegisterController@index')->name('login');
+Route::get('/login', 'Auth\LoginController@index')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout',  'Auth\LogoutController@logout')->name('logout');
 
 Route::get('/', 'Profile\ProfileController@home')->name('home');
 Route::get('/contests', 'Problem\ProblemListController@show')->name('contests');
 Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
-Route::get('/profile', 'Profile\ProfileController@show')->name('profile');
-Route::get('/profile/info', 'Profile\ProfileController@info')->name('profile.info');
+
+
+Route::get('/settings', 'Setting\SettingController@settings')->name('settings');
+Route::get('/settings/profile', 'Setting\SettingController@profile')->name('settings.profile');
+
+Route::get('/profile/{handle}', 'Profile\ProfileController@show')->name('profile');
+
+Route::get('/profilee/info', 'Profile\ProfileController@info')->name('profile.info');
+
+Route::get('user/{id}', function ($id) {
+    echo "$id";
+});
 
 Route::get('/modal', function () {
     return view('includes.modal');
@@ -34,8 +45,4 @@ Route::get('/footer', function () {
     return view('includes.footer');
 });
 
-Route::get('/loginn', function () {
-    return view('pages.auth.login');
-})->middleware('CheckLayoutKey')->name('loginn');
 
-Route::resource('problems','Problem\ProblemController');

@@ -10,12 +10,18 @@ function Div(div) {
     this.defaultLoad = function() {
         formPrevent();
     };
+    this.getScrapeArea = function(html,id){
+        var doc = new DOMParser().parseFromString(html, "text/html").getElementById(id);
+        var html = doc != null ? doc.innerHTML : html;
+        return html;
+    }
     this.load = function(data, callback) {
         if ($.isPlainObject(data)) {
             this.url = data.url;
             this.loader = data.loader;
             this.changeUrl = data.changeUrl;
             this.data = data.data;
+            this.scrapeArea = data.scrapeArea;
         }
         this.url = !this.url ? "" : this.url;
         this.loader = !this.loader ? "div" : this.loader;
@@ -27,13 +33,16 @@ function Div(div) {
         if(this.changeUrl){
             url.change("","",this.url);
         }
+        var html = $("#app-body").html();
 
         var requestData = $.isPlainObject(this.data) ? this.data : {};
-        requestData['ajax_layout_load'] = app.layoutkey;
 
         $.get(this.url, requestData , function(response) {
             if(this.changeUrl)document.title = $(response).filter('title').text();
-            self.div.html(response);
+            
+            var html = self.scrapeArea != null ? self.getScrapeArea(response,self.scrapeArea) : response;
+            self.div.html(html);
+
             self.defaultLoad();
             if ($.isFunction(callback)) callback(response);
         }).fail(function(error) {
@@ -41,7 +50,8 @@ function Div(div) {
                 alert("Error Found\n");
                 location.reload();
             } else {
-                self.div.html(error.responseText);
+                var html = self.scrapeArea != null ? self.getScrapeArea(error.responseText,self.scrapeArea) : response;
+                self.div.html(html);
                 toast.danger(error.status + " Error Found");
             }
         });

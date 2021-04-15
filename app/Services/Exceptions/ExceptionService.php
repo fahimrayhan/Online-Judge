@@ -13,7 +13,7 @@ class ExceptionService
     public function viewException($e)
     {
         $errorMsg = [
-            '404' => "Not Found",
+            '404' => "Oops...Not found!",
             '401' => "Not authorized",
             '403' => "This action is unauthorized.",
             '422' => "Unprocessable Entity",
@@ -28,6 +28,8 @@ class ExceptionService
         if ($message == "") {
             $message = isset($errorMsg[$statusCode]) ? $errorMsg[$statusCode] : "Internal Error";
         }
+
+        if($statusCode == 404)$message = $errorMsg[404];
 
         //if request is post then output is json formate.
         if (request()->isMethod('post')) {

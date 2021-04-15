@@ -2,7 +2,7 @@
 @section('title', 'Profile')
 @section('content')
 
-	<style type="text/css">
+    <style type="text/css">
     
 
     .userInfoTr{
@@ -55,14 +55,16 @@
         text-align: center; 
     }
 </style>
+ 
+
 <div class="">
         <div class="row">
             <div class="col-md-3">
                 <div class="bannerArea">
                     <div class="box box-body" style="text-align: center;">
-                    	<img class="welcomeBanner img-thumbnail " src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg">
-                    	<div class="userHandle">AmirHamza</div>
-                    	<div class="userFullName">Sk.Amir Hamza</div> 
+                        <img class="welcomeBanner img-thumbnail " src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg">
+                       <div class="userHandle">{{ $user->handle }}</div>
+                        <div class="userFullName">Sk.Amir Hamza</div> 
                     </div>
                     
                      
@@ -93,7 +95,7 @@
                 </ul>
                 </div>
                 <div class="el-card is-always-shadow" style="height: 300px;margin-top: 10px;">
-                	@yield('profile-sub-content',view('pages.profile.sub.info'))
+                    
                 </div>
             </div>
         </div>
