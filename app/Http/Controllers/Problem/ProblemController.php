@@ -24,7 +24,6 @@ class ProblemController extends Controller
         $this->problemService = $probServc;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +41,7 @@ class ProblemController extends Controller
      */
     public function create()
     {
-        //
+        return view("pages.problem.dashboard.problem_create");
     }
 
     /**
@@ -53,10 +52,10 @@ class ProblemController extends Controller
      */
     public function store(ProblemCreateRequest $request)
     {
-      $this->problemService->createNewProblem($request->all());
-      return response()->json([
-          'message' => 'Problem Successfully Created'
-      ]);
+        $this->problemService->createNewProblem($request->all());
+        return response()->json([
+            'message' => 'Problem Successfully Created',
+        ]);
     }
 
     /**
@@ -91,6 +90,11 @@ class ProblemController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function updateDetails(ProblemCreateRequest $request)
+    {
+        $this->problemService->update($request->all());
     }
 
     /**
