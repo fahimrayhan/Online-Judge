@@ -13,7 +13,7 @@ class ProblemCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,6 @@ class ProblemCreateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'short_name' => 'required|unique:problems'
         ];
     }
 }

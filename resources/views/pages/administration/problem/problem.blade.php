@@ -24,7 +24,7 @@
   .panel-sidebar-btn:focus{
   	outline: none;
   }
-  .sidebarBtn{
+  .sidebar-btn{
     width: 100%;
     text-align: left;
   }
@@ -37,22 +37,7 @@
 </style>
 <div class="row">
 	<div class="col-md-3">
-		<div class="box">
-			<div class="header">Settings</div>
-			<div class="body" style="min-height: 300px;">
-				<button class="panel-sidebar-btn sidebarBtn">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-            	<button class="panel-sidebar-btn sidebarBtn sidebar-btn-active">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-				@for($i=1; $i<=10; $i++)
-				<button class="panel-sidebar-btn sidebarBtn">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-            	@endfor
-			</div>
-		</div>
+		@include('pages.administration.problem.sidebar')
 	</div>
 	<div class="col-md-9">
 		<div class="box">
@@ -60,8 +45,8 @@
 				@yield('title','Ok')
 			</div>
 			<div class="body" style="min-height: 300px;">
-				@yield('setting-sub-content',view('pages.settings.info'))
-			</div>
+			 @yield('problem-sub-content',view('pages.administration.problem.overview'))
+      </div>
 		</div>
 	</div>
 </div>

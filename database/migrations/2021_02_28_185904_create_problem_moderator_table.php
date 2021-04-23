@@ -14,13 +14,13 @@ class CreateProblemModeratorTable extends Migration
     public function up()
     {
         Schema::create('problem_moderator', function (Blueprint $table) {
-            $table->id();
-            $table->integer('role')->default(20);
-            $table->boolean('is_accepted')->default(false);
-            $table->timestamps();
-
             $table->foreignId('problem_id')->references('id')->on('problems')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->enum('role', ['owner','moderator'])->default('moderator');
+            $table->boolean('is_accepted')->default(false);
+
+            $table->primary(['problem_id', 'user_id']);
         });
     }
 

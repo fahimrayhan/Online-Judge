@@ -115,14 +115,14 @@ var url = {
         var newUrl = window.location.href;
         return (newUrl.substr(newUrl.length - 1) == "/") ? newUrl.slice(0, -1) : newUrl;
     },
-    getWithoutParameter: function(){
+    getWithoutParameter: function() {
         var newUrl = location.host + location.pathname;
         return (newUrl.substr(newUrl.length - 1) == "/") ? newUrl.slice(0, -1) : newUrl;
     },
     change: function(data, title, url) {
         if (this.get() != url) history.pushState(data, title, url);
     },
-    load: function(url,callback) {
+    load: function(url, callback) {
         new Div("app-body").load({
             url: url,
             loader: "top",
@@ -133,6 +133,15 @@ var url = {
             if ($.isFunction(callback)) callback(response);
         });
     },
+    checkValidUrl: function(url) {
+        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        return !!pattern.test(url);
+    }
 };
 var Preload = function() {
     var self = this;
@@ -178,6 +187,7 @@ $(document).ready(function() {
         var self = $(this);
         var link = $(this).attr("href");
         if (link == "#") return;
+        if(!url.checkValidUrl(link))return;
         if (link.indexOf(document.domain) >= 0) {
             if ($(this).attr("logout-btn")) return;
             e.preventDefault();
@@ -196,6 +206,7 @@ $(document).ready(function() {
         url.load(url.get(), function(response) {});
     });
 });
+
 function formPrevent() {
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -395,4 +406,89 @@ var auth = {
             toast.danger(error.status + " Error Found");
         });;
     }
+};
+var problem = {
+    create: function() {
+        var form = new Form("create_problem");
+        form.submit({
+            loadingText: "creating...",
+            success: {
+                resetForm: true,
+                callback: function() {
+                    alert("ok");
+                }
+            }
+        });
+    },
+    editor: function(problemData){
+        problemDetailsEditor.setEditor(problemData);
+    }
+};
+var problemDetailsEditor = {
+    constraintsEditor: "",
+    inputEditor: "",
+    outputExEditor: "",
+    descriptionEditor: "",
+    noteEditor: "",
+    setEditor: function(problemData) {
+        this.descriptionEditor = CKEDITOR.replace('descriptionEditor');
+        this.inputEditor = CKEDITOR.replace('inputEditor');
+        this.outputEditor = CKEDITOR.replace('outputEditor');
+        this.noteEditor = CKEDITOR.replace('noteEditor');
+        this.constraintsEditor = CKEDITOR.replace('constraintsEditor');
+        //set global data
+        this.setEditorConfig();
+        this.setEditorToolbar();
+        this.setEditorData(problemData);
+    },
+    setEditorConfig: function() {
+        CKEDITOR.config.height = 100;
+        CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+        CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify,image2';
+        CKEDITOR.config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
+        CKEDITOR.config.mathJaxClass = 'equation';
+        CKEDITOR.config.codeSnippet_theme = 'pojoaque';
+        CKEDITOR.config.fontSize_defaultLabel = '12px';
+        CKEDITOR.config.disableObjectResizing = false;
+        CKEDITOR.config.autoGrow_minHeight = 100;
+        CKEDITOR.config.autoGrow_maxHeight = 300;
+        CKEDITOR.config.tabSpaces = 4;
+    },
+    setEditorToolbar: function() {
+        var toolbarConstraintsEditor = [{
+            name: 'clipboard',
+            groups: ['clipboard', 'undo'],
+            items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+        }, {
+            name: 'editing',
+            groups: ['find', 'selection', 'spellchecker'],
+            items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+        }, {
+            name: 'others',
+            items: ['-']
+        }, {
+            name: 'Math',
+            items: ['Mathjax']
+        }, {
+            name: 'basicstyles',
+            groups: ['basicstyles', 'cleanup'],
+            items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
+        }];
+        var toolbarInputExEditor = [{
+            name: 'clipboard',
+            groups: ['clipboard', 'undo'],
+            items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+        }];
+        this.constraintsEditor.config.toolbar = toolbarConstraintsEditor;
+        this.inputEditor.config.toolbar = toolbarConstraintsEditor;
+        this.outputEditor.config.toolbar = toolbarConstraintsEditor;
+    },
+    setEditorData: function(problemData) {
+        var problemData = JSON.parse(problemData);
+        CKEDITOR.instances.descriptionEditor.setData(problemData.problem_description);
+        CKEDITOR.instances.inputEditor.setData(problemData.input_description);
+        CKEDITOR.instances.outputEditor.setData(problemData.output_description);
+        CKEDITOR.instances.constraintsEditor.setData(problemData.constraint_description);
+        CKEDITOR.instances.noteEditor.setData(problemData.notes);
+    },
 };

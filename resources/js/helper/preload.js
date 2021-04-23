@@ -42,6 +42,7 @@ $(document).ready(function() {
         var self = $(this);
         var link = $(this).attr("href");
         if (link == "#") return;
+        if(!url.checkValidUrl(link))return;
         if (link.indexOf(document.domain) >= 0) {
             if ($(this).attr("logout-btn")) return;
             e.preventDefault();

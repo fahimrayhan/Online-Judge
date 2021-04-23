@@ -16,13 +16,13 @@ class CreateProblemsTable extends Migration
         Schema::create('problems', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('short_name')->unique();
+            $table->string('slug')->unique();
             $table->text('problem_description')->nullable();
             $table->text('input_description')->nullable();
             $table->text('output_description')->nullable();
             $table->text('constraint_description')->nullable();
             $table->text('notes')->nullable();
-            $table->float('time_limit')->default(2.0);
+            $table->integer('time_limit')->default(1000);
             $table->integer('memory_limit')->default(128000);
             $table->text('checker')->nullable();
             $table->timestamps();

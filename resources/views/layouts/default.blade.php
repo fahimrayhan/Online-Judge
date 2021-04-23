@@ -10,6 +10,7 @@
         <link rel="icon" href="http://coderoj.com/file/site_metarial/favicon.png" type="image/gif" sizes="16x16">
         <title>@yield('title') - {{config('app.name')}}</title>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+        <script src="{{asset('lib/ckeditor/4.13.1/ckeditor.js')}}"> </script>
         <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
         @include('includes.head')
     </head>

@@ -2,7 +2,6 @@
 namespace App\Services\Problem;
 
 use App\Models\Problem;
-use Auth;
 
 class ProblemService
 {
@@ -14,6 +13,15 @@ class ProblemService
      */
     public function createNewProblem($data)
     {
-        Problem::create($data);
+        return Problem::create($data);
+    }
+
+    public function update($data)
+    {
+        return Problem::where(['slug' => request()->slug])->update(request()->all());
+    }
+
+    public function getProblemData($slug){
+        return Problem::where(['slug' => $slug])->firstOrFail();
     }
 }

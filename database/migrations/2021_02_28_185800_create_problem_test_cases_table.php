@@ -15,7 +15,7 @@ class CreateProblemTestCasesTable extends Migration
     {
         Schema::create('problem_test_cases', function (Blueprint $table) {
           $table->id();
-          $table->string('id_hash',150)->nullable();
+          $table->string('hash_id',150)->nullable();
           $table->integer('point')->default(1);
           $table->boolean('sample')->default(0);
           $table->timestamps();
