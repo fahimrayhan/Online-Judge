@@ -14,4 +14,8 @@ class SettingController extends Controller
     {
         return view('pages.settings.info');
     }
+    public function changePassword()
+    {
+        return view('pages.settings.change_password');
+    }
 }

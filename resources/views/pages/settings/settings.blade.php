@@ -37,22 +37,8 @@
 </style>
 <div class="row">
 	<div class="col-md-3">
-		<div class="box">
-			<div class="header">Settings</div>
-			<div class="body" style="min-height: 300px;">
-				<button class="panel-sidebar-btn sidebarBtn">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-            	<button class="panel-sidebar-btn sidebarBtn sidebar-btn-active">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-				@for($i=1; $i<=10; $i++)
-				<button class="panel-sidebar-btn sidebarBtn">
-              		<i class="fa fa-trophy"></i> Standing
-            	</button>
-            	@endfor
-			</div>
-		</div>
+		
+		@include('pages.settings.sidebar')
 	</div>
 	<div class="col-md-9">
 		<div class="box">
