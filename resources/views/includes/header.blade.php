@@ -80,7 +80,7 @@
                 @if(auth()->check())
                  <li class="dropdown">
                     <button class="nav-profile-btn" data-toggle="dropdown">
-                    <img src="http://localhost/project/Online-Judge/user_file/user_photo/24fa9768400dcfc9a8bc9afb33832099459a055173880a36d5d8f32c60eb772b.jpg" >
+                    <img src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg" >
                     {{auth()->user()->handle}}
                         <b><i class="fas fa-chevron-down"></i></b>
                     </button>
@@ -90,7 +90,7 @@
                             <div class="navbar-login">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: center">
-                                        <img src="http://localhost/project/Online-Judge/user_file/user_photo/24fa9768400dcfc9a8bc9afb33832099459a055173880a36d5d8f32c60eb772b.jpg" style="height: 80px; width: 80px;">
+                                        <img src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg" style="height: 80px; width: 80px;">
                                     </div>
                                     <div class="col-md-8" style="color: #000000">
                                         <strong>{{auth()->user()->handle}}</strong>

@@ -57,3 +57,7 @@ Route::get('/modal', function () {
 Route::get('/footer', function () {
     return view('includes.footer');
 });
+
+
+Route::get('/settings/change_password','Setting\SettingController@changePassword')->name('settings.change_password');
+Route::post('/profile/update_password','Profile\ProfileController@updatePassword')->name('profile.update_password');
