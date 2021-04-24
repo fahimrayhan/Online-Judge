@@ -5,13 +5,8 @@ var profile = {
             loadingText: "Changing Password...",
             success: {
                 callback: function(response) {
-                    if(!response['error']){
-                        toast.success(response['message']);
-                    }
-                    else{
-                        toast.danger(response['message']);
-                    }
-                    
+                    url.load();
+                    toast.success("Password Changed");
                 }
             }
         });
