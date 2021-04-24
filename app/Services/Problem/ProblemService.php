@@ -18,7 +18,10 @@ class ProblemService
 
     public function update($data)
     {
-        return Problem::where(['slug' => request()->slug])->update(request()->all());
+        //echo $data->name;
+        print_r($data);
+        if(isset($data['_token']))unset($data['_token']);
+        return Problem::where(['slug' => request()->slug])->update($data);
     }
 
     public function getProblemData($slug){

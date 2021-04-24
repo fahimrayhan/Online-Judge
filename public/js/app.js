@@ -301,7 +301,7 @@ function Modal(type, width) {
         new Div(this.body).load({
             url: url,
             data: {
-                'check_layout' : true
+                'modal' : true
             }
         }, function(response) {
             if ($.isFunction(callback)) callback(response);
@@ -421,7 +421,21 @@ var problem = {
         });
     },
     editor: function(problemData){
+        console.log(problemData);
         problemDetailsEditor.setEditor(problemData);
+    },
+    detailsUpadte: function(actionUrl){
+        var data = problemDetailsEditor.getEditorData();
+        data['name'] = $("#problem_name").val(); 
+        var btn = new Button("update-problem-details");
+        btn.off("Updating....");
+        $.post(actionUrl, app.setToken(data), function (response) {
+            toast.success("Updated Details");
+            btn.on();
+        });
+    },
+    preview: function(e){
+        new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function(response) {});
     }
 };
 var problemDetailsEditor = {
@@ -485,10 +499,21 @@ var problemDetailsEditor = {
     },
     setEditorData: function(problemData) {
         var problemData = JSON.parse(problemData);
-        CKEDITOR.instances.descriptionEditor.setData(problemData.problem_description);
-        CKEDITOR.instances.inputEditor.setData(problemData.input_description);
-        CKEDITOR.instances.outputEditor.setData(problemData.output_description);
-        CKEDITOR.instances.constraintsEditor.setData(problemData.constraint_description);
-        CKEDITOR.instances.noteEditor.setData(problemData.notes);
+        CKEDITOR.instances.descriptionEditor.setData(atob(problemData.problem_description));
+        CKEDITOR.instances.inputEditor.setData(atob(problemData.input_description));
+        CKEDITOR.instances.outputEditor.setData(atob(problemData.output_description));
+        CKEDITOR.instances.constraintsEditor.setData(atob(problemData.constraint_description));
+        CKEDITOR.instances.noteEditor.setData(atob(problemData.notes));
     },
+    getEditorData: function() {
+        var editorData = {
+            'problem_description': CKEDITOR.instances.descriptionEditor.getData(),
+            'input_description': CKEDITOR.instances.inputEditor.getData(),
+            'output_description': CKEDITOR.instances.outputEditor.getData(),
+            'notes': CKEDITOR.instances.noteEditor.getData(),
+            'constraint_description': CKEDITOR.instances.constraintsEditor.getData()
+        }
+        return editorData;
+    }
 };
+

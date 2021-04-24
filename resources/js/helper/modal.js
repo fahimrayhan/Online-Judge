@@ -32,7 +32,7 @@ function Modal(type, width) {
         new Div(this.body).load({
             url: url,
             data: {
-                'check_layout' : true
+                'modal' : true
             }
         }, function(response) {
             if ($.isFunction(callback)) callback(response);
