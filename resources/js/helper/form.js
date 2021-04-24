@@ -18,7 +18,9 @@ var Form = function (form,options) {
     this.submit = function (options) {
             
         this.submitButton.off("<i class='fa fa-refresh fa-spin fa-1x fa-fw'></i>" + options.loadingText);
-        
+        if(options.success == null){
+            options.success = {}
+        }
         $.post(this.action(), this.data(), function (response) {
             _this.errorArea.hide();
             _this.successArea.show();

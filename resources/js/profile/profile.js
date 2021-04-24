@@ -4,10 +4,7 @@ var profile = {
         new Form("change_password").submit({
             loadingText: "Changing Password...",
             success: {
-                callback: function(response) {
-                    url.load();
-                    toast.success("Password Changed");
-                }
+                resetForm: true,
             }
         });
         //console.log(form.data(), form.action());
