@@ -39,8 +39,7 @@ class ProfileController extends Controller
     {
         $response = $this->profileService->ChangePassword($request->all());
         return response()->json([
-            'message' => $response[0],
-            'error' => $response[1]
-        ]);        
+            'message' => $response['message'],
+        ],$response['status']);        
     }
 }

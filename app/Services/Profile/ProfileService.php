@@ -15,14 +15,27 @@ class ProfileService
     {
         
         $user = auth()->user();
-        if($data['old_password'] == $data['new_password']) return ["Old password and new password must be different",1];
+        if($data['old_password'] == $data['new_password'])
+        {
+            return [
+                'message' => "Old password and new password must be different",
+                'status' => 419
+            ];
+        }
+         
         if(Hash::check($data['old_password'], $user->password))
         {
             $user->password = bcrypt($data['new_password']);
             $user->save();
-            return ["Your Password Is Changed",0];
+            return [
+                'message' => "Your Password Is Changed",
+                'status' => 200
+            ];
         }
-        return ["Your old password do not match with current password",1];
+        return [
+            'message' => "Your old password do not match with current password",
+            'status' => 419
+        ];
     }
     
 }
