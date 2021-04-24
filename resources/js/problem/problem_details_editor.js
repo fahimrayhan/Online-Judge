@@ -59,10 +59,20 @@ var problemDetailsEditor = {
     },
     setEditorData: function(problemData) {
         var problemData = JSON.parse(problemData);
-        CKEDITOR.instances.descriptionEditor.setData(problemData.problem_description);
-        CKEDITOR.instances.inputEditor.setData(problemData.input_description);
-        CKEDITOR.instances.outputEditor.setData(problemData.output_description);
-        CKEDITOR.instances.constraintsEditor.setData(problemData.constraint_description);
-        CKEDITOR.instances.noteEditor.setData(problemData.notes);
+        CKEDITOR.instances.descriptionEditor.setData(atob(problemData.problem_description));
+        CKEDITOR.instances.inputEditor.setData(atob(problemData.input_description));
+        CKEDITOR.instances.outputEditor.setData(atob(problemData.output_description));
+        CKEDITOR.instances.constraintsEditor.setData(atob(problemData.constraint_description));
+        CKEDITOR.instances.noteEditor.setData(atob(problemData.notes));
     },
+    getEditorData: function() {
+        var editorData = {
+            'problem_description': CKEDITOR.instances.descriptionEditor.getData(),
+            'input_description': CKEDITOR.instances.inputEditor.getData(),
+            'output_description': CKEDITOR.instances.outputEditor.getData(),
+            'notes': CKEDITOR.instances.noteEditor.getData(),
+            'constraint_description': CKEDITOR.instances.constraintsEditor.getData()
+        }
+        return editorData;
+    }
 };

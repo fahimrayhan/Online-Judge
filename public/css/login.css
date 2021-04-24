@@ -1,6 +1,4 @@
-
-
-.inputTxt{
+.inputTxt {
     width: 100%;
     padding: 12px 12px;
     margin: 8px 0;
@@ -10,8 +8,7 @@
     border-radius: 5px;
     box-sizing: border-box;
 }
-
-.inputClass{
+.inputClass {
     padding: 10px 10px;
     margin: 8px 0;
     display: inline-block;
@@ -20,47 +17,40 @@
     border-radius: 5px;
     box-sizing: border-box;
 }
-
 button {
     background-color: #2C3542;
     color: #ffffff;
     padding: 10px;
     border: none;
     cursor: pointer;
-	border-radius: 3px;
+    border-radius: 3px;
     font-size: 14px;
 }
-
 button:hover {
     opacity: 0.8;
     color: #ffffff;
 }
-
 button:disabled {
-  opacity: 0.8;
-  color: #ffffff;
-}
-button:focus  {
-  outline: none;
-}
-
-.btn:hover{
     opacity: 0.8;
     color: #ffffff;
 }
-
-.btn:disabled {
-  opacity: 0.8;
-  color: #ffffff;
+button:focus {
+    outline: none;
 }
-.btn:focus  {
+.btn:hover {
+    opacity: 0.8;
+    color: #ffffff;
+}
+.btn:disabled {
+    opacity: 0.8;
+    color: #ffffff;
+}
+.btn:focus {
     color: #ffffff;
     outline: none;
 }
-
-.register_notice{
+.register_notice {
     color: #006266;
     margin-left: 5px;
-    font-size:  13px;
-
+    font-size: 13px;
 }

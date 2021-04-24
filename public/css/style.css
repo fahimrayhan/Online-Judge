@@ -28,6 +28,15 @@ a:hover {
 }
 /*button*/
 
+.btn{
+    padding: 9px;
+}
+
+.btn-default{
+    background-color: #2C3542;
+    color: #ffffff;
+}
+
 .btn-custom {
     padding: 7px 15px 7px 15px;
     border: none;
@@ -126,5 +135,35 @@ a:hover {
 .form .alert-area {
     margin-bottom: 15px;
 }
-
 /*end form*/
+
+/*table style*/
+
+.table-custom {
+    width: 100%;
+}
+.table-custom th {
+    border: 1px solid #DDDDDD;
+    background-color: #F4F6F8;
+    font-size: 14px;
+    padding: 10px 5px 10px 5px;
+    text-align: center;
+}
+.table-custom td {
+    border: 1px solid #DDDDDD;
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+}
+.submit-btn {
+    background-color: #305485;
+    color: #ffffff;
+    font-weight: bold;
+}
+.submit-btn:focus {
+    outline: none;
+}
+.btn:focus {
+    outline: none;
+}
+/*end table style*/

@@ -3,36 +3,7 @@
 @section('content')
 
 <style type="text/css">
-	.table-custom{
-		width: 100%;
-	}
-	.table-custom th{
-		border: 1px solid #eeeeee;
-		background-color: #f7f7f7;
-		font-size: 14px;
-		padding: 10px 5px 10px 5px;
-		text-align: center;
-	}
-	.table-custom td{
-		border: 1px solid #eeeeee;
-		font-size: 14px;
-		padding: 5px;
-		text-align: center;
-	}
-
-	.submit-btn{
-        background-color: #305485;
-        color: #ffffff;
-        
-        font-weight: bold;
-    }
-    .submit-btn:focus{
-        outline: none;
-    }
-
-    .btn:focus{
-    	outline: none;
-    }
+	
 
 </style>
 

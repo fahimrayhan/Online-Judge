@@ -34,6 +34,11 @@ Route::group(['prefix' => 'administration'], function () {
         Route::group(['prefix' => '{slug}'], function () {
         	Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
         	Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
+            Route::post('/details', 'Problem\ProblemController@updateDetails');
+            Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
+            Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
+            Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
+            Route::post('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
         });
     });
 

@@ -29,7 +29,7 @@ var helperJs = [
 var appJs = [
 	'resources/js/auth/auth.js',
 	'resources/js/problem/problem_dashboard.js',
-	'resources/js/problem/problem_details_editor.js',
+	'resources/js/problem/problem_details_editor.js'
 ];
 
 var scripts = [].concat(libJs,helperJs,appJs);
