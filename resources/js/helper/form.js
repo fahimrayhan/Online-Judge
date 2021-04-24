@@ -25,6 +25,7 @@ var Form = function (form,options) {
             _this.errorArea.hide();
             _this.successArea.show();
             _this.successArea.html("<strong>" + response.message + "</strong>");
+            toast.success(response['message']);
             //clear form
             if(options.success.resetForm == true)_this.form.trigger("reset");
             //call callback function

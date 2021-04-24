@@ -22,7 +22,9 @@
             <div class="container-fluid content-body">
                 <div id="app-body">
                     @include('includes.header')
-                    @yield('content')
+                    <div class="container">
+                        @yield('content')
+                    </div>
                     @include('includes.footer')
                 </div>
             </div>

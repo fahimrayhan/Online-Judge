@@ -6,6 +6,12 @@
             'url' => route('settings.change_password'),
             'callback' => ''
         ],
+		'change_name' => [
+            'icon'  => 'far fa-id-card',
+            'name' => 'Change Name',
+            'url' => route('settings.change_name'),
+            'callback' => ''
+        ]
         
     ];
 @endphp

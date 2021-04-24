@@ -18,4 +18,8 @@ class SettingController extends Controller
     {
         return view('pages.settings.change_password');
     }
+    public function changeName()
+    {
+        return view('pages.settings.change_name');
+    }
 }

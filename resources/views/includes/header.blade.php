@@ -38,7 +38,7 @@
     <div class="top-loader" style="display: none;" id="top-loader">
       <div class="bar"></div>
     </div>
-    <div class="container-fluid" style="margin-top: 5px;">
+    <div class="container-fluid container" style="margin-top: 5px;">
         <div class="navbar-header">
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

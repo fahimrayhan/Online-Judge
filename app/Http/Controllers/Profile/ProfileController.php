@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\ChangePasswordRequest;
+use App\Http\Requests\Profile\ChangeNameRequest;
 use App\Models\User;
 use App\Services\Profile\ProfileService;
 
@@ -41,5 +42,14 @@ class ProfileController extends Controller
         return response()->json([
             'message' => $response['message'],
         ],$response['status']);        
+    }
+
+    public function updateName(ChangeNameRequest $request)
+    {
+        $this->profileService->ChangeName($request->all());
+        return response()->json([
+            'message' => "Name Changed Successfully",
+        ]);
+
     }
 }

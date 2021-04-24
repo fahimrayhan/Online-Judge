@@ -9,4 +9,14 @@ var profile = {
         });
         //console.log(form.data(), form.action());
     },
+    changeName: function() {
+        new Form("change_name").submit({
+            loadingText: "Changing Name...",
+            success: {
+                resetForm: false,
+            }
+
+        });
+        //console.log(form.data(), form.action());
+    },
 };

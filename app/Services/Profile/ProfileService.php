@@ -37,5 +37,12 @@ class ProfileService
             'status' => 419
         ];
     }
+
+    public function ChangeName($data)
+    {
+        $user = auth()->user();
+        $user->name = $data['name'];
+        $user->save();
+    }
     
 }
