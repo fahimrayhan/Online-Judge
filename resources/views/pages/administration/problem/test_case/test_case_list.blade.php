@@ -7,7 +7,7 @@
 		padding: 5px;
 	}
 </style>
-	<div style='text-align: right; margin-bottom: 10px;'><button class="btn btn-success"><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>
+	<div style='text-align: right; margin-bottom: 10px;'><button class="btn btn-success" onclick="new Modal('md').load('{{route('administration.problem.test_case.add',['slug' => request()->slug])}}')"><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>
 	<table width='100%' class="table-custom">
 		<tr>
 			<th>Order</th>

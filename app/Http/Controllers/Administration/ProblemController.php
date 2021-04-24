@@ -49,4 +49,8 @@ class ProblemController extends Controller
     public function testCaseList(){
     	return view('pages.administration.problem.test_case.test_case_list', ['problem' => $this->problemData]);
     }
+
+    public function testCaseAdd(){
+        return view('pages.administration.problem.test_case.add_test_case');
+    }
 }

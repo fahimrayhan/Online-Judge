@@ -41,6 +41,6 @@ class ProfileController extends Controller
         return response()->json([
             'message' => $response[0],
             'error' => $response[1]
-        ],);        
+        ]);        
     }
 }
