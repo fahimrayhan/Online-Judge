@@ -18,8 +18,6 @@ class ProblemService
 
     public function update($data)
     {
-        //echo $data->name;
-        print_r($data);
         if(isset($data['_token']))unset($data['_token']);
         return Problem::where(['slug' => request()->slug])->update($data);
     }

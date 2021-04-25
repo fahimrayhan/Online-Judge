@@ -19,18 +19,24 @@
 			<th>Added By</th>
 			<th></th>
 		</tr>
+		@php 
+			$testCases = $problem->testCases()->get();
+			$cnt = 0;
+		@endphp
+		@foreach ($testCases as $key => $testCase)
 		<tr>
-			<td>1</td>
-			<td>input-1.txt (2 Bytes)</td>
-			<td>input-1.txt (2 Bytes)</td>
+			<td>{{++$cnt}}</td>
+			<td><a href="{{asset($testCase->input_file)}}" target="_blank">input-{{$cnt}}.txt (2 Bytes)</a> </td>
+			<td><a href="{{asset($testCase->output_file)}}" target="_blank">output-{{$cnt}}.txt (2 Bytes)</a></td>
 			<td><input type="checkbox" name=""></td>
-			<td>10</td>
-			<td>2020-06-29 08:12:43	</td>
-			<td><a href="">hamza</a></td>
+			<td>{{$testCase->point}}</td>
+			<td>{{$testCase->created_at}}</td>
+			<td><a href="">fgad</a></td>
 			<td>
 				<button value='' class='btn btn-sm btn-default' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-pencil'></span></button>
 				<button value='' class='btn btn-sm btn-danger' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-trash'></span></button>
 			</td>
 		</tr>
+		@endforeach
 	</table>
 @stop

@@ -38,7 +38,7 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
             Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
             Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
-            Route::post('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
+            Route::post('/test_case/add', 'TestCase\TestCaseController@addTestCase')->name('administration.problem.test_case.add');
         });
     });
 

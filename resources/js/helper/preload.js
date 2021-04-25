@@ -41,8 +41,14 @@ $(document).ready(function() {
     $('body').on('click', 'a', function(e) {
         var self = $(this);
         var link = $(this).attr("href");
+        var target = $(this).attr("target");
+        if (target == "_blank") {
+            if (link == "#") return;
+            window.open(link, '_blank');
+            return;
+        }
         if (link == "#") return;
-        if(!url.checkValidUrl(link))return;
+        if (!url.checkValidUrl(link)) return;
         if (link.indexOf(document.domain) >= 0) {
             if ($(this).attr("logout-btn")) return;
             e.preventDefault();
