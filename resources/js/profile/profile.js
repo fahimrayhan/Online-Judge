@@ -9,4 +9,24 @@ var profile = {
         });
         //console.log(form.data(), form.action());
     },
+    changeName: function() {
+        new Form("change_name").submit({
+            loadingText: "Changing Name...",
+            success: {
+                resetForm: false,
+            }
+
+        });
+        //console.log(form.data(), form.action());
+    },
+    changeAvatar: function() {
+        new Form("change_avatar").submit({
+            loadingText: "Changing avatar...",
+            success: {
+                resetForm: true,
+            }
+
+        });
+        //console.log(form.data(), form.action());
+    },
 };

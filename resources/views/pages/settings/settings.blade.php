@@ -24,7 +24,7 @@
   .panel-sidebar-btn:focus{
   	outline: none;
   }
-  .sidebarBtn{
+  .sidebar-btn{
     width: 100%;
     text-align: left;
   }

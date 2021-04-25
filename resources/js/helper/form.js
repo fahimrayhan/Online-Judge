@@ -1,4 +1,4 @@
-var Form = function(form, options) {
+var Form = function (form, options) {
     var _this = this;
     this.form = (form instanceof jQuery) ? form : $("#" + form);
     this.options = options;
@@ -6,8 +6,8 @@ var Form = function(form, options) {
     this.id = this.form.attr("id");
     this.errorArea = $("#" + this.id + " .error-area");
     this.successArea = $("#" + this.id + " .success-area");
-    this.data = function() {
-        return this.form.serialize();
+    this.data = function () {
+        return new FormData(document.getElementById(this.id));
     };
     this.action = function() {
         return this.form.attr('action');
@@ -17,28 +17,38 @@ var Form = function(form, options) {
         if (options.success == null) {
             options.success = {}
         }
-        $.post(this.action(), this.data(), function(response) {
-            _this.errorArea.hide();
-            _this.successArea.show();
-            _this.successArea.html("<strong>" + response.message + "</strong>");
-            //clear form
-            if (options.success.resetForm == true) _this.form.trigger("reset");
-            //call callback function
-            if ($.isFunction(options.success.callback)) options.success.callback(response);
-            _this.submitButton.on();
-        }).fail(function(Error) {
+        $.ajax({
+            url: this.action(),
+            data: this.data(),
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (response) {
+                _this.errorArea.hide();
+                _this.successArea.show();
+                _this.successArea.html("<strong>" + response.message + "</strong>");
+                toast.success(response['message']);
+                //clear form
+                if (options.success.resetForm == true) _this.form.trigger("reset");
+                //call callback function
+                if ($.isFunction(options.success.callback)) options.success.callback(response);
+                _this.submitButton.on();
+            }
+        }).fail(function (Error) {
             var error = JSON.parse(Error.responseText);
             _this.successArea.hide();
             _this.errorArea.show();
             _this.errorArea.html("<strong>" + error['message'] + "</strong>");
             toast.danger(error['message']);
             errorMsg = "";
-            $.map(error['errors'], function(errors, field) {
+            $.map(error['errors'], function (errors, field) {
                 console.log(errors[0], field);
                 errorMsg += "<li>" + errors[0] + "</li>";
             });
             _this.errorArea.append("<ul>" + errorMsg + "</ul>");
             _this.submitButton.on();
         });
+
+
     }
 }

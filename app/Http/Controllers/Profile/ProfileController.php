@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\ChangePasswordRequest;
+use App\Http\Requests\Profile\UpdateProfileRequest;
+use App\Http\Requests\Profile\ChangeAvatarRequest;
 use App\Models\User;
 use App\Services\Profile\ProfileService;
+use Illuminate\Support\Facades\Storage;
+use Hash;
 
 class ProfileController extends Controller
 {
@@ -37,9 +41,27 @@ class ProfileController extends Controller
 
     public function updatePassword(ChangePasswordRequest $request)
     {
-        $response = $this->profileService->ChangePassword($request->all());
+        $response = $this->profileService->changePassword($request->all());
         return response()->json([
             'message' => $response['message'],
         ],$response['status']);        
     }
+
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        $this->profileService->updateProfile($request->all());
+        return response()->json([
+            'message' => "Profile Updated Successfully",
+        ]);
+
+    }
+
+    public function updateAvatar(ChangeAvatarRequest $request)
+    {
+        $this->profileService->changeAvatar($request);
+        return response()->json([
+            'message' => "Avatar Changed Successfully",
+        ]);
+    }
+   
 }

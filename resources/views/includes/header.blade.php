@@ -38,7 +38,7 @@
     <div class="top-loader" style="display: none;" id="top-loader">
       <div class="bar"></div>
     </div>
-    <div class="container-fluid" style="margin-top: 5px;">
+    <div class="container-fluid container" style="margin-top: 5px;">
         <div class="navbar-header">
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -80,7 +80,7 @@
                 @if(auth()->check())
                  <li class="dropdown">
                     <button class="nav-profile-btn" data-toggle="dropdown">
-                    <img src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg" >
+                    <img src="{{ auth()->user()->avatar }}" >
                     {{auth()->user()->handle}}
                         <b><i class="fas fa-chevron-down"></i></b>
                     </button>
@@ -90,7 +90,7 @@
                             <div class="navbar-login">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: center">
-                                        <img src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg" style="height: 80px; width: 80px;">
+                                        <img src="{{ auth()->user()->avatar }}" style="height: 80px; width: 80px;">
                                     </div>
                                     <div class="col-md-8" style="color: #000000">
                                         <strong>{{auth()->user()->handle}}</strong>
@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
-                                            <a href="{{route('settings')}}" class="btn btn-success btn-block">Setting</a>
+                                            <a href="{{route('settings.general')}}" class="btn btn-success btn-block">Setting</a>
                                             <button id="logout-btn" onclick="auth.logout(this)" url="{{route('logout')}}" class="btn btn-danger btn-block">Logout</button>
                                         </p>
                                     </div>

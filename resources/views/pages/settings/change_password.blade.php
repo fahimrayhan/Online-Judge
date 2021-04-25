@@ -1,5 +1,5 @@
 @extends("pages.settings.settings")
-@section('title', 'Profile Settings')
+@section('title', 'Profile Security')
 @section('setting-sub-content')
 	<style type="text/css">
 

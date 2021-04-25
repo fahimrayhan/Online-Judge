@@ -1,11 +1,25 @@
 @php
     $sidebar = [
-        'change_password' => [
-            'icon'  => 'fas fa-key',
+      'general' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'General',
+                'url' => route('settings.general'),
+                'callback' => ''
+        ],
+        'security' => [
+            'icon'  => 'fas fa-shield-alt',
             'name' => 'Change Password',
             'url' => route('settings.change_password'),
             'callback' => ''
         ],
+        
+        'change_avatar' => [
+            'icon'  => 'far fa-id-card',
+            'name' => 'Change Avatar',
+            'url' => route('settings.change_avatar'),
+            'callback' => ''
+        ]
+
         
     ];
 @endphp
