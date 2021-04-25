@@ -51,6 +51,7 @@ class User extends Authenticatable
         static::creating(function ($user) {
             $user->type     = $user->getUserType();
             $user->password = bcrypt($user->password);
+            $user->avatar = "default_avatar.png";
         });
     }
 
@@ -65,7 +66,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($avatar)
     {
-        return Storage::url('avatars/'.$avatar);
+        return asset('upload/avatars/'.$avatar);
     }
 
 }

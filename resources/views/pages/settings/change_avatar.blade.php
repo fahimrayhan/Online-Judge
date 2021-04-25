@@ -66,11 +66,23 @@
         margin-bottom: 15px;
     }
     </style>
+    <script>
+    var loadFile = function(event) {
+        var output = document.getElementById('img-preview');
+        if (!event.target.files[0]){
+            output.src = $('#img-preview-default').attr('src');
+        }
+        else output.src = URL.createObjectURL(event.target.files[0]);
 
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+  };
+</script>
     <form style="width: 70%" action="{{ route('profile.update_avatar') }} " class="form" id="change_avatar" method="post" enctype="multipart/form-data">
         @csrf
         <div class="alert-area">
-            <div class="alert alert-danger error-area">ok</div>
+            <div class="alert alert-danger error-area"></div>
             <div class="alert alert-success success-area"></div>
         </div>
         <div class='row' style="margin-bottom: 5px;">
@@ -78,7 +90,9 @@
                 <label> Avatar <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="file" class='form-control-input' value='' name="avatar" placeholder="Select your new avatar">
+                <img id="img-preview-default" src="{{auth()->user()->avatar}}" style="display: none">
+                <img id="img-preview" src="{{auth()->user()->avatar}}" height="100"  width="100" class="img-thumbnail" style="margin-bottom: 10px;">
+                <input type="file" class='form-control-input' accept="image/*" value='' name="avatar" onchange="profile.loadFileAvatar(event)" placeholder="Select your new avatar">
             </div>
         </div>
         <div class='row'>
