@@ -66,19 +66,6 @@
         margin-bottom: 15px;
     }
     </style>
-    <script>
-    var loadFile = function(event) {
-        var output = document.getElementById('img-preview');
-        if (!event.target.files[0]){
-            output.src = $('#img-preview-default').attr('src');
-        }
-        else output.src = URL.createObjectURL(event.target.files[0]);
-
-        output.onload = function() {
-            URL.revokeObjectURL(output.src) // free memory
-        }
-  };
-</script>
     <form style="width: 70%" action="{{ route('profile.update_avatar') }} " class="form" id="change_avatar" method="post" enctype="multipart/form-data">
         @csrf
         <div class="alert-area">
