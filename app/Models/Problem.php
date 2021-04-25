@@ -24,15 +24,15 @@ class Problem extends Model
 
             // check to see if any other slugs exist that are the same & count them
             $count = static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
-            while(1){
+            while (1) {
                 $tmpSlug = $count ? "{$slug}-{$count}" : $slug;
-                if(static::where('slug', '=', $tmpSlug)->exists()){
-                    $count ++;
+                if (static::where('slug', '=', $tmpSlug)->exists()) {
+                    $count++;
                     continue;
                 }
                 break;
             }
-            
+
             // if other slugs exist that are the same, append the count to the slug
             $slug = $count ? "{$slug}-{$count}" : $slug;
 
