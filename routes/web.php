@@ -44,7 +44,7 @@ Route::group(['prefix' => 'administration'], function () {
 
 });
 
-Route::get('/settings', 'Setting\SettingController@settings')->name('settings');
+
 Route::get('/settings/profile', 'Setting\SettingController@profile')->name('settings.profile');
 
 Route::get('/profile/{handle}', 'Profile\ProfileController@show')->name('profile');
@@ -63,10 +63,11 @@ Route::get('/footer', function () {
     return view('includes.footer');
 });
 
+Route::get('/settings/general', 'Setting\SettingController@generalSettings')->name('settings.general');
+Route::post('/profile/update_profile','Profile\ProfileController@updateProfile')->name('profile.update_profile');
 
-Route::get('/settings/change_password','Setting\SettingController@changePassword')->name('settings.change_password');
+Route::get('/settings/security','Setting\SettingController@changePassword')->name('settings.change_password');
 Route::post('/profile/update_password','Profile\ProfileController@updatePassword')->name('profile.update_password');
-Route::get('/settings/change_name','Setting\SettingController@changeName')->name('settings.change_name');
-Route::post('/profile/update_name','Profile\ProfileController@updateName')->name('profile.update_name');
 
-
+Route::get('/settings/change_avatar','Setting\SettingController@changeAvatar')->name('settings.change_avatar');
+Route::post('/profile/update_avatar','Profile\ProfileController@updateAvatar')->name('profile.update_avatar');

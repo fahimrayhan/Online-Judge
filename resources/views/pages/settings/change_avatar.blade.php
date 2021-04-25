@@ -67,7 +67,7 @@
     }
     </style>
 
-    <form style="width: 70%" action="{{ route('profile.update_name') }} " class="form" id="change_name" method="post">
+    <form style="width: 70%" action="{{ route('profile.update_avatar') }} " class="form" id="change_avatar" method="post" enctype="multipart/form-data">
         @csrf
         <div class="alert-area">
             <div class="alert alert-danger error-area">ok</div>
@@ -75,20 +75,19 @@
         </div>
         <div class='row' style="margin-bottom: 5px;">
             <div class='col-md-4 label-area'>
-                <label> Name <font color="red">*</font>:</label>
+                <label> Avatar <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" class='form-control-input' value='{{ auth()->user()->name }}' name="name" placeholder="Enter New Name">
+                <input type="file" class='form-control-input' value='' name="avatar" placeholder="Select your new avatar">
             </div>
         </div>
         <div class='row'>
         	<div class="col-md-4"></div>
             <div class="col-md-8">
                 <div style="">
-                    <button type="submit" class="btn submit-btn"  style="margin-top: 15px;" onclick="profile.changeName()" >Change Name</button>
+                    <button type="submit" class="btn submit-btn"  style="margin-top: 15px;" onclick="profile.changeAvatar()">Change Avatar</button>
                 </div>
             </div>
         </div>
 </form>
 @stop
-

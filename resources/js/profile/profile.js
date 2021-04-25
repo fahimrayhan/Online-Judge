@@ -19,4 +19,14 @@ var profile = {
         });
         //console.log(form.data(), form.action());
     },
+    changeAvatar: function() {
+        new Form("change_avatar").submit({
+            loadingText: "Changing avatar...",
+            success: {
+                resetForm: true,
+            }
+
+        });
+        //console.log(form.data(), form.action());
+    },
 };

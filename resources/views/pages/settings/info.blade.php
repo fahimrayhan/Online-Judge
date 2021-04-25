@@ -1,10 +1,10 @@
 @extends("pages.settings.settings")
-@section('title', 'Profile Settings')
+@section('title', 'General Settings')
 @section('setting-sub-content')
 	<style type="text/css">
 
     .form{
-
+        
     }
 
     .form .form-control-input{
@@ -67,7 +67,7 @@
     }
     </style>
 
-    <form style="width: 70%" action="{{route('login')}}" class="form" id="login" method="post">
+    <form style="width: 70%" action="{{ route('profile.update_profile') }} " class="form" id="change_name" method="post">
         @csrf
         <div class="alert-area">
             <div class="alert alert-danger error-area">ok</div>
@@ -75,28 +75,20 @@
         </div>
         <div class='row' style="margin-bottom: 5px;">
             <div class='col-md-4 label-area'>
-                <label> Your Name <font color="red">*</font>:</label>
+                <label> Name <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="text" class='form-control-input' value='{{auth()->user()->name}}' name="login" placeholder="Enter Handle or Email">
-            </div>
-        </div>
-        <div class='row'>
-            <div class='col-md-4 label-area'>
-                <label> Password <font color="red">*</font>:</label>
-            </div>
-            <div class="col-md-8">
-                <input type="password" class='form-control-input' name="password" placeholder="Enter Password">
+                <input type="text" class='form-control-input' value='{{ auth()->user()->name }}' name="name" placeholder="Enter New Name">
             </div>
         </div>
         <div class='row'>
         	<div class="col-md-4"></div>
             <div class="col-md-8">
                 <div style="">
-                    <button type="submit" class="btn submit-btn" onclick="auth.login()" style="margin-top: 15px;">Login</button>
+                    <button type="submit" class="btn submit-btn"  style="margin-top: 15px;" onclick="profile.changeName()" >Update Profile</button>
                 </div>
             </div>
         </div>
 </form>
-
 @stop
+

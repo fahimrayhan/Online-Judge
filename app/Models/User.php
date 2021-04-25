@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\User\UserType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -56,6 +57,11 @@ class User extends Authenticatable
     public function problems()
     {
         return $this->belongsToMany(Problem::class, 'problem_moderator', 'user_id', 'problem_id')->withPivot(['role', 'is_accepted']);
+    }
+
+    public function getAvatarAttribute($avatar)
+    {
+        return Storage::url('avatars/'.$avatar);
     }
 
 }

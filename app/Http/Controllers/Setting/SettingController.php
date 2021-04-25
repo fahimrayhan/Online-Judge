@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
-    public function settings()
+    public function generalSettings()
     {
-        return redirect()->route('settings.profile');
+        return view('pages.settings.info');
     }
     public function profile()
     {
@@ -18,8 +18,8 @@ class SettingController extends Controller
     {
         return view('pages.settings.change_password');
     }
-    public function changeName()
+    public function changeAvatar()
     {
-        return view('pages.settings.change_name');
+        return view('pages.settings.change_avatar');
     }
 }
