@@ -32,18 +32,22 @@ Route::group(['prefix' => 'administration'], function () {
         Route::post('/create', 'Problem\ProblemController@store');
 
         Route::group(['prefix' => '{slug}'], function () {
-        	Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
-        	Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
+            Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
+            Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
             Route::post('/details', 'Problem\ProblemController@updateDetails');
             Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
             Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
             Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
             Route::post('/test_case/add', 'TestCase\TestCaseController@addTestCase')->name('administration.problem.test_case.add');
+            Route::get('/test_case/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
+
+            Route::get('/test_case/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
+            Route::post('/test_case/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase')->name('problem.test_case.edit');
+            Route::get('/test_case/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
         });
     });
 
 });
-
 
 Route::get('/settings/profile', 'Setting\SettingController@profile')->name('settings.profile');
 
@@ -64,10 +68,10 @@ Route::get('/footer', function () {
 });
 
 Route::get('/settings/general', 'Setting\SettingController@generalSettings')->name('settings.general');
-Route::post('/profile/update_profile','Profile\ProfileController@updateProfile')->name('profile.update_profile');
+Route::post('/profile/update_profile', 'Profile\ProfileController@updateProfile')->name('profile.update_profile');
 
-Route::get('/settings/security','Setting\SettingController@changePassword')->name('settings.change_password');
-Route::post('/profile/update_password','Profile\ProfileController@updatePassword')->name('profile.update_password');
+Route::get('/settings/security', 'Setting\SettingController@changePassword')->name('settings.change_password');
+Route::post('/profile/update_password', 'Profile\ProfileController@updatePassword')->name('profile.update_password');
 
-Route::get('/settings/change_avatar','Setting\SettingController@changeAvatar')->name('settings.change_avatar');
-Route::post('/profile/update_avatar','Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
+Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
+Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');

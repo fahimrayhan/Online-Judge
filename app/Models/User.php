@@ -59,7 +59,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Problem::class, 'problem_moderator', 'user_id', 'problem_id')->withPivot(['role', 'is_accepted']);
     }
-    public function testCase()
+    public function problemTestCase()
     {
         return $this->belongsToMany(ProblemTestCase::class);
     }

@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProblemTestCase extends Model
 {
-	/**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'hash_id', 'point', 'sample','problem_id'
+        'id', 'hash_id', 'point', 'sample', 'problem_id',
     ];
 
     protected $appends = ['input_file,output_file'];
@@ -27,7 +27,7 @@ class ProblemTestCase extends Model
      * @var array
      */
     protected $casts = [
-        'point' => 'integer',
+        'point'  => 'integer',
         'sample' => 'boolean',
     ];
 
@@ -41,29 +41,50 @@ class ProblemTestCase extends Model
 
         // auto-sets values on creation
         static::created(function ($testCase) {
-            $hash = hash('sha256',Str::random(20). "_" . rand() . "_" . $testCase->id . "_" . Carbon::now()->timestamp);
+            $hash              = hash('sha256', Str::random(20) . "_" . rand() . "_" . $testCase->id . "_" . Carbon::now()->timestamp);
             $testCase->hash_id = $hash;
             $testCase->save();
-
-            File::put($testCase->input_file,isset(request()->input) ? request()->input : "");
-            File::put($testCase->output_file,isset(request()->output) ? request()->output : "");
         });
     }
 
-    public function getInputFileAttribute(){
-        return 'file/test_case/input/'.$this->hash_id.".txt";
+    public function getInputFileAttribute()
+    {
+        return 'file/test_case/input/' . $this->hash_id . ".txt";
     }
 
-    public function getOutputFileAttribute(){
-        return 'file/test_case/output/'.$this->hash_id.".txt";
+    public function getOutputFileAttribute()
+    {
+        return 'file/test_case/output/' . $this->hash_id . ".txt";
     }
+
+    public function inputLength()
+    {
+        return File::exists($this->input_file) ? File::size($this->input_file) : 0;
+    }
+
+    public function outputLength()
+    {
+        return File::exists($this->output_file) ? File::size($this->output_file) : 0;
+    }
+
+    public function input()
+    {
+        return File::exists($this->input_file) ? File::get($this->input_file) : "";
+    }
+
+    public function output()
+    {
+        return File::exists($this->output_file) ? File::get($this->output_file) : "";
+    }
+
 
     public function problem()
     {
-      return $this->belongsTo(Problem::class);
+        return $this->belongsTo(Problem::class);
     }
+
     public function user()
     {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
