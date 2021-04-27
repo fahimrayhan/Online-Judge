@@ -28,6 +28,10 @@ var problem = {
     preview: function(e) {
         new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function(response) {});
     },
+    copyTestCase: function(e){
+        copyer(e.value);
+        toast.info("The example has been copied into the clipboard");
+    }
 };
 var testCase = {
     selectInputType: function(e) {
@@ -99,5 +103,6 @@ var testCase = {
             toast.success(response.message);
             url.load();
         });
-    }
+    },
+    
 }
