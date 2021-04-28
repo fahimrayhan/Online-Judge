@@ -50,13 +50,14 @@ class ProfileService
     {
         $user = auth()->user();
         $baseName = basename($user->avatar);
-        if (basename($user->avatar) != "default_avatar.png")
+        if ($baseName != "default_avatar.png")
         {
-            Storage::delete("public/avatars/".$baseName);
+            unlink(public_path('upload/avatars/').$baseName);
         }
-        $fileName= hash('sha256',auth()->user()->handle .'-'.Str::random(20). "-" . time()).".".$data->file('avatar')->extension();
-        $path = $data->file('avatar')->storeAs('public/avatars', $fileName);       
-        $user->avatar = basename($path);
+        $avatar = $data->avatar;
+        $fileName = hash('sha256',auth()->user()->handle .'-'.Str::random(20). "-" . time()).".".$avatar->extension();
+        $avatar->move(public_path('upload/avatars'),$fileName);   
+        $user->avatar = $fileName;
         $user->save();
     }
     
