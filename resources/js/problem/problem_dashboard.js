@@ -11,61 +11,98 @@ var problem = {
             }
         });
     },
-    editor: function(problemData){
+    editor: function(problemData) {
         console.log(problemData);
         problemDetailsEditor.setEditor(problemData);
     },
-    detailsUpadte: function(actionUrl){
+    detailsUpadte: function(actionUrl) {
         var data = problemDetailsEditor.getEditorData();
-        data['name'] = $("#problem_name").val(); 
+        data['name'] = $("#problem_name").val();
         var btn = new Button("update-problem-details");
         btn.off("Updating....");
-        $.post(actionUrl, app.setToken(data), function (response) {
+        $.post(actionUrl, app.setToken(data), function(response) {
             toast.success("Updated Details");
             btn.on();
         });
     },
-    preview: function(e){
+    preview: function(e) {
         new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function(response) {});
     },
+    copyTestCase: function(e){
+        copyer(e.value);
+        toast.info("The example has been copied into the clipboard");
+    }
 };
-
 var testCase = {
-    testCaseData : {
-        input : "",
-        output: ""
-    },
-
-    updateField: function(e){
-        if(e.id == "testCaseInput")this.testCaseData.input = e.value;
-        else this.testCaseData.output = e.value;
-    },
-    selectType : function(e){
+    selectInputType: function(e) {
         var type = e.value;
-        this.outputEditorType = type;
+        $("#testCaseInputEditorArea").hide();
+        $("#testCaseInputUploadArea").hide();
+        if (type == "editor") $("#testCaseInputEditorArea").show();
+        if (type == "upload") $("#testCaseInputUploadArea").show();
+    },
+    selectOutputType: function(e) {
+        var type = e.value;
         $("#testCaseOutputEditorArea").hide();
         $("#testCaseOutputUploadArea").hide();
-        $("#testCaseOutputUrlArea").hide();
-        if(type == "editor")$("#testCaseOutputEditorArea").show();
-        if(type == "upload")$("#testCaseOutputUploadArea").show();
-        if(type == "url")$("#testCaseOutputUrlArea").show();
+        if (type == "editor") $("#testCaseOutputEditorArea").show();
+        if (type == "upload") $("#testCaseOutputUploadArea").show();
     },
-    uploadFile: function(e){
-        var reader = new FileReader();
-        console.log(reader);
-        reader.onload = function(){
-            $.get(reader.result, function(data) {
-                //uploadOutputData = data;
-                console.log(data);
-            }, "text");
-        };
-        if(e.target.files[0]){
-            reader.readAsDataURL(e.target.files[0]);
+    setInputEditorLimit: function(e) {
+        var editorVal = $('#testCaseInput').val();
+        var maxLen = 5000;
+        var txtLen = editorVal.length;
+        if (txtLen >= maxLen) {
+            alert("Input File Is To Large. If You Need Large Input You Try Upload Option.");
+        }
+    },
+    setOutputEditorLimit: function(e) {
+        var editorVal = $('#testCaseOutput').val();
+        var maxLen = 5000;
+        var txtLen = editorVal.length;
+        if (txtLen >= maxLen) {
+            alert("Output File Is To Large. If You Need Large Output You Try Upload Option.");
         }
     },
 
-    addTestCase: function(){
-        console.log(this.testCaseData);
-    }
+    updateSample: function(e){
+        var sample = $(e).prop("checked") == true ? 1 : 0;
+        var data = {
+            'sample': sample
+        };
+        $.get($(e).attr('name'),data, function(response) {
+            toast.success(response.message);
+        });
+    },
+    addTestCase: function() {
+        new Form("add_test_case").submit({
+            loadingText: "Saving...",
+            success: {
+                callback: function(response) {
+                    new Modal().close();
+                    url.load();
+                }
+            }
+        });
+    },
+    updateTestCase: function() {
+        new Form("update_test_case").submit({
+            loadingText: "Saving...",
+            success: {
+                callback: function(response) {
+                    new Modal().close();
+                    url.load();
+                }
+            }
+        });
+    },
+    delete: function(e) {
+        var ok = confirm("Are you want to delete this test case");
+        if (!ok) return;
+        $.get($(e).attr('url'), function(response) {
+            toast.success(response.message);
+            url.load();
+        });
+    },
     
 }

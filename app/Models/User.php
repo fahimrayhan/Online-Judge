@@ -51,6 +51,7 @@ class User extends Authenticatable
         static::creating(function ($user) {
             $user->type     = $user->getUserType();
             $user->password = bcrypt($user->password);
+            $user->avatar = "default_avatar.png";
         });
     }
 
@@ -58,14 +59,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Problem::class, 'problem_moderator', 'user_id', 'problem_id')->withPivot(['role', 'is_accepted']);
     }
-    public function testCase()
+    public function problemTestCase()
     {
         return $this->belongsToMany(ProblemTestCase::class);
     }
 
     public function getAvatarAttribute($avatar)
     {
-        return Storage::url('avatars/'.$avatar);
+        return asset('upload/avatars/'.$avatar);
     }
 
 }

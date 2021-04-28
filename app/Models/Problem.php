@@ -52,6 +52,10 @@ class Problem extends Model
     {
         return $this->hasMany(ProblemTestCase::class);
     }
+
+    public function testCasesSample(){
+        return $this->testCases()->where(['sample' => 1]);
+    }
     public function moderator()
     {
         return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted']);

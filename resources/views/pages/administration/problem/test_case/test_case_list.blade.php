@@ -26,15 +26,15 @@
 		@foreach ($testCases as $key => $testCase)
 		<tr>
 			<td>{{++$cnt}}</td>
-			<td><a href="{{asset($testCase->input_file)}}" target="_blank">input-{{$cnt}}.txt (2 Bytes)</a> </td>
-			<td><a href="{{asset($testCase->output_file)}}" target="_blank">output-{{$cnt}}.txt (2 Bytes)</a></td>
-			<td><input type="checkbox" name=""></td>
+			<td><a href="{{asset($testCase->input_file)}}" target="_blank">input-{{$cnt}}.txt ({{$testCase->inputLength()}} Bytes)</a> </td>
+			<td><a href="{{asset($testCase->output_file)}}" target="_blank">output-{{$cnt}}.txt ({{$testCase->outputLength()}} Bytes)</a></td>
+			<td><input type="checkbox" name="{{route('problem.test_case.update_sample',['slug' => request()->slug,'test_case_id' => $testCase->id])}}" value="true" onchange="testCase.updateSample(this)" {{$testCase->sample ? "checked" : ""}}></td>
 			<td>{{$testCase->point}}</td>
 			<td>{{$testCase->created_at}}</td>
-			<td><a href="">fgad</a></td>
+			<td><a href="{{route('profile',['handle' => $testCase->user->handle])}}">{{$testCase->user->handle}}</a></td>
 			<td>
-				<button value='' class='btn btn-sm btn-default' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-pencil'></span></button>
-				<button value='' class='btn btn-sm btn-danger' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-trash'></span></button>
+				<button value='' onclick="new Modal('md').load('{{route('problem.test_case.edit',['slug' => request()->slug,'test_case_id' => $testCase->id])}}','Edit Test Case')" class='btn btn-sm btn-default' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-pencil'></span></button>
+				<button value='' class='btn btn-sm btn-danger' url="{{route('problem.test_case.delete',['slug' => request()->slug,'test_case_id' => $testCase->id])}}" onclick ='testCase.delete(this)' id='updateTestCaseBtn'><span class='glyphicon glyphicon-trash'></span></button>
 			</td>
 		</tr>
 		@endforeach

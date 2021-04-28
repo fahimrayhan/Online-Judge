@@ -24,7 +24,11 @@ class TestCaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'point' => 'required|min:0',
+            'point' => 'required|numeric|min:0',
+            'input_type' => 'required',
+            'input_file' => 'required_if:input_type,upload|file|mimes:text,txt|max:10000',
+            'output_type' => 'required',
+            'output_file' => 'required_if:output_type,upload|file|mimes:text,txt|max:10000'
         ];
     }
 }

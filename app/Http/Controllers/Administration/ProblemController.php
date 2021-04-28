@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Administration;
 use App\Http\Controllers\Controller;
 use App\Services\Problem\ProblemService;
 
+use App\Models\Problem;
+
 class ProblemController extends Controller
 {
     /**
@@ -46,11 +48,19 @@ class ProblemController extends Controller
         return view('pages.administration.problem.preview_problem', ['problem' => $this->problemData]);
     }
 
-    public function testCaseList(){
-    	return view('pages.administration.problem.test_case.test_case_list', ['problem' => $this->problemData]);
+    public function testCaseList()
+    {
+        return view('pages.administration.problem.test_case.test_case_list', ['problem' => $this->problemData]);
     }
 
-    public function testCaseAdd(){
+    public function testCaseAdd()
+    {
         return view('pages.administration.problem.test_case.add_test_case');
+    }
+    public function updateTestCase()
+    {
+        $testCase = Problem::where(['slug' => request()->slug])->firstOrFail()->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
+        //dd($testCase);
+        return view('pages.administration.problem.test_case.update_test_case', ['testCase' => $testCase]);
     }
 }
