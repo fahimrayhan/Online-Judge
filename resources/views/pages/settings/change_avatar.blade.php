@@ -1,5 +1,5 @@
 @extends("pages.settings.settings")
-@section('title', 'Change Name')
+@section('title', 'Change Avatar')
 @section('setting-sub-content')
 <style type="text/css">
 
