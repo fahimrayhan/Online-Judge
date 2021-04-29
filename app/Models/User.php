@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     use Notifiable, UserType;
-    public $avatarPath = "upload/avatars/";
-
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +18,8 @@ class User extends Authenticatable
     protected $fillable = [
         'handle', 'name', 'email', 'password', 'avatar', 'type', 'last_login', 'remember_token',
     ];
+
+    protected $appends = ['avatarPath'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -63,6 +63,11 @@ class User extends Authenticatable
     public function problemTestCase()
     {
         return $this->belongsToMany(ProblemTestCase::class);
+    }
+
+    public function getAvatarPathAttribute()
+    {
+        return 'upload/avatars/';
     }
 
     public function getAvatarAttribute($avatar)
