@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     use Notifiable, UserType;
+    public $avatarPath = "upload/avatars/";
 
     /**
      * The attributes that are mass assignable.
@@ -66,7 +67,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($avatar)
     {
-        return asset('upload/avatars/'.$avatar);
+        return asset($this->avatarPath.$avatar);
     }
 
 }
