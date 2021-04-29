@@ -17,6 +17,7 @@ class ProfileService
     {
         
         $user = auth()->user();
+        
         if($data['old_password'] == $data['new_password'])
         {
             return [
@@ -48,15 +49,21 @@ class ProfileService
     }
     public function changeAvatar($data)
     {
+
         $user = auth()->user();
         $baseName = basename($user->avatar);
-        if (basename($user->avatar) != "default_avatar.png")
+        if ($baseName != "default_avatar.png")
         {
-            Storage::delete("public/avatars/".$baseName);
+            if(file_exists(public_path($user->avatarPath).$baseName))
+            {
+                unlink(public_path($user->avatarPath).$baseName);
+            }
+            
         }
-        $fileName= hash('sha256',auth()->user()->handle .'-'.Str::random(20). "-" . time()).".".$data->file('avatar')->extension();
-        $path = $data->file('avatar')->storeAs('public/avatars', $fileName);       
-        $user->avatar = basename($path);
+        $avatar = $data->avatar;
+        $fileName = hash('sha256',auth()->user()->handle .'-'.Str::random(20). "-" . time()).".".$avatar->extension();
+        $avatar->move(public_path($user->avatarPath),$fileName);   
+        $user->avatar = $fileName;
         $user->save();
     }
     

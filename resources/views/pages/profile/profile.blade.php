@@ -62,9 +62,9 @@
             <div class="col-md-3">
                 <div class="bannerArea">
                     <div class="box box-body" style="text-align: center;">
-                        <img class="welcomeBanner img-thumbnail " src="http://coderoj.com/user_file/user_photo/f1aeebe4d60da07a91a4adf39683e885e9fa07f2e0f18958f78f651c68ca9eca.jpg">
+                        <img class="welcomeBanner img-thumbnail " src="{{ $user->avatar }}">
                        <div class="userHandle">{{ $user->handle }}</div>
-                        <div class="userFullName">Sk.Amir Hamza</div> 
+                        <div class="userFullName">{{ $user->name }}</div> 
                     </div>
                     
                      
@@ -72,7 +72,7 @@
                         <div class="userInfoLeft">
                              <i class="fas fa-university profileInfoIcon"></i> EWU                        </div>
                          <div class="userInfoLeft">
-                             <i class="fas fa-envelope profileInfoIcon"></i> sk.amirhamza@gmail.com                        </div>
+                             <i class="fas fa-envelope profileInfoIcon"></i> {{ $user->email }}                       </div>
                          <div class="userInfoLeft">
                              <i class="fas fa-eye profileInfoIcon"></i> Last seen <span style='color:green; font-weight: bold'><span class='onlineIcon'></span>Online Now</span>                        </div>
 
