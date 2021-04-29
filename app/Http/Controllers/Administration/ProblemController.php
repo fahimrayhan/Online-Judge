@@ -63,4 +63,12 @@ class ProblemController extends Controller
         //dd($testCase);
         return view('pages.administration.problem.test_case.update_test_case', ['testCase' => $testCase]);
     }
+
+    public function deleteProblem(){
+        $this->problemData->delete();
+    }
+
+    public function checker(){
+        return view('pages.administration.problem.checker',['problem' => $this->problemData]);
+    }
 }

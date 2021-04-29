@@ -67,30 +67,40 @@
 	</div>
 </div>
 
+@if(trim($problem->problem_description != ""))
 <div class="problem-statement-block">
 	{!!$problem->problem_description!!}
 </div>
+@endif
+
+@if(trim($problem->input_description != ""))
 <div class="problem-statement-block">
 	<div class="title">Input</div>
 	{!!$problem->input_description!!}
 </div>
+@endif
+
+@if(trim($problem->constraint_description != ""))
 <div class="problem-statement-block">
 	<div class="title">Constraint</div>
 	{!!$problem->constraint_description!!}
 </div>
+@endif
+
+@if(trim($problem->output_description != ""))
 <div class="problem-statement-block">
 	<div class="title">Output</div>
 	{!!$problem->output_description!!}
 </div>
-
+@endif
+@php
+	$testCases = $problem->testCasesSample()->get();
+@endphp
+@if(count($testCases) != 0)
 <div class="problem-statement-block">
 	<div class="title">Examples</div>
-	@php
-		$testCases = $problem->testCasesSample()->get();
-	@endphp
-
+	
 	@foreach ($testCases as $key => $testCase)
-
 	@php
 		$input = $testCase->input();
 		$input = strlen($input) >= 250 ? substr($input,0,250)."..." : $input;
@@ -119,7 +129,7 @@
     </table>
     @endforeach
 </div>
-
+@endif
 
 
 @if(trim($problem->notes != ""))

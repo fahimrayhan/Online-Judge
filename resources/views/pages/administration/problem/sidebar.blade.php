@@ -23,7 +23,13 @@
             'name' => 'Test Case',
             'url' => route('administration.problem.test_case',['slug' => request()->slug]),
             'callback' => ''
-        ], 
+        ],
+        'checker' => [
+            'icon'  => 'fas fa-home',
+            'name' => 'Checker',
+            'url' => route('administration.problem.checker',['slug' => request()->slug]),
+            'callback' => ''
+        ],  
     ];
 @endphp
 

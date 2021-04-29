@@ -12,7 +12,7 @@ class Problem extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker',
+        'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker_type', 'default_checker', 'custom_checker',
     ];
 
     protected static function boot()
@@ -46,6 +46,14 @@ class Problem extends Model
                 'is_accepted' => '1',
             ]);
         });
+
+        static::deleting(function ($problem) {
+            $testCases = $problem->testCases()->get();
+            foreach ($testCases as $key => $testCase) {
+                $testCase->delete();
+            }
+
+        });
     }
 
     public function testCases()
@@ -53,7 +61,8 @@ class Problem extends Model
         return $this->hasMany(ProblemTestCase::class);
     }
 
-    public function testCasesSample(){
+    public function testCasesSample()
+    {
         return $this->testCases()->where(['sample' => 1]);
     }
     public function moderator()
