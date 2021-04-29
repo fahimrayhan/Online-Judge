@@ -31,6 +31,7 @@ var appJs = [
 	'resources/js/problem/problem_dashboard.js',
 	'resources/js/problem/problem_details_editor.js',
 	'resources/js/profile/profile.js',
+	'resources/js/language/language.js',
 ];
 
 var scripts = [].concat(libJs,helperJs,appJs);
