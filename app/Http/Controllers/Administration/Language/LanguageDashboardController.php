@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Language;
+namespace App\Http\Controllers\Administration\Language;
 
 use App\Http\Controllers\Controller;
 use App\Services\Language\LanguageService;
@@ -18,6 +18,6 @@ class LanguageDashboardController extends Controller
     public function show()
     {
         $languages = $this->languageService->allLanguages();
-        return view('pages.language.dashboard.index',['languages' => $languages]);
+        return view('pages.administration.language.index',['languages' => $languages]);
     }
 }
