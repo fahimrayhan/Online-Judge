@@ -5,7 +5,11 @@
 
 
     </style>
+    @php
+        $archived = isset(request()->archived) ? "checked" : "";
+    @endphp
     <div class="pull-right" style="margin-bottom: 10px;">
+        Archived Problems <input type="checkbox" style="margin-right: 15px;" location="{{ route('administration.languages') }}" name="" onclick="language.loadArchived($(this))" {{$archived}}> 
         <button
             onclick="new Modal('md',600).load('{{ route('administration.languages.create') }}','Create Language')">Create
             Language</button>

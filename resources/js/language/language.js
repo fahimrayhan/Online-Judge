@@ -40,4 +40,14 @@ var language = {
             url.load();
         });
     },
+
+    loadArchived : function (e) {
+        var location = e.attr("location");
+        if(e.prop("checked") == true)
+        {
+            location = location + "?archived=1";
+        }
+        // alert(location);
+        url.load(location);
+    }
 };

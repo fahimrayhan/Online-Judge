@@ -18,6 +18,14 @@ class LanguageDashboardController extends Controller
     public function show()
     {
         $languages = $this->languageService->allLanguages();
+        if(isset(request()->archived))
+        {
+            $languages = $languages->where('is_archive',1);
+        }
+        else
+        {
+            $languages = $languages->where('is_archive',0);
+        }
         return view('pages.administration.language.index',['languages' => $languages]);
     }
 }
