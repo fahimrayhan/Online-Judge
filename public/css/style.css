@@ -157,9 +157,13 @@ a:hover {
 }
 .submit-btn {
     background-color: #305485;
+    min-width: 200px;
     color: #ffffff;
+    padding: 9px;
     font-weight: bold;
 }
+
+
 .submit-btn:focus {
     outline: none;
 }

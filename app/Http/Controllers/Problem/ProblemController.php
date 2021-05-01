@@ -97,6 +97,11 @@ class ProblemController extends Controller
         $this->problemService->update($request->all());
     }
 
+    public function updateChecker()
+    {
+        $this->problemService->update(request()->all());
+    }
+
     /**
      * Remove the specified resource from storage.
      *
