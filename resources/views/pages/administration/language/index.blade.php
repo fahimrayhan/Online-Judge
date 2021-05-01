@@ -1,6 +1,5 @@
-@extends('pages.administration.index')
-@section('title', 'Languages')
-@section('setting-sub-content')
+@extends('pages.administration.language.base')
+@section('languages-sub-content')
 
     <style type="text/css">
 

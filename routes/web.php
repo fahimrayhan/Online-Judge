@@ -26,7 +26,7 @@ Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissi
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
 Route::group(['prefix' => 'administration'], function () {
-    Route::get('/home', 'Administration\AdministrationController@index')->name('administration.home');
+    Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');

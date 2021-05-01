@@ -1,9 +1,9 @@
 @extends($layout)
 @section('content')
-@section('title', 'Administraion')
+@section('title', 'Language')
 
 @php
-  $titleSub = "Administration";
+  $titleSub = "Language";
 @endphp
 
 <style type="text/css">
@@ -39,9 +39,18 @@
 <div class="row">
 	<div class="col-md-3">
 		
-		<a href="{{ route('administration.languages') }}" class="btn btn-info btn-sm m-2">Languages</a>
+		@include('pages.administration.language.sidebar')
 	</div>
-	
+	<div class="col-md-9">
+		<div class="box">
+			<div class="header">
+				@yield('title','Languages')
+			</div>
+			<div class="body" style="min-height: 300px;">
+				@yield('languages-sub-content')
+			</div>
+		</div>
+	</div>
 </div>
 
 @stop

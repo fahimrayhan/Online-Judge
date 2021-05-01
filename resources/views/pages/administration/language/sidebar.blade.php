@@ -1,11 +1,5 @@
 @php
     $sidebar = [
-      'home' => [
-                'icon'  => 'fas fa-home',
-                'name' => 'Administration',
-                'url' => route('administration.home'),
-                'callback' => ''
-        ],
       'languages' => [
                 'icon'  => 'fas fa-cog',
                 'name' => 'Languages',
