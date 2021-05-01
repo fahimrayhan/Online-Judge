@@ -26,6 +26,7 @@ Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissi
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
 Route::group(['prefix' => 'administration'], function () {
+    Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
@@ -49,6 +50,17 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
             Route::post('checker', 'Problem\ProblemController@updateChecker');
         });
+    });
+    Route::group(['prefix' => 'languages'], function () {
+        Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.languages');
+        Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.languages.create');
+        Route::post('/store', 'Administration\Language\LanguageController@store')->name('administration.languages.store');
+        Route::group(['prefix' => '{language_id}'], function () {
+            Route::get('/edit', 'Administration\Language\LanguageController@edit')->name('administration.languages.edit');
+            Route::put('/update', 'Administration\Language\LanguageController@update')->name('administration.languages.update');
+            Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.languages.toggle_archive');
+        });
+    
     });
 
 });
@@ -80,29 +92,3 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
 
-Route::group(['prefix' => 'languages'], function () {
-    Route::get('/', 'Language\LanguageDashboardController@show')->name('languages');
-    Route::get('/create', 'Language\LanguageController@create')->name('languages.create');
-    Route::post('/store', 'Language\LanguageController@store')->name('languages.store');
-    // Route::group(['prefix' => 'problems'], function () {
-    //     Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
-    //     Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
-    //     Route::post('/create', 'Problem\ProblemController@store');
-
-    //     Route::group(['prefix' => '{slug}'], function () {
-    //         Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
-    //         Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
-    //         Route::post('/details', 'Problem\ProblemController@updateDetails');
-    //         Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
-    //         Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
-    //         Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
-    //         Route::post('/test_case/add', 'TestCase\TestCaseController@addTestCase')->name('administration.problem.test_case.add');
-    //         Route::get('/test_case/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
-
-    //         Route::get('/test_case/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
-    //         Route::post('/test_case/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase')->name('problem.test_case.edit');
-    //         Route::get('/test_case/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
-    //     });
-    // });
-
-});
