@@ -26,6 +26,6 @@ class LanguageDashboardController extends Controller
         {
             $languages = $languages->where('is_archive',0);
         }
-        return view('pages.administration.language.index',['languages' => $languages]);
+        return view('pages.administration.settings.language.index',['languages' => $languages]);
     }
 }

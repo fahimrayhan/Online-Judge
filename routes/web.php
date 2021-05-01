@@ -51,18 +51,18 @@ Route::group(['prefix' => 'administration'], function () {
             Route::post('checker', 'Problem\ProblemController@updateChecker');
         });
     });
-    Route::group(['prefix' => 'languages'], function () {
-        Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.languages');
-        Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.languages.create');
-        Route::post('/store', 'Administration\Language\LanguageController@store')->name('administration.languages.store');
-        Route::group(['prefix' => '{language_id}'], function () {
-            Route::get('/edit', 'Administration\Language\LanguageController@edit')->name('administration.languages.edit');
-            Route::put('/update', 'Administration\Language\LanguageController@update')->name('administration.languages.update');
-            Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.languages.toggle_archive');
+    Route::group(['prefix' => 'settings'], function () {
+        Route::group(['prefix' => 'languages'], function () {
+            Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');
+            Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.settings.languages.create');
+            Route::post('/store', 'Administration\Language\LanguageController@store')->name('administration.settings.languages.store');
+            Route::group(['prefix' => '{language_id}'], function () {
+                Route::get('/edit', 'Administration\Language\LanguageController@edit')->name('administration.settings.languages.edit');
+                Route::put('/update', 'Administration\Language\LanguageController@update')->name('administration.settings.languages.update');
+                Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.settings.languages.toggle_archive');
+            });
         });
-    
     });
-
 });
 
 Route::get('/settings/profile', 'Setting\SettingController@profile')->name('settings.profile');
@@ -91,4 +91,3 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
-
