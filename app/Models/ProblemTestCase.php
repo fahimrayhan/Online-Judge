@@ -44,6 +44,16 @@ class ProblemTestCase extends Model
             $hash              = hash('sha256', Str::random(20) . "_" . rand() . "_" . $testCase->id . "_" . Carbon::now()->timestamp);
             $testCase->hash_id = $hash;
             $testCase->save();
+
+            $input  = (request()->input_type == "upload") ? request()->file('input_file')->get() : request()->input;
+            $output = (request()->output_type == "upload") ? request()->file('output_file')->get() : request()->output;
+
+            File::put($testCase->input_file, $input);
+            File::put($testCase->output_file, $output);
+        });
+
+        static::deleted(function ($testCase) {
+            File::delete($testCase->input_file, $testCase->output_file);
         });
     }
 
@@ -76,7 +86,6 @@ class ProblemTestCase extends Model
     {
         return File::exists($this->output_file) ? File::get($this->output_file) : "";
     }
-
 
     public function problem()
     {

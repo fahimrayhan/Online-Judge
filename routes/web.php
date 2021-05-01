@@ -33,6 +33,7 @@ Route::group(['prefix' => 'administration'], function () {
         Route::post('/create', 'Problem\ProblemController@store');
 
         Route::group(['prefix' => '{slug}'], function () {
+            Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
             Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
             Route::post('/details', 'Problem\ProblemController@updateDetails');
@@ -45,6 +46,8 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('/test_case/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
             Route::post('/test_case/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase')->name('problem.test_case.edit');
             Route::get('/test_case/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
+
+            Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
         });
     });
     Route::group(['prefix' => 'languages'], function () {
