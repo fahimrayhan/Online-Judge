@@ -47,6 +47,7 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('/test_case/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
 
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
+            Route::post('checker', 'Problem\ProblemController@updateChecker');
         });
     });
 

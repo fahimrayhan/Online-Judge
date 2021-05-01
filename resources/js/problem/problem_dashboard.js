@@ -1,4 +1,5 @@
 var problem = {
+    checkerEditor: "",
     create: function() {
         var form = new Form("create_problem");
         form.submit({
@@ -28,10 +29,60 @@ var problem = {
     preview: function(e) {
         new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function(response) {});
     },
-    copyTestCase: function(e){
+    copyTestCase: function(e) {
         copyer(e.value);
         toast.info("The example has been copied into the clipboard");
-    }
+    },
+    setCheckerCustomEditor: function(code) {
+        this.checkerEditor = ace.edit("checkerEditor");
+        this.checkerEditor.setOption("maxLines", 30);
+        this.checkerEditor.setOption("minLines", 30);
+        this.checkerEditor.setReadOnly(false);
+        this.checkerEditor.setValue(atob(code), -1);
+        this.checkerEditor.getSession().setMode("ace/mode/c_cpp");
+    },
+    updateCustomChecker: function(e) {
+        code = this.checkerEditor.getValue()
+        if (code == "") {
+            alert("Checker can not be empty");
+            return;
+        }
+        var data = {
+            checker_type: 'custom',
+            custom_checker: code
+        };
+        var btn = new Button("custom_checker_btn");
+        btn.off("Saving....");
+        $.post($(e).attr('url'), app.setToken(data), function(response) {
+            toast.success("Save success custom checker");
+            btn.on();
+        });
+    },
+    updateDefaultChecker: function(e) {
+        checker = $("#default_checker").val();
+        if (checker == "") {
+            alert("Checker can not be empty");
+            return;
+        }
+        var data = {
+            checker_type: 'default',
+            default_checker: checker
+        };
+        var btn = new Button("default_checker_btn");
+        btn.off("Saving....");
+        $.post($(e).attr('url'), app.setToken(data), function(response) {
+            toast.success("Save success default checker");
+            btn.on();
+        });
+    },
+    selectDefaultChecker: function() {
+        $("#custom_checker_area").hide();
+        $("#default_checker_area").show();
+    },
+    selectCustomChecker: function() {
+        $("#default_checker_area").hide();
+        $("#custom_checker_area").show();
+    },
 };
 var testCase = {
     selectInputType: function(e) {
@@ -64,13 +115,12 @@ var testCase = {
             alert("Output File Is To Large. If You Need Large Output You Try Upload Option.");
         }
     },
-
-    updateSample: function(e){
+    updateSample: function(e) {
         var sample = $(e).prop("checked") == true ? 1 : 0;
         var data = {
             'sample': sample
         };
-        $.get($(e).attr('name'),data, function(response) {
+        $.get($(e).attr('name'), data, function(response) {
             toast.success(response.message);
         });
     },
@@ -104,5 +154,4 @@ var testCase = {
             url.load();
         });
     },
-    
 }

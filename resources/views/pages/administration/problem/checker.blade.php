@@ -21,17 +21,40 @@
 		<div class="row">
 			<div class="col-md-3"><div class="option-name">Checker Type</div></div>
 			<div class="col-md-9">
-				<input class="form-check-input" type="radio" name="gridRadios" id="default_checker" value="option1" checked>
-          		<label class="form-check-label" for="default_checker" style="margin-right: 15px;">
+				<input class="form-check-input" type="radio" name="gridRadios" onchange="problem.selectDefaultChecker()" id="default_checker_select" value="default" {{$problem->checker_type == "default" ? "checked" : ""}}>
+          		<label class="form-check-label" for="default_checker_select" style="margin-right: 15px;">
             		Default Checker
           		</label>
-				<input class="form-check-input" type="radio" name="gridRadios" id="custom_checker" value="option1" checked>
-          		<label class="form-check-label" for="custom_checker">
+				<input class="form-check-input" type="radio" name="gridRadios" onchange="problem.selectCustomChecker()" id="custom_checker_select" value="custom"  {{$problem->checker_type == "custom" ? "checked" : ""}}>
+          		<label class="form-check-label" for="custom_checker_select">
             		Custom Checker
           		</label>
 			</div>
 		</div>
 	</div>
+	<div class="details-section" id="custom_checker_area" style='display: {{$problem->checker_type == "custom" ? "block" : "none"}}'>
+		<div class="row">
+			<div class="col-md-3"><div class="option-name">Custom Checker Code</div></div>
+			<div class="col-md-9">
+				<textarea rows="10" id="checkerEditor">{{$problem->custom_checker}}</textarea>
+				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 5px;">Save Custom Checker</button>
+			</div>
+		</div>
+	</div>
+	<div class="details-section" id="default_checker_area" style='display: {{$problem->checker_type == "default" ? "block" : "none"}}'>
+		<div class="row">
+			<div class="col-md-3"><div class="option-name">Select Default Checker</div></div>
+			<div class="col-md-9">
+				<select id="default_checker" style="padding: 5px;">
+					<option value="default">Default</option>
+				</select><br/>
+				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 10px;">Set Default Checker</button>
+			</div>
+		</div>
+	</div>
 </div>
+<script type="text/javascript">
+	problem.setCheckerCustomEditor("{!! base64_encode($problem->custom_checker) !!}")
+</script>
 
 @stop
