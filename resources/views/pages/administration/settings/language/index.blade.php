@@ -1,4 +1,4 @@
-@extends('pages.administration.language.base')
+@extends('pages.administration.settings.language.base')
 @section('languages-sub-content')
 
     <style type="text/css">
@@ -9,9 +9,9 @@
         $archived = isset(request()->archived) ? "checked" : "";
     @endphp
     <div class="pull-right" style="margin-bottom: 10px;">
-        Archived Problems <input type="checkbox" style="margin-right: 15px;" location="{{ route('administration.languages') }}" name="" onclick="language.loadArchived($(this))" {{$archived}}> 
+        Archived Problems <input type="checkbox" style="margin-right: 15px;" location="{{ route('administration.settings.languages') }}" name="" onclick="language.loadArchived($(this))" {{$archived}}> 
         <button
-            onclick="new Modal('md',600).load('{{ route('administration.languages.create') }}','Create Language')">Create
+            onclick="new Modal('md',600).load('{{ route('administration.settings.languages.create') }}','Create Language')">Create
             Language</button>
     </div>
     <table class="table-custom">
@@ -37,14 +37,14 @@
                 <td>{{ $language->updated_at }}</td>
                 <td>
                     <button
-                        onclick="new Modal('md',600).load('{{ route('administration.languages.edit', ['language_id' => $language->id]) }}','Update Language')"
+                        onclick="new Modal('md',600).load('{{ route('administration.settings.languages.edit', ['language_id' => $language->id]) }}','Update Language')"
                         class="btn btn-sm btn-primary" title="Edit Language"><i class="fa fa-pencil"></i></button>
                     @php
                         $archiveBtnIcon = $language->is_archive ? 'fas fa-eye' : 'fas fa-eye-slash';
                         $archiveBtnClass = $language->is_archive ? 'btn-success' : 'btn-danger';
                     @endphp
                     <button value='' class='btn btn-sm {{ $archiveBtnClass }}'
-                        url="{{ route('administration.languages.toggle_archive', ['language_id' => $language->id]) }}"
+                        url="{{ route('administration.settings.languages.toggle_archive', ['language_id' => $language->id]) }}"
                         onclick='language.toggleArchive($(this))' id='updateTestCaseBtn'
                         data-archive-status={{ $language->is_archive }}>
                         <i class="{{ $archiveBtnIcon }}"></i>

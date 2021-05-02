@@ -3,7 +3,7 @@
       'languages' => [
                 'icon'  => 'fas fa-cog',
                 'name' => 'Languages',
-                'url' => route('administration.languages'),
+                'url' => route('administration.settings.languages'),
                 'callback' => ''
         ],
         

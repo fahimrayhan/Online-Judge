@@ -38,8 +38,7 @@
 </style>
 <div class="row">
 	<div class="col-md-3">
-		
-		<a href="{{ route('administration.languages') }}" class="btn btn-info btn-sm m-2">Languages</a>
+		<a href="{{ route('administration.settings.languages') }}" class="btn btn-info btn-sm m-2">Languages</a>
 	</div>
 	
 </div>

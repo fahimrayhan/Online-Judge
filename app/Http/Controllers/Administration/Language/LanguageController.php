@@ -24,7 +24,7 @@ class LanguageController extends Controller
 
     public function create()
     {
-        return view('pages.administration.language.create');
+        return view('pages.administration.settings.language.create');
     }
 
     public function store(LanguageCreateRequest $request)
@@ -38,7 +38,7 @@ class LanguageController extends Controller
 
     public function edit()
     {
-        return view('pages.administration.language.edit', ['language' => $this->languageData]);
+        return view('pages.administration.settings.language.edit', ['language' => $this->languageData]);
     }
 
     public function update(LanguageUpdateRequest $request)

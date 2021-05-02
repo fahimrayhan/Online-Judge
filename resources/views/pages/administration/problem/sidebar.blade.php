@@ -29,7 +29,13 @@
             'name' => 'Checker',
             'url' => route('administration.problem.checker',['slug' => request()->slug]),
             'callback' => ''
-        ],  
+        ], 
+        'languages' => [
+            'icon'  => 'fas fa-code',
+            'name' => 'Languages',
+            'url' => route('administration.problem.languages',['slug' => request()->slug]),
+            'callback' => ''
+        ]
     ];
 @endphp
 

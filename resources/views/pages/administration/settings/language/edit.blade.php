@@ -1,4 +1,4 @@
-<form action="{{ route('administration.languages.update',['language_id' => $language->id]) }}" class="form" id="edit_language" method="post">
+<form action="{{ route('administration.settings.languages.update',['language_id' => $language->id]) }}" class="form" id="edit_language" method="post">
     @csrf
     @method('PUT')
     <div class="alert-area">
