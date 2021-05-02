@@ -60,7 +60,7 @@ Route::group(['prefix' => 'administration'], function () {
             Route::put('/update', 'Administration\Language\LanguageController@update')->name('administration.languages.update');
             Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.languages.toggle_archive');
         });
-    
+
     });
 
 });
@@ -91,4 +91,3 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
-
