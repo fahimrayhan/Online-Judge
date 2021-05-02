@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Problem\HasLanguage;
 use Illuminate\Database\Eloquent\Model;
 
 class Problem extends Model
 {
+    use HasLanguage;
     /**
      * The attributes that are mass assignable.
      *
@@ -37,7 +39,6 @@ class Problem extends Model
             $slug = $count ? "{$slug}-{$count}" : $slug;
 
             $problem->slug = $slug;
-
         });
         // auto-sets values on creation
         static::created(function ($problem) {
@@ -52,13 +53,16 @@ class Problem extends Model
             foreach ($testCases as $key => $testCase) {
                 $testCase->delete();
             }
-
         });
     }
 
     public function testCases()
     {
         return $this->hasMany(ProblemTestCase::class);
+    }
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class)->withPivot('time_limit','memory_limit');
     }
 
     public function testCasesSample()

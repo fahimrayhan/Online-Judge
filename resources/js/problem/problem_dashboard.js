@@ -83,6 +83,17 @@ var problem = {
         $("#default_checker_area").hide();
         $("#custom_checker_area").show();
     },
+    addLanguages: function() {
+        new Form("add_languages").submit({
+            loadingText: "Add Languages",
+            success: {
+                callback: function(response) {
+                    new Modal().close();
+                    url.load();
+                }
+            }
+        });
+    },
 };
 var testCase = {
     selectInputType: function(e) {
@@ -154,4 +165,5 @@ var testCase = {
             url.load();
         });
     },
+    
 }

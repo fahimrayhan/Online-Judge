@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Problem\AddLanguageRequest;
 use App\Services\Problem\ProblemService;
+use App\Services\Language\LanguageService;
 
 use App\Models\Problem;
 
@@ -13,6 +15,7 @@ class ProblemController extends Controller
      * @var \App\Services\Problem\ProblemService $problemService
      */
     protected $problemService;
+    protected $languageService;
     private $problemData;
 
     /**
@@ -21,9 +24,10 @@ class ProblemController extends Controller
      * @param  \App\Services\Auth\ProblemService $probServc
      * @return void
      */
-    public function __construct(ProblemService $probServc)
+    public function __construct(ProblemService $probServc,LanguageService $languageService)
     {
         $this->problemService = $probServc;
+        $this->languageService = $languageService;
         if (isset(request()->slug)) {
             $this->problemData = $this->problemService->getProblemData(request()->slug);
         }
@@ -70,5 +74,28 @@ class ProblemController extends Controller
 
     public function checker(){
         return view('pages.administration.problem.checker',['problem' => $this->problemData]);
+    }
+
+    public function  languages()
+    {
+        return view('pages.administration.problem.language.index',[
+            'languages' => $this->problemData->languages()->get(),
+            ]);
+    }
+    public function addLanguages()
+    {
+        return view('pages.administration.problem.language.add_languages',[
+            'languages' => $this->languageService->allLanguages(),
+            'problem' =>  $this->problemData
+            ]);
+    }
+
+
+    public function saveLanguages(AddLanguageRequest $request)
+    {
+        $this->problemService->addLanguages($this->problemData,$request->all());
+        return response()->json([
+            'message' => 'Languages Successfully Addded',
+        ]);
     }
 }

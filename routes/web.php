@@ -49,6 +49,10 @@ Route::group(['prefix' => 'administration'], function () {
 
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
             Route::post('checker', 'Problem\ProblemController@updateChecker');
+
+            Route::get('/languages','Administration\ProblemController@languages')->name('administration.problem.languages');
+            Route::get('/languages/add','Administration\ProblemController@addLanguages')->name('administration.problem.add_languages');
+            Route::post('/languages/save','Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
         });
     });
     Route::group(['prefix' => 'settings'], function () {
