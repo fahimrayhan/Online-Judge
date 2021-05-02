@@ -94,6 +94,17 @@ var problem = {
             }
         });
     },
+    updateLanguages: function() {
+        new Form("edit_problem_language").submit({
+            loadingText: "Updating Languages",
+            success: {
+                callback: function(response) {
+                    new Modal().close();
+                    url.load();
+                }
+            }
+        });
+    },
 };
 var testCase = {
     selectInputType: function(e) {

@@ -38,4 +38,12 @@ class ProblemService
         $problem->languages()->sync($pivot);
         return $problem;
     }
+
+    public function updateLanguage(Problem $problem, $data,$language_id)
+    {
+        $problem->languages()->updateExistingPivot($language_id,[
+            'time_limit' => $data['time_limit'],
+             'memory_limit' => $data['memory_limit'],
+            ]);
+    }
 }

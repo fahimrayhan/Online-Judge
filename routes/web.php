@@ -53,6 +53,8 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('/languages','Administration\ProblemController@languages')->name('administration.problem.languages');
             Route::get('/languages/add','Administration\ProblemController@addLanguages')->name('administration.problem.add_languages');
             Route::post('/languages/save','Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
+            Route::get('/languages/{language_id}/edit','Administration\ProblemController@editLanguage')->name('administration.problem.edit_languages');
+            Route::put('/languages/{language_id}/update','Administration\ProblemController@updateLanguage')->name('administration.problem.update_languages');
         });
     });
     Route::group(['prefix' => 'settings'], function () {

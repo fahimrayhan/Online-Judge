@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
+use App\Http\Requests\Problem\ProblemLanguageUpdateRequest;
 use App\Services\Problem\ProblemService;
 use App\Services\Language\LanguageService;
 
 use App\Models\Problem;
+
 
 class ProblemController extends Controller
 {
@@ -96,6 +98,24 @@ class ProblemController extends Controller
         $this->problemService->addLanguages($this->problemData,$request->all());
         return response()->json([
             'message' => 'Languages Successfully Addded',
+        ]);
+    }
+
+    public function editLanguage()
+    {
+        $language = $this->problemData->languages()->where('language_id',request()->language_id)->first();
+        return view('pages.administration.problem.language.edit',[
+            'problem' => $this->problemData,
+            'language' => $language
+        ]);
+    }
+
+    public function updateLanguage(ProblemLanguageUpdateRequest $request)
+    {
+        $this->problemService->updateLanguage($this->problemData,$request->all(),request()->language_id);
+        
+        return response()->json([
+            'message' => 'Time Limit and Memory Limit Successfully Updated',
         ]);
     }
 }

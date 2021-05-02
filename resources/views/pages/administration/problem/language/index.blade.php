@@ -25,7 +25,7 @@
                 <td>{{ $language->pivot->memory_limit }}</td>
                 <td>
                     <button
-                        onclick=""
+                    onclick="new Modal('md',600).load('{{ route('administration.problem.edit_languages', ['slug' => request()->slug,'language_id' => $language->id]) }}','Update Language')"
                         class="btn btn-sm btn-primary" title="Edit Language"><i class="fa fa-pencil"></i></button>
                 </td>
             </tr>
