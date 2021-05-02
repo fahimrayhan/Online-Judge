@@ -71,4 +71,22 @@ class ProblemController extends Controller
     public function checker(){
         return view('pages.administration.problem.checker',['problem' => $this->problemData]);
     }
+
+    
+    public function updateSettings()
+    {
+        return view('pages.administration.problemsettings.info',['problem' => $this->problemData]);
+    }
+    public function editSettings(Request $req){
+        
+       $validateData = $req->validate([
+          'timelimit' =>'required|numeric|max:10',
+          'memorylimit' => 'required|numeric|max:10',
+       ]);
+
+       $this->problemData->time_limit = $validateData['timelimit'];
+       $this->problemData->memory_limit = $validateData['memorylimit'];
+       $this->problemData->save();
+      
+    }
 }
