@@ -77,7 +77,7 @@
                 <label> Timelimit <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="number" class='form-control-input' value='{{ $problem->time_limit }}' name="timelimit" placeholder="Enter New Timelimit">
+                <input type="number" class='form-control-input' value='{{ $problem->time_limit }}' name="time_limit" placeholder="Enter New Timelimit">
             </div>
         </div>
         <div class='row' style="margin-bottom: 5px;">
@@ -85,7 +85,7 @@
                 <label> Memorylimit <font color="red">*</font>:</label>
             </div>
             <div class="col-md-8">
-                <input type="number" class='form-control-input' value='{{ $problem->memory_limit }}' name="memorylimit" placeholder="Enter New Memorylimit">
+                <input type="number" class='form-control-input' value='{{ $problem->memory_limit }}' name="memory_limit" placeholder="Enter New Memorylimit">
             </div>
         </div>
         <div class='row'>
@@ -93,7 +93,7 @@
             <div class="col-md-8">
                 <div style="">
                     <button type="submit" class="btn submit-btn"  style="margin-top: 15px;">
-                    Update Profile</button>
+                    Update Problem Settings</button>
                 </div>
             </div>
         </div>
