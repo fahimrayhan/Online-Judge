@@ -1,4 +1,4 @@
-<form action="{{ route('administration.languages.store') }}" class="form" id="create_language" method="post">
+<form action="{{ route('administration.settings.languages.store') }}" class="form" id="create_language" method="post">
     @csrf
     <div class="alert-area">
         <div class="alert alert-danger error-area">ok</div>
