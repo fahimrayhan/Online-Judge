@@ -97,3 +97,12 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
+<<<<<<< HEAD
+
+
+/// problem settings
+
+Route::get('/problem/settings/update/{slug}','Administration\ProblemController@updateSettings')->name('settings.update');
+Route::post('/problem/settings/edit/{slug}','Administration\ProblemController@editSettings')->name('settings.edit');
+=======
+>>>>>>> upstream/master

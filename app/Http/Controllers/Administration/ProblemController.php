@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
 use App\Http\Requests\Problem\ProblemLanguageUpdateRequest;
 use App\Services\Problem\ProblemService;
+<<<<<<< HEAD
+use App\Http\Requests\Problem\ProblemSettingsRequest;
+=======
 use App\Services\Language\LanguageService;
+>>>>>>> upstream/master
 
 use App\Models\Problem;
 
@@ -78,6 +82,20 @@ class ProblemController extends Controller
         return view('pages.administration.problem.checker',['problem' => $this->problemData]);
     }
 
+<<<<<<< HEAD
+
+    public function updateSettings()
+    {
+        return view('pages.administration.problemsettings.info',['problem' => $this->problemData]);
+    }
+    public function editSettings(ProblemSettingsRequest $req){
+        
+       $this->problemData->time_limit = $req['time_limit'];
+       $this->problemData->memory_limit = $req['memory_limit'];
+       $this->problemData->save();
+       return response()->json([
+            'message' => "Problem Settings Updated Successfully",
+=======
     public function  languages()
     {
         return view('pages.administration.problem.language.index',[
@@ -116,6 +134,7 @@ class ProblemController extends Controller
         
         return response()->json([
             'message' => 'Time Limit and Memory Limit Successfully Updated',
+>>>>>>> upstream/master
         ]);
     }
 }
