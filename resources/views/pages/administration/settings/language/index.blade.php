@@ -18,7 +18,7 @@
         <tr>
             <th>Language Name</th>
             <th>Language Short Code</th>
-            <th>Is Archive</th>
+            <th>Status</th>
             <th>Created At</th>
             <th>Updated At</th>
             <th></th>
@@ -29,9 +29,9 @@
                 <td>{{ $language->code }}</td>
                 <td>
                     @if ($language->is_archive)
-                        Archived
+                        <label class="label label-danger"><i class="fas fa-ban"></i> Archived</label>
                     @else
-                        Visible
+                        <label class="label label-success"><i class="fas fa-check"></i> Active</label>
                     @endif
                 <td>{{ $language->created_at }}</td>
                 <td>{{ $language->updated_at }}</td>

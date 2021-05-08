@@ -67,7 +67,7 @@
     }
     </style>
 
-    <form style="width: 70%" action="{{ route('profile.update_profile') }} " class="form" id="change_name" method="post">
+    <form style="width: 70%" action="{{ route('profile.update_profile') }}" class="form" id="change_name" method="post">
         @csrf
         <div class="alert-area">
             <div class="alert alert-danger error-area">ok</div>

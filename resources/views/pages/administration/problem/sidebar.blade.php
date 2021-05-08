@@ -12,10 +12,10 @@
             'url' => route('administration.problem.preview_problem',['slug' => request()->slug]),
             'callback' => ''
         ],
-        'details' => [
+        'statement' => [
             'icon'  => 'fas fa-home',
-            'name' => 'Details',
-            'url' => route('administration.problem.details',['slug' => request()->slug]),
+            'name' => 'Statement',
+            'url' => route('administration.problem.statement',['slug' => request()->slug]),
             'callback' => ''
         ], 
         'test_case' => [

@@ -20,9 +20,12 @@
                 @foreach ($languages as $key => $language)
                 <tr>
                     <td><input type="checkbox" class='' name="languages[]" placeholder="Enter Language Name" id="{{ $language->code }}" value="{{ $language->id }}" @if ($problem->hasLanguage($language->id)) checked @endif></td>
-                    <td style="text-align: left;"><label for="{{ $language->code }}">{{ $language->name }}</label></td>
-                    <td>1x</td>
-                    <td>1x</td>
+                    <td style="text-align: left;">
+                        <label for="{{ $language->code }}">{{ $language->name }}</label>
+                        
+                    </td>
+                    <td><input type="number" step="0.01" name="time_limit[{{$language->id}}]" value="1">x</td>
+                    <td><input type="number" step="0.01" name="memory_limit[{{$language->id}}]" value="1">x</td>
                 </tr>
                 @endforeach               
             

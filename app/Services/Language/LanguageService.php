@@ -18,9 +18,15 @@ class LanguageService
         $language->save();
         return $language;
     }
+
     public function allLanguages()
     {
-        return  Language::all();
+        return Language::all();
+    }
+
+    public function getActiveLanguage()
+    {
+        return Language::where(['is_archive' => 0])->get();
     }
 
     public function getLanguage($language_id)

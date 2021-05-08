@@ -19,7 +19,10 @@ class ProblemService
 
     public function update($data)
     {
-        if (isset($data['_token'])) unset($data['_token']);
+        if (isset($data['_token'])) {
+            unset($data['_token']);
+        }
+
         return Problem::where(['slug' => request()->slug])->update($data);
     }
 
@@ -32,18 +35,15 @@ class ProblemService
     {
         // dd($data);
         $pivot = array();
-        foreach ($data['languages'] as $d) {
-            $pivot[$d] = ['time_limit' => 1, 'memory_limit' => 1];
+
+        foreach ($data['languages'] as $language_id) {
+            $pivot[$language_id] = [
+                'time_limit' => (double)max($data['time_limit'][$language_id],0.1), 
+                'memory_limit' => (double)max($data['memory_limit'][$language_id],0.1)
+            ];
         }
         $problem->languages()->sync($pivot);
         return $problem;
     }
 
-    public function updateLanguage(Problem $problem, $data,$language_id)
-    {
-        $problem->languages()->updateExistingPivot($language_id,[
-            'time_limit' => $data['time_limit'],
-             'memory_limit' => $data['memory_limit'],
-            ]);
-    }
 }

@@ -35,8 +35,8 @@ Route::group(['prefix' => 'administration'], function () {
         Route::group(['prefix' => '{slug}'], function () {
             Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
-            Route::get('/details', 'Administration\ProblemController@details')->name('administration.problem.details');
-            Route::post('/details', 'Problem\ProblemController@updateDetails');
+            Route::get('/statement', 'Administration\ProblemController@details')->name('administration.problem.statement');
+            Route::post('/statement', 'Problem\ProblemController@updateDetails');
             Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
             Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
             Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
@@ -50,11 +50,8 @@ Route::group(['prefix' => 'administration'], function () {
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
             Route::post('checker', 'Problem\ProblemController@updateChecker');
 
-            Route::get('/languages','Administration\ProblemController@languages')->name('administration.problem.languages');
-            Route::get('/languages/add','Administration\ProblemController@addLanguages')->name('administration.problem.add_languages');
-            Route::post('/languages/save','Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
-            Route::get('/languages/{language_id}/edit','Administration\ProblemController@editLanguage')->name('administration.problem.edit_languages');
-            Route::put('/languages/{language_id}/update','Administration\ProblemController@updateLanguage')->name('administration.problem.update_languages');
+            Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');
+            Route::post('/languages/save', 'Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
         });
     });
     Route::group(['prefix' => 'settings'], function () {
@@ -97,12 +94,8 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
-<<<<<<< HEAD
-
 
 /// problem settings
 
-Route::get('/problem/settings/update/{slug}','Administration\ProblemController@updateSettings')->name('settings.update');
-Route::post('/problem/settings/edit/{slug}','Administration\ProblemController@editSettings')->name('settings.edit');
-=======
->>>>>>> upstream/master
+Route::get('/problem/settings/update/{slug}', 'Administration\ProblemController@updateSettings')->name('settings.update');
+Route::post('/problem/settings/edit/{slug}', 'Administration\ProblemController@editSettings')->name('settings.edit');
