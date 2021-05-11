@@ -73,8 +73,10 @@
              </script>
             <ul class="nav navbar-nav navbar-right">
                 @if(!auth()->check())
-                    <button onclick="auth.loginPage(this)" url="{{route('login')}}" class="btn btn-custom btn-info">Login</button>
-                    <button class="btn btn-custom btn-success" onclick="auth.registerPage(this)" url="{{route('register')}}">Register</button>
+                    <div class="sign-area">
+                        <span onclick="auth.loginPage(this)" url="{{route('login')}}" class="btn btn-sign"><i class="fas fa-sign-in-alt"></i> Login</span>
+                        <span class="btn btn-sign" onclick="auth.registerPage(this)" url="{{route('register')}}"><i class="fas fa-user-plus"></i> Register</span>
+                    </div>
                 @endif
 
                 @if(auth()->check())
