@@ -12,9 +12,11 @@ var loader = {
     top : {
         start: function(){
             $("#top-loader").show();
+            $("#top-loader-message").show();
         },
         stop: function(){
             $("#top-loader").hide();
+            $("#top-loader-message").hide();
         }
     },
     div: function(div){

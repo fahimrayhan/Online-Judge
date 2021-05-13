@@ -124,3 +124,7 @@
         </div>
     </div>
 </div>
+
+<center>
+    <div class="alert-warning loader-top-message" id="top-loader-message"><i class="fas fa-spinner fa-pulse"></i>  Loading...</div>
+</center>

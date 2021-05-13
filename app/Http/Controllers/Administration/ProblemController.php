@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Administration;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
-use App\Http\Requests\Problem\ProblemLanguageUpdateRequest;
 use App\Http\Requests\Problem\ProblemSettingsRequest;
 use App\Models\Problem;
 use App\Services\Language\LanguageService;
 use App\Services\Problem\ProblemService;
+use PDF;
 
 class ProblemController extends Controller
 {
@@ -49,6 +49,15 @@ class ProblemController extends Controller
     {
         if (isset(request()->modal)) {
             return view('pages.problem.layout.default', ['problem' => $this->problemData]);
+        }
+        if (isset(request()->pdf)) {
+            $html = view('pages.problem.layout.pdf',['problem' => $this->problemData]);
+            $pdf = PDF::loadHtml($html);
+
+            $customPaper = array(0, 0, 325.53, 595.28);
+            $pdf->setPaper($customPaper, 'landscape');
+            $pdf->getDomPDF()->set_option("enable_php", true);
+            return $pdf->stream('medium.pdf');
         }
         return view('pages.administration.problem.preview_problem', ['problem' => $this->problemData]);
     }
@@ -99,13 +108,13 @@ class ProblemController extends Controller
 
         $languages        = $this->languageService->getActiveLanguage();
         $problemLanguages = $this->problemData->languages()->get();
-  
+
         return view('pages.administration.problem.language.index', [
             'languages' => $languages->merge($problemLanguages),
             'problem'   => $this->problemData,
         ]);
     }
-    
+
     public function saveLanguages(AddLanguageRequest $request)
     {
         $this->problemService->addLanguages($this->problemData, $request->all());
