@@ -31,12 +31,25 @@ class ProblemController extends Controller
         $this->languageService = $languageService;
         if (isset(request()->slug)) {
             $this->problemData = $this->problemService->getProblemData(request()->slug);
+            
         }
     }
 
     public function overview()
     {
         return view('pages.administration.problem.overview');
+    }
+
+    public function moderators()
+    {
+        // dd(auth()->user()->problems()->where('problem_id',$this->problemData->id)->first()->pivot->role);
+        $role = auth()->user()->problems()->where('problem_id',$this->problemData->id)->first();
+        $role = $role ? $role->pivot->role : "Not Owner Or Moderator";
+        $moderators = $this->problemData->moderator->sortByDesc('created_at');
+        return view('pages.administration.problem.moderators',[
+            'moderators' => $moderators,
+            'role' => $role
+            ]);
     }
 
     public function details()

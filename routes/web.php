@@ -52,6 +52,11 @@ Route::group(['prefix' => 'administration'], function () {
 
             Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');
             Route::post('/languages/save', 'Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
+
+            Route::get('/moderators', 'Administration\ProblemController@moderators')->name('administration.problem.moderators');
+            Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
+            Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
+            Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
         });
     });
     Route::group(['prefix' => 'settings'], function () {
