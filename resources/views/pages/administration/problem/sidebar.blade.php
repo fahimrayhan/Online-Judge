@@ -35,6 +35,12 @@
             'name' => 'Languages',
             'url' => route('administration.problem.languages',['slug' => request()->slug]),
             'callback' => ''
+        ],
+        'test_submissions' => [
+            'icon'  => 'fas fa-hammer',
+            'name' => 'Test Submissions',
+            'url' => route('administration.problem.test_submissions',['slug' => request()->slug]),
+            'callback' => ''
         ]
     ];
 @endphp
