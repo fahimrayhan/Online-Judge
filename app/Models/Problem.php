@@ -60,6 +60,12 @@ class Problem extends Model
     {
         return $this->hasMany(ProblemTestCase::class);
     }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
     public function languages()
     {
         return $this->belongsToMany(Language::class)->withPivot('time_limit','memory_limit');

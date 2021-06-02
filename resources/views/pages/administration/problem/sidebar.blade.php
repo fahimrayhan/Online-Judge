@@ -1,4 +1,5 @@
 @php
+
 $sidebar = [
     'overview' => [
         'icon' => 'fa fa-dashboard',
@@ -42,7 +43,14 @@ $sidebar = [
         'url' => route('administration.problem.moderators',['slug' => request()->slug]),
         'callback' => '',
     ],
+    'test_submissions' => [
+            'icon'  => 'fas fa-hammer',
+            'name' => 'Test Submissions',
+            'url' => route('administration.problem.test_submissions',['slug' => request()->slug]),
+            'callback' => ''
+     ]
 ];
+
 @endphp
 
 <div class="box">
