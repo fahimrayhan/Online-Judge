@@ -111,6 +111,10 @@ var problem = {
         var addUrl = el.attr('data-add-url');
         var data = {};
         data['search'] = el.val();
+        if(data['search'] == "")
+        {
+            return;
+        }
         $.post(geturl, app.setToken(data), function (response) {
             var moderatorsList = JSON.parse(response);            
             $.each(moderatorsList, function () {
