@@ -25,14 +25,16 @@ Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
-Route::group(['prefix' => 'administration','middleware'=>'auth'], function () {
+Route::group(['prefix' => 'administration','middleware'=>['auth','IsAdmin']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
         Route::post('/create', 'Problem\ProblemController@store');
 
-        Route::group(['prefix' => '{slug}','middleware'=>['HasProblemAccess','ModeratorIsPending']], function () {
+        Route::post('/{slug}/accept_moderator','Administration\Problem\ModeratorController@acceptModetator')->name('administration.problem.accept_moderator');
+        Route::post('/{slug}/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
+        Route::group(['prefix' => '{slug}','middleware'=>['ModeratorIsPending']], function () {
             Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
             Route::get('/statement', 'Administration\ProblemController@details')->name('administration.problem.statement');
@@ -58,6 +60,7 @@ Route::group(['prefix' => 'administration','middleware'=>'auth'], function () {
             Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
             Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
             Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
+            
 
             Route::get('/test_submissions', 'Administration\ProblemController@viewTestSubmission')->name('administration.problem.test_submissions');
             Route::get('/create_test_submission', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.create_test_submission');

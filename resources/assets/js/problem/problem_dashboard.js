@@ -149,9 +149,34 @@ var problem = {
         var data = {
             'userId': userId,
         }
+        console.log(userId);
+        // return;
         $.post(delUrl, app.setToken(data), function (response) {
             url.load();
             toast.success("Successfully Removed Moderator");
+        });
+    },
+    // removeRequestModetrator : function(el) {
+    //     var delUrl = el.attr('data-url');
+    //     var userId = el.attr('data-userId');
+    //     var data = {
+    //         'userId': userId,
+    //     }
+    //     $.post(delUrl, app.setToken(data), function (response) {
+    //         url.load();
+    //         toast.success("Successfully Removed Moderator");
+    //     });
+    // },
+    acceptProblemModerator : function (el) {
+        var acceptUrl = el.attr('data-url');
+        var userId = el.attr('data-userId');
+        console.log(userId);
+        var data = {
+            'userId' : userId
+        };
+        $.post(acceptUrl, app.setToken(data), function (response) {
+            url.load();
+            toast.success("Your are now moderator");
         });
     }
 };

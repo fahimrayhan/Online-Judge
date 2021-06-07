@@ -46,4 +46,13 @@ class ModeratorController extends Controller
             'message' => "Moderator Removed Successfully",
         ]);
     }
+
+    public function acceptModetator()
+    {
+        $user = User::find(request()->userId);
+        $user->problems()->updateExistingPivot($this->problemData,['is_accepted' => 1]);
+        return response()->json([
+            'message' => "Moderator accept successfully",
+        ]);
+    }
 }

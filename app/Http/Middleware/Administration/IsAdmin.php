@@ -17,7 +17,7 @@ class IsAdmin
     {
         $user = auth()->user();
         $role = $user ? $user->type : abort(401);
-        if($role != "super_admin")
+        if(!in_array($role,array('super_admin','admin','moderator')))
         {
             abort(401);
         }
