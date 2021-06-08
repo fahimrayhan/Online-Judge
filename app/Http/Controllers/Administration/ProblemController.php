@@ -139,11 +139,7 @@ class ProblemController extends Controller
 
     public function viewTestSubmission()
     {
-        $submissions = $this->problemData->submissions()->where(['type' => '1'])->get();
-        
-        $current_date_time = Carbon::now()->toDateTimeString();
-
-        echo $current_date_time;
+        $submissions = $this->problemData->submissions()->where(['type' => '1'])->orderBy('id', 'DESC')->get();
 
         return view('pages.administration.problem.test_submission', [
             'problem'     => $this->problemData,

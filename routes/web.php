@@ -87,6 +87,10 @@ Route::get('/profile/{handle}', 'Profile\ProfileController@show')->name('profile
 
 Route::get('/profilee/info', 'Profile\ProfileController@info')->name('profile.info');
 
+Route::get('judge_process', 'Judge\JudgeController@process')->name('judge.process');
+
+
+
 Route::get('user/{id}', function ($id) {
     echo "$id";
 });
