@@ -33,7 +33,8 @@ Route::group(['prefix' => 'administration','middleware'=>['auth','Administration
         Route::post('/create', 'Problem\ProblemController@store');
 
         Route::post('/{slug}/accept_moderator','Administration\Problem\ModeratorController@acceptModetator')->name('administration.problem.accept_moderator');
-        Route::post('/{slug}/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
+        Route::post('/{slug}/cancel_moderator','Administration\Problem\ModeratorController@cancelModeratorRequest')->name('administration.problem.cancel_moderator');
+        
         Route::group(['prefix' => '{slug}','middleware'=>['ModeratorIsPending']], function () {
             Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
@@ -60,7 +61,7 @@ Route::group(['prefix' => 'administration','middleware'=>['auth','Administration
             Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
             Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
             Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
-            
+            Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
 
             Route::get('/test_submissions', 'Administration\ProblemController@viewTestSubmission')->name('administration.problem.test_submissions');
             Route::get('/create_test_submission', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.create_test_submission');

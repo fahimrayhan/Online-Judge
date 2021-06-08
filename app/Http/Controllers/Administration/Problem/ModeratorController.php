@@ -34,7 +34,7 @@ class ModeratorController extends Controller
             'role' => 'moderator',
             'is_accepted' => 0
         ]);
-        response()->json([
+        return response()->json([
             'message' => "Moderator Added Successfully",
         ]);
     }
@@ -42,10 +42,20 @@ class ModeratorController extends Controller
     public function deleteModerator()
     {
         $this->problemData->moderator()->detach(request()->userId);
-        return json_encode([
-            'userId' => request()->userId,
-            'problem' => $this->problemData->name,
-            ]);
+        return response()->json([
+            'message' => "Moderator Added Successfully",
+        ]);
+    }
+
+    public function cancelModeratorRequest()
+    {
+        # code...
+        $this->problemData->moderator()->detach(auth()->user()->id);
+        return response()->json([
+            'message' => "Moderator Detach Successfully",
+        ]);
+        
+
     }
 
     public function acceptModetator()

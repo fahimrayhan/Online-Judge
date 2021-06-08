@@ -70,6 +70,5 @@ class Kernel extends HttpKernel
         'ModeratorIsPending' => \App\Http\Middleware\Administration\Problem\ModeratorIsPending::class,
         'Administration' => \App\Http\Middleware\Administration\Administration::class,
         'Admin' => \App\Http\Middleware\Admin::class,
-        'HasProblemAccess' => \App\Http\Middleware\Administration\Problem\HasAccess::class,
     ];
 }
