@@ -128,8 +128,8 @@ class JudgeService
             }
         }
 
-        $submission->save();
         $testCase->save();
+        $submission->save();
 
     }
 
