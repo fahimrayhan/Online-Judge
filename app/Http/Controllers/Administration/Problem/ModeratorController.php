@@ -42,9 +42,10 @@ class ModeratorController extends Controller
     public function deleteModerator()
     {
         $this->problemData->moderator()->detach(request()->userId);
-        response()->json([
-            'message' => "Moderator Removed Successfully",
-        ]);
+        return json_encode([
+            'userId' => request()->userId,
+            'problem' => $this->problemData->name,
+            ]);
     }
 
     public function acceptModetator()

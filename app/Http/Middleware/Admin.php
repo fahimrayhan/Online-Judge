@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Middleware\Administration;
+namespace App\Http\Middleware;
 
 use Closure;
 
-class Administration
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class Administration
     {
         $user = auth()->user();
         $role = $user ? $user->type : abort(401);
-        if($role > 30)
+        if($role > 20)
         {
             abort(401);
         }

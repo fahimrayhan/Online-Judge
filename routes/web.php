@@ -70,7 +70,7 @@ Route::group(['prefix' => 'administration','middleware'=>['auth','Administration
 
         });
     });
-    Route::group(['prefix' => 'settings'], function () {
+    Route::group(['prefix' => 'settings','middleware' => ['Admin']], function () {
         Route::group(['prefix' => 'languages'], function () {
             Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');
             Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.settings.languages.create');

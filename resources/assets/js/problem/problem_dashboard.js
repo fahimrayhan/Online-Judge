@@ -149,10 +149,12 @@ var problem = {
         var data = {
             'userId': userId,
         }
-        console.log(userId);
+        // console.log("Hello Form Delete Problem Moderator");
+        console.log(app.setToken(data));
         // return;
         $.post(delUrl, app.setToken(data), function (response) {
-            url.load();
+            console.log(JSON.parse(response));
+            // url.load();
             toast.success("Successfully Removed Moderator");
         });
     },
