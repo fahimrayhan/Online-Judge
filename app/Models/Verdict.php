@@ -19,7 +19,7 @@ class Verdict extends Model
     {
         $id = $this->id;
         $loader = "";
-        if ($id == 1) {
+        if ($id == 1 || $id == 16) {
             $label = "default";
         } else if ($id == 2) {
             $label = "primary";
