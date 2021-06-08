@@ -25,7 +25,7 @@ Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
-Route::group(['prefix' => 'administration','middleware'=>['auth','IsAdmin']], function () {
+Route::group(['prefix' => 'administration','middleware'=>['auth','Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');

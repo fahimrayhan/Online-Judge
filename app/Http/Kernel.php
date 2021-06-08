@@ -68,7 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'CheckLayoutKey' => \App\Http\Middleware\CheckLayoutKey::class,
         'ModeratorIsPending' => \App\Http\Middleware\Administration\Problem\ModeratorIsPending::class,
-        'IsAdmin' => \App\Http\Middleware\Administration\IsAdmin::class,
+        'Administration' => \App\Http\Middleware\Administration\Administration::class,
         'HasProblemAccess' => \App\Http\Middleware\Administration\Problem\HasAccess::class,
     ];
 }
