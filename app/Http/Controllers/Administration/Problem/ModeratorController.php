@@ -29,7 +29,10 @@ class ModeratorController extends Controller
 
     public function addModerator()
     {
-
+        if($this->problemData->authUserRole != "owner")
+        {
+            abort(401,"You Can Not Add Moderator. Only Problem owner can add moderator");
+        }
         $this->problemData->moderator()->attach(request()->userId,[
             'role' => 'moderator',
             'is_accepted' => 0
@@ -41,10 +44,27 @@ class ModeratorController extends Controller
 
     public function deleteModerator()
     {
+        if($this->problemData->authUserRole != "owner")
+        {
+            abort(401,"You Can Not Add Moderator");
+        }
         $this->problemData->moderator()->detach(request()->userId);
         return response()->json([
             'message' => "Moderator Added Successfully",
         ]);
+    }
+
+    public function leaveModerator()
+    {
+        if($this->problemData->authUserRole == "owner")
+        {
+            abort(401,"You Can Not Leave From this Problem");
+        }
+        $this->problemData->moderator()->detach(auth()->user()->id);
+        return response()->json([
+            'message' => "You Leave From {$this->problemData->name}",
+        ]);
+
     }
 
     public function cancelModeratorRequest()

@@ -164,6 +164,18 @@ var problem = {
             toast.success("Successfully Removed Moderator");
         });
     },
+    leaveFromModerator : function (el) {
+        var ok = confirm("Are you want to Leave From moderator?");
+        if(ok)
+        {
+            var delUrl = el.attr('data-url');
+            var data = {};
+            $.post(delUrl, app.setToken(data), function (response) {
+                url.load();
+                toast.success("Successfully Leave From Moderator");
+            });
+        }
+    },
     acceptProblemModerator : function (el) {
         var acceptUrl = el.attr('data-url');
         var userId = el.attr('data-userId');
