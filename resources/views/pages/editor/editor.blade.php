@@ -43,7 +43,6 @@
     }
 </style>
 
-
 <div class="editorArea">
     <div class="editorAreaTop">
         <div class="row">

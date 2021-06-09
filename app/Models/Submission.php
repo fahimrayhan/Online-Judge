@@ -88,9 +88,23 @@ class Submission extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function verdict()
     {
         return $this->belongsTo(Verdict::class);
     }
+
+    public function verdictStatus(){
+        return $this->verdict->statusClass([
+            'running_on_test' => true,
+            'total_test_case' => $this->total_test_case,
+            'run_on_test' => $this->run_on_test,
+            'judge_type' => $this->judge_type,
+            'total_point' => $this->total_point,
+            'passed_point' => $this->passed_point
+        ]);
+    }
+
+    
 
 }

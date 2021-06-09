@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class SubmissionTestCase extends Model
 {
-	protected $appends = ['input_file,expected_output_file'];
+	protected $appends = ['input_file,expected_output_file','passed_point'];
     protected $fillable = [
         'submission_id', 'verdict_id', 'hash_file','token', 'input', 'output', 'expected_output', 'time', 'memory', 'checker_log', 'compiler_log', 'point',
     ];
@@ -15,6 +15,11 @@ class SubmissionTestCase extends Model
     public function getInputFileAttribute()
     {
         return public_path() . '/file/test_case/input/' . $this->hash_file . ".txt";
+    }
+
+    public function getPassedPointAttribute()
+    {
+        return $this->verdict_id == 3 ? $this->point : 0;
     }
 
     public function getExpectedOutputFileAttribute()

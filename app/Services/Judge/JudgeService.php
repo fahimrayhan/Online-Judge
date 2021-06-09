@@ -78,7 +78,7 @@ class JudgeService
 
         $verdictId = $tokenData->verdict[0]->id;
 
-        $submission->passed_point += $verdictId != 3 ? $testCase->point : 0;
+        $submission->passed_point += $verdictId == 3 ? $testCase->point : 0;
 
         $judgeFinish = $submission->run_on_test == $submission->total_test_case;
         $judgeFinish |= ($verdictId > 3 && $submission->judge_type == 'binary');
