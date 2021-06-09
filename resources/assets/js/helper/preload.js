@@ -42,12 +42,22 @@ $(document).ready(function() {
         var self = $(this);
         var link = $(this).attr("href");
         var target = $(this).attr("target");
+        var modal = $(this).attr("modal");
+
         if (target == "_blank") {
             if (link == "#") return;
             window.open(link, '_blank');
             return;
         }
         e.preventDefault();
+
+        if(modal == "true"){
+            modalType = $(this).attr("modal-type");
+            modalWidth = $(this).attr("modal-width");
+            modalHeader = $(this).attr("modal-header");
+            new Modal(modalType,modalWidth).load(link,modalHeader);
+            return;
+        }
         if (link == "#") return;
         if (!url.checkValidUrl(link)) return;
         if (link.indexOf(document.domain) >= 0) {

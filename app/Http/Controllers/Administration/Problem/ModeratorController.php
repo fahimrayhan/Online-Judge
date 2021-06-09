@@ -22,7 +22,7 @@ class ModeratorController extends Controller
     public function getModeratorsList()
     {
         $existing = $this->problemData->moderator;
-        $moderators = User::where('handle','like',request()->search.'%')->get();
+        $moderators = User::where('handle','like',request()->search.'%')->whereRaw('type <= 30')->get();
         $moderators = $moderators->diff($existing)->take(2)->take(5);
         return json_encode($moderators,200);
     }

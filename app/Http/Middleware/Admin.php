@@ -15,6 +15,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+        if (!auth()->check()) {
+            abort(401,"You need to login your account");
+        }
         $user = auth()->user();
         $role = $user ? $user->type : abort(401);
         if($role > 20)

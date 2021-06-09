@@ -75,4 +75,3 @@ setInterval(function() {
     submission.loadSubmissionData();
 }, 2000);
 
-
