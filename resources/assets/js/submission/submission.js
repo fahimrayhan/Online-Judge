@@ -20,7 +20,7 @@ var submission = {
                 $("#submission_test_case_verdict_" + value.id).html(value.verdict_status);
                 $("#submission_test_case_time_" + value.id).html(value.time + " ms");
                 $("#submission_test_case_memory_" + value.id).html(value.memory + " kb");
-                $("#submission_test_case_point_" + value.id).html(value.point);
+                $("#submission_test_case_point_" + value.id).html(value.passed_point);
                 $("#submission_test_case_input_" + value.id).html(value.input);
                 $("#submission_test_case_output_" + value.id).html(value.output);
                 $("#submission_test_case_expected_output_" + value.id).html(value.expected_output);

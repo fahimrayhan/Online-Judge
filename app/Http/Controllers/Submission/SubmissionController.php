@@ -22,32 +22,35 @@ class SubmissionController extends Controller
             'source_code' => base64_decode(request()->source_code),
             'language_id' => request()->language_id,
             'type'        => "testing",
-            'judge_type'  => "binary",
+            'judge_type'  => "partial",
             'problem_id'  => $problem->id,
         ];
 
         //dd($data);
-        for($i=1; $i<=1; $i++)$submission = Submission::create($data);
+        for ($i = 1; $i <= 1; $i++) {
+            $submission = Submission::create($data);
+        }
+
         return response()->json([
-            'message'       => 'Submission Create Success',
-            'submission_id' => $submission->id,
-            'view_submission_url' => route('administration.problem.submission.view',[
-                'slug' => request()->slug,
-                'submission_id' => $submission->id
-            ])
+            'message'             => 'Submission Create Success',
+            'submission_id'       => $submission->id,
+            'view_submission_url' => route('administration.problem.submission.view', [
+                'slug'          => request()->slug,
+                'submission_id' => $submission->id,
+            ]),
         ]);
     }
 
     public function submissionVerdict()
     {
-        $submission = Submission::select(['id', 'time', 'memory', 'verdict_id'])->where(['id' => request()->submission_id])->firstOrFail();
+        $submission = Submission::where(['id' => request()->submission_id])->firstOrFail();
         $testCases  = $submission->testCases()->get();
         $data       = [
             'id'             => $submission->id,
             'time'           => $submission->time,
             'memory'         => $submission->memory,
             'verdict_id'     => $submission->verdict_id,
-            'verdict_status' => $submission->verdict->statusClass(),
+            'verdict_status' => $submission->verdictStatus(),
             'test_cases'     => [],
         ];
 
@@ -60,7 +63,7 @@ class SubmissionController extends Controller
                 'expected_output' => nl2br($testCase->expected_output),
                 'time'            => $testCase->time,
                 'memory'          => $testCase->memory,
-                'point'           => $testCase->point,
+                'passed_point'    => $testCase->passed_point,
                 'checker_log'     => nl2br($testCase->checker_log),
                 'compiler_log'    => nl2br($testCase->compiler_log),
                 'verdict_id'      => $testCase->verdict_id,

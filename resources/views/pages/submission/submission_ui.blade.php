@@ -103,6 +103,14 @@
     .submissionBox{
         box-shadow: 1px 1px 3px #DADADA;
     }
+    .submission-live-judge{
+        font-size: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .submission-live-judge .label{
+        font-size: 18px;
+    }
 
 </style>
 
@@ -116,9 +124,9 @@
                 <table width="100%" id="submission_table" class="table-custom submission-table">
                 	<tr class="submissionTr">
                 		<th>#</th>
-                		<th>Author</th>
+                        <th>When</th>
+                        <th>Author</th>
                 		<th>Problem</th>
-                		<th>Time</th>
                 		<th>Language</th>
                 		<th>CPU</th>
                 		<th>Memory</th>
@@ -132,7 +140,7 @@
                 		<td>{{$submission->language->name}}</td>
                 		<td id="submission_time_{{$submission->id}}">{{$submission->time}} ms</td>
                 		<td id="submission_memory_{{$submission->id}}">{{$submission->memory}} kb</td>
-                		<td style="width: 150px;" id="submission_verdict_{{$submission->id}}">{!!$submission->verdict->statusClass()!!}</td>
+                		<td style="width: 150px;" id="submission_verdict_{{$submission->id}}">{!!$submission->verdictStatus()!!}</td>
                 	</tr>
             	</table>
            	</div>
@@ -171,7 +179,7 @@
                 		<td>{{$key+1}}</td>
                 		<td id="submission_test_case_time_{{$testCase->id}}">{{$testCase->time}} ms</td>
                 		<td id="submission_test_case_memory_{{$testCase->id}}">{{$testCase->memory}} kb</td>
-                		<td id="submission_test_case_point_{{$testCase->id}}">{{$testCase->point}}</td>
+                		<td id="submission_test_case_point_{{$testCase->id}}">{{$testCase->passed_point}}</td>
                 		<td style="width: 150px;" id="submission_test_case_verdict_{{$testCase->id}}">{!!$testCase->verdict->statusClass()!!}</td>
                 	</tr>
                     @if($testCase->verdict->id != 16)
@@ -247,7 +255,8 @@
 </div>
 
 
-
+@if($submission->verdict_id <3)
 <script type="text/javascript">
     submission.setSubmissionPage({{$submission->id}});
 </script>
+@endif

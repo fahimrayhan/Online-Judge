@@ -17,7 +17,7 @@
 <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
-                <button class="btn submit-btn" style="margin-bottom: 15px;" onclick="new Modal('lg').load('{{route('administration.problem.test_submission.create',['slug' => request()->slug])}}')">Create Test Submission</button>
+                <button class="btn submit-btn" style="margin-bottom: 15px;" onclick="new Modal('lg').load('{{route('administration.problem.test_submission.create',['slug' => request()->slug])}}','Create Test Submission')">Create Test Submission</button>
 
             </div>
         </div>
@@ -39,7 +39,7 @@
 			<td>{{$submission->created_at->format('M/d/Y h:i:s')}}</td>
 			<td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$submission->user->handle}}</a></td>
 			<td>{{$submission->language->name}}</td>
-			<td>{!!$submission->verdict->statusClass()!!}</td>
+			<td>{!!$submission->verdictStatus()!!}</td>
 			<td>{{$submission->time}}</td>
 			<td>{{$submission->memory}}</td>
 		</tr>
