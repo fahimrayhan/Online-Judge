@@ -48,6 +48,12 @@ class ModeratorController extends Controller
         {
             abort(401,"You Can Not Add Moderator");
         }
+        $user = $this->problemData->moderator()->where('user_id',request()->userId)->firstOrFail();
+
+        if($user->pivot->role == "owner")
+        {
+            abort(401,"You Can Not Be Deleted");
+        }
         $this->problemData->moderator()->detach(request()->userId);
         return response()->json([
             'message' => "Moderator Added Successfully",
@@ -73,6 +79,7 @@ class ModeratorController extends Controller
         $this->problemData->moderator()->detach(auth()->user()->id);
         return response()->json([
             'message' => "Moderator Detach Successfully",
+            // 'url' => route()
         ]);
         
 
