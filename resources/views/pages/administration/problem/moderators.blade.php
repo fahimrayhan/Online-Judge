@@ -36,11 +36,14 @@
             padding: 10px 0px 10px 0px;
         }
 
-        .userListImg {
-            width: 100%;
+        .moderatorImg {
+            width: 80px;
+            height: 80px;
         }
 
-        .userListBody {}
+        .userListBody {
+            margin-top: 15px;
+        }
 
         .userListBody a {
             font-weight: bold;
@@ -130,16 +133,16 @@
                     <div class='boxx none_border'>
                         <div class='box_bodyy' style='padding-left: 15px;'>
                             <div class='row userListCard'>
-                                <div class='col-md-2 col-sm-2'>
-                                    <img class='img-thumbnail userListImg' src='{{ $moderator->avatar }}'>
+                                <div class='col-md-3 col-sm-3'>
+                                    <img class='img-thumbnail moderatorImg' src='{{ $moderator->avatar }}'>
                                 </div>
-                                <div class='col-md-10 col-sm-10'>
+                                <div class='col-md-9 col-sm-9' >
                                     <div class='userListBody'>
                                         <div class='pull-right'>
                                             @if ($role == 'owner')
                                                 @if (auth()->user()->id != $moderator->id)
                                                     <button onclick='problem.deleteProblemModerator($(this))'
-                                                        class='btn btn-sm btn-danger' data-userId = "{{ $moderator->id }}" data-url = "{{ route('administration.problem.delete_moderator',['slug' => request()->slug]) }}">Delete</button>
+                                                        class='btn btn-sm btn-danger' data-userId = "{{ $moderator->id }}" data-url = "{{ route('administration.problem.delete_moderator',['slug' => request()->slug]) }}"><span class='glyphicon glyphicon-trash'></span> Remove</button>
                                                 @endif
                                             @elseif (auth()->user()->id == $moderator->id && $role == 'moderator')
                                             <button onclick='problem.deleteProblemModerator($(this))'
@@ -147,13 +150,14 @@
 
                                             @endif
 
-
                                         </div>
                                         <a href="{{ route('profile',['handle'=>$moderator->handle]) }}">{{ $moderator->handle }}</a><br />
-                                        <span class='userPermission'>{{ $moderator->pivot->role }}</span>
+                                        <div style="margin-top: 5px;"></div>
+                                        <span class='label label-{{$moderator->pivot->role == "owner" ? "success" : "info"}}'><i class="fas fa-shield-alt"></i> {{ $moderator->pivot->role }} </span>
                                         @if(!$moderator->pivot->is_accepted)
-                                        <span class='userPermission d-block'><strong>(Pending)</strong></span>
+                                        <span style="margin-left: 5px;" title="User need to accept this moderator request" class='label label-warning'><i class="fa fa-clock-o"></i> Pending</span>
                                         @endif
+                                        <br/>
                                     </div>
                                 </div>
                             </div>

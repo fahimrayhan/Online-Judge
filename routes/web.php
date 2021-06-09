@@ -25,17 +25,17 @@ Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
-Route::group(['prefix' => 'administration','middleware'=>['auth','Administration']], function () {
+Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
         Route::post('/create', 'Problem\ProblemController@store');
 
-        Route::post('/{slug}/accept_moderator','Administration\Problem\ModeratorController@acceptModetator')->name('administration.problem.accept_moderator');
-        Route::post('/{slug}/cancel_moderator','Administration\Problem\ModeratorController@cancelModeratorRequest')->name('administration.problem.cancel_moderator');
-        
-        Route::group(['prefix' => '{slug}','middleware'=>['ModeratorIsPending']], function () {
+        Route::post('/{slug}/accept_moderator', 'Administration\Problem\ModeratorController@acceptModetator')->name('administration.problem.accept_moderator');
+        Route::post('/{slug}/cancel_moderator', 'Administration\Problem\ModeratorController@cancelModeratorRequest')->name('administration.problem.cancel_moderator');
+
+        Route::group(['prefix' => '{slug}', 'middleware' => ['ModeratorIsPending']], function () {
             Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
             Route::get('/statement', 'Administration\ProblemController@details')->name('administration.problem.statement');
@@ -56,7 +56,6 @@ Route::group(['prefix' => 'administration','middleware'=>['auth','Administration
             Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');
             Route::post('/languages/save', 'Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
 
-
             Route::get('/moderators', 'Administration\ProblemController@moderators')->name('administration.problem.moderators');
             Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
             Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
@@ -71,7 +70,7 @@ Route::group(['prefix' => 'administration','middleware'=>['auth','Administration
 
         });
     });
-    Route::group(['prefix' => 'settings','middleware' => ['Admin']], function () {
+    Route::group(['prefix' => 'settings', 'middleware' => ['Admin']], function () {
         Route::group(['prefix' => 'languages'], function () {
             Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');
             Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.settings.languages.create');
@@ -92,8 +91,6 @@ Route::get('/profile/{handle}', 'Profile\ProfileController@show')->name('profile
 Route::get('/profilee/info', 'Profile\ProfileController@info')->name('profile.info');
 
 Route::get('judge_process', 'Judge\JudgeController@process')->name('judge.process');
-
-
 
 Route::get('user/{id}', function ($id) {
     echo "$id";

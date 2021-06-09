@@ -139,8 +139,7 @@ class ProblemController extends Controller
 
     public function viewTestSubmission()
     {
-        $submissions = $this->problemData->submissions()->where(['type' => '1'])->orderBy('id', 'DESC')->get();
-
+        $submissions = $this->problemData->submissions()->where(['type' => '1'])->orderBy('id', 'DESC')->paginate(15);
         return view('pages.administration.problem.test_submission', [
             'problem'     => $this->problemData,
              'submissions' => $submissions,
@@ -151,7 +150,7 @@ class ProblemController extends Controller
     {
         $submission = $this->problemData->submissions()->where(['type' => '1','id' => request()->submission_id])->firstOrFail();
         
-        return view('pages.submission.submission_ui', [
+        return view('pages.administration.problem.submission', [
             'submission' => $submission,
          ]);
     }
