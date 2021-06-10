@@ -109,10 +109,8 @@ class ProblemController extends Controller
 
     public function editSettings(ProblemSettingsRequest $req)
     {
-
-        $this->problemData->time_limit   = $req['time_limit'];
-        $this->problemData->memory_limit = $req['memory_limit'];
-        $this->problemData->save();
+         
+        $this->problemData = $this->problemService->updateTimeAndMemory($this->problemData, $req->all());
         return response()->json([
             'message' => "Problem Settings Updated Successfully",
         ]);
