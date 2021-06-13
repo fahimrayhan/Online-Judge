@@ -21,11 +21,17 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 Route::get('/', 'Profile\ProfileController@home')->name('home');
 Route::get('/contests', 'Problem\ProblemListController@show')->name('contests');
-Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
+
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
 Route::post('/request_for_moderator','Administration\Problem\ModeratorController@requestForModerator')->name('request_for_moderator');
+
+Route::group(['prefix' => 'problems'], function () {
+    Route::get('/', 'Problem\ProblemListController@show')->name('problems');
+    Route::get('/{slug}', 'Problem\ProblemListController@viewProblem')->name('problem.view');
+    Route::get('/{slug}/create_submission', 'Problem\ProblemController@createSubmission')->name('problem.submission.create');
+});
 
 
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {

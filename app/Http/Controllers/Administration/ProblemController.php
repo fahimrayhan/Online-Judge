@@ -153,7 +153,7 @@ class ProblemController extends Controller
     public function viewTestSubmissionEditor()
     {
         return view('pages.editor.editor', [
-            'languages' => $this->problemData->languages()->get(),
+            'problem'     => $this->problemData,
             'submitUrl' => route("administration.problem.test_submission.create", request()->slug),
         ]);
     }

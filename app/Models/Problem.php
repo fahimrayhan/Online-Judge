@@ -77,6 +77,11 @@ class Problem extends Model
     {
         return $this->testCases()->where(['sample' => 1]);
     }
+
+    public function owner(){
+        return $this->moderator()->firstOrFail();
+    }
+
     public function moderator()
     {
         return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
