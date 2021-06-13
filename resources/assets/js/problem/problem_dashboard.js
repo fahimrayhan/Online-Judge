@@ -27,7 +27,7 @@ var problem = {
         });
     },
     preview: function (e) {
-        new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function (response) {});
+        new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function (response) { });
     },
     copyTestCase: function (e) {
         copyer(e.value);
@@ -111,17 +111,16 @@ var problem = {
         var addUrl = el.attr('data-add-url');
         var data = {};
         data['search'] = el.val();
-        if(data['search'] == "")
-        {
+        if (data['search'] == "") {
             return;
         }
         $.post(geturl, app.setToken(data), function (response) {
             console.log(response);
-            var moderatorsList = JSON.parse(response);    
-            $('#suggestion_box').html("");        
+            var moderatorsList = JSON.parse(response);
+            $('#suggestion_box').html("");
             $.each(moderatorsList, function () {
                 $('#suggestion_box').append(
-                    "<li class='list-group-item moderators_suggestion_li' onclick='problem.addProblemModerator($(this))' data-userId='"+ this.id +"' data-url='"+addUrl+"'>" +
+                    "<li class='list-group-item moderators_suggestion_li' onclick='problem.addProblemModerator($(this))' data-userId='" + this.id + "' data-url='" + addUrl + "'>" +
                     "<img class='img-thumbnail moderators_suggestion_li_img' src='" + this.avatar + "' style='width: 50px;'><b> " +
                     this.handle + "</b></li>"
                 );
@@ -129,7 +128,7 @@ var problem = {
         });
 
     },
-    addProblemModerator : function(el){
+    addProblemModerator: function (el) {
         var userId = el.attr('data-userId');
         var addurl = el.attr('data-url');
         var data = {
@@ -140,10 +139,9 @@ var problem = {
             toast.success("Successfully Add Moderator");
         });
     },
-    deleteProblemModerator : function(el) {
+    deleteProblemModerator: function (el) {
         var ok = confirm("Are you want to delete moderator?");
-        if(ok)
-        {
+        if (ok) {
             var delUrl = el.attr('data-url');
             var userId = el.attr('data-userId');
             var data = {
@@ -154,9 +152,9 @@ var problem = {
                 toast.success("Successfully Removed Moderator");
             });
         }
-        
+
     },
-    cancelProblemModerator : function(el) {
+    cancelProblemModerator: function (el) {
         var delUrl = el.attr('data-url');
         var data = {}
         $.post(delUrl, app.setToken(data), function (response) {
@@ -164,10 +162,9 @@ var problem = {
             toast.success(response.message);
         });
     },
-    leaveFromModerator : function (el) {
+    leaveFromModerator: function (el) {
         var ok = confirm("Are you want to Leave From moderator?");
-        if(ok)
-        {
+        if (ok) {
             var delUrl = el.attr('data-url');
             var data = {};
             $.post(delUrl, app.setToken(data), function (response) {
@@ -176,24 +173,45 @@ var problem = {
             });
         }
     },
-    acceptProblemModerator : function (el) {
+    acceptProblemModerator: function (el) {
         var acceptUrl = el.attr('data-url');
         var userId = el.attr('data-userId');
         console.log(userId);
         var data = {
-            'userId' : userId
+            'userId': userId
         };
         $.post(acceptUrl, app.setToken(data), function (response) {
             url.load();
             toast.success("Your are now moderator");
         });
     },
-    requestForModerator : function (el) {
+    requestForModerator: function (el) {
         var requestUrl = el.attr('data-url');
         var data = {};
         $.post(requestUrl, app.setToken(data), function (response) {
             url.load();
             toast.success("Your Request Sent To Admin");
+        });
+    },
+    requestForJudgeProblem: function (el) {
+        var requestUrl = el.attr('data-url');
+        $.post(requestUrl, app.setToken(), function (response) {
+            url.load();
+            toast.success(response.message);
+        });
+    },
+    aproveRequestForJudgeProblem: function (el) {
+        var requestUrl = el.attr('data-url');
+        $.post(requestUrl, app.setToken(), function (response) {
+            url.load();
+            toast.success(response.message);
+        });
+    },
+    deleteFromJudgeProblem: function (el) {
+        var requestUrl = el.attr('data-url');
+        $.post(requestUrl, app.setToken(), function (response) {
+            url.load();
+            toast.success(response.message);
         });
     }
 };

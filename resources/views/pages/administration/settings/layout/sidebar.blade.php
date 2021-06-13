@@ -18,6 +18,12 @@
                 'url' => route('administration.settings.checker.index'),
                 'callback' => ''
         ],
+        'judge_problem' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'Judge Problem',
+                'url' => route('administration.settings.judge_problem'),
+                'callback' => ''
+        ],
         
     ];
 
