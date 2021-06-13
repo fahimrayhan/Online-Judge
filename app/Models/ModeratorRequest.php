@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModeratorRequest extends Model
 {
     protected $fillable = [
-        'user_id', 'type',
+        'user_id', 'type','message'
     ];
 
     public function user()

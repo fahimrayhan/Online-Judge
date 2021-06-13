@@ -190,7 +190,9 @@ var problem = {
     },
     requestForModerator : function (el) {
         var requestUrl = el.attr('data-url');
-        var data = {};
+        var data = {
+            'message': "hello guys"
+        };
         $.post(requestUrl, app.setToken(data), function (response) {
             url.load();
             toast.success("Your Request Sent To Admin");

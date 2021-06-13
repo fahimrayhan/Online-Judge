@@ -105,7 +105,8 @@ class ModeratorController extends Controller
         {
             ModeratorRequest::create([
                 'user_id' => auth()->user()->id,
-                'type' => 30
+                'type' => 30,
+                'message' => request()->message
             ]);
         }
 
