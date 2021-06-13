@@ -43,6 +43,12 @@ $sidebar = [
         'url' => route('administration.problem.moderators',['slug' => request()->slug]),
         'callback' => '',
     ],
+    'settings' => [
+        'icon' => 'fas fa-code',
+        'name' => 'Settings',
+        'url' => route('administration.problem.settings',['slug' => request()->slug]),
+        'callback' => '',
+    ],
     'test_submissions' => [
             'icon'  => 'fas fa-hammer',
             'name' => 'Test Submissions',
