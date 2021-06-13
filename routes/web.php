@@ -93,6 +93,16 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.settings.languages.toggle_archive');
             });
         });
+        Route::group(['prefix' => 'checker'], function () {
+            Route::get('/','Administration\Checker\CheckerController@index')->name('administration.settings.checker.index');
+            Route::get('/create','Administration\Checker\CheckerController@create')->name('administration.settings.checker.create');
+            Route::post('/store','Administration\Checker\CheckerController@store')->name('administration.settings.checker.store');
+            Route::group(['prefix' => '{checkerId}'], function () {
+                Route::get('/edit','Administration\Checker\CheckerController@edit')->name('administration.settings.checker.edit');
+                Route::post('/update','Administration\Checker\CheckerController@update')->name('administration.settings.checker.update');
+                Route::post('/delete','Administration\Checker\CheckerController@delete')->name('administration.settings.checker.delete');
+            });
+        });
     });
 });
 

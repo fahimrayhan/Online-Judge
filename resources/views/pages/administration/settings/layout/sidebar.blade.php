@@ -12,6 +12,12 @@
                 'url' => route('administration.settings.moderators'),
                 'callback' => ''
         ],
+        'checker' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'Checker',
+                'url' => route('administration.settings.checker.index'),
+                'callback' => ''
+        ],
         
     ];
 
