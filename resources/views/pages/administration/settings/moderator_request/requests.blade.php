@@ -24,8 +24,8 @@ Moderators
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->handle }}</td>
                 <td>
-                    <button class="btn btn-sm btn-info" onclick="moderator.aproveRequest($(this))" data-userId = {{ $user->id }} data-url = "{{ route('administration.settings.moderators.aprove_moderator_request') }}">Aprove</button>
-                    <button class="btn btn-sm btn-danger" onclick="moderator.deleteRequest($(this))" data-userId = {{ $user->id }} data-url = "{{ route('administration.settings.moderators.delete_moderator_request') }}">Delete</button>
+                    <button class="btn btn-sm btn-info" onclick="moderator.aproveRequest($(this))" data-url = "{{ route('administration.settings.moderators.request.aprove',['requestId' => $user->moderatorRequest->id]) }}">Aprove</button>
+                    <button class="btn btn-sm btn-danger" onclick="moderator.deleteRequest($(this))" data-url = "{{ route('administration.settings.moderators.request.delete',['requestId' => $user->moderatorRequest->id]) }}">Delete</button>
                 </td>
             </tr>
         @endforeach

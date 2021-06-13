@@ -79,9 +79,11 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         Route::group(['prefix' => 'moderators'],function(){
             Route::get('/','Administration\User\UserTypeChangeController@modertators')->name('administration.settings.moderators');
             Route::get('/requests','Administration\User\UserTypeChangeController@modertatorRequests')->name('administration.settings.moderators.reqeusts');
-            Route::post('/aprove_request','Administration\User\UserTypeChangeController@aproveModertatorRequest')->name('administration.settings.moderators.aprove_moderator_request');
-            Route::post('/delete_request','Administration\User\UserTypeChangeController@deleteModertatorRequest')->name('administration.settings.moderators.delete_moderator_request');
-            Route::post('/delete_moderator','Administration\User\UserTypeChangeController@deleteModertator')->name('administration.settings.moderators.delete_moderator');
+            Route::group(['prefix' => '/request/{requestId}'],function(){
+                Route::post('/aprove','Administration\User\UserTypeChangeController@aproveModertatorRequest')->name('administration.settings.moderators.request.aprove');
+                Route::post('/delete','Administration\User\UserTypeChangeController@deleteModertatorRequest')->name('administration.settings.moderators.request.delete');
+            });
+            Route::post('{userId}/delete','Administration\User\UserTypeChangeController@deleteModertator')->name('administration.settings.moderators.delete');
         });
         Route::group(['prefix' => 'languages'], function () {
             Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');

@@ -5,14 +5,20 @@ namespace App\Http\Controllers\Administration\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\User\ModeratorService;
+use App\Models\ModeratorRequest;
 
 
 class UserTypeChangeController extends Controller
 {
     protected $moderatorService;
+    protected $requestData;
     public function __construct(ModeratorService $moderatorService)
     {
         $this->moderatorService  = $moderatorService;
+        if(isset(request()->requestId))
+        {
+            $this->requestData = $this->moderatorService->getRequestData(request()->requestId);
+        }
     }
 
     public function modertators()
@@ -30,7 +36,7 @@ class UserTypeChangeController extends Controller
 
     public function aproveModertatorRequest()
     {
-        $this->moderatorService->aproveModeratorRequest(request()->userId);
+        $this->moderatorService->aproveModeratorRequest($this->requestData);
         return response()->json([
             'message' => "Moderator Is Aproved"
         ]);
@@ -38,7 +44,7 @@ class UserTypeChangeController extends Controller
 
     public function deleteModertatorRequest()
     {
-        $this->moderatorService->deleteModeratorRequest(request()->userId);
+        $this->moderatorService->deleteModeratorRequest($this->requestData);
         return response()->json([
             'message' => "Moderator Request is Deleted"
         ]);

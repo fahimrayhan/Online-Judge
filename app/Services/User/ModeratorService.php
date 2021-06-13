@@ -7,6 +7,11 @@ use App\Models\ModeratorRequest;
 
 class ModeratorService
 {
+    public function getRequestData($requestId)
+    {
+        return ModeratorRequest::findOrFail($requestId);
+    }
+
     public function getAllModeratorList()
     {
         return User::where('type',30)->get();
@@ -17,18 +22,18 @@ class ModeratorService
         return User::has('moderatorRequest')->get();
     }
 
-    public function aproveModeratorRequest($userId)
+    public function aproveModeratorRequest(ModeratorRequest $requestData)
     {
-        $user = User::find($userId);
+        
+        $user = $requestData->user;
         $user->type = 30;
         $user->save();
-        $user->moderatorRequest->delete();
+        $requestData->delete();
     }
 
-    public function deleteModeratorRequest($userId)
+    public function deleteModeratorRequest(ModeratorRequest $requestData)
     {
-        $user = User::find($userId);
-        $user->moderatorRequest->delete();
+        $requestData->delete();
     }
 
     public function deleteModerator($userId)

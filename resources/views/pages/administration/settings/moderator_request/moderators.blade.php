@@ -23,7 +23,7 @@ Moderators
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $moderator->name }}</td>
                 <td>{{ $moderator->handle }}</td>
-                <td><button class="btn btn-sm btn-danger" onclick="moderator.deleteModerator($(this))" data-userId = {{ $moderator->id }} data-url = "{{ route('administration.settings.moderators.delete_moderator') }}">Delete</button></td>
+                <td><button class="btn btn-sm btn-danger" onclick="moderator.deleteModerator($(this))" data-url = "{{ route('administration.settings.moderators.delete',['userId' => $moderator->id]) }}">Delete</button></td>
             </tr>
         @endforeach
 
