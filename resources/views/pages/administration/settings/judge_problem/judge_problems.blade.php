@@ -8,11 +8,6 @@ Judge Problem
 
 
     </style>
-
-    <div class="pull-right" style="margin-bottom: 10px;">
-        <a href="{{ route('administration.settings.judge_problem.requests') }}">Requests </a>
-     </div>
-    
     <table class="table-custom">
         <tr>
             <th>Problem Name</th>
@@ -29,6 +24,9 @@ Judge Problem
             <td>{{ $problem->judgeProblem->created_at }}</td>
             <td>
                 <button class="btn btn-danger btn-sm" onclick="problem.deleteFromJudgeProblem($(this))" data-url="{{ route('administration.settings.judge_problem.delete_from_judge_problem',['judgeProblemId' => $problem->judgeProblem->id ]) }}">Delete</button>
+                @if (!$problem->judgeProblem->is_accepted)
+                    <button class="btn btn-sm btn-success" onclick="problem.aproveRequestForJudgeProblem($(this))" data-url="{{ route('administration.settings.judge_problem.requests.aprove',['judgeProblemId' => $problem->judgeProblem->id]) }}">Approved</button>
+                @endif
             </td>
         </tr>
             

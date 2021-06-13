@@ -181,17 +181,6 @@ class ProblemController extends Controller
             'message' => "Your Request Waiting For Acceptance"
         ]);
     }
-
-    /**
-     * Show all problems that requests for judge problem
-     */
-    public function requests()
-    {
-        return view('pages.administration.settings.judge_problem.request_problems', [
-            'judgeProblems' => $this->judgeProblemSerivce->getAllPendingRequests()
-        ]);
-    }
-
     /**
      * Aprove Request For Judge Problem
      */

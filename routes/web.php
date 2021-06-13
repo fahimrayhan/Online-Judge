@@ -130,7 +130,6 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/', 'Administration\ProblemController@judgeProblems')->name('administration.settings.judge_problem');
             Route::post('/{judgeProblemId}/delete', 'Administration\ProblemController@deleteFromJudgeProblem')->name('administration.settings.judge_problem.delete_from_judge_problem');
             Route::group(['prefix' => 'requests'], function () {
-                Route::get('/', 'Administration\ProblemController@requests')->name('administration.settings.judge_problem.requests');
                 Route::post('/{judgeProblemId}/aprove', 'Administration\ProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
