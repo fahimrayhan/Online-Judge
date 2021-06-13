@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasOne(ModeratorRequest::class);
     }
 
+    public function judgeProblem()
+    {
+        return $this->hasMany(JudgeProblem::class);
+    }
+
     public function getAvatarAttribute($avatar)
     {
         return asset($this->avatarPath.$avatar);
