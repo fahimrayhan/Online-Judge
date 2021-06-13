@@ -39,6 +39,7 @@ var appJs = [
 	'resources/assets/js/language/language.js',
 	'resources/assets/js/submission/submission_editor.js',
 	'resources/assets/js/submission/submission.js',
+	'resources/assets/js/moderator/moderator_request.js',
 ];
 
 var scripts = [].concat(libJs,helperJs,appJs);

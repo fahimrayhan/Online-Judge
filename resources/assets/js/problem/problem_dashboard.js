@@ -187,6 +187,14 @@ var problem = {
             url.load();
             toast.success("Your are now moderator");
         });
+    },
+    requestForModerator : function (el) {
+        var requestUrl = el.attr('data-url');
+        var data = {};
+        $.post(requestUrl, app.setToken(data), function (response) {
+            url.load();
+            toast.success("Your Request Sent To Admin");
+        });
     }
 };
 var testCase = {

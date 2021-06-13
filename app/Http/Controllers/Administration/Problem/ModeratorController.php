@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\Problem\ProblemService;
 use App\Models\User;
+use App\Models\ModeratorRequest;
 
 class ModeratorController extends Controller
 {
@@ -92,5 +93,27 @@ class ModeratorController extends Controller
         return response()->json([
             'message' => "Moderator accept successfully",
         ]);
+    }
+
+    public function requestForModerator()
+    {
+        if (!auth()->check()) {
+            abort(401,"You need to login your account");
+        }
+        if(!auth()->user()->moderatorRequest)
+        {
+            ModeratorRequest::create([
+                'user_id' => auth()->user()->id,
+                'type' => 30
+            ]);
+        }
+
+        // dd(User::has('moderatorRequest')->get());
+        
+        return response()->json([
+            'message' => "Your Request Is Sent"
+        ]);
+
+
     }
 }

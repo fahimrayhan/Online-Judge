@@ -25,6 +25,9 @@ Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
 
+Route::post('/request_for_moderator','Administration\Problem\ModeratorController@requestForModerator')->name('request_for_moderator');
+
+
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
@@ -73,6 +76,13 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         });
     });
     Route::group(['prefix' => 'settings', 'middleware' => ['Admin']], function () {
+        Route::group(['prefix' => 'moderators'],function(){
+            Route::get('/','Administration\User\UserTypeChangeController@modertators')->name('administration.settings.moderators');
+            Route::get('/requests','Administration\User\UserTypeChangeController@modertatorRequests')->name('administration.settings.moderators.reqeusts');
+            Route::post('/aprove_request','Administration\User\UserTypeChangeController@aproveModertatorRequest')->name('administration.settings.moderators.aprove_moderator_request');
+            Route::post('/delete_request','Administration\User\UserTypeChangeController@deleteModertatorRequest')->name('administration.settings.moderators.delete_moderator_request');
+            Route::post('/delete_moderator','Administration\User\UserTypeChangeController@deleteModertator')->name('administration.settings.moderators.delete_moderator');
+        });
         Route::group(['prefix' => 'languages'], function () {
             Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');
             Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.settings.languages.create');

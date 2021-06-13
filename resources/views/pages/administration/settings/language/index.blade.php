@@ -1,4 +1,4 @@
-@extends('pages.administration.settings.language.base')
+@extends('pages.administration.settings.layout.base')
 @section('languages-sub-content')
 
     <style type="text/css">
