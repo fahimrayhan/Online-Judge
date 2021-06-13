@@ -160,9 +160,21 @@ var problem = {
         var delUrl = el.attr('data-url');
         var data = {}
         $.post(delUrl, app.setToken(data), function (response) {
-            url.load();
-            toast.success("Successfully Removed Moderator");
+            url.load(response.url);
+            toast.success(response.message);
         });
+    },
+    leaveFromModerator : function (el) {
+        var ok = confirm("Are you want to Leave From moderator?");
+        if(ok)
+        {
+            var delUrl = el.attr('data-url');
+            var data = {};
+            $.post(delUrl, app.setToken(data), function (response) {
+                url.load(response.url);
+                toast.success(response.message);
+            });
+        }
     },
     acceptProblemModerator : function (el) {
         var acceptUrl = el.attr('data-url');
@@ -174,6 +186,14 @@ var problem = {
         $.post(acceptUrl, app.setToken(data), function (response) {
             url.load();
             toast.success("Your are now moderator");
+        });
+    },
+    requestForModerator : function (el) {
+        var requestUrl = el.attr('data-url');
+        var data = {};
+        $.post(requestUrl, app.setToken(data), function (response) {
+            url.load();
+            toast.success("Your Request Sent To Admin");
         });
     }
 };

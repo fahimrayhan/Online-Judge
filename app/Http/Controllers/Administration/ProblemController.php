@@ -43,13 +43,10 @@ class ProblemController extends Controller
 
     public function moderators()
     {
-        // dd(auth()->user()->problems()->where('problem_id',$this->problemData->id)->first()->pivot->role);
-        $role = auth()->user()->problems()->where('problem_id',$this->problemData->id)->first();
-        $role = $role ? $role->pivot->role : "Not Owner Or Moderator";
         $moderators = $this->problemData->moderator->sortBy('created_at');
         return view('pages.administration.problem.moderators',[
             'moderators' => $moderators,
-            'role' => $role
+            'role' => $this->problemData->authUserRole
             ]);
     }
 

@@ -17,6 +17,8 @@ class Problem extends Model
         'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker_type', 'default_checker', 'custom_checker',
     ];
 
+    protected $appends = ['authUserRole'];
+
     protected static function boot()
     {
         parent::boot();
@@ -78,5 +80,10 @@ class Problem extends Model
     public function moderator()
     {
         return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
+    }
+
+    public function getAuthUserRoleAttribute()
+    {
+        return $this->moderator()->where('user_id',auth()->user()->id)->firstOrFail()->pivot->role;
     }
 }
