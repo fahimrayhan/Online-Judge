@@ -160,8 +160,8 @@ var problem = {
         var delUrl = el.attr('data-url');
         var data = {}
         $.post(delUrl, app.setToken(data), function (response) {
-            url.load();
-            toast.success("Successfully Removed Moderator");
+            url.load(response.url);
+            toast.success(response.message);
         });
     },
     leaveFromModerator : function (el) {
@@ -171,8 +171,8 @@ var problem = {
             var delUrl = el.attr('data-url');
             var data = {};
             $.post(delUrl, app.setToken(data), function (response) {
-                url.load();
-                toast.success("Successfully Leave From Moderator");
+                url.load(response.url);
+                toast.success(response.message);
             });
         }
     },

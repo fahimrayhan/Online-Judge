@@ -70,6 +70,7 @@ class ModeratorController extends Controller
         $this->problemData->moderator()->detach(auth()->user()->id);
         return response()->json([
             'message' => "You Leave From {$this->problemData->name}",
+            'url' => route('administration.problems'),
         ]);
 
     }
@@ -80,7 +81,7 @@ class ModeratorController extends Controller
         $this->problemData->moderator()->detach(auth()->user()->id);
         return response()->json([
             'message' => "Moderator Detach Successfully",
-            // 'url' => route()
+            'url' => route('administration.problems')
         ]);
         
 
