@@ -42,6 +42,10 @@
         text-align: center;
     }
 </style>
+@php
+    $languages = $problem->languages()->get();
+@endphp
+
 
 <div class="editorArea">
     <div class="editorAreaTop">

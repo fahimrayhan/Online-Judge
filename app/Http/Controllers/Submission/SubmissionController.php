@@ -41,6 +41,11 @@ class SubmissionController extends Controller
         ]);
     }
 
+    public function createPracticeSubmission()
+    {
+        
+    }
+
     public function submissionVerdict()
     {
         $submission = Submission::where(['id' => request()->submission_id])->firstOrFail();
