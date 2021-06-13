@@ -18,14 +18,16 @@ Moderators
             <th>Handle</th>
             <th></th>
         </tr>
+
         @foreach ($users as $key => $user)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->handle }}</td>
+                <td>{{ $user->moderatorRequest->message }}</td>
                 <td>
                     <button class="btn btn-sm btn-info" onclick="moderator.aproveRequest($(this))" data-url = "{{ route('administration.settings.moderators.request.aprove',['requestId' => $user->moderatorRequest->id]) }}">Aprove</button>
-                    <button class="btn btn-sm btn-danger" onclick="moderator.deleteRequest($(this))" data-url = "{{ route('administration.settings.moderators.request.delete',['requestId' => $user->moderatorRequest->id]) }}">Delete</button>
+                    <button class="btn btn-sm btn-danger" onclick="moderator.deleteRequest($(this))" data-url = "{{ route('administration.settings.moderators.request.delete',['requestId' => $user->moderatorRequest->id]) }}">Cancle</button>
                 </td>
             </tr>
         @endforeach

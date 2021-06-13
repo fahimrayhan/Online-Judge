@@ -24,7 +24,6 @@ class ModeratorService
 
     public function aproveModeratorRequest(ModeratorRequest $requestData)
     {
-        
         $user = $requestData->user;
         $user->type = 30;
         $user->save();
@@ -44,3 +43,4 @@ class ModeratorService
     }
 
 }
+

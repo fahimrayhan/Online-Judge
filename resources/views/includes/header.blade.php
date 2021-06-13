@@ -110,6 +110,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <p>
+                                            <a href="{{route('administration')}}" class="btn btn-info btn-block">Administration</a>
                                             <a href="{{route('settings.general')}}" class="btn btn-success btn-block">Setting</a>
                                             <button id="logout-btn" onclick="auth.logout(this)" url="{{route('logout')}}" class="btn btn-danger btn-block">Logout</button>
                                         </p>
