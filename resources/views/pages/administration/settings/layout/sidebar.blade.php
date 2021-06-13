@@ -6,8 +6,22 @@
                 'url' => route('administration.settings.languages'),
                 'callback' => ''
         ],
+        'moderators' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'Moderators',
+                'url' => route('administration.settings.moderators'),
+                'callback' => ''
+        ],
+        'checker' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'Checker',
+                'url' => route('administration.settings.checker.index'),
+                'callback' => ''
+        ],
         
     ];
+
+    
 @endphp
 
 <div class="box">

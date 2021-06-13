@@ -39,7 +39,7 @@
 <div class="row">
 	<div class="col-md-3">
 		
-		@include('pages.administration.settings.language.sidebar')
+		@include('pages.administration.settings.layout.sidebar')
 	</div>
 	<div class="col-md-9">
 		<div class="box">

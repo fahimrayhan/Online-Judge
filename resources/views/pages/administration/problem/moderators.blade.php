@@ -128,7 +128,7 @@
     </style>
     <div class='row'>
         <div class='col-md-6 border'>
-            <div style="">
+            <div>
                 @foreach ($moderators as $moderator)
                     <div class='boxx none_border'>
                         <div class='box_bodyy' style='padding-left: 15px;'>
@@ -145,8 +145,8 @@
                                                         class='btn btn-sm btn-danger' data-userId = "{{ $moderator->id }}" data-url = "{{ route('administration.problem.delete_moderator',['slug' => request()->slug]) }}"><span class='glyphicon glyphicon-trash'></span> Remove</button>
                                                 @endif
                                             @elseif (auth()->user()->id == $moderator->id && $role == 'moderator')
-                                            <button onclick='problem.deleteProblemModerator($(this))'
-                                            class='btn btn-sm btn-danger' data-userId = "{{ $moderator->id }}" data-url = "{{ route('administration.problem.delete_moderator',['slug' => request()->slug]) }}">Leave</button>
+                                            <button onclick='problem.leaveFromModerator($(this))'
+                                            class='btn btn-sm btn-danger' data-url = "{{ route('administration.problem.moderators.leave_moderator',['slug' => request()->slug]) }}">Leave</button>
 
                                             @endif
 
@@ -167,9 +167,10 @@
             </div>
         </div>
 
-
+        @if($role == "owner")
         <div class="col-md-6">
             <div class='box_body'>
+
                 <input type='text' onkeyup='problem.getModetatorsList($(this))' autocomplete='off' class='form-control'
                     id='search_moderators' placeholder='Enter Moderator Handle' name="search"
                     data-url="{{ route('administration.problem.get_moderators_list', ['slug' => request()->slug]) }}"
@@ -179,5 +180,6 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 @stop
