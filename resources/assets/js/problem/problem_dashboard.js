@@ -1,39 +1,39 @@
 var problem = {
     checkerEditor: "",
-    create: function () {
+    create: function() {
         var form = new Form("create_problem");
         form.submit({
             loadingText: "creating...",
             success: {
                 resetForm: true,
-                callback: function () {
+                callback: function() {
                     alert("ok");
                 }
             }
         });
     },
-    editor: function (problemData) {
+    editor: function(problemData) {
         console.log(problemData);
         problemDetailsEditor.setEditor(problemData);
     },
-    detailsUpadte: function (actionUrl) {
+    detailsUpadte: function(actionUrl) {
         var data = problemDetailsEditor.getEditorData();
         data['name'] = $("#problem_name").val();
         var btn = new Button("update-problem-details");
         btn.off("Updating....");
-        $.post(actionUrl, app.setToken(data), function (response) {
+        $.post(actionUrl, app.setToken(data), function(response) {
             toast.success("Updated Details");
             btn.on();
         });
     },
-    preview: function (e) {
-        new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function (response) { });
+    preview: function(e) {
+        new Modal("custom", 750).load($(e).attr('url'), "Preview Problem", function(response) {});
     },
-    copyTestCase: function (e) {
+    copyTestCase: function(e) {
         copyer(e.value);
         toast.info("The example has been copied into the clipboard");
     },
-    setCheckerCustomEditor: function (code) {
+    setCheckerCustomEditor: function(code) {
         this.checkerEditor = ace.edit("checkerEditor");
         this.checkerEditor.setOption("maxLines", 30);
         this.checkerEditor.setOption("minLines", 30);
@@ -41,7 +41,7 @@ var problem = {
         this.checkerEditor.setValue(atob(code), -1);
         this.checkerEditor.getSession().setMode("ace/mode/c_cpp");
     },
-    updateCustomChecker: function (e) {
+    updateCustomChecker: function(e) {
         code = this.checkerEditor.getValue()
         if (code == "") {
             alert("Checker can not be empty");
@@ -53,12 +53,12 @@ var problem = {
         };
         var btn = new Button("custom_checker_btn");
         btn.off("Saving....");
-        $.post($(e).attr('url'), app.setToken(data), function (response) {
+        $.post($(e).attr('url'), app.setToken(data), function(response) {
             toast.success("Save success custom checker");
             btn.on();
         });
     },
-    updateDefaultChecker: function (e) {
+    updateDefaultChecker: function(e) {
         checker = $("#default_checker").val();
         if (checker == "") {
             alert("Checker can not be empty");
@@ -70,42 +70,42 @@ var problem = {
         };
         var btn = new Button("default_checker_btn");
         btn.off("Saving....");
-        $.post($(e).attr('url'), app.setToken(data), function (response) {
+        $.post($(e).attr('url'), app.setToken(data), function(response) {
             toast.success("Save success default checker");
             btn.on();
         });
     },
-    selectDefaultChecker: function () {
+    selectDefaultChecker: function() {
         $("#custom_checker_area").hide();
         $("#default_checker_area").show();
     },
-    selectCustomChecker: function () {
+    selectCustomChecker: function() {
         $("#default_checker_area").hide();
         $("#custom_checker_area").show();
     },
-    addLanguages: function () {
+    addLanguages: function() {
         new Form("add_languages").submit({
             loadingText: "Add Languages",
             success: {
-                callback: function (response) {
+                callback: function(response) {
                     new Modal().close();
                     url.load();
                 }
             }
         });
     },
-    updateLanguages: function () {
+    updateLanguages: function() {
         new Form("edit_problem_language").submit({
             loadingText: "Updating Languages",
             success: {
-                callback: function (response) {
+                callback: function(response) {
                     new Modal().close();
                     url.load();
                 }
             }
         });
     },
-    getModetatorsList: function (el) {
+    getModetatorsList: function(el) {
         $('#suggestion_box').html("");
         var geturl = el.attr('data-url');
         var addUrl = el.attr('data-add-url');
@@ -114,32 +114,27 @@ var problem = {
         if (data['search'] == "") {
             return;
         }
-        $.post(geturl, app.setToken(data), function (response) {
+        $.post(geturl, app.setToken(data), function(response) {
             console.log(response);
             var moderatorsList = JSON.parse(response);
             $('#suggestion_box').html("");
-            $.each(moderatorsList, function () {
-                $('#suggestion_box').append(
-                    "<li class='list-group-item moderators_suggestion_li' onclick='problem.addProblemModerator($(this))' data-userId='" + this.id + "' data-url='" + addUrl + "'>" +
-                    "<img class='img-thumbnail moderators_suggestion_li_img' src='" + this.avatar + "' style='width: 50px;'><b> " +
-                    this.handle + "</b></li>"
-                );
+            $.each(moderatorsList, function() {
+                $('#suggestion_box').append("<li class='list-group-item moderators_suggestion_li' onclick='problem.addProblemModerator($(this))' data-userId='" + this.id + "' data-url='" + addUrl + "'>" + "<img class='img-thumbnail moderators_suggestion_li_img' src='" + this.avatar + "' style='width: 50px;'><b> " + this.handle + "</b></li>");
             });
         });
-
     },
-    addProblemModerator: function (el) {
+    addProblemModerator: function(el) {
         var userId = el.attr('data-userId');
         var addurl = el.attr('data-url');
         var data = {
             'userId': userId,
         }
-        $.post(addurl, app.setToken(data), function (response) {
+        $.post(addurl, app.setToken(data), function(response) {
             url.load();
             toast.success("Successfully Add Moderator");
         });
     },
-    deleteProblemModerator: function (el) {
+    deleteProblemModerator: function(el) {
         var ok = confirm("Are you want to delete moderator?");
         if (ok) {
             var delUrl = el.attr('data-url');
@@ -147,92 +142,93 @@ var problem = {
             var data = {
                 'userId': userId,
             }
-            $.post(delUrl, app.setToken(data), function (response) {
+            $.post(delUrl, app.setToken(data), function(response) {
                 url.load();
                 toast.success("Successfully Removed Moderator");
             });
         }
-
     },
-    cancelProblemModerator: function (el) {
+    cancelProblemModerator: function(el) {
         var delUrl = el.attr('data-url');
         var data = {}
-        $.post(delUrl, app.setToken(data), function (response) {
+        $.post(delUrl, app.setToken(data), function(response) {
             url.load(response.url);
             toast.success(response.message);
         });
     },
-    leaveFromModerator: function (el) {
+    leaveFromModerator: function(el) {
         var ok = confirm("Are you want to Leave From moderator?");
         if (ok) {
             var delUrl = el.attr('data-url');
             var data = {};
-            $.post(delUrl, app.setToken(data), function (response) {
+            $.post(delUrl, app.setToken(data), function(response) {
                 url.load(response.url);
                 toast.success(response.message);
             });
         }
     },
-    acceptProblemModerator: function (el) {
+    acceptProblemModerator: function(el) {
         var acceptUrl = el.attr('data-url');
         var userId = el.attr('data-userId');
         console.log(userId);
         var data = {
             'userId': userId
         };
-        $.post(acceptUrl, app.setToken(data), function (response) {
+        $.post(acceptUrl, app.setToken(data), function(response) {
             url.load();
             toast.success("Your are now moderator");
         });
     },
-    requestForModerator: function (el) {
-        var requestUrl = el.attr('data-url');
+    requestForModerator: function(e) {
+        var ok = confirm("Are you want to send moderator request?");
+        if (!ok) return;
         var data = {
-            'message': "hello guys"
+            'message': $("#moderator_message").val()
         };
-        $.post(requestUrl, app.setToken(data), function (response) {
+        new Button("sendReqBtn").off("Sending...").loader();
+        $.post(e.attr('data-url'), app.setToken(data), function(response) {
             url.load();
             toast.success("Your Request Sent To Admin");
         });
     },
-    requestForJudgeProblem: function (el) {
-        var requestUrl = el.attr('data-url');
-        $.post(requestUrl, app.setToken(), function (response) {
+    // judge problem list
+    requestForJudgeProblem: function(e) {
+        $.post(e.attr('data-url'), app.setToken(), function(response) {
             url.load();
             toast.success(response.message);
         });
     },
-    aproveRequestForJudgeProblem: function (el) {
-        var requestUrl = el.attr('data-url');
-        $.post(requestUrl, app.setToken(), function (response) {
+    aproveRequestForJudgeProblem: function(e) {
+        $.post(e.attr('data-url'), app.setToken(), function(response) {
             url.load();
             toast.success(response.message);
         });
     },
-    deleteFromJudgeProblem: function (el) {
-        var requestUrl = el.attr('data-url');
-        $.post(requestUrl, app.setToken(), function (response) {
+    deleteFromJudgeProblem: function(e) {
+        $.post( e.attr('data-url'), app.setToken(), function(response) {
             url.load();
-            toast.success(response.message);
+            console.log(response);
+           // toast.success(response.message);
         });
     }
+    //end judge problem list
 };
 var testCase = {
-    selectInputType: function (e) {
+    selectInputType: function(e) {
         var type = e.value;
         $("#testCaseInputEditorArea").hide();
         $("#testCaseInputUploadArea").hide();
         if (type == "editor") $("#testCaseInputEditorArea").show();
         if (type == "upload") $("#testCaseInputUploadArea").show();
     },
-    selectOutputType: function (e) {
+    selectOutputType: function(e) {
         var type = e.value;
         $("#testCaseOutputEditorArea").hide();
         $("#testCaseOutputUploadArea").hide();
         if (type == "editor") $("#testCaseOutputEditorArea").show();
         if (type == "upload") $("#testCaseOutputUploadArea").show();
     },
-    setInputEditorLimit: function (e) {
+    setInputEditorLimit: function(e) {
         var editorVal = $('#testCaseInput').val();
         var maxLen = 5000;
         var txtLen = editorVal.length;
@@ -240,7 +236,7 @@ var testCase = {
             alert("Input File Is To Large. If You Need Large Input You Try Upload Option.");
         }
     },
-    setOutputEditorLimit: function (e) {
+    setOutputEditorLimit: function(e) {
         var editorVal = $('#testCaseOutput').val();
         var maxLen = 5000;
         var txtLen = editorVal.length;
@@ -248,44 +244,43 @@ var testCase = {
             alert("Output File Is To Large. If You Need Large Output You Try Upload Option.");
         }
     },
-    updateSample: function (e) {
+    updateSample: function(e) {
         var sample = $(e).prop("checked") == true ? 1 : 0;
         var data = {
             'sample': sample
         };
-        $.get($(e).attr('name'), data, function (response) {
+        $.get($(e).attr('name'), data, function(response) {
             toast.success(response.message);
         });
     },
-    addTestCase: function () {
+    addTestCase: function() {
         new Form("add_test_case").submit({
             loadingText: "Saving...",
             success: {
-                callback: function (response) {
+                callback: function(response) {
                     new Modal().close();
                     url.load();
                 }
             }
         });
     },
-    updateTestCase: function () {
+    updateTestCase: function() {
         new Form("update_test_case").submit({
             loadingText: "Saving...",
             success: {
-                callback: function (response) {
+                callback: function(response) {
                     new Modal().close();
                     url.load();
                 }
             }
         });
     },
-    delete: function (e) {
+    delete: function(e) {
         var ok = confirm("Are you want to delete this test case");
         if (!ok) return;
-        $.get($(e).attr('url'), function (response) {
+        $.get($(e).attr('url'), function(response) {
             toast.success(response.message);
             url.load();
         });
     },
-
 }

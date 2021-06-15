@@ -37,7 +37,7 @@
 			<div class="col-md-3"><div class="option-name">Custom Checker Code</div></div>
 			<div class="col-md-9">
 				<textarea rows="10" id="checkerEditor">{{$problem->custom_checker}}</textarea>
-				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 5px;">Save Custom Checker</button>
+				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 5px;">Save Custom Checker</button>
 			</div>
 		</div>
 	</div>
@@ -45,10 +45,12 @@
 		<div class="row">
 			<div class="col-md-3"><div class="option-name">Select Default Checker</div></div>
 			<div class="col-md-9">
-				<select id="default_checker" style="padding: 5px;">
+				<select id="default_checker" class="form-control" style="width: 120px;">
 					<option value="default">Default</option>
-				</select><br/>
-				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 10px;">Set Default Checker</button>
+					<option value="default">Default</option>
+					<option value="default">Default</option>
+				</select>
+				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 10px;">Set Default Checker</button>
 			</div>
 		</div>
 	</div>

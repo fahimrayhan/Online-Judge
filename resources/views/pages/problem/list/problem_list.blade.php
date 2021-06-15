@@ -58,20 +58,20 @@
 				<span class="glyphicon glyphicon-list-alt"></span> Problems </div>
 			<div class="body" style="min-height: 500px">
 				<div class="problem-list">
-					@foreach($problems as $key => $problem)
-					<a href="{{route('problem.view',['slug' => $problem->slug])}}">
+					@foreach($JudgeProblems as $key => $JudgeProblem)
+					<a href="{{route('problem.view',['slug' => $JudgeProblem->problem->slug])}}">
 					<div class="problem">
-						<div class="problem-title">{{$problem->name}}</div>
+						<div class="problem-title">{{$JudgeProblem->problem->id}} - {{$JudgeProblem->problem->name}}</div>
 						<div class="problem-sub">
-							<span>ATTEMPTED BY: <b>{{rand()%1000}}</b></span> 
-							<span>SUCCESS RATE: <b>88%</b> </span>
+							<!-- <span>ATTEMPTED BY: <b>{{rand()%1000}}</b></span>  -->
+							<!-- <span>SUCCESS RATE: <b>88%</b> </span> -->
 							<span>LEVEL: <b>Easy</b></div></span>
 					</div>
 					</a>
 					@endforeach
 				</div>
 				<div style="text-align: center;">
-					{{$problems->links()}}
+					{{$JudgeProblems->links()}}
 				</div>
 			</div>
 		</div>

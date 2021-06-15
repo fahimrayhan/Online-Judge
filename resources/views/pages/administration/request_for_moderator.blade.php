@@ -24,8 +24,7 @@
 </style>
 
 <div class="row">
-<div class="col-md-3"></div>
-<div class="col-md-6">
+<div class="col-md-6 col-md-offset-3">
 	<div class="box">
 	<div class="header">Moderator Request</div>
 	<div class="body">
@@ -35,6 +34,7 @@
 				<center><i class="fas fa-shield-alt request-icon"></i></center>
 			</div>
 			<div class="col-md-9">
+				<b style="color: red">You are not moderator.</b><br/>
 				<b>If you are a moderator you can use those feature:</b><br/>
 				<ul style="margin-top: 5px;">
 				<li>You can moderate problems</li>
@@ -45,7 +45,7 @@
 					<b style="color: #27ae60"><i class="fa fa-clock-o "></i> Your Request is Pending. Please Waiting for Admin Response.</b>
  					@else
  					<b>Why you want to be a moderator?</b><br/>
- 					<textarea rows="3" cols="25"></textarea><br/>
+ 					<textarea id="moderator_message" rows="3" cols="25"></textarea><br/>
  					<button class="btn btn-success btn-sm" style="margin-top: 10px;" id="sendReqBtn" onclick='problem.requestForModerator($(this))' data-url = "{{ route('request_for_moderator') }}"><i class="fa fa-paper-plane" aria-hidden="true"></i>
  Send Moderator Request</button>
  					@endif
