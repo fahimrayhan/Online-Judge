@@ -15,7 +15,7 @@ var problem = {
     settingsUpdate: function () {
         var form = new Form("update_problem");
         form.submit({
-            loadingText: "creating...",
+            loadingText: "Updating...",
             success: {
                 resetForm: true,
                 callback: function (response) {
