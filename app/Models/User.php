@@ -69,6 +69,15 @@ class User extends Authenticatable
     {
         return 'upload/avatars/';
     }
+    public function moderatorRequest()
+    {
+        return $this->hasOne(ModeratorRequest::class);
+    }
+
+    public function judgeProblem()
+    {
+        return $this->hasMany(JudgeProblem::class);
+    }
 
     public function getAvatarAttribute($avatar)
     {

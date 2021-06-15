@@ -38,14 +38,14 @@ class ProblemService
 
         foreach ($data['languages'] as $language_id) {
             $pivot[$language_id] = [
-                'time_limit' => (double)max($data['time_limit'][$language_id],0.1), 
-                'memory_limit' => (double)max($data['memory_limit'][$language_id],0.1)
+                'time_limit' => (float)max($data['time_limit'][$language_id], 0.1),
+                'memory_limit' => (float)max($data['memory_limit'][$language_id], 0.1)
             ];
         }
         $problem->languages()->sync($pivot);
         return $problem;
     }
-    
+
     public function updateTimeAndMemory(Problem $problem, $data)
     {
         $problem->time_limit   = $data['time_limit'];
@@ -53,5 +53,4 @@ class ProblemService
         $problem->save();
         return $problem;
     }
-
 }

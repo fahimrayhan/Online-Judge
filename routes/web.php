@@ -21,9 +21,18 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 Route::get('/', 'Profile\ProfileController@home')->name('home');
 Route::get('/contests', 'Problem\ProblemListController@show')->name('contests');
-Route::get('/problems', 'Problem\ProblemListController@show')->name('problems');
+
 Route::get('/submissions', 'Problem\ProblemListController@show')->name('submissions');
 Route::get('/ranklist', 'Problem\ProblemListController@show')->name('ranklist');
+
+Route::post('/request_for_moderator', 'Administration\Problem\ModeratorController@requestForModerator')->name('request_for_moderator');
+
+Route::group(['prefix' => 'problems'], function () {
+    Route::get('/', 'Problem\ProblemListController@show')->name('problems');
+    Route::get('/{slug}', 'Problem\ProblemListController@viewProblem')->name('problem.view');
+    Route::get('/{slug}/create_submission', 'Problem\ProblemController@createSubmission')->name('problem.submission.create');
+});
+
 
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
@@ -56,11 +65,21 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');
             Route::post('/languages/save', 'Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
 
-            Route::get('/moderators', 'Administration\ProblemController@moderators')->name('administration.problem.moderators');
-            Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
-            Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
-            Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
-            Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
+            Route::group(['prefix' => 'moderators'], function () {
+                Route::get('/', 'Administration\ProblemController@moderators')->name('administration.problem.moderators');
+                Route::post('/get_moderators_list', 'Administration\Problem\ModeratorController@getModeratorsList')->name('administration.problem.get_moderators_list');
+                Route::post('/add_moderator', 'Administration\Problem\ModeratorController@addModerator')->name('administration.problem.add_moderator');
+                Route::post('/delete_moderator', 'Administration\Problem\ModeratorController@deleteModerator')->name('administration.problem.delete_moderator');
+                Route::post('/leave_moderator', 'Administration\Problem\ModeratorController@leaveModerator')->name('administration.problem.moderators.leave_moderator');
+            });
+            /*
+            Problem Settings
+            */
+            Route::group(['prefix' => '/settings'], function () {
+                Route::get('/', 'Administration\ProblemController@settings')->name('administration.problem.settings');
+                Route::post('/request_judge_problem', 'Administration\ProblemController@requestJudgeProblem')->name('administration.problem.settings.request_judge_problem');
+            });
+
 
             Route::get('/test_submissions', 'Administration\ProblemController@viewTestSubmission')->name('administration.problem.test_submissions');
             Route::get('/create_test_submission', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.create_test_submission');
@@ -71,9 +90,26 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
            Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
 
 
+
         });
     });
+
+    /*
+    
+    Administration Settings
+    Only Access by Admin(20) And Super Admin(10)
+    
+    */
     Route::group(['prefix' => 'settings', 'middleware' => ['Admin']], function () {
+        Route::group(['prefix' => 'moderators'], function () {
+            Route::get('/', 'Administration\User\UserTypeChangeController@modertators')->name('administration.settings.moderators');
+            Route::get('/requests', 'Administration\User\UserTypeChangeController@modertatorRequests')->name('administration.settings.moderators.reqeusts');
+            Route::group(['prefix' => '/request/{requestId}'], function () {
+                Route::post('/aprove', 'Administration\User\UserTypeChangeController@aproveModertatorRequest')->name('administration.settings.moderators.request.aprove');
+                Route::post('/delete', 'Administration\User\UserTypeChangeController@deleteModertatorRequest')->name('administration.settings.moderators.request.delete');
+            });
+            Route::post('{userId}/delete', 'Administration\User\UserTypeChangeController@deleteModertator')->name('administration.settings.moderators.delete');
+        });
         Route::group(['prefix' => 'languages'], function () {
             Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings.languages');
             Route::get('/create', 'Administration\Language\LanguageController@create')->name('administration.settings.languages.create');
@@ -82,6 +118,24 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::get('/edit', 'Administration\Language\LanguageController@edit')->name('administration.settings.languages.edit');
                 Route::put('/update', 'Administration\Language\LanguageController@update')->name('administration.settings.languages.update');
                 Route::get('/toggleArchive', 'Administration\Language\LanguageController@toggleArchive')->name('administration.settings.languages.toggle_archive');
+            });
+        });
+        Route::group(['prefix' => 'checker'], function () {
+            Route::get('/', 'Administration\Checker\CheckerController@index')->name('administration.settings.checker.index');
+            Route::get('/create', 'Administration\Checker\CheckerController@create')->name('administration.settings.checker.create');
+            Route::post('/store', 'Administration\Checker\CheckerController@store')->name('administration.settings.checker.store');
+            Route::group(['prefix' => '{checkerId}'], function () {
+                Route::get('/edit', 'Administration\Checker\CheckerController@edit')->name('administration.settings.checker.edit');
+                Route::post('/update', 'Administration\Checker\CheckerController@update')->name('administration.settings.checker.update');
+                Route::post('/delete', 'Administration\Checker\CheckerController@delete')->name('administration.settings.checker.delete');
+            });
+        });
+
+        Route::group(['prefix' => 'judge_problem'], function () {
+            Route::get('/', 'Administration\ProblemController@judgeProblems')->name('administration.settings.judge_problem');
+            Route::post('/{judgeProblemId}/delete', 'Administration\ProblemController@deleteFromJudgeProblem')->name('administration.settings.judge_problem.delete_from_judge_problem');
+            Route::group(['prefix' => 'requests'], function () {
+                Route::post('/{judgeProblemId}/aprove', 'Administration\ProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
     });

@@ -112,4 +112,14 @@ class ProblemController extends Controller
     {
         //
     }
+
+    public function createSubmission()
+    {
+        $problemData = $this->problemService->getProblemData(request()->slug);
+        return view("pages.editor.editor", [
+            'problem' => $problemData,
+            'submitUrl' => 'hey'
+        ]);
+    }
 }
+

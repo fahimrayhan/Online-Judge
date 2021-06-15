@@ -17,6 +17,8 @@ class Problem extends Model
         'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker_type', 'default_checker', 'custom_checker',
     ];
 
+    protected $appends = ['authUserRole',];
+
     protected static function boot()
     {
         parent::boot();
@@ -68,15 +70,36 @@ class Problem extends Model
 
     public function languages()
     {
-        return $this->belongsToMany(Language::class)->withPivot('time_limit','memory_limit');
+        return $this->belongsToMany(Language::class)->withPivot('time_limit', 'memory_limit');
     }
 
     public function testCasesSample()
     {
         return $this->testCases()->where(['sample' => 1]);
     }
+
+    public function owner()
+    {
+        return $this->moderator()->firstOrFail();
+    }
+
     public function moderator()
     {
         return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
+    }
+
+    public function judgeProblem()
+    {
+        return $this->hasOne(JudgeProblem::class);
+    }
+
+    public function getAuthUserRoleAttribute()
+    {
+        return $this->moderator()->where('user_id', auth()->user()->id)->firstOrFail()->pivot->role;
+    }
+
+    public function userRole($userId)
+    {
+        return $this->moderator()->where('user_id', $userId)->firstOrFail()->pivot->role;
     }
 }

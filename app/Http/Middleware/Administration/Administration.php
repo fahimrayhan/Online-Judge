@@ -22,7 +22,7 @@ class Administration
         $role = $user ? $user->type : abort(401);
         if($role > 30)
         {
-            abort(401);
+            return response(view('pages.administration.request_for_moderator'));
         }
         return $next($request);
     }
