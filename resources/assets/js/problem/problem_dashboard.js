@@ -12,22 +12,16 @@ var problem = {
             }
         });
     },
-    settingsUpdate: function () {
+    settingsUpdate: function() {
         var form = new Form("update_problem");
         form.submit({
             loadingText: "Updating...",
             success: {
                 resetForm: true,
-                callback: function (response) {
-                     url.load();
-                }
             }
         });
     },
-    editor: function (problemData) {
-
     editor: function(problemData) {
-
         console.log(problemData);
         problemDetailsEditor.setEditor(problemData);
     },
@@ -102,9 +96,9 @@ var problem = {
         var defaultChecker = $("#default_checker").val();
         var checkerDescription = $("#default_checker").find(':selected').attr('description');
         $("#checker-name-url").html(defaultChecker);
-        $("#checker-description").html(checkerDescription);
+        $("#checker-description-area").html(checkerDescription);
     },
-    viewChecker: function(url){
+    viewChecker: function(url) {
         var defaultChecker = $("#default_checker").val();
         var data = {
             'checker_name': defaultChecker
@@ -113,7 +107,7 @@ var problem = {
         modal.open("std::" + defaultChecker + ".cpp");
         new Div(modal.body).load({
             'url': url,
-            'data' : data
+            'data': data
         });
     },
     addLanguages: function() {
@@ -238,10 +232,10 @@ var problem = {
         });
     },
     deleteFromJudgeProblem: function(e) {
-        $.post( e.attr('data-url'), app.setToken(), function(response) {
+        $.post(e.attr('data-url'), app.setToken(), function(response) {
             url.load();
             console.log(response);
-           // toast.success(response.message);
+            // toast.success(response.message);
         });
     }
     //end judge problem list

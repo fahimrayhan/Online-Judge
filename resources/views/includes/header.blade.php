@@ -34,6 +34,27 @@
     ];
 @endphp
 
+<style type="text/css">
+    .navbar-login .option-list{
+        padding: 10px 2px 10px 2px;
+        border: 1px solid #eeeeee;
+        border-width: 0px 0px 1px 0px;
+    }
+    .navbar-login a{
+        color: #2C3542;
+    }
+    .navbar-login a:focus{
+        background: #ffffff;
+    }
+    .navbar-login a:hover{
+        text-decoration: none;
+        background-color: #f5f5f5;
+    }
+    .navbar-login a:hover i{
+        color: #1A6FC9;
+    }
+</style>
+
 <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">
     <div class="top-loader" style="display: none;" id="top-loader">
       <div class="bar"></div>
@@ -90,29 +111,66 @@
                         <span class="dropdown-menu-arrow"></span>
                         <li>
                             <div class="navbar-login">
+                                <a href="{{route('profile',['handle' => auth()->user()->handle])}}">
                                 <div class="row">
-                                    <div class="col-md-4" style="text-align: center">
-                                        <img src="{{ auth()->user()->avatar }}" style="height: 80px; width: 80px;">
-                                    </div>
-                                    <div class="col-md-8" style="color: #000000">
-                                        <strong>{{auth()->user()->handle}}</strong>
-                                        <p class="text-left small">{{auth()->user()->email}}</p>
-                                        <p class="text-left">
-                                            <a href="{{route('profile',['handle' => auth()->user()->handle])}}" class="btn btn-primary btn-block btn-sm">View Profile</a>
-                                        </p>
+                                    <div class="col-md-12" style="color: #000000;text-align: center;margin-top: 5px;">
+                                        <img class="img-thumbnail" src="{{ auth()->user()->avatar }}" style="height: 70px; width: 75px;border-radius: 50%"><br/>
+                                        <b>{{auth()->user()->handle}}</b>
+                                        <p class="text-center small">{{auth()->user()->email}}</p>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <div class="navbar-login navbar-login-session">
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" style="text-align: left;margin-top: -15px;" >
                                         <p>
-                                            <a href="{{route('administration')}}" class="btn btn-info btn-block">Administration</a>
-                                            <a href="{{route('settings.general')}}" class="btn btn-success btn-block">Setting</a>
-                                            <button id="logout-btn" onclick="auth.logout(this)" url="{{route('logout')}}" class="btn btn-danger btn-block">Logout</button>
+                                            <a href="{{route('administration')}}" class="">
+                                            <div class="option-list">
+                                                <div class="row" style="color: #2C3542">
+                                                    <div class="col-md-2" style="font-size: 35px">
+                                                        <i class="fas fa-shield-alt"></i>
+                                                    </div>
+                                                    <div class="col-lg-10">
+                                                        
+                                                    <b>Administration</b><br/>
+                                                    <small id="checker-description" class="form-text text-muted">Control site administration</small>
+                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </a>
+                                            <a href="{{route('settings.general')}}">
+                                            <div class="option-list">
+                                                <div class="row" style="color: #2C3542">
+                                                    <div class="col-md-2" style="font-size: 35px">
+                                                        <i class="fa fa-cog"></i>
+                                                    </div>
+                                                    <div class="col-lg-10"><b>
+                                                        Setting</b><br/>
+                                                    <small id="checker-description" class="form-text text-muted">Access account settings</small>
+                                               
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             </a>
+                                             <a href="" onclick="auth.logout(this)" url="{{route('logout')}}">
+                                            <div class="option-list">
+                                                <div class="row" style="color: #2C3542">
+                                                    <div class="col-md-2" style="font-size: 35px">
+                                                        <i class="fa fa-sign-out"></i>
+                                                    </div>
+                                                    <div class="col-lg-10"><b>
+                                                         Logout</b><br/>
+                                                    <small id="checker-description" class="form-text text-muted">Logout from your account</small>
+                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </a>
                                         </p>
                                     </div>
                                 </div>

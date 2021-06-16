@@ -59,7 +59,7 @@
 				<div style="margin-top: 5px;"></div>
 				<a href="" onclick="problem.viewChecker('{{route('administration.problem.checker.view',['slug'=> request()->slug])}}')" url="" style="font-size: 12px;"><u>View source: std::<font id="checker-name-url">{{$problem->defaultChecker()->name}}</font>.cpp</u></a>
 				<div style="margin-top: 7px;">	
-					<small id="checker-description" class="form-text text-muted">{{$problem->defaultChecker()->description}}</small>
+					<small id="checker-description-area" class="form-text text-muted">{{$problem->defaultChecker()->description}}</small>
 				</div>
 				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 10px;">Set Default Checker</button>
 			</div>
