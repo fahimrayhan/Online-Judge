@@ -20,6 +20,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "@wiris/mathtype-ckeditor5": "^7.24.4"
+        "@wiris/mathtype-ckeditor5": "^7.24.4",
+        "flag-icon-css": "^3.5.0"
     }
 }
