@@ -33,7 +33,6 @@ Route::group(['prefix' => 'problems'], function () {
     Route::get('/{slug}/create_submission', 'Problem\ProblemController@createSubmission')->name('problem.submission.create');
 });
 
-
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
     Route::group(['prefix' => 'problems'], function () {
@@ -50,20 +49,35 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/statement', 'Administration\ProblemController@details')->name('administration.problem.statement');
             Route::post('/statement', 'Problem\ProblemController@updateDetails');
             Route::get('/preview_problem', 'Administration\ProblemController@previewProblem')->name('administration.problem.preview_problem');
-            Route::get('/test_case', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
-            Route::get('/test_case/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
-            Route::post('/test_case/add', 'TestCase\TestCaseController@addTestCase')->name('administration.problem.test_case.add');
-            Route::get('/test_case/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
 
-            Route::get('/test_case/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
-            Route::post('/test_case/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase')->name('problem.test_case.edit');
-            Route::get('/test_case/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
-
+            //problem checker
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
             Route::post('checker', 'Problem\ProblemController@updateChecker');
+            Route::get('checker/view', 'Administration\ProblemController@viewChecker')->name('administration.problem.checker.view');
 
+            //problem languages
             Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');
             Route::post('/languages/save', 'Administration\ProblemController@saveLanguages')->name('administration.problem.save_languages');
+
+            //test case group
+            Route::group(['prefix' => 'test_case'], function () {
+                //test case list
+                Route::get('/', 'Administration\ProblemController@testCaseList')->name('administration.problem.test_case');
+
+                //test case add
+                Route::get('/add', 'Administration\ProblemController@testCaseAdd')->name('administration.problem.test_case.add');
+                Route::post('/add', 'TestCase\TestCaseController@addTestCase');
+
+                //test case delete
+                Route::get('/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
+
+                //test case edit
+                Route::get('/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
+                Route::post('/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase');
+
+                //test case add sample
+                Route::get('/{test_case_id}/update_sample', 'TestCase\TestCaseController@updateSample')->name('problem.test_case.update_sample');
+            });
 
             Route::group(['prefix' => 'moderators'], function () {
                 Route::get('/', 'Administration\ProblemController@moderators')->name('administration.problem.moderators');
@@ -74,12 +88,11 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             });
             /*
             Problem Settings
-            */
+             */
             Route::group(['prefix' => '/settings'], function () {
                 Route::get('/', 'Administration\ProblemController@settings')->name('administration.problem.settings');
-                Route::post('/request_judge_problem', 'Administration\ProblemController@requestJudgeProblem')->name('administration.problem.settings.request_judge_problem');
+                Route::post('/request_judge_problem', 'JudgeProblem\JudgeProblemController@requestJudgeProblem')->name('administration.problem.settings.request_judge_problem');
             });
-
 
             Route::get('/test_submissions', 'Administration\ProblemController@viewTestSubmission')->name('administration.problem.test_submissions');
             Route::get('/create_test_submission', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.create_test_submission');
@@ -95,12 +108,14 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
     });
 
     /*
-    
+
     Administration Settings
     Only Access by Admin(20) And Super Admin(10)
-    
-    */
+
+     */
     Route::group(['prefix' => 'settings', 'middleware' => ['Admin']], function () {
+        Route::get('/', 'Administration\Language\LanguageDashboardController@show')->name('administration.settings');
+
         Route::group(['prefix' => 'moderators'], function () {
             Route::get('/', 'Administration\User\UserTypeChangeController@modertators')->name('administration.settings.moderators');
             Route::get('/requests', 'Administration\User\UserTypeChangeController@modertatorRequests')->name('administration.settings.moderators.reqeusts');
@@ -132,10 +147,10 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         });
 
         Route::group(['prefix' => 'judge_problem'], function () {
-            Route::get('/', 'Administration\ProblemController@judgeProblems')->name('administration.settings.judge_problem');
-            Route::post('/{judgeProblemId}/delete', 'Administration\ProblemController@deleteFromJudgeProblem')->name('administration.settings.judge_problem.delete_from_judge_problem');
+            Route::get('/', 'JudgeProblem\JudgeProblemController@judgeProblems')->name('administration.settings.judge_problem');
+            Route::post('/{judge_problem_id}/delete', 'JudgeProblem\JudgeProblemController@deleteFromJudgeProblem')->name('administration.settings.judge_problem.delete_from_judge_problem');
             Route::group(['prefix' => 'requests'], function () {
-                Route::post('/{judgeProblemId}/aprove', 'Administration\ProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
+                Route::post('/{judge_problem_id}/aprove', 'JudgeProblem\JudgeProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
     });

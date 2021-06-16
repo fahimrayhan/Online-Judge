@@ -16,6 +16,12 @@
 	}
 </style>
 
+<?php 
+	$ch = "lcmp - Lines ignore whitespace";
+	$ch = explode('-', $ch);
+	//dd($problem->defaultChecker());
+?>
+
 <div id="problem-details-editor-body" style="">
 	<div class="details-section">
 		<div class="row">
@@ -37,7 +43,7 @@
 			<div class="col-md-3"><div class="option-name">Custom Checker Code</div></div>
 			<div class="col-md-9">
 				<textarea rows="10" id="checkerEditor">{{$problem->custom_checker}}</textarea>
-				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 5px;">Save Custom Checker</button>
+				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 5px;">Save Custom Checker</button>
 			</div>
 		</div>
 	</div>
@@ -45,16 +51,23 @@
 		<div class="row">
 			<div class="col-md-3"><div class="option-name">Select Default Checker</div></div>
 			<div class="col-md-9">
-				<select id="default_checker" style="padding: 5px;">
-					<option value="default">Default</option>
-				</select><br/>
-				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn submit-btn" style="margin-top: 10px;">Set Default Checker</button>
+				<select id="default_checker" onchange="problem.selectDefaultCheckerOption()" class="form-control" style="width: 250px;">
+					@foreach($checkers as $key => $checker)
+						<option description="{{$checker->description}}" value="{{$checker->name}}" {{$checker->name == $problem->defaultChecker()->name ? "selected" : "" }}>{{$checker->name}} - {{$checker->short_description}}</option>
+					@endforeach
+				</select>
+				<div style="margin-top: 5px;"></div>
+				<a href="" onclick="problem.viewChecker('{{route('administration.problem.checker.view',['slug'=> request()->slug])}}')" url="" style="font-size: 12px;"><u>View source: std::<font id="checker-name-url">{{$problem->defaultChecker()->name}}</font>.cpp</u></a>
+				<div style="margin-top: 7px;">	
+					<small id="checker-description" class="form-text text-muted">{{$problem->defaultChecker()->description}}</small>
+				</div>
+				<button id="default_checker_btn" onclick="problem.updateDefaultChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 10px;">Set Default Checker</button>
 			</div>
 		</div>
 	</div>
 </div>
 <script type="text/javascript">
-	problem.setCheckerCustomEditor("{!! base64_encode($problem->custom_checker) !!}")
+	problem.setCheckerCustomEditor("{!! base64_encode($problem->custom_checker) !!}");
 </script>
 
 @stop

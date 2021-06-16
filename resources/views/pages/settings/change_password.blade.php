@@ -93,7 +93,7 @@
         	<div class="col-md-4"></div>
             <div class="col-md-8">
                 <div style="">
-                    <button type="submit" class="btn submit-btn"  style="margin-top: 15px;" onclick="profile.changePassword()">Change Password</button>
+                    <button type="submit" class="btn btn-primary"  style="margin-top: 15px;" onclick="profile.changePassword()">Change Password</button>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
 		padding: 5px;
 	}
 </style>
-	<div style='text-align: right; margin-bottom: 10px;'><button class="btn btn-success" onclick="new Modal('md').load('{{route('administration.problem.test_case.add',['slug' => request()->slug])}}')"><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>
+	<div style='text-align: right; margin-bottom: 10px;'><button class="btn btn-primary" onclick="new Modal('md').load('{{route('administration.problem.test_case.add',['slug' => request()->slug])}}')"><span class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>
 	<table width='100%' class="table-custom">
 		<tr>
 			<th>Order</th>
@@ -33,7 +33,7 @@
 			<td>{{$testCase->created_at}}</td>
 			<td><a href="{{route('profile',['handle' => $testCase->user->handle])}}">{{$testCase->user->handle}}</a></td>
 			<td>
-				<button value='' onclick="new Modal('md').load('{{route('problem.test_case.edit',['slug' => request()->slug,'test_case_id' => $testCase->id])}}','Edit Test Case')" class='btn btn-sm btn-default' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-pencil'></span></button>
+				<button value='' onclick="new Modal('md').load('{{route('problem.test_case.edit',['slug' => request()->slug,'test_case_id' => $testCase->id])}}','Edit Test Case')" class='btn btn-sm btn-success' onclick ='' id='updateTestCaseBtn'><span class='glyphicon glyphicon-pencil'></span></button>
 				<button value='' class='btn btn-sm btn-danger' url="{{route('problem.test_case.delete',['slug' => request()->slug,'test_case_id' => $testCase->id])}}" onclick ='testCase.delete(this)' id='updateTestCaseBtn'><span class='glyphicon glyphicon-trash'></span></button>
 			</td>
 		</tr>

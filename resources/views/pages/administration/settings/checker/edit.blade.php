@@ -12,9 +12,17 @@
             <input type="text" class='form-control-input' name="name" placeholder="Enter Checker Name" value="{{ $checker->name }}">
         </div>
     </div>
+     <div class='row' style="margin-bottom: 5px;">
+        <div class='col-md-4 label-area'>
+            <label> Short Description<font color="red">*</font>:</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text"  name="short_description" id="" cols="30" rows="5" class='form-control-input' value="{{ $checker->short_description }}">
+        </div>
+    </div>
     <div class='row' style="margin-bottom: 5px;">
         <div class='col-md-4 label-area'>
-            <label> Checker Description<font color="red">*</font>:</label>
+            <label>Description<font color="red">*</font>:</label>
         </div>
         <div class="col-md-8">
             <textarea name="description" id="" cols="30" rows="5" class='form-control-input'>{{ $checker->description }}</textarea>
@@ -32,7 +40,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-8">
             <div>
-                <button type="submit" class="btn submit-btn" onclick="checker.update()" style="margin-top: 15px;">Update Checker</button>
+                <button type="submit" class="btn btn-primary" onclick="checker.update()" style="margin-top: 15px;">Update Checker</button>
             </div>
         </div>
     </div>

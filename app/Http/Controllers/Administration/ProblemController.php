@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
 use App\Http\Requests\Problem\ProblemSettingsRequest;
 use App\Models\Problem;
+use App\Models\Checker;
 use App\Services\Language\LanguageService;
 use App\Services\Problem\ProblemService;
-use App\Services\JudgeProblem\JudgeProblemService;
 use PDF;
 use Carbon\Carbon;
 
@@ -19,7 +19,6 @@ class ProblemController extends Controller
      */
     protected $problemService;
     protected $languageService;
-    protected $judgeProblemSerivce;
     private $problemData;
 
     /**
@@ -28,11 +27,10 @@ class ProblemController extends Controller
      * @param  \App\Services\Auth\ProblemService $probServc
      * @return void
      */
-    public function __construct(ProblemService $probServc, LanguageService $languageService, JudgeProblemService $judgeProblemSerivce)
+    public function __construct(ProblemService $probServc, LanguageService $languageService)
     {
         $this->problemService  = $probServc;
         $this->languageService = $languageService;
-        $this->judgeProblemSerivce = $judgeProblemSerivce;
         if (isset(request()->slug)) {
             $this->problemData = $this->problemService->getProblemData(request()->slug);
         }
@@ -98,7 +96,17 @@ class ProblemController extends Controller
 
     public function checker()
     {
-        return view('pages.administration.problem.checker', ['problem' => $this->problemData]);
+        return view('pages.administration.problem.checker', [
+            'problem' => $this->problemData,
+            'checkers' => Checker::all()
+        ]);
+    }
+
+    public function viewChecker(){
+        $checker = Checker::where(['name' => request()->checker_name])->firstOrFail();
+        return view('pages.administration.problem.view_checker', [
+            'checker' => $checker
+        ]);
     }
 
     public function updateSettings()
@@ -170,47 +178,5 @@ class ProblemController extends Controller
             'problem' => $this->problemData
         ]);
     }
-    /**
-     * Request For Judge Problem
-     */
-
-    public function requestJudgeProblem()
-    {
-        $this->judgeProblemSerivce->requestForJudgeProblem($this->problemData);
-        return response()->json([
-            'message' => "Your Request Waiting For Acceptance"
-        ]);
-    }
-    /**
-     * Aprove Request For Judge Problem
-     */
-    public function aproveRequest($judgeProblemId)
-    {
-        $this->judgeProblemSerivce->acceptJudgeProblem($judgeProblemId);
-        return response()->json([
-            'message' => "One Problem Is accepted for judge problem"
-        ]);
-    }
-
-    /**
-     * Show all judge Problems
-     */
-    public function judgeProblems()
-    {
-        // dd($this->judgeProblemSerivce->getAllJudgeProblems());
-        return view('pages.administration.settings.judge_problem.judge_problems', [
-            'problems' => $this->judgeProblemSerivce->getAllJudgeProblems()
-        ]);
-    }
-    /**
-     * Delete From Judge Problem
-     */
-
-    public function deleteFromJudgeProblem($judgeProblemId)
-    {
-        $this->judgeProblemSerivce->deleteFromJudgeProblem($judgeProblemId);
-        return response()->json([
-            'message' => "Problem is deleted from judge problem"
-        ]);
-    }
+    
 }

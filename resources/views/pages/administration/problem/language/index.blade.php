@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
-                <button type="submit" class="btn submit-btn" onclick="problem.addLanguages()" style="margin-top: 15px;">Save Languages</button>
+                <button type="submit" class="btn btn-primary" onclick="problem.addLanguages()" style="margin-top: 15px;">Save Languages</button>
             </div>
         </div>
     </div>

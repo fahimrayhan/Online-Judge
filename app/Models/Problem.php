@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Problem\HasLanguage;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Checker;
 
 class Problem extends Model
 {
@@ -91,6 +92,11 @@ class Problem extends Model
     public function judgeProblem()
     {
         return $this->hasOne(JudgeProblem::class);
+    }
+
+    public function defaultChecker(){
+        $checker = Checker::where(['name' => $this->default_checker])->first();
+        return !$checker ? Checker::first() : $checker;
     }
 
     public function getAuthUserRoleAttribute()
