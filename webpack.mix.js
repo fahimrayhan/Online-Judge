@@ -41,6 +41,7 @@ var appJs = [
 	'resources/assets/js/submission/submission.js',
 	'resources/assets/js/moderator/moderator_request.js',
 	'resources/assets/js/checker/checker.js',
+	'resources/assets/js/country/country.js',
 ];
 
 var scripts = [].concat(libJs,helperJs,appJs);
