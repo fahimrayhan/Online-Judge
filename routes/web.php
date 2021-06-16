@@ -35,6 +35,13 @@ Route::group(['prefix' => 'problems'], function () {
 
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
     Route::get('/', 'Administration\AdministrationController@index')->name('administration');
+    Route::group(['prefix' => 'filemanager'], function () {
+        Route::get('/structure', 'Administration\FileManager\FileManagerController@structure')->name('administration.filemanager.structure');
+        Route::get('/loadUploadArea', 'Administration\FileManager\FileManagerController@loadUploadArea')->name('administration.filemanager.uploadArea');
+        Route::post('/upload', 'Administration\FileManager\FileManagerController@upload')->name('administration.filemanager.upload');
+        Route::get('/galery', 'Administration\FileManager\FileManagerController@galery')->name('administration.filemanager.galery');
+        Route::post('/{id}/delete', 'Administration\FileManager\FileManagerController@delete')->name('administration.filemanager.delete');
+    });
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
@@ -99,11 +106,8 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submission/create', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.test_submission.create');
             Route::post('/test_submission/create', 'Submission\SubmissionController@createTestSubmission');
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
-           Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
-           Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
-
-
-
+            Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
+            Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
         });
     });
 
@@ -186,5 +190,3 @@ Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')-
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
 
 /// problem settings
-
-
