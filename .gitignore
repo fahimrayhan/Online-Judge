@@ -17,3 +17,4 @@ yarn-error.log
 /public/file/test_case/input
 /public/file/test_case/output
 /public/upload/avatars
+/public/upload/files
