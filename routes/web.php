@@ -157,6 +157,23 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::post('/{judge_problem_id}/aprove', 'JudgeProblem\JudgeProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
+         /// Country 
+
+        Route::group(['prefix' => 'country'], function () {
+            Route::get('/', 'Administration\Country\CountryController@index')->name('administration.settings.country.index');
+            Route::get('/create', 'Administration\Country\CountryController@create')->name('administration.settings.country.create');
+            Route::post('/store', 'Administration\Country\CountryController@store')->name('administration.settings.country.store');
+            Route::group(['prefix' => '{Id}'], function () {
+                Route::get('/edit', 'Administration\Country\CountryController@edit')->name('administration.settings.country.edit');
+                Route::post('/update', 'Administration\Country\CountryController@update')->name('administration.settings.country.update');
+                Route::post('/delete', 'Administration\Country\CountryController@delete')->name('administration.settings.country.delete');
+            });
+        });
+
+
+        ///City
+
+
     });
 });
 
@@ -189,4 +206,3 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
 
-/// problem settings
