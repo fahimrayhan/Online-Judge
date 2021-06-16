@@ -99,6 +99,11 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submission/create', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.test_submission.create');
             Route::post('/test_submission/create', 'Submission\SubmissionController@createTestSubmission');
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
+           Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
+           Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
+
+
+
         });
     });
 
@@ -182,5 +187,4 @@ Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')-
 
 /// problem settings
 
-Route::get('/problem/settings/update/{slug}', 'Administration\ProblemController@updateSettings')->name('settings.update');
-Route::post('/problem/settings/edit/{slug}', 'Administration\ProblemController@editSettings')->name('settings.edit');
+

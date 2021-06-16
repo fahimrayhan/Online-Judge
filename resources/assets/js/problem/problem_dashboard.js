@@ -12,7 +12,22 @@ var problem = {
             }
         });
     },
+    settingsUpdate: function () {
+        var form = new Form("update_problem");
+        form.submit({
+            loadingText: "Updating...",
+            success: {
+                resetForm: true,
+                callback: function (response) {
+                     url.load();
+                }
+            }
+        });
+    },
+    editor: function (problemData) {
+
     editor: function(problemData) {
+
         console.log(problemData);
         problemDetailsEditor.setEditor(problemData);
     },

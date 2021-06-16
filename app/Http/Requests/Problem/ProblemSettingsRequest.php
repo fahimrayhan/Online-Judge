@@ -24,7 +24,7 @@ class ProblemSettingsRequest extends FormRequest
     public function rules()
     {
         return [
-          'time_limit' =>'required|numeric|max:10',
+          'time_limit' =>'required|numeric|max:10000',
           'memory_limit' => 'required|numeric|max:2097152',
         ];
     }

@@ -12,7 +12,7 @@ class VerdictSeeder extends Seeder
      */
     public function run()
     {
-        Verdict::truncate();
+        //Verdict::truncate();
         Verdict::insert([
             [
                 'id'         => 1,

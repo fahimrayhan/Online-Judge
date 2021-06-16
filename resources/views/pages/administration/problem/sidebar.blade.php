@@ -37,6 +37,12 @@ $sidebar = [
         'url' => route('administration.problem.languages', ['slug' => request()->slug]),
         'callback' => '',
     ],
+    'Setting' => [
+        'icon' => 'fas fa-code',
+        'name' => 'Setting',
+        'url' => route('administration.problem.settings', ['slug' => request()->slug]),
+        'callback' => '',
+    ],
     'moderators' => [
         'icon' => 'fas fa-code',
         'name' => 'Moderators',
