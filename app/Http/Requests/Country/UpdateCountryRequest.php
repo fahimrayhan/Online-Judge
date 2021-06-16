@@ -28,7 +28,6 @@ class UpdateCountryRequest extends FormRequest
             'name' => 'required',
             'code' => 'required',
             'short_name' => 'required',
-            'flag' => 'required',
         ];
     }
 }
