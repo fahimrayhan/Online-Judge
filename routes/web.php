@@ -138,6 +138,23 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::post('/{judgeProblemId}/aprove', 'Administration\ProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
+         /// Country 
+
+        Route::group(['prefix' => 'country'], function () {
+            Route::get('/', 'Administration\Country\CountryController@index')->name('administration.settings.country.index');
+            Route::get('/create', 'Administration\Country\CountryController@create')->name('administration.settings.country.create');
+            Route::post('/store', 'Administration\Country\CountryController@store')->name('administration.settings.country.store');
+            Route::group(['prefix' => '{Id}'], function () {
+                Route::get('/edit', 'Administration\Country\CountryController@edit')->name('administration.settings.country.edit');
+                Route::post('/update', 'Administration\Country\CountryController@update')->name('administration.settings.country.update');
+                Route::post('/delete', 'Administration\Country\CountryController@delete')->name('administration.settings.country.delete');
+            });
+        });
+
+
+        ///City
+
+
     });
 });
 
@@ -172,4 +189,14 @@ Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')-
 
 /// problem settings
 
+/*
+Route::get('administration/settings/country', 'Administration\Country\CountryController@index')->name('administration.settings.country.index');
 
+Route::get('administration/settings/country/create', 'Administration\Country\CountryController@create')->name('administration.settings.country.create');
+Route::post('administration/settings/country/store', 'Administration\Country\CountryController@store')->name('administration.settings.country.store');
+ Route::group(['prefix' => '{Id}'], function () {
+                Route::get('/edit', 'Administration\Country\CountryController@edit')->name('administration.settings.country.edit');
+                Route::post('/update', 'Administration\Country\CountryController@update')->name('administration.settings.country.update');
+                Route::post('/delete', 'Administration\Country\CountryController@delete')->name('administration.settings.country.delete');
+                });
+    */        

@@ -24,6 +24,12 @@
                 'url' => route('administration.settings.judge_problem'),
                 'callback' => ''
         ],
+        'country' => [
+                'icon'  => 'fas fa-cog',
+                'name' => 'Country',
+                'url' => route('administration.settings.country.index'),
+                'callback' => ''
+        ],
         
     ];
 
