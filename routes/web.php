@@ -53,6 +53,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             //problem checker
             Route::get('checker', 'Administration\ProblemController@checker')->name('administration.problem.checker');
             Route::post('checker', 'Problem\ProblemController@updateChecker');
+            Route::get('checker/view', 'Administration\ProblemController@viewChecker')->name('administration.problem.checker.view');
 
             //problem languages
             Route::get('/languages', 'Administration\ProblemController@languages')->name('administration.problem.languages');

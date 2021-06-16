@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Checker extends Model
 {
     protected $fillable = [
-        'name','description','code'
+        'name','short_description','description','code'
     ];
 }

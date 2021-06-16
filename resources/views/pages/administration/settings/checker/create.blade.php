@@ -14,6 +14,14 @@
     </div>
     <div class='row' style="margin-bottom: 5px;">
         <div class='col-md-4 label-area'>
+            <label> Short Description<font color="red">*</font>:</label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" name="short_description" id="" cols="30" rows="5" class='form-control-input' placeholder="Enter Short Description">
+        </div>
+    </div>
+    <div class='row' style="margin-bottom: 5px;">
+        <div class='col-md-4 label-area'>
             <label> Checker Description<font color="red">*</font>:</label>
         </div>
         <div class="col-md-8">
@@ -32,7 +40,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-8">
             <div>
-                <button type="submit" class="btn submit-btn" onclick="checker.create()" style="margin-top: 15px;">Create Checker</button>
+                <button type="submit" class="btn btn-primary" onclick="checker.create()" style="margin-top: 15px;">Create Checker</button>
             </div>
         </div>
     </div>

@@ -96,7 +96,7 @@ class JudgeService
         $response = json_decode($response);
 
         $response->input = $this->compressString(base64_decode($data['input']));
-        $response->output = $this->compressString($response->input);
+        $response->output = $this->compressString(base64_decode($response->output));
         $response->expected_output = $this->compressString(base64_decode($data['expected_output']));
         $response->verdict_id = $response->status->id;
 
@@ -152,7 +152,7 @@ class JudgeService
         $testCase->input           = $tokenData->input;
         $testCase->output          = $tokenData->output;
         $testCase->expected_output = $tokenData->expected_output;
-        $testCase->time            = $tokenData->time;
+        $testCase->time            = $tokenData->time * 1000;
         $testCase->memory          = $tokenData->memory;
         $testCase->checker_log     = $tokenData->checker_log;
         $testCase->compiler_log    = $tokenData->compiler_log;

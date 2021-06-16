@@ -83,6 +83,24 @@ var problem = {
         $("#default_checker_area").hide();
         $("#custom_checker_area").show();
     },
+    selectDefaultCheckerOption: function() {
+        var defaultChecker = $("#default_checker").val();
+        var checkerDescription = $("#default_checker").find(':selected').attr('description');
+        $("#checker-name-url").html(defaultChecker);
+        $("#checker-description").html(checkerDescription);
+    },
+    viewChecker: function(url){
+        var defaultChecker = $("#default_checker").val();
+        var data = {
+            'checker_name': defaultChecker
+        };
+        var modal = new Modal("custom", 800);
+        modal.open("std::" + defaultChecker + ".cpp");
+        new Div(modal.body).load({
+            'url': url,
+            'data' : data
+        });
+    },
     addLanguages: function() {
         new Form("add_languages").submit({
             loadingText: "Add Languages",

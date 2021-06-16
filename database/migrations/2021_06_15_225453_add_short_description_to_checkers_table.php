@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCheckersTable extends Migration
+class AddShortDescriptionToCheckersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateCheckersTable extends Migration
      */
     public function up()
     {
-        Schema::create('checkers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->text('code')->nullable();
-            $table->timestamps();
+        Schema::table('checkers', function (Blueprint $table) {
+            $table->string('short_description')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateCheckersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkers');
+        Schema::table('checkers', function (Blueprint $table) {
+            $table->dropColumn('short_description');
+        });
     }
 }

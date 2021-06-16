@@ -21,13 +21,9 @@ class CheckerService
         return Checker::findOrFail($checkerId);
     }
 
-    public function updateChecker(Checker $checker,$data)
+    public function updateChecker(Checker $checker, $data)
     {
-        // dd($data);
-        $checker->name = $data['name'];
-        $checker->description = $data['description'];
-        $checker->code = $data['code'];
-        $checker->save();
+        $checker->update($data);
     }
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
 use App\Http\Requests\Problem\ProblemSettingsRequest;
 use App\Models\Problem;
+use App\Models\Checker;
 use App\Services\Language\LanguageService;
 use App\Services\Problem\ProblemService;
 use PDF;
@@ -95,7 +96,17 @@ class ProblemController extends Controller
 
     public function checker()
     {
-        return view('pages.administration.problem.checker', ['problem' => $this->problemData]);
+        return view('pages.administration.problem.checker', [
+            'problem' => $this->problemData,
+            'checkers' => Checker::all()
+        ]);
+    }
+
+    public function viewChecker(){
+        $checker = Checker::where(['name' => request()->checker_name])->firstOrFail();
+        return view('pages.administration.problem.view_checker', [
+            'checker' => $checker
+        ]);
     }
 
     public function updateSettings()
