@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -48,3 +49,5 @@ var appJs = [
 var scripts = [].concat(libJs, helperJs, appJs);
 
 mix.scripts(scripts, 'public/js/app.js').version();
+
+mix.copyDirectory('node_modules/flag-icon-css', 'public/flag')
