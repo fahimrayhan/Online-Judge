@@ -1,12 +1,7 @@
-@extends("pages.administration.problem.problem")
-@section('title', 'Update Time and Memory')
-@section('problem-sub-content')
-	
-  
-     <form style="width: 70%" action="{{route('administration.problem.settings.edit',['slug'=>$problem->slug])}}" class="form" id="update_problem" method="post">
+    <form style="width: 70%" action="{{route('administration.problem.settings.edit',['slug'=>$problem->slug])}}" class="form" id="update_problem" method="post">
         @csrf
         <div class="alert-area">
-            <div class="alert alert-danger error-area">ok</div>
+            <div class="alert alert-danger error-area"></div>
             <div class="alert alert-success success-area"></div>
         </div>
         <div class='row' style="margin-bottom: 5px;">
@@ -35,6 +30,3 @@
             </div>
         </div>
 </form>
-
-@stop
-

@@ -43,16 +43,22 @@
 	.cke_contents{}
 </style>
 
-<div id="problem-details-editor-loader" style="text-align: center;">
-	<img src="http://coderoj.com/file/site_metarial/loader2.gif"><br>
-		<b>Editor Loading...</b>
-</div>
 
-<div id="problem-details-editor-body" style="display: none;">
+<div id="problem-details-editor-body">
 	<div class="details-section">
 		<div class="row">
 			<div class="col-md-3"><div class="option-name">Problem Name</div></div>
 			<div class="col-md-9"><input type="text" id="problem_name" class="form-control" style="width: 520px;" name="" value="{{$problem->name}}"></div>
+		</div>
+	</div>
+	<div class="details-section">
+		<div class="row">
+			<div class="col-md-3"><div class="option-name">Problem Slug</div></div>
+			<div class="col-md-9">
+				{{url('/')}}/.../<span style="border: 1px solid #dddddd;padding: 0px;font-weight: bold;border-radius: 5px; display: inline-block;min-width: 150px;">{{$problem->slug}}</span><br/>
+				<small class="form-text text-muted">
+				Slug can only be updated when you change problem name.<br/></small>
+			</div>
 		</div>
 	</div>
 	<div class="details-section">
@@ -103,10 +109,6 @@
 
 <script type="text/javascript">
 	problem.editor('{!! json_encode($editorData) !!}');
-	setTimeout(function(){ 
-    	$("#problem-details-editor-loader").hide();
-    	$("#problem-details-editor-body").show();
-  	}, 1000);
 </script>
 
 @stop

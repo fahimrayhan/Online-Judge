@@ -42,6 +42,7 @@ class Problem extends Model
             $slug = $count ? "{$slug}-{$count}" : $slug;
 
             $problem->slug = $slug;
+            $problem->default_checker = "lcmp";
         });
         // auto-sets values on creation
         static::created(function ($problem) {

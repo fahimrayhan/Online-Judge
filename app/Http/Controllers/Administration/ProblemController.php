@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Administration;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\AddLanguageRequest;
 use App\Http\Requests\Problem\ProblemSettingsRequest;
-use App\Models\Problem;
 use App\Models\Checker;
+use App\Models\Language;
+use App\Models\Problem;
+use App\Models\Verdict;
 use App\Services\Language\LanguageService;
 use App\Services\Problem\ProblemService;
 use PDF;
-use Carbon\Carbon;
 
 class ProblemController extends Controller
 {
@@ -46,7 +47,7 @@ class ProblemController extends Controller
         $moderators = $this->problemData->moderator->sortBy('created_at');
         return view('pages.administration.problem.moderators', [
             'moderators' => $moderators,
-            'role' => $this->problemData->authUserRole
+            'role'       => $this->problemData->authUserRole,
         ]);
     }
 
@@ -97,15 +98,16 @@ class ProblemController extends Controller
     public function checker()
     {
         return view('pages.administration.problem.checker', [
-            'problem' => $this->problemData,
-            'checkers' => Checker::all()
+            'problem'  => $this->problemData,
+            'checkers' => Checker::all(),
         ]);
     }
 
-    public function viewChecker(){
+    public function viewChecker()
+    {
         $checker = Checker::where(['name' => request()->checker_name])->firstOrFail();
         return view('pages.administration.problem.view_checker', [
-            'checker' => $checker
+            'checker' => $checker,
         ]);
     }
 
@@ -144,10 +146,30 @@ class ProblemController extends Controller
 
     public function viewTestSubmission()
     {
-        $submissions = $this->problemData->submissions()->where(['type' => '1'])->orderBy('id', 'DESC')->paginate(15);
+        $submissions = $this->problemData->submissions()->where(['type' => '1'])
+            ->whereHas('verdict', function ($q) {
+                if (request()->verdict != "") {
+                    $q->where('name', request()->verdict);
+                }
+
+            })
+            ->whereHas('language', function ($q) {
+                if (request()->language != "") {
+                    $q->where('name', request()->language);
+                }
+            })
+            ->whereHas('user', function ($q) {
+                if (request()->handle != "") {
+                    $q->where('handle', request()->handle);
+                }
+            })
+            ->orderBy('id', 'DESC')->paginate(15);
+
         return view('pages.administration.problem.test_submission', [
             'problem'     => $this->problemData,
             'submissions' => $submissions,
+            'verdicts'    => Verdict::all(),
+            'languages'   => Language::all(),
         ]);
     }
 
@@ -163,20 +185,20 @@ class ProblemController extends Controller
     public function viewTestSubmissionEditor()
     {
         return view('pages.editor.editor', [
-            'problem'     => $this->problemData,
+            'problem'   => $this->problemData,
             'submitUrl' => route("administration.problem.test_submission.create", request()->slug),
         ]);
     }
 
     /**
      * Problem Settings
-     * 
+     *
      */
     public function settings()
     {
         return view('pages.administration.problem.settings.settings', [
-            'problem' => $this->problemData
+            'problem' => $this->problemData,
         ]);
     }
-    
+
 }

@@ -26,8 +26,13 @@ var problem = {
         problemDetailsEditor.setEditor(problemData);
     },
     detailsUpadte: function(actionUrl) {
+        if(!$("#problem_name").val()){
+            alert("Problem name is requried");
+            return;
+        }
         var data = problemDetailsEditor.getEditorData();
         data['name'] = $("#problem_name").val();
+
         var btn = new Button("update-problem-details");
         btn.off("Updating....");
         $.post(actionUrl, app.setToken(data), function(response) {

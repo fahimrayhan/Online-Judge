@@ -114,8 +114,8 @@
                                 <a href="{{route('profile',['handle' => auth()->user()->handle])}}">
                                 <div class="row">
                                     <div class="col-md-12" style="color: #000000;text-align: center;margin-top: 5px;">
-                                        <img class="img-thumbnail" src="{{ auth()->user()->avatar }}" style="height: 70px; width: 75px;border-radius: 50%"><br/>
-                                        <b>{{auth()->user()->handle}}</b>
+                                        <img class="img-thumbnail" src="{{ auth()->user()->avatar }}" style="height: 75px; width: 75px;border-radius: 50%"><br/>
+                                        <b style="font-size: 15px;">{{auth()->user()->handle}}</b>
                                         <p class="text-center small">{{auth()->user()->email}}</p>
                                     </div>
                                 </div>

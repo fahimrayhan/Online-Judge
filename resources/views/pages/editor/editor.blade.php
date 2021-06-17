@@ -78,7 +78,7 @@
            </div>
            <div class="col-md-4">
                 <div class="pull-right">
-                    <button style="width: 150px;" url="{{$submitUrl}}" class="btn btn-default" id="btn-create-submission" onclick="submissionEditor.createSubmission(this)">Submit Solution</button>
+                    <button style="width: 150px;" url="{{$submitUrl}}" class="btn btn-primary" id="btn-create-submission" onclick="submissionEditor.createSubmission(this)">Submit Solution</button>
                 </div>
            </div>
        </div>
