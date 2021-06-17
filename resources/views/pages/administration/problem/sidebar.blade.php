@@ -37,24 +37,19 @@ $sidebar = [
         'url' => route('administration.problem.languages', ['slug' => request()->slug]),
         'callback' => '',
     ],
-    'Setting' => [
-        'icon' => 'fas fa-code',
-        'name' => 'Setting',
+    'settings' => [
+        'icon' => 'fa fa-cog',
+        'name' => 'Settings',
         'url' => route('administration.problem.settings', ['slug' => request()->slug]),
         'callback' => '',
     ],
     'moderators' => [
-        'icon' => 'fas fa-code',
+        'icon' => 'fas fa-users',
         'name' => 'Moderators',
         'url' => route('administration.problem.moderators',['slug' => request()->slug]),
         'callback' => '',
     ],
-    'settings' => [
-        'icon' => 'fas fa-code',
-        'name' => 'Settings',
-        'url' => route('administration.problem.settings',['slug' => request()->slug]),
-        'callback' => '',
-    ],
+
     'test_submissions' => [
             'icon'  => 'fas fa-hammer',
             'name' => 'Test Submissions',

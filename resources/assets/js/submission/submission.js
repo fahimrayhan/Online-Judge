@@ -69,9 +69,20 @@ var submission = {
         $("#" + openToggleDiv).show();
         $("#" + closeToggleDiv).hide();
         this.openToggleSourceCode ^= 1;
+    },
+    filter: function(base) {
+        var data = {};
+        var verdict = $("#submission-filter-verdict").val();
+        if (verdict) data['verdict'] = verdict;
+        var language = $("#submission-filter-language").val();
+        if (language) data['language'] = language;
+        var handle = $("#submission-filter-handle").val();
+        if (handle) data['handle'] = handle;
+    
+        base = base.replace(/\?.*$/, "") + "?" + jQuery.param(data);
+        url.load(base);
     }
 };
 setInterval(function() {
     submission.loadSubmissionData();
 }, 2000);
-

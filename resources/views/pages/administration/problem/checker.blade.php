@@ -16,12 +16,6 @@
 	}
 </style>
 
-<?php 
-	$ch = "lcmp - Lines ignore whitespace";
-	$ch = explode('-', $ch);
-	//dd($problem->defaultChecker());
-?>
-
 <div id="problem-details-editor-body" style="">
 	<div class="details-section">
 		<div class="row">

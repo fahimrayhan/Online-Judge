@@ -99,6 +99,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::group(['prefix' => '/settings'], function () {
                 Route::get('/', 'Administration\ProblemController@settings')->name('administration.problem.settings');
                 Route::post('/request_judge_problem', 'JudgeProblem\JudgeProblemController@requestJudgeProblem')->name('administration.problem.settings.request_judge_problem');
+                Route::post('edit', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
             });
 
             Route::get('/test_submissions', 'Administration\ProblemController@viewTestSubmission')->name('administration.problem.test_submissions');
@@ -106,8 +107,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submission/create', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.test_submission.create');
             Route::post('/test_submission/create', 'Submission\SubmissionController@createTestSubmission');
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
-            Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
-            Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
+
         });
     });
 
