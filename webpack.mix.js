@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,16 +13,16 @@ const mix = require('laravel-mix');
  */
 
 var libDir = [
-	
+
 ];
 
 var libJs = [
 	'resources/assets/lib/jquery/jquery3.4.1.min.js',
 	'resources/assets/lib/bootstrap/js/bootstrap.min.js',
- ];
+];
 
 var helperJs = [
- 	'resources/assets/js/script.js',
+	'resources/assets/js/script.js',
 	'resources/assets/js/helper/button.js',
 	'resources/assets/js/helper/toast.js',
 	'resources/assets/js/helper/url.js',
@@ -41,8 +42,12 @@ var appJs = [
 	'resources/assets/js/submission/submission.js',
 	'resources/assets/js/moderator/moderator_request.js',
 	'resources/assets/js/checker/checker.js',
+	'resources/assets/js/filemanager/file_manager.js',
+	'resources/assets/js/country/country.js',
 ];
 
-var scripts = [].concat(libJs,helperJs,appJs);
+var scripts = [].concat(libJs, helperJs, appJs);
 
 mix.scripts(scripts, 'public/js/app.js').version();
+
+mix.copyDirectory('node_modules/flag-icon-css', 'public/flag')

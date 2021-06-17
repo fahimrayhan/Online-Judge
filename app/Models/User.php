@@ -81,7 +81,11 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($avatar)
     {
-        return asset($this->avatarPath.$avatar);
+        return asset($this->avatarPath . $avatar);
     }
 
+    public function files()
+    {
+        return $this->hasMany(FileManager::class);
+    }
 }
