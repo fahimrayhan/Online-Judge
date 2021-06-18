@@ -18,7 +18,7 @@ var problemDetailsEditor = {
     setEditorConfig: function() {
         CKEDITOR.config.height = 100;
         CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
-        CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify,image2';
+        CKEDITOR.config.extraPlugins = 'mathjax,autogrow,justify,image2,div,coderojpreview,coderojfilemanager';
         CKEDITOR.config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML';
         CKEDITOR.config.mathJaxClass = 'equation';
         CKEDITOR.config.codeSnippet_theme = 'pojoaque';
@@ -30,32 +30,34 @@ var problemDetailsEditor = {
     },
     setEditorToolbar: function() {
         var toolbarConstraintsEditor = [{
-            name: 'clipboard',
-            groups: ['clipboard', 'undo'],
-            items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+            name: "paragraph",
+            items: ['Bold', 'Italic', 'Strike']
         }, {
-            name: 'editing',
-            groups: ['find', 'selection', 'spellchecker'],
-            items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
-        }, {
-            name: 'others',
-            items: ['-']
-        }, {
-            name: 'Math',
-            items: ['Mathjax']
+            name: "paragraph",
+            items: ["NumberedList", "BulletedList"]
         }, {
             name: 'basicstyles',
             groups: ['basicstyles', 'cleanup'],
-            items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']
+            items: ['CreateDiv', 'Link', 'Image', 'CoderojFileManager', 'Table', 'Mathjax']
+        }, {
+            name: "paragraph",
+            items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+        }, {
+            name: 'tools',
+            items: ['CoderojPreview', 'Maximize']
         }];
         var toolbarInputExEditor = [{
-            name: 'clipboard',
-            groups: ['clipboard', 'undo'],
-            items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+            name: "paragraph",
+            items: ['Bold', 'Italic', 'Strike', 'Mathjax']
+        }, {
+            name: 'tools',
+            items: ['CoderojPreview', 'Maximize']
         }];
-        this.constraintsEditor.config.toolbar = toolbarConstraintsEditor;
-        this.inputEditor.config.toolbar = toolbarConstraintsEditor;
-        this.outputEditor.config.toolbar = toolbarConstraintsEditor;
+        this.constraintsEditor.config.toolbar = toolbarInputExEditor;
+        this.inputEditor.config.toolbar = toolbarInputExEditor;
+        this.outputEditor.config.toolbar = toolbarInputExEditor;
+        this.descriptionEditor.config.toolbar = toolbarConstraintsEditor;
+        this.noteEditor.config.toolbar = toolbarConstraintsEditor;
     },
     setEditorData: function(problemData) {
         var problemData = JSON.parse(problemData);

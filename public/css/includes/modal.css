@@ -29,11 +29,11 @@
 
 .modal-content-header {
   background-color: #F8F8F8;
-  color: #506685;
+  color: #4F4F4F;
   padding: 15px;
   font-size: 16px;
   font-weight: bold;
-  border: 1px solid #eeeeee;
+  border: 1px solid #e2e2e2;
   border-width: 0px 0px 1px 0px;
 }
 
@@ -46,7 +46,7 @@
   position: absolute;
   top: 15px;
   right: 20px;
-  color: #5b5757;
+  color: #7C7C7C;
   font-size: 25px;
   opacity: 1;
   z-index: 10;
