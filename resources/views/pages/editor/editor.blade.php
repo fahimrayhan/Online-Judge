@@ -44,6 +44,8 @@
 </style>
 @php
     $languages = $problem->languages()->get();
+    $userLanguage = auth()->user()->lastSubmissionLanguage();
+    $userLanguageId = !empty($userLanguage) ? $userLanguage->id : -1;
 @endphp
 
 
@@ -64,7 +66,7 @@
                     <option value="-1">Select Language</option>
                 @foreach ($languages as $key => $language)
                     @if(!$language->is_archive)
-                    <option value="{{$language->id}}">{{$language->name}}</option>
+                    <option value="{{$language->id}}" {{$userLanguageId == $language->id ? "selected" : ""}}>{{$language->name}}</option>
                     @endif
                 @endforeach
                 </select>

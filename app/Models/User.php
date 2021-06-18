@@ -6,6 +6,7 @@ use App\Models\Traits\User\UserType;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Submission;
 
 class User extends Authenticatable
 {
@@ -82,6 +83,11 @@ class User extends Authenticatable
     public function getAvatarAttribute($avatar)
     {
         return asset($this->avatarPath . $avatar);
+    }
+
+    public function lastSubmissionLanguage(){
+        $submission = Submission::where(['user_id' => $this->id])->orderBy('id','DESC')->first();
+        return empty($submission)? [] : $submission->language;
     }
 
     public function files()
