@@ -48,7 +48,7 @@
                 File Name: <span class="fileInfoCls" id="uploadFileName"></span><br />
                 File Type: <span class="fileInfoCls" id="uploadFileType"></span><br />
                 File Size: <span class="fileInfoCls" id="uploadFileSize"></span><br />
-                <button style="width: 140px;" id="updatePhotoBtn" onclick="fileManager.upload()" url="">Upload</button>
+                <button class="btn btn-primary" style="width: 140px;" id="updatePhotoBtn" onclick="fileManager.upload()" url="">Upload</button>
             </div>
         </div>
     </form>

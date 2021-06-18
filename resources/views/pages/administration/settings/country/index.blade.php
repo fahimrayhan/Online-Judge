@@ -22,7 +22,7 @@
                 <td>{{ $country->name }}</td>
                 <td>{{ $country->code }}</td>
                 <td>{{ $country->short_name }}</td>
-                <td> <img src="{{ $country->flag }}" height="50" width="70"></td>
+                <td> <span class="flag-icon flag-icon-bd" style="font-size: 360px"></span> </td>
                  <td>
                     <button
                         onclick="new Modal('md',600).load('{{ route('administration.settings.country.edit',['Id' => $country->id]) }}','Update Country')"

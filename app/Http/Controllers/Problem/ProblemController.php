@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Problem;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Problem\ProblemCreateRequest;
 use App\Services\Problem\ProblemService;
+use App\Models\Problem;
 
 class ProblemController extends Controller
 {
@@ -94,7 +95,8 @@ class ProblemController extends Controller
 
     public function updateDetails(ProblemCreateRequest $request)
     {
-        $this->problemService->update($request->all());
+        $problem = Problem::where(['slug' => request()->slug])->firstOrFail();
+        $this->problemService->update($problem, $request->all());
     }
 
     public function updateChecker()
@@ -117,9 +119,8 @@ class ProblemController extends Controller
     {
         $problemData = $this->problemService->getProblemData(request()->slug);
         return view("pages.editor.editor", [
-            'problem' => $problemData,
-            'submitUrl' => 'hey'
+            'problem'   => $problemData,
+            'submitUrl' => 'hey',
         ]);
     }
 }
-

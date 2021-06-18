@@ -53,7 +53,6 @@ class ProblemController extends Controller
 
     public function details()
     {
-        $problemData = $this->problemService->getProblemData(request()->slug);
         return view('pages.administration.problem.details', ['problem' => $this->problemData]);
     }
 
@@ -202,3 +201,5 @@ class ProblemController extends Controller
     }
 
 }
+
+
