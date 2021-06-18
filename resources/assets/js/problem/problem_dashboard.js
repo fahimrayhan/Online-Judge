@@ -217,7 +217,7 @@ var problem = {
         var data = {
             'message': $("#moderator_message").val()
         };
-        new Button("sendReqBtn").off("Sending...").loader();
+        new Button("sendReqBtn").off("Sending...");
         $.post(e.attr('data-url'), app.setToken(data), function(response) {
             url.load();
             toast.success("Your Request Sent To Admin");
