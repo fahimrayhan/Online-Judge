@@ -78,6 +78,12 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 //test case delete
                 Route::get('/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
 
+                Route::get('/input-{test_case_serial}.txt', 'TestCase\TestCaseController@viewInput')->name('problem.test_case.input.view');
+                Route::get('/output-{test_case_serial}.txt', 'TestCase\TestCaseController@viewOutput')->name('problem.test_case.output.view');
+                Route::get('/input-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downloadInput')->name('problem.test_case.input.download');
+                Route::get('/output-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downlaodOutput')->name('problem.test_case.output.download');
+
+
                 //test case edit
                 Route::get('/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
                 Route::post('/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase');

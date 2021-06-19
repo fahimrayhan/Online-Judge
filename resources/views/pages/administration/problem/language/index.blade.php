@@ -2,11 +2,14 @@
 @section('title', 'Programming Languages')
 @section('problem-sub-content')
 
-<form action="{{ route('administration.problem.save_languages',['slug' => request()->slug]) }}" class="form" id="add_languages" method="post">
+
+
+<form action="{{ route('administration.problem.save_languages',['slug' => request()->slug]) }}" class="" id="add_languages" method="post">
     @csrf
+
     <table class="table-custom">
         <tr>
-            <th><input type="checkbox" name="" id="allcb"></th>
+            <th><input type="checkbox" name="" id="allcb" {{$checkAll ? "checked" : ""}}></th>
             <th>Language Name</th>
             <th>Language Short Code</th>
             <th>Time Limit</th>
@@ -14,12 +17,12 @@
         </tr>
         @foreach ($languages as $language)
             @php
-                $timeLimit = isset($language->pivot->time_limit) ? $language->pivot->time_limit : 1;
-                $memoryLimit = isset($language->pivot->memory_limit) ? $language->pivot->memory_limit : 1;
+                $timeLimit = isset($language->time_limit) ? $language->time_limit : 1;
+                $memoryLimit = isset($language->memory_limit) ? $language->memory_limit : 1;
             @endphp
             <tr>
                 <td>
-                    <input type="checkbox" class='' name="languages[]" placeholder="Enter Language Name" id="{{ $language->code }}" value="{{ $language->id }}" {{isset($language->pivot->problem_id) ? 'checked' : ''}}>
+                    <input type="checkbox" class='' name="languages[]" placeholder="Enter Language Name" id="{{ $language->code }}" value="{{ $language->id }}" {{isset($language->is_checked) ? 'checked' : ''}}>
                 </td>
                 <td width="35%">{{ $language->name }} 
                 @if($language->is_archive)
@@ -43,10 +46,16 @@
         @endforeach
 
     </table>
+
     <div class="row">
+
         <div class="col-md-12">
+            <div class="pull-left" style="margin-top: 10px;">
+                <label for="language_auto_update" >Auto select all language list:</label> <input type = 'checkbox' id="language_auto_update" name="language_auto_update"  {{$problem->language_auto_update ? "checked" : ""}}>
+                <div class="form-text text-muted" style="margin-top: -5px"><small>(If you want to select perticuler language for submission please not select this.)</small></div>
+            </div>
             <div class="pull-right">
-                <button type="submit" class="btn btn-primary" onclick="problem.addLanguages()" style="margin-top: 15px;">Save Languages</button>
+                <button type="submit" class="btn btn-primary" onclick="problem.addLanguages()" style="margin-top: 10px;">Save Languages</button>
             </div>
         </div>
     </div>
@@ -56,6 +65,7 @@
     $('#allcb').change(function () {
         $('tbody tr td input[type="checkbox"]').prop('checked', $(this).prop('checked'));
     });
+
 </script>
 
 

@@ -127,19 +127,26 @@ class ProblemController extends Controller
     public function languages()
     {
         $languages        = $this->languageService->getActiveLanguage();
-        $problemLanguages = $this->problemData->languages()->get();
+        $problemLanguages = $this->problemData->languageList();
+
+        $mergeProblemLanguages = $languages->merge($problemLanguages);
 
         return view('pages.administration.problem.language.index', [
-            'languages' => $languages->merge($problemLanguages),
+            'languages' => $mergeProblemLanguages,
             'problem'   => $this->problemData,
+            'checkAll'  => count($mergeProblemLanguages) == count($problemLanguages),
         ]);
     }
 
     public function saveLanguages(AddLanguageRequest $request)
     {
+        $this->problemData->update([
+            'language_auto_update' => isset(request()->language_auto_update),
+        ]);
+
         $this->problemService->addLanguages($this->problemData, $request->all());
         return response()->json([
-            'message' => 'Languages Successfully Saved',
+            'message' => 'Languages Successfully Saved ' . request()->language_auto_update,
         ]);
     }
 
@@ -201,5 +208,3 @@ class ProblemController extends Controller
     }
 
 }
-
-

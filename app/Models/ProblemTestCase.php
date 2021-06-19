@@ -59,12 +59,20 @@ class ProblemTestCase extends Model
 
     public function getInputFileAttribute()
     {
-        return 'file/test_case/input/' . $this->hash_id . ".txt";
+        return public_path().'/file/test_case/input/' . $this->hash_id . ".txt";
     }
 
     public function getOutputFileAttribute()
     {
-        return 'file/test_case/output/' . $this->hash_id . ".txt";
+        return public_path().'/file/test_case/output/' . $this->hash_id . ".txt";
+    }
+
+    public function inputLastModified(){
+        return Carbon::createFromTimestamp(File::lastModified($this->input_file));
+    }
+
+    public function outputLastModified(){
+        return Carbon::createFromTimestamp(File::lastModified($this->output_file));
     }
 
     public function inputLength()
