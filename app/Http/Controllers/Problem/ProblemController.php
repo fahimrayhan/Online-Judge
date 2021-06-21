@@ -101,7 +101,8 @@ class ProblemController extends Controller
 
     public function updateChecker()
     {
-        $this->problemService->update(request()->all());
+        $problem = Problem::where(['slug' => request()->slug])->firstOrFail();
+        $this->problemService->update($problem, request()->all());
     }
 
     /**

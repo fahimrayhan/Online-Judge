@@ -2,11 +2,28 @@
 namespace App\Services\Judge;
 use Carbon\Carbon;
 use App\Models\Submission;
+use App\Events\SubmissionEvent;
+use App\Events\TestCaseEvent;
 
 class JudgeProcessService
 {
-	protected $multiProcessStart;
+    protected $multiProcessStart;
+    protected $serverNo;
+    protected $totalServer = 1;
+    
+    public function __construct($serverNo = 1)
+    {
+        $this->serverNo = $serverNo - 1;
 
+        if ($this->totalServer == 0) {
+            exit();
+        }
+        
+        if ($this->serverNo > $this->totalServer) {
+            exit();
+        }
+    }
+    
     public function multiProcess($isStart = true)
     {
         if ($isStart) {
@@ -36,14 +53,14 @@ class JudgeProcessService
 
     public function checkTotalRunningSubmissons()
     {
-        $totalRunningLimit = 10;
+        $totalRunningLimit = 15;
         $total             = Submission::where(['verdict_id' => 2, 'judge_status' => 'judging'])->get()->count();
         return $total < $totalRunningLimit ? 1 : 0;
     }
 
     public function verdictStatus()
     {
-        $submission = Submission::where(['verdict_id' => 1, 'judge_status' => 'test_case_ready'])->first();
+        $submission = Submission::where(['verdict_id' => 1, 'judge_status' => 'test_case_ready'])->whereRaw("id MOD {$this->totalServer} = {$this->serverNo}")->first();
         if (empty($submission)) {
             return;
         }
@@ -56,5 +73,6 @@ class JudgeProcessService
         $testCase->update([
             'verdict_id' => 2,
         ]);
+        event(new SubmissionEvent($submission,[$testCase]));
     }
 }

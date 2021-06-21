@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Submission;
 
+use App\Events\TestEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Problem;
 use App\Models\Submission;
@@ -22,7 +23,7 @@ class SubmissionController extends Controller
             'source_code' => base64_decode(request()->source_code),
             'language_id' => request()->language_id,
             'type'        => "testing",
-            'judge_type'  => "partial",
+            'judge_type'  => "binary",
             'problem_id'  => $problem->id,
         ];
 
@@ -43,7 +44,7 @@ class SubmissionController extends Controller
 
     public function createPracticeSubmission()
     {
-        
+
     }
 
     public function submissionVerdict()
@@ -76,5 +77,31 @@ class SubmissionController extends Controller
             ]);
         }
         return response()->json($data);
+    }
+
+    public function submissionListVerdict()
+    {
+
+        // $submissionsId = json_decode(request()->submission_list);
+        $submissionsId = [290, 291];
+        $submissions   = Submission::whereIn('id', $submissionsId)->get();
+        $data          = [];
+
+        foreach ($submissions as $key => $submission) {
+            array_push($data, [
+                'id'            => $submission->id,
+                'time'          => $submission->time,
+                'memory'        => $submission->memory,
+                'verdict_id'    => $submission->verdict_id,
+                'verdict_label' => $submission->verdictStatus(),
+            ]);
+        }
+        return response()->json($data);
+    }
+    public function testEvent()
+    {
+        //  event(new TestEvent("hello how are you"));
+        $sub = Submission::where(['id' => 476])->firstOrFail();
+        echo hash('sha256', request()->ip() . "-submission-{$sub->id}-{$sub->created_at->timestamp}->compile_file");
     }
 }

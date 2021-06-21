@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
+Route::get('/test-event', 'Submission\SubmissionController@testEvent')->name('testevent');
+
 Route::get('/register', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/login', 'Auth\LoginController@index')->name('login');
@@ -113,6 +116,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submission/create', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.test_submission.create');
             Route::post('/test_submission/create', 'Submission\SubmissionController@createTestSubmission');
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
+            Route::get('/test_submissions/{submission_id}/test_case_details', 'Administration\ProblemController@viewTestSubmissionTestCaseDetailsPage')->name('administration.problem.submission.view.testcase.details');
 
         });
     });

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Console\Commands\Judge;
+namespace App\Console\Commands\JudgeProcess;
 
 use Illuminate\Console\Command;
 
-class JudgeCron4 extends Command
+class cron2 extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'judge:cron4';
+    protected $signature = 'judge_process:cron2';
 
     /**
      * The console command description.
@@ -37,7 +37,7 @@ class JudgeCron4 extends Command
      */
     public function handle()
     {
-        (new \App\Services\Judge\JudgeService(4))->multiJudge();
+        (new \App\Services\Judge\JudgeProcessService(2))->multiProcess();
         return 0;
     }
 }

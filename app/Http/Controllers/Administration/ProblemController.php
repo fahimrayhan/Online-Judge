@@ -185,7 +185,19 @@ class ProblemController extends Controller
 
         return view('pages.administration.problem.submission', [
             'submission' => $submission,
+            'testCaseDetailsRoute' => route("administration.problem.submission.view.testcase.details",[
+                'slug' => request()->slug,
+                'submission_id' => request()->submission_id
+            ]),
         ]);
+    }
+
+    public function viewTestSubmissionTestCaseDetailsPage(){
+        $submission = $this->problemData->submissions()->where(['type' => '1', 'id' => request()->submission_id])->firstOrFail();
+        $testCase = $submission->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
+        return view('pages.submission.submission_test_case_details', [
+            'testCase' => $testCase,
+        ]); 
     }
 
     public function viewTestSubmissionEditor()
