@@ -44,6 +44,7 @@ var appJs = [
 	'resources/assets/js/checker/checker.js',
 	'resources/assets/js/filemanager/file_manager.js',
 	'resources/assets/js/country/country.js',
+	'resources/assets/js/city/city.js',
 ];
 
 var scripts = [].concat(libJs, helperJs, appJs);
