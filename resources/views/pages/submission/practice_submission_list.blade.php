@@ -38,10 +38,10 @@
 
 </style>
 
+
 <div class="submissionFilter">
 	<center>
 		<table style="">
-
 			<tr>
 				<td class="filter_td2">
 					<input style="width: 210px;" id="submission-filter-handle" class="form-control" type="text" placeholder="User Handle" value="{{request()->handle}}">
@@ -63,7 +63,7 @@
 					</select>
 				</td>
 				<td class="filter_td2">
-					
+					<button id="submissionFilterBtn" onclick="submission.filter('{{route('submissions')}}')" style="width: 150px;" class="btn btn-primary">Filter</button>
 				</td>
 			</tr>
 		</table>

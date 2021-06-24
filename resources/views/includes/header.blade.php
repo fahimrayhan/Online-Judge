@@ -6,12 +6,7 @@
             'url' => route('home'),
             'callback' => ''
         ],
-        'contest' => [
-            'icon'  => 'glyphicon glyphicon-list',
-            'name' => 'CONTEST',
-            'url' => 'http://127.0.0.1:8000/login',
-            'callback' => ''
-        ],
+        
         'problems' => [
             'icon'  => 'glyphicon glyphicon-list',
             'name' => 'PROBLEMS',
@@ -22,12 +17,6 @@
             'icon'  => 'fas fa-random',
             'name' => 'SUBMISSIONS',
             'url' => route('submissions'),
-            'callback' => ''
-        ],
-        'ranklist' => [
-            'icon'  => 'fas fa-trophy',
-            'name' => 'RANK LIST',
-            'url' => route('ranklist'),
             'callback' => ''
         ],
 
@@ -53,6 +42,7 @@
     .navbar-login a:hover i{
         color: #1A6FC9;
     }
+    .delHoverA:focus{text-decoration: none;color: #ffffff}
 </style>
 
 <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">

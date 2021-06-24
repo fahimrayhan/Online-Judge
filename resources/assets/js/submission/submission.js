@@ -119,11 +119,12 @@ var submission = {
     }
 };
 
-var pusher = new Pusher('989556a2ac4c44c59db9', {
+var pusherAppKey = atob($('meta[name="PAK"]').attr('content'));
+var pusher = new Pusher(pusherAppKey, {
     cluster: 'mt1'
 });
-var channel = pusher.subscribe('submission-channel');
 
+var channel = pusher.subscribe('submission-channel');
 channel.bind("submission-event", function(data) {
     //    data = JSON.parse(data);
     data = JSON.parse(data.message);

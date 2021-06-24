@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="app-name" content="{{ config('app.name') }}" />
+    <meta name="PAK" content="{{ base64_encode(env('PUSHER_APP_KEY')) }}" />
     <meta name="layout-key" content="{{ $layoutKey }}" />
     <link rel="icon" href="http://coderoj.com/file/site_metarial/favicon.png" type="image/gif" sizes="16x16">
     <title>@yield('title') - {{ config('app.name') }}</title>

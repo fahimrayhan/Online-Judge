@@ -110,7 +110,13 @@ class Problem extends Model
         return $this->moderator()->firstOrFail();
     }
 
-    
+    public function isUserSolved(){
+        if(!auth()->check())return -1;
+        $submission = $this->submissions()->where(['user_id' => auth()->user()->id,'type' => 2,'verdict_id' => 3])->first();
+        if(!empty($submission))return 1;
+        $submissions = $this->submissions()->where(['user_id' => auth()->user()->id,'type' => 2])->count();
+        return $submissions == 0 ? -1 : 0;
+    }
 
     public function moderator()
     {

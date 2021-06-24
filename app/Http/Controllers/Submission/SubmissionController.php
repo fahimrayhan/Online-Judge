@@ -130,6 +130,18 @@ class SubmissionController extends Controller
 
     public function testEvent()
     {
+        $options = array(
+            'cluster' => 'mt1',
+            'useTLS'  => true,
+        );
+        $pusher = new \Pusher\Pusher(
+            'dcab8d83af4cb3d194e7',
+            '7b0eba9a2b63bd31a33c',
+            '1224987',
+            $options
+        );
 
+        $data['message'] = 'this is ok';
+        $pusher->trigger('my-channel', 'my-event', $data);
     }
 }

@@ -61,11 +61,22 @@
 					@foreach($JudgeProblems as $key => $JudgeProblem)
 					<a href="{{route('problem.view',['slug' => $JudgeProblem->problem->slug])}}">
 					<div class="problem">
+						<div class="pull-right" style="margin-top: 20px;font-size: 14px;">
+							@php
+								$solveStatus = $JudgeProblem->problem->isUserSolved();
+							@endphp
+							@if($solveStatus == 1)
+								<span class="label label-success"><i class="fa fa-check"></i> Solved</span>
+							@elseif($solveStatus == 0)
+								<span class="label label-warning"><i class="fa fa-times"></i> Attempted</span>
+							@endif
+						</div>
 						<div class="problem-title">{{$JudgeProblem->problem->name}}</div>
 						<div class="problem-sub">
-							<!-- <span>ATTEMPTED BY: <b>{{rand()%1000}}</b></span>  -->
-							<!-- <span>SUCCESS RATE: <b>88%</b> </span> -->
-							<span>LEVEL: <b>Easy</b></div></span>
+							<span>ATTEMPTED BY: <b>-</b></span>
+							<span>SUCCESS RATE: <b>-%</b> </span>
+						</div>
+
 					</div>
 					</a>
 					@endforeach

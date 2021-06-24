@@ -86,6 +86,8 @@ class JudgeService
             'custom_checker'      => base64_encode($this->submission->problem->custom_checker),
             'compile_file'        => hash('sha256', request()->ip() . "-submission-{$this->submission->id}-{$this->submission->created_at->timestamp}->compile_file"),
             'delete_compile_file' => $this->submission->run_on_test == $this->submission->total_test_case ? 1 : 0,
+            'checker_compile_file'        => hash('sha256',request()->ip()."-cheker_file-submission-{$this->submission->id}-{$this->submission->created_at->timestamp}->compile_file"),
+            'delete_checker_compile_file' => $this->submission->run_on_test == $this->submission->total_test_case ? 1 : 0,
             'api_type'            => 'submission',
         ];
 
