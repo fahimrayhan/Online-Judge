@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
+Route::get('/test-event', 'Submission\SubmissionController@testEvent')->name('testevent');
+
 Route::get('/register', 'Auth\RegisterController@index')->name('register');
 Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/login', 'Auth\LoginController@index')->name('login');
@@ -30,7 +33,14 @@ Route::post('/request_for_moderator', 'Administration\Problem\ModeratorControlle
 Route::group(['prefix' => 'problems'], function () {
     Route::get('/', 'Problem\ProblemListController@show')->name('problems');
     Route::get('/{slug}', 'Problem\ProblemListController@viewProblem')->name('problem.view');
-    Route::get('/{slug}/create_submission', 'Problem\ProblemController@createSubmission')->name('problem.submission.create');
+    Route::get('/{slug}/submit', 'Problem\ProblemController@createSubmission')->name('problem.submit');
+    Route::post('/{slug}/submit', 'Submission\SubmissionController@createPracticeSubmission');
+});
+
+Route::group(['prefix' => 'submissions'], function () {
+    Route::get('/', 'Submission\SubmissionController@practiceSubmissionList')->name('submissions');
+    Route::get('/{submission_id}', 'Submission\SubmissionController@viewSubmission')->name('submissions.view');
+    Route::get('/{submission_id}/test_case_details', 'Submission\SubmissionController@viewSubmissionTestCaseDetails')->name('submissions.view.test_case_details');
 });
 
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {
@@ -78,6 +88,12 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 //test case delete
                 Route::get('/{test_case_id}/delete', 'TestCase\TestCaseController@deleteTestCase')->name('problem.test_case.delete');
 
+                Route::get('/input-{test_case_serial}.txt', 'TestCase\TestCaseController@viewInput')->name('problem.test_case.input.view');
+                Route::get('/output-{test_case_serial}.txt', 'TestCase\TestCaseController@viewOutput')->name('problem.test_case.output.view');
+                Route::get('/input-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downloadInput')->name('problem.test_case.input.download');
+                Route::get('/output-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downlaodOutput')->name('problem.test_case.output.download');
+
+
                 //test case edit
                 Route::get('/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
                 Route::post('/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase');
@@ -107,6 +123,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submission/create', 'Administration\ProblemController@viewTestSubmissionEditor')->name('administration.problem.test_submission.create');
             Route::post('/test_submission/create', 'Submission\SubmissionController@createTestSubmission');
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
+            Route::get('/test_submissions/{submission_id}/test_case_details', 'Administration\ProblemController@viewTestSubmissionTestCaseDetailsPage')->name('administration.problem.submission.view.testcase.details');
 
         });
     });

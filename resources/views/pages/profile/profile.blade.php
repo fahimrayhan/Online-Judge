@@ -88,14 +88,16 @@
                     <li class="nav-item userProfileTab box">
                             <a class="nav-link active mixBackground" href="{{route('profile.info')}}">Overview</a>
                     </li>
-                    <li class="nav-item userProfileTab" style="background-color: #eeeeee">
+                    <li class="nav-item userProfileTab box">
                         <a class="nav-link mixBackground" href="profile.php?id=1&action=submission">Submission</a>
                     </li>
                     
                 </ul>
                 </div>
                 <div class="el-card is-always-shadow" style="height: 300px;margin-top: 10px;">
-                    
+                    <div class="box-body" style="height: 180px;">
+                        
+                    </div>
                 </div>
             </div>
         </div>

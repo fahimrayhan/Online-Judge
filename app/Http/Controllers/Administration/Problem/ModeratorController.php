@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Administration\Problem;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Services\Problem\ProblemService;
-use App\Models\User;
 use App\Models\ModeratorRequest;
+use App\Models\User;
+use App\Services\Problem\ProblemService;
+use Illuminate\Http\Request;
 
 class ModeratorController extends Controller
 {
@@ -14,7 +14,7 @@ class ModeratorController extends Controller
     protected $problemService;
     public function __construct(ProblemService $probServc)
     {
-        $this->problemService  = $probServc;
+        $this->problemService = $probServc;
         // $this->languageService = $languageService;
         if (isset(request()->slug)) {
             $this->problemData = $this->problemService->getProblemData(request()->slug);
@@ -22,21 +22,20 @@ class ModeratorController extends Controller
     }
     public function getModeratorsList()
     {
-        $existing = $this->problemData->moderator;
-        $moderators = User::where('handle','like',request()->search.'%')->whereRaw('type <= 30')->get();
+        $existing   = $this->problemData->moderator;
+        $moderators = User::where('handle', 'like', request()->search . '%')->whereRaw('type <= 30')->get();
         $moderators = $moderators->diff($existing)->take(2)->take(5);
-        return json_encode($moderators,200);
+        return json_encode($moderators, 200);
     }
 
     public function addModerator()
     {
-        if($this->problemData->authUserRole != "owner")
-        {
-            abort(401,"You Can Not Add Moderator. Only Problem owner can add moderator");
+        if ($this->problemData->authUserRole != "owner") {
+            abort(401, "You Can Not Add Moderator. Only Problem owner can add moderator");
         }
-        $this->problemData->moderator()->attach(request()->userId,[
-            'role' => 'moderator',
-            'is_accepted' => 0
+        $this->problemData->moderator()->attach(request()->userId, [
+            'role'        => 'moderator',
+            'is_accepted' => 0,
         ]);
         return response()->json([
             'message' => "Moderator Added Successfully",
@@ -45,15 +44,13 @@ class ModeratorController extends Controller
 
     public function deleteModerator()
     {
-        if($this->problemData->authUserRole != "owner")
-        {
-            abort(401,"You Can Not Add Moderator");
+        if ($this->problemData->authUserRole != "owner") {
+            abort(401, "You Can Not Add Moderator");
         }
-        $user = $this->problemData->moderator()->where('user_id',request()->userId)->firstOrFail();
+        $user = $this->problemData->moderator()->where('user_id', request()->userId)->firstOrFail();
 
-        if($user->pivot->role == "owner")
-        {
-            abort(401,"You Can Not Be Deleted");
+        if ($user->pivot->role == "owner") {
+            abort(401, "You Can Not Be Deleted");
         }
         $this->problemData->moderator()->detach(request()->userId);
         return response()->json([
@@ -63,14 +60,13 @@ class ModeratorController extends Controller
 
     public function leaveModerator()
     {
-        if($this->problemData->authUserRole == "owner")
-        {
-            abort(401,"You Can Not Leave From this Problem");
+        if ($this->problemData->authUserRole == "owner") {
+            abort(401, "You Can Not Leave From this Problem");
         }
         $this->problemData->moderator()->detach(auth()->user()->id);
         return response()->json([
             'message' => "You Leave From {$this->problemData->name}",
-            'url' => route('administration.problems'),
+            'url'     => route('administration.problems'),
         ]);
 
     }
@@ -81,16 +77,15 @@ class ModeratorController extends Controller
         $this->problemData->moderator()->detach(auth()->user()->id);
         return response()->json([
             'message' => "Moderator Detach Successfully",
-            'url' => route('administration.problems')
+            'url'     => route('administration.problems'),
         ]);
-        
 
     }
 
     public function acceptModetator()
     {
         $user = User::find(request()->userId);
-        $user->problems()->updateExistingPivot($this->problemData,['is_accepted' => 1]);
+        $user->problems()->updateExistingPivot($this->problemData, ['is_accepted' => 1]);
         return response()->json([
             'message' => "Moderator accept successfully",
         ]);
@@ -99,23 +94,19 @@ class ModeratorController extends Controller
     public function requestForModerator()
     {
         if (!auth()->check()) {
-            abort(401,"You need to login your account");
+            abort(401, "You need to login your account");
         }
-        if(!auth()->user()->moderatorRequest)
-        {
+        if (!auth()->user()->moderatorRequest) {
             ModeratorRequest::create([
                 'user_id' => auth()->user()->id,
-                'type' => 30,
-                'message' => request()->message
+                'type'    => 30,
+                'message' => request()->message,
             ]);
         }
 
-        // dd(User::has('moderatorRequest')->get());
-        
         return response()->json([
-            'message' => "Your Request Is Sent"
+            'message' => "Your Request Is Sent",
         ]);
-
 
     }
 }

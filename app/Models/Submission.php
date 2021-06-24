@@ -24,7 +24,6 @@ class Submission extends Model
             $submission->verdict_id = 1;
             $submission->time       = 0;
             $submission->memory     = 0;
-            $submission->type       = $submission->getSubmissionType();
             $submission->user_id    = auth()->user()->id;
 
             $problem  = Problem::where(['id' => $submission->problem_id])->firstOrFail();

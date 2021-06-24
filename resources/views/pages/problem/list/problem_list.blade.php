@@ -61,11 +61,22 @@
 					@foreach($JudgeProblems as $key => $JudgeProblem)
 					<a href="{{route('problem.view',['slug' => $JudgeProblem->problem->slug])}}">
 					<div class="problem">
-						<div class="problem-title">{{$JudgeProblem->problem->id}} - {{$JudgeProblem->problem->name}}</div>
+						<div class="pull-right" style="margin-top: 20px;font-size: 14px;">
+							@php
+								$solveStatus = $JudgeProblem->problem->isUserSolved();
+							@endphp
+							@if($solveStatus == 1)
+								<span class="label label-success"><i class="fa fa-check"></i> Solved</span>
+							@elseif($solveStatus == 0)
+								<span class="label label-warning"><i class="fa fa-times"></i> Attempted</span>
+							@endif
+						</div>
+						<div class="problem-title">{{$JudgeProblem->problem->name}}</div>
 						<div class="problem-sub">
-							<!-- <span>ATTEMPTED BY: <b>{{rand()%1000}}</b></span>  -->
-							<!-- <span>SUCCESS RATE: <b>88%</b> </span> -->
-							<span>LEVEL: <b>Easy</b></div></span>
+							<span>ATTEMPTED BY: <b>-</b></span>
+							<span>SUCCESS RATE: <b>-%</b> </span>
+						</div>
+
 					</div>
 					</a>
 					@endforeach
@@ -76,36 +87,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-		<div class="box">
-			<div class="header">
-				<span class="glyphicon glyphicon-list-alt"></span> Difficaulty </div>
-			<div class="body">
-				
-				<span class="label label-success">Easy</span>
-				<span class="label label-warning">Medium</span>
-				<span class="label label-danger">Hard</span>
-			</div>
-		</div>
-	</div>
 	
-	<div class="col-md-3">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="box">
-					<div class="header">
-						<span class="glyphicon glyphicon-list-alt"></span> Tags 
-					</div>
-					<div class="body">
-						@for($i=1; $i<=15; $i++)
-							<span class="label label-default">Segment Tree</span>
-						@endfor
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
 
 </div>
 @stop

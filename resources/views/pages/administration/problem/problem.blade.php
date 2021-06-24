@@ -42,7 +42,7 @@
 	<div class="col-md-9">
 		<div class="box">
 			<div class="header">
-				@yield('title','Ok')
+				@yield('title','')
 			</div>
 			<div class="body" style="min-height: 300px;">
 			 @yield('problem-sub-content',view('pages.administration.problem.overview'))

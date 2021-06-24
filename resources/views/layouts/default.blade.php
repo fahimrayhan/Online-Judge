@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="app-name" content="{{ config('app.name') }}" />
+    <meta name="PAK" content="{{ base64_encode(env('PUSHER_APP_KEY')) }}" />
     <meta name="layout-key" content="{{ $layoutKey }}" />
     <link rel="icon" href="http://coderoj.com/file/site_metarial/favicon.png" type="image/gif" sizes="16x16">
     <title>@yield('title') - {{ config('app.name') }}</title>
@@ -15,10 +16,14 @@
         src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_HTML'></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="{{ asset('lib/ckeditor/4.13.1/ckeditor.js') }}"> </script>
+
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('flag/css/flag-icon.css') }}">
     @include('includes.head')
 </head>
+
 
 <body>
     <!-- <div id="pre-loader">@include('includes.preload')</div> -->

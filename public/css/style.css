@@ -174,7 +174,7 @@ a:hover {
 
 /*card start*/
 .card-counter {
-  box-shadow: 2px 2px 5px #dddddd;
+  border: 1px solid #E7ECF1;
   margin: 5px;
   margin-bottom: 30px;
   padding: 20px 10px;
@@ -182,7 +182,7 @@ a:hover {
   height: 100px;
   border-radius: 1px;
   transition: .3s linear all;
-  border: 1px solid #F4F4F4;
+
 }
 
 .card-counter:hover {

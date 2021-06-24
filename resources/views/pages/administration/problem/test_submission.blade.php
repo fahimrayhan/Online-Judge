@@ -2,18 +2,6 @@
 @section('title', 'Problem Details')
 @section('problem-sub-content')
 
-<style type="text/css">
-	.submit-btn:focus{
-		outline: none;
-		color: #ffffff;
-	}
-	.submit-btn:hover{
-		outline: none;
-		color: #ffffff;
-	}
-
-</style>
-
 <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
@@ -98,9 +86,9 @@
 			<td>{{$submission->created_at->format('M/d/Y h:i:s')}}</td>
 			<td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$submission->user->handle}}</a></td>
 			<td>{{$submission->language->name}}</td>
-			<td>{!!$submission->verdictStatus()!!}</td>
-			<td>{{$submission->time}} ms</td>
-			<td>{{$submission->memory}} kb</td>
+			<td><span id="submission_{{$submission->id}}_verdict">{!!$submission->verdictStatus()!!}</span></td>
+			<td><span id="submission_{{$submission->id}}_time">{{$submission->time}} ms</span></td>
+			<td><span id="submission_{{$submission->id}}_memory">{{$submission->memory}} kb</span></td>
 		</tr>
 	@endforeach
 </table>
@@ -108,5 +96,15 @@
 <div style="text-align: center;">
     {!! $submissions->appends(request()->input())->links() !!}
 </div>
+
+<script type="text/javascript">
+	var submissionList = [];
+	@foreach($submissions as $key => $submission)
+		@if($submission->verdict_id < 3)
+			submissionList.push({{$submission->id}});
+		@endif
+	@endforeach
+	//submission.submissionListForSocket = submissionList;
+</script>
 
 @stop

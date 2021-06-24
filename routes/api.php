@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/submission_verdict/{submission_id}', 'Submission\SubmissionController@submissionVerdict')->name('submission.verdict');
+
+Route::get('/submission_verdict/', 'Submission\SubmissionController@submissionListVerdict')->name('submission_list.verdict');
