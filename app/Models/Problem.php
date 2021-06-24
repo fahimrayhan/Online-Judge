@@ -4,21 +4,22 @@ namespace App\Models;
 
 use App\Models\Checker;
 use App\Models\Traits\Problem\HasLanguage;
+use App\Models\Traits\Problem\HasStatistics;
 use Illuminate\Database\Eloquent\Model;
 
 class Problem extends Model
 {
-    use HasLanguage;
+    use HasLanguage,HasStatistics;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker_type', 'default_checker', 'custom_checker','language_auto_update'
+        'id', 'name', 'slug', 'problem_description', 'input_description', 'output_description', 'constraint_description', 'notes', 'time_limit', 'memory_limit', 'checker_type', 'default_checker', 'custom_checker', 'language_auto_update',
     ];
 
-    protected $appends = ['authUserRole'];
+    protected $appends = ['authUserRole,statistics'];
 
     protected $casts = [
         'language_auto_update' => 'boolean',
@@ -81,10 +82,10 @@ class Problem extends Model
 
     public function languageList()
     {
-        $problemLanguages = $this->languages()->get();
+        $problemLanguages = $this->languages()->orderBy('name', 'asc')->get();
 
         if ($this->language_auto_update) {
-            $languages        = Language::where(['is_archive' => 0])->get();
+            $languages        = Language::where(['is_archive' => 0])->orderBy('name', 'asc')->get();
             $problemLanguages = $languages->merge($problemLanguages);
         }
 
@@ -108,6 +109,8 @@ class Problem extends Model
     {
         return $this->moderator()->firstOrFail();
     }
+
+    
 
     public function moderator()
     {

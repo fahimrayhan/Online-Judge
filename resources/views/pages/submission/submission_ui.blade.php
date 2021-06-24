@@ -87,7 +87,7 @@
         display: none;
         max-height: 200px;
         overflow-y: scroll;
-        background-color: #c9bfbf;
+        background-color: #cecece;
     }
     .testCaseDetailBodyArea{
         margin-bottom: 0px;
@@ -138,10 +138,11 @@
                 		<th></th>
                 	</tr>
                 	<tr class="submissionTr">
-                		<td><a href="">{{$submission->id}}</a></td>
-                		<td><a href="">{{$submission->user->handle}}</a></td>
-                		<td><a href="">{{$submission->problem->name}}</a></td>
-                		<td>{{$submission->created_at}}</td>
+                		<td><a callback="(new Modal()).close()" href="{{url()->current()}}">{{$submission->id}}</a></td>
+                        <td>{{$submission->created_at}}</td>
+                		<td><a callback="(new Modal()).close()" href="{{route('profile',['handle' => $submission->user->handle])}}">{{$submission->user->handle}}</a></td>
+                		<td><a callback="(new Modal()).close()" href="{{route('problem.view',[ 'slug' => $submission->problem->slug])}}">{{$submission->problem->name}}</a></td>
+                		
                 		<td>{{$submission->language->name}}</td>
                 		<td id="submission_view_{{$submission->id}}_time">{{$submission->time}} ms</td>
                 		<td id="submission_view_{{$submission->id}}_memory">{{$submission->memory}} kb</td>
@@ -154,7 +155,7 @@
 </div>
 
 <div class='row'>
-    <div class='col-md-12 col-sm-12'>
+    <div class='col-md-{{isset(request()->modal) ? "12" : "6"}} col-sm-12'>
         <div class="box" style="margin-bottom: 20px">
         	<div class="header">Test Cases </div>
            	<div class="body subBody" style="overflow-x: scroll;scrollbar-width: none;">
@@ -164,7 +165,7 @@
                 	<tr class="submissionTr">
                 		<th style="width: 60px;"></th>
                 		<th>#</th>
-                		<th>Time</th>
+                		<th>CPU</th>
                 		<th>Memory</th>
                 		<th>Points</th>
                 		<th></th>
@@ -202,11 +203,9 @@
            	</div>
         </div>
     </div>
-</div>
+    {!!isset(request()->modal) ? "</div><div class='row'>" : ""!!}
 
-
-<div class='row'>
-    <div class='col-md-12 col-sm-12'>
+    <div class='col-md-{{isset(request()->modal) ? "12" : "6"}} col-sm-12'>
         <div class="box" style="margin-bottom: 20px">
         	<div class="header">Source Code</div>
            	<div class="body">

@@ -3,11 +3,12 @@ var problem = {
     create: function() {
         var form = new Form("create_problem");
         form.submit({
-            loadingText: "creating...",
+            loadingText: "Creating...",
             success: {
                 resetForm: true,
-                callback: function() {
-                    alert("ok");
+                callback: function(response) {
+                    url.load(response.url);
+                    new Modal().close();
                 }
             }
         });

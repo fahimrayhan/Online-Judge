@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Submission;
 
 use App\Events\TestEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\Problem;
 use App\Models\Submission;
+use App\Models\Verdict;
 use Illuminate\Http\Request;
 
 class SubmissionController extends Controller
@@ -22,7 +24,7 @@ class SubmissionController extends Controller
         $data = [
             'source_code' => base64_decode(request()->source_code),
             'language_id' => request()->language_id,
-            'type'        => "testing",
+            'type'        => 1,
             'judge_type'  => "binary",
             'problem_id'  => $problem->id,
         ];
@@ -44,64 +46,90 @@ class SubmissionController extends Controller
 
     public function createPracticeSubmission()
     {
+        $problem = Problem::where(['slug' => request()->slug])->firstOrFail();
+        if (!$problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->exists()) {
+            abort(419, 'Problem language is not found');
+        }
+        $language = $problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->firstOrFail();
 
-    }
-
-    public function submissionVerdict()
-    {
-        $submission = Submission::where(['id' => request()->submission_id])->firstOrFail();
-        $testCases  = $submission->testCases()->get();
-        $data       = [
-            'id'             => $submission->id,
-            'time'           => $submission->time,
-            'memory'         => $submission->memory,
-            'verdict_id'     => $submission->verdict_id,
-            'verdict_status' => $submission->verdictStatus(),
-            'test_cases'     => [],
+        $data = [
+            'source_code' => base64_decode(request()->source_code),
+            'language_id' => request()->language_id,
+            'type'        => 2,
+            'judge_type'  => "binary",
+            'problem_id'  => $problem->id,
         ];
 
-        foreach ($testCases as $key => $testCase) {
-
-            array_push($data['test_cases'], [
-                'id'              => $testCase->id,
-                'input'           => nl2br($testCase->input),
-                'output'          => nl2br($testCase->output),
-                'expected_output' => nl2br($testCase->expected_output),
-                'time'            => $testCase->time,
-                'memory'          => $testCase->memory,
-                'passed_point'    => $testCase->passed_point,
-                'checker_log'     => nl2br($testCase->checker_log),
-                'compiler_log'    => nl2br($testCase->compiler_log),
-                'verdict_id'      => $testCase->verdict_id,
-                'verdict_status'  => $testCase->verdict->statusClass(),
-            ]);
+        for ($i = 1; $i <= 1; $i++) {
+            $submission = Submission::create($data);
         }
-        return response()->json($data);
+
+        return response()->json([
+            'message'             => 'Submission Create Success',
+            'submission_id'       => $submission->id,
+            'view_submission_url' => route('submissions.view', [
+                'submission_id' => $submission->id,
+            ]),
+        ]);
     }
 
-    public function submissionListVerdict()
+    public function practiceSubmissionList()
     {
+        $submissions = Submission::where(['type' => 2])
+            ->whereHas('verdict', function ($q) {
+                if (request()->verdict != "") {
+                    $q->where('name', request()->verdict);
+                }
 
-        // $submissionsId = json_decode(request()->submission_list);
-        $submissionsId = [290, 291];
-        $submissions   = Submission::whereIn('id', $submissionsId)->get();
-        $data          = [];
+            })
+            ->whereHas('language', function ($q) {
+                if (request()->language != "") {
+                    $q->where('name', request()->language);
+                }
+            })
+            ->whereHas('user', function ($q) {
+                if (request()->handle != "") {
+                    $q->where('handle', request()->handle);
+                }
+            })
+            ->whereHas('problem', function ($q) {
+                if (request()->slug != "") {
+                    $q->where('slug', request()->slug);
+                }
+            })
+            ->orderBy('id', 'DESC')->paginate(25);
 
-        foreach ($submissions as $key => $submission) {
-            array_push($data, [
-                'id'            => $submission->id,
-                'time'          => $submission->time,
-                'memory'        => $submission->memory,
-                'verdict_id'    => $submission->verdict_id,
-                'verdict_label' => $submission->verdictStatus(),
-            ]);
-        }
-        return response()->json($data);
+        return view('pages.submission.practice_submission_list', [
+            'submissions' => $submissions,
+            'verdicts'    => Verdict::all(),
+            'languages'   => Language::all(),
+        ]);
     }
+
+    public function viewSubmission()
+    {
+        $submission = Submission::where(['type' => '2', 'id' => request()->submission_id])->firstOrFail();
+
+        return view('pages.submission.view_submission', [
+            'submission'           => $submission,
+            'testCaseDetailsRoute' => route("submissions.view.test_case_details", [
+                'submission_id' => request()->submission_id,
+            ]),
+        ]);
+    }
+
+    public function viewSubmissionTestCaseDetails()
+    {
+        $submission = Submission::where(['type' => '2', 'id' => request()->submission_id])->firstOrFail();
+
+        $testCase = $submission->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
+        return view('pages.submission.submission_test_case_details', [
+            'testCase' => $testCase,
+        ]);
+    }
+
     public function testEvent()
     {
-        //  event(new TestEvent("hello how are you"));
-        $sub = Submission::where(['id' => 476])->firstOrFail();
-        echo hash('sha256', request()->ip() . "-submission-{$sub->id}-{$sub->created_at->timestamp}->compile_file");
+
     }
 }

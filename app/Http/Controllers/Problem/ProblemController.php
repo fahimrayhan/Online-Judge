@@ -53,9 +53,12 @@ class ProblemController extends Controller
      */
     public function store(ProblemCreateRequest $request)
     {
-        $this->problemService->createNewProblem($request->all());
+        $problem = $this->problemService->createNewProblem($request->all());
         return response()->json([
             'message' => 'Problem Successfully Created',
+            'url' => route("administration.problem.overview",[
+                'slug' => $problem->slug
+            ])
         ]);
     }
 
@@ -121,7 +124,7 @@ class ProblemController extends Controller
         $problemData = $this->problemService->getProblemData(request()->slug);
         return view("pages.editor.editor", [
             'problem'   => $problemData,
-            'submitUrl' => 'hey',
+            'submitUrl' => route('problem.submit',['slug' => request()->slug]),
         ]);
     }
 }

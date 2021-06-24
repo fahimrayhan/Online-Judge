@@ -33,7 +33,14 @@ Route::post('/request_for_moderator', 'Administration\Problem\ModeratorControlle
 Route::group(['prefix' => 'problems'], function () {
     Route::get('/', 'Problem\ProblemListController@show')->name('problems');
     Route::get('/{slug}', 'Problem\ProblemListController@viewProblem')->name('problem.view');
-    Route::get('/{slug}/create_submission', 'Problem\ProblemController@createSubmission')->name('problem.submission.create');
+    Route::get('/{slug}/submit', 'Problem\ProblemController@createSubmission')->name('problem.submit');
+    Route::post('/{slug}/submit', 'Submission\SubmissionController@createPracticeSubmission');
+});
+
+Route::group(['prefix' => 'submissions'], function () {
+    Route::get('/', 'Submission\SubmissionController@practiceSubmissionList')->name('submissions');
+    Route::get('/{submission_id}', 'Submission\SubmissionController@viewSubmission')->name('submissions.view');
+    Route::get('/{submission_id}/test_case_details', 'Submission\SubmissionController@viewSubmissionTestCaseDetails')->name('submissions.view.test_case_details');
 });
 
 Route::group(['prefix' => 'administration', 'middleware' => ['Administration']], function () {

@@ -64,9 +64,27 @@
 		<div class="box">
 			<div class="header">Submit</div>
 			<div class="body">
-				<button class="btn btn-info">Submit</button>
+				@if(auth()->check())
+				<button class="btn btn-primary" style="width: 100%" onclick="new Modal('lg').load('{{route('problem.submit',['slug' => request()->slug])}}', 'Submit Your Solution')">Submit</button>
+				@else
+					You need to <b>Login</b> or <b>Registration</b> for submit your solution
+				@endif
 			</div>
 		</div>
+		@if(count($lastSubmissionList) != 0)
+		<div class="box">
+			<div class="body">
+				<table style="width: 100%;font-size: 14px;" >
+					@foreach($lastSubmissionList as $key => $submission)
+					<tr style="border: 1px solid #E7ECF1; border-width: 0px 0px 1px 0px;">
+						<td style="padding: 10px 0px 10px 0px;"><a modal='true' modal-type='lg' modal-header="Submission #{{$submission->id}}" title="{{$submission->created_at}}" href="{{route('submissions.view',['submission_id' => $submission->id])}}">{{$submission->created_at->diffForHumans()}}</a></td>
+						<td style="padding: 7px 0px 7px 0px;text-align: right;" id="submissionGlobalVerdictStatus_2960"><span id="submission_{{$submission->id}}_verdict">{!!$submission->verdictStatus()!!}</span></td>
+					</tr>
+					@endforeach
+				</table>
+			</div>
+		</div>
+		@endif
 	</div>
 </div>
 	
@@ -90,7 +108,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		legendText: "AC = Accepted",
 		dataPoints: [      
 			{ y: {{rand()%100}}, label: "AC" },
-			{ y: 114,  label: "WA" },
+			{ y: {{$problem->statistics->ac}},  label: "WA" },
 			{ y: 8,  label: "TLE" },
 			{ y: 0,  label: "MLE" },
 			{ y: 5,  label: "RTE" },

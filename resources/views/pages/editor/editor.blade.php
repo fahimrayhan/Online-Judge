@@ -43,7 +43,7 @@
     }
 </style>
 @php
-    $languages = $problem->languages()->get();
+    $languages = $problem->languageList();
     $userLanguage = auth()->user()->lastSubmissionLanguage();
     $userLanguageId = !empty($userLanguage) ? $userLanguage->id : -1;
 @endphp
