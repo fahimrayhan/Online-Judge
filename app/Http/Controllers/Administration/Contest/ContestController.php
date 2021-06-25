@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contest;
 use App\Http\Requests\Contest\ContestUpdateRequest;
 use App\Services\Contest\ContestService;
+use Illuminate\Http\Request;
 
 class ContestController extends Controller
 {
@@ -39,6 +40,23 @@ class ContestController extends Controller
         $this->contestService->updateContest($this->contest, $request);
         return response()->json([
             'message' => "Contest Data Updated Successfully"
+        ]);
+    }
+
+    public function problems()
+    {
+        return view('pages.administration.contest.problem.problem_list', ['problems' => $this->contest->problems]);
+    }
+    public function addProblem(Request $request)
+    {
+        return response()->json([
+            'message' => $this->contestService->addProblem($this->contest, $request->slug)
+        ]);
+    }
+    public function removeProblem(Request $request)
+    {
+        return response()->json([
+            'message' => $this->contestService->removeProblem($this->contest, request()->problem_id)
         ]);
     }
 }

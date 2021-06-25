@@ -35,5 +35,29 @@ var Contest = {
             URL.revokeObjectURL(output.src) // free memory
         }
     },
+    addProblem: function (e) {
+        var problemSlug = prompt("Enter problem Slug");
+        if (problemSlug == null) return;
+        var addUrl = e.attr("url");
+        var data = {
+            'slug': problemSlug
+        };
+        $.post(addUrl, app.setToken(data), function (response) {
+            url.load();
+            toast.success(response.message);
+        });
+        // console.log(problemSlug);
+    },
+    removeProblem: function (e) {
+        var ok = confirm("Are you want to remove problem");
+        if (!ok) return;
+        var removeUrl = e.attr("url");
+        $.post(removeUrl, app.setToken(), function (response) {
+            url.load();
+            toast.success(response.message);
+        });
+        // console.log(problemSlug);
+    },
+
 
 };
