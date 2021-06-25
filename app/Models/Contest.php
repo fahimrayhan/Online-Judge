@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Contest extends Model
 {
     protected $fillable = [
-        'id', 'name', 'slug', 'description', 'banner', 'format', 'publish', 'visibility', 'password', 'start', 'duration', 'registration_auto_accept', 'user_data_field', 'participate_main_name','participate_sub_name'
+        'id', 'name', 'slug', 'description', 'banner', 'format', 'publish', 'visibility', 'password', 'start', 'duration', 'registration_auto_accept', 'user_data_field', 'participate_main_name', 'participate_sub_name'
     ];
 
     protected $casts = [
         'start' => 'datetime',
     ];
+
+    protected $appends = ['bannerPath'];
 
     protected static function boot()
     {
@@ -46,7 +48,6 @@ class Contest extends Model
         });
 
         static::deleting(function ($contest) {
-            
         });
     }
 
@@ -63,5 +64,15 @@ class Contest extends Model
     public function problems()
     {
         return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial']);
+    }
+
+    public function getBannerPathAttribute()
+    {
+        return 'upload/banner/';
+    }
+
+    public function getBannerAttribute($banner)
+    {
+        return asset($this->bannerPath . $banner);
     }
 }

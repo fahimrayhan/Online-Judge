@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Administration\Contest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contest;
+use App\Http\Requests\Contest\ContestUpdateRequest;
+use App\Services\Contest\ContestService;
 
 class ContestController extends Controller
 {
     protected $contest;
-
-    public function __construct()
+    protected $contestService;
+    public function __construct(ContestService $contestService)
     {
+        $this->contestService = $contestService;
         if (isset(request()->contest_id)) {
             $this->contest = Contest::where(['id' => request()->contest_id])->firstOrFail();
         }
@@ -23,11 +26,19 @@ class ContestController extends Controller
 
     public function overview()
     {
-    	return view('pages.administration.contest.overview.overview',['contest' => $this->contest]);
+        return view('pages.administration.contest.overview.overview', ['contest' => $this->contest]);
     }
 
     public function edit()
     {
         return view('pages.administration.contest.edit.edit', ['contest' => $this->contest]);
+    }
+
+    public function update(ContestUpdateRequest $request)
+    {
+        $this->contestService->updateContest($this->contest, $request);
+        return response()->json([
+            'message' => "Contest Data Updated Successfully"
+        ]);
     }
 }
