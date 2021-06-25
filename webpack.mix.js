@@ -45,6 +45,8 @@ var appJs = [
 	'resources/assets/js/filemanager/file_manager.js',
 	'resources/assets/js/country/country.js',
 	'resources/assets/js/contest/contest.js',
+	'resources/assets/js/city/city.js',
+
 ];
 
 var scripts = [].concat(libJs, helperJs, appJs);
