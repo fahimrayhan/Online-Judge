@@ -169,13 +169,8 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         });
     });
 
-            Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
-            Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
-
-
-                    });
-});
-
+    Route::get('/settings/', 'Administration\ProblemController@updateSettings')->name('administration.problem.settings');
+    Route::post('/settings/edit/', 'Administration\ProblemController@editSettings')->name('administration.problem.settings.edit');
 
     /*
 
