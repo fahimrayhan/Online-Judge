@@ -20,6 +20,7 @@ class ModeratorController extends Controller
             $this->problemData = $this->problemService->getProblemData(request()->slug);
         }
     }
+    
     public function getModeratorsList()
     {
         $existing   = $this->problemData->moderator;

@@ -11,11 +11,11 @@
 	<div class="col-md-12">
 		<div class="box">
 			<div class="header">
-				<span class="glyphicon glyphicon-list-alt"></span> Problems </div>
+				<span class="glyphicon glyphicon-list-alt"></span> Contests </div>
 			<div class="body" style="min-height: 500px">
 				
 				<div class="pull-right" style="margin-bottom: 10px;">
-					<button class="btn btn-primary" onclick="new Modal('md',500).load('{{route('problem.create')}}','Create Problem')">Create Problem</button>
+					<button class="btn btn-primary" onclick="new Modal('md',500).load('{{route('problem.create')}}','Create Problem')">Create Contest</button>
 				</div>
 				<table class="table-custom">
 					<tr>
