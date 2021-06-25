@@ -150,14 +150,14 @@
                         Contest Visibility:
                     </label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="visibility" onchange="selectContestVisibility(this)">
-                            <option value="public">
+                        <select class="form-control" name="visibility">
+                            <option value="public" {{ $contest->visibility == 'public' ? 'selected' : '' }}>
                                 Public - any one can registration and participate
                             </option>
-                            <option value="protected">
+                            <option value="protected" {{ $contest->visibility == 'protected' ? 'selected' : '' }}>
                                 Protected - any one can registration and participate but before registration need password
                             </option>
-                            <option value="private">
+                            <option value="private" {{ $contest->visibility == 'private' ? 'selected' : '' }}>
                                 Private - only invited user can participate
                             </option>
                         </select>
@@ -179,20 +179,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                                                <label class="control-label col-sm-3" for=" Registration Close ">
-                                                    Registration Close:
-                                                </label>
-                                                <div class="col-sm-9">
-                                                    <input class="form-control" name="registrationClose" placeholder="Registration Close"
-                                                        type="datetime-local" value="2021-03-24T09:20">
-                                                    <small class="form-text text-muted">
-                                                        After this time user can not registration this contest.
-                                                    </small>
-                                                    <br />
-
-                                                </div>
-                                            </div> -->
                     <div class="form-group">
                         <label class="control-label col-sm-3" for=" Registration Auto Accept ">
                             Registration Auto Accept:

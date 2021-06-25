@@ -15,11 +15,11 @@ var Contest = {
     update: function () {
         var form = new Form("updateContestForm");
         form.submit({
-            loadingText: "updating...",
+            loadingText: "Updating...",
             success: {
-                resetForm: true,
+                resetForm: false,
                 callback: function (response) {
-                    url.load();
+                   // url.load();
                     // new Modal().close();
                 }
             }
@@ -45,6 +45,8 @@ var Contest = {
         $.post(addUrl, app.setToken(data), function (response) {
             url.load();
             toast.success(response.message);
+        }).fail(function(error) {
+            toast.danger("Problem Added Error");
         });
         // console.log(problemSlug);
     },
@@ -58,6 +60,4 @@ var Contest = {
         });
         // console.log(problemSlug);
     },
-
-
 };
