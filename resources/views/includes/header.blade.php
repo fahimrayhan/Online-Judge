@@ -4,31 +4,20 @@
             'icon'  => 'fas fa-home',
             'name' => 'HOME',
             'url' => route('home'),
-            'callback' => 'profile.afterLoad'
+            'callback' => ''
         ],
-        'contest' => [
-            'icon'  => 'glyphicon glyphicon-list',
-            'name' => 'CONTEST',
-            'url' => 'http://127.0.0.1:8000/login',
-            'callback' => 'profile.afterLoad'
-        ],
+        
         'problems' => [
             'icon'  => 'glyphicon glyphicon-list',
             'name' => 'PROBLEMS',
             'url' => route('problems'),
-            'callback' => 'profile.afterLoad'
+            'callback' => ''
         ],
-        'profile' => [
+        'submissions' => [
             'icon'  => 'fas fa-random',
-            'name' => 'PROFILE',
-            'url' => route('profile',['handle' => 'amirhamza05']),
-            'callback' => 'profile.afterLoad()'
-        ],
-        'ranklist' => [
-            'icon'  => 'fas fa-trophy',
-            'name' => 'RANK LIST',
-            'url' => route('ranklist'),
-            'callback' => 'profile.afterLoad'
+            'name' => 'SUBMISSIONS',
+            'url' => route('submissions'),
+            'callback' => ''
         ],
 
     ];
@@ -53,6 +42,7 @@
     .navbar-login a:hover i{
         color: #1A6FC9;
     }
+    .delHoverA:focus{text-decoration: none;color: #ffffff}
 </style>
 
 <div class="navbar navbar-default navbar-fixed-top navbar-custom" role="navigation">

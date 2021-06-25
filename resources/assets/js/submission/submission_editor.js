@@ -53,7 +53,9 @@ var submissionEditor = {
         };
 
         $.post($(e).attr('url'), app.setToken(data), function(response) {
+            console.log(response);
             new Modal('lg').load(response.view_submission_url,"Submission #"+response.submission_id);
+            url.load();
         });
     },
 }

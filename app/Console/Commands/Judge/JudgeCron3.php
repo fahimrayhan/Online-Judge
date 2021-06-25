@@ -37,6 +37,7 @@ class JudgeCron3 extends Command
      */
     public function handle()
     {
+        (new \App\Services\Judge\JudgeService(3))->multiJudge();
         return 0;
     }
 }

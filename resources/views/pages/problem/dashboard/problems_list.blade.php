@@ -15,34 +15,39 @@
 			<div class="body" style="min-height: 500px">
 				
 				<div class="pull-right" style="margin-bottom: 10px;">
-					My Problems <input type="checkbox" style="margin-right: 15px;" name=""> 
-					Pending Problems <input type="checkbox" style="margin-right: 15px" name=""> 
-					<button onclick="new Modal('md',500).load('{{route('problem.create')}}','Create Problem')">Create Problem</button>
+					<button class="btn btn-primary" onclick="new Modal('md',500).load('{{route('problem.create')}}','Create Problem')">Create Problem</button>
 				</div>
 				<table class="table-custom">
 					<tr>
-						<th>Slug</th>
-						<th>Name</th>
+						<th>#</th>
+						<th style="text-align: left;padding-left: 15px">Name</th>
 						<th>Owner</th>
 						<th>Role</th>
 						<th>Created At</th>
-						<th>Updated At</th>
 						<th></th>
 					</tr>
+
 					@foreach($problems as $key=>$problem)
 						<tr>
-							<td>{{$problem->slug}}</td>
-							<td>{{$problem->name}}</td>
-							<td><a href="">Owner</a></td>
-							<td><span class="label label-success">Owner</span></td>
-							<td>{{$problem->created_at}}</td>
-							<td>{{$problem->updated_at}}</td>
+							<td style="width: 5%">{{$problem->id}}</td>
+							<td style="width: 45%;text-align: left;padding-left: 15px;"><a href="{{route('administration.problem.overview',['slug' => $problem->slug])}}">{{$problem->name}}</a></td>
+							<td style="width: 15%"><a href="{{route('profile',['handle' => $problem->owner()->handle])}}">{{$problem->owner()->handle}}</a></td>
+							<td style="width: 15%">
+								<span class="label label-{{$problem->pivot->role == "owner" ? "success":"info"}}"><i class="fas fa-shield-alt"></i> {{$problem->pivot->role}}</span>
+								@if(!$problem->pivot->is_accepted)
+									<span class="label label-warning"><i class="fa fa-clock-o"></i> pending</span>
+								@endif
+							</td>
+							<td><font title="{{$problem->created_at}}">{{$problem->created_at->diffForHumans()}}</font></td>
 							<td>
-								<a href="{{route('administration.problem.overview',['slug' => $problem->slug])}}"><button title="Edit Problem" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></button></a>
+								<a style="" href="{{route('administration.problem.overview',['slug' => $problem->slug])}}"><button title="Edit Problem" style="padding: 5px;" class="btn btn-sm btn-primary"><i class="fas fa-pencil-square-o"></i> Enter Panel</button></a>
 							</td>
 						</tr>
 					@endforeach
 				</table>
+				<div style="text-align: center;">
+    				{!! $problems->appends(request()->input())->links() !!}
+				</div>
 			</div>
 		</div>
 	</div>

@@ -8,10 +8,12 @@ use App\Http\Requests\Problem\ProblemSettingsRequest;
 use App\Models\Checker;
 use App\Models\Language;
 use App\Models\Problem;
+use App\Models\Submission;
 use App\Models\Verdict;
 use App\Services\Language\LanguageService;
 use App\Services\Problem\ProblemService;
 use PDF;
+use Spatie\Activitylog\Models\Activity;
 
 class ProblemController extends Controller
 {
@@ -40,6 +42,14 @@ class ProblemController extends Controller
     public function overview()
     {
         return view('pages.administration.problem.overview');
+    }
+
+    public function activityLog()
+    {
+        activity()
+            ->performedOn($this->problemData)
+            ->withProperties(['key' => 'value'])
+            ->log('edited');
     }
 
     public function moderators()
@@ -127,26 +137,35 @@ class ProblemController extends Controller
     public function languages()
     {
         $languages        = $this->languageService->getActiveLanguage();
-        $problemLanguages = $this->problemData->languages()->get();
+        $problemLanguages = $this->problemData->languageList();
+
+        $mergeProblemLanguages = $languages->merge($problemLanguages);
 
         return view('pages.administration.problem.language.index', [
-            'languages' => $languages->merge($problemLanguages),
+            'languages' => $mergeProblemLanguages,
             'problem'   => $this->problemData,
+            'checkAll'  => count($mergeProblemLanguages) == count($problemLanguages),
         ]);
     }
 
     public function saveLanguages(AddLanguageRequest $request)
     {
+        $this->problemData->update([
+            'language_auto_update' => isset(request()->language_auto_update),
+        ]);
+
         $this->problemService->addLanguages($this->problemData, $request->all());
         return response()->json([
-            'message' => 'Languages Successfully Saved',
+            'message' => 'Languages Successfully Saved ' . request()->language_auto_update,
         ]);
     }
 
     public function viewTestSubmission()
     {
-        $submissions = $this->problemData->submissions()->where(['type' => '1'])
+        $submissions = Submission::where([])
             ->whereHas('verdict', function ($q) {
+                $model = "verdict";
+
                 if (request()->verdict != "") {
                     $q->where('name', request()->verdict);
                 }
@@ -160,6 +179,11 @@ class ProblemController extends Controller
             ->whereHas('user', function ($q) {
                 if (request()->handle != "") {
                     $q->where('handle', request()->handle);
+                }
+            })
+            ->whereHas('problem', function ($q) {
+                if (request()->slug != "") {
+                    $q->where('slug', request()->slug);
                 }
             })
             ->orderBy('id', 'DESC')->paginate(15);
@@ -177,7 +201,20 @@ class ProblemController extends Controller
         $submission = $this->problemData->submissions()->where(['type' => '1', 'id' => request()->submission_id])->firstOrFail();
 
         return view('pages.administration.problem.submission', [
-            'submission' => $submission,
+            'submission'           => $submission,
+            'testCaseDetailsRoute' => route("administration.problem.submission.view.testcase.details", [
+                'slug'          => request()->slug,
+                'submission_id' => request()->submission_id,
+            ]),
+        ]);
+    }
+
+    public function viewTestSubmissionTestCaseDetailsPage()
+    {
+        $submission = $this->problemData->submissions()->where(['type' => '1', 'id' => request()->submission_id])->firstOrFail();
+        $testCase   = $submission->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
+        return view('pages.submission.submission_test_case_details', [
+            'testCase' => $testCase,
         ]);
     }
 
@@ -201,5 +238,3 @@ class ProblemController extends Controller
     }
 
 }
-
-

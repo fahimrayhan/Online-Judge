@@ -10,7 +10,7 @@ use Models\Problem;
 class ProblemDashboardController extends Controller
 {
     public function show(){
-    	$problems = auth()->user()->problems()->get();
+    	$problems = auth()->user()->problems()->paginate(15);
     	return view("pages.problem.dashboard.problems_list",['problems' => $problems]);
     }
 }

@@ -3,11 +3,12 @@ var problem = {
     create: function() {
         var form = new Form("create_problem");
         form.submit({
-            loadingText: "creating...",
+            loadingText: "Creating...",
             success: {
                 resetForm: true,
-                callback: function() {
-                    alert("ok");
+                callback: function(response) {
+                    url.load(response.url);
+                    new Modal().close();
                 }
             }
         });
@@ -217,7 +218,7 @@ var problem = {
         var data = {
             'message': $("#moderator_message").val()
         };
-        new Button("sendReqBtn").off("Sending...").loader();
+        new Button("sendReqBtn").off("Sending...");
         $.post(e.attr('data-url'), app.setToken(data), function(response) {
             url.load();
             toast.success("Your Request Sent To Admin");

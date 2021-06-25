@@ -3,6 +3,8 @@ var submission = {
     submissionPageSocketStart: 0,
     submissionPageSocketBusy: 0,
     openToggleSourceCode: false,
+    submissionListForSocket: {},
+    submissionListSocketBusy: false,
     setSubmissionPage: function(submissionId) {
         this.loadSubmissionPageId = submissionId;
         this.submissionPageSocketStart = 1;
@@ -42,16 +44,26 @@ var submission = {
             submissionPageSocketBusy = 0;
         });
     },
-    viewTestCaseDetail: function(id) {
-        var divId = "#submission_test_case_detail_" + id;
-        if ($(divId).css('display') == 'none') {
-            $(divId).show(500);
-            $("#view_test_case_btn_" + id).removeClass('fa fa-angle-double-down');
-            $("#view_test_case_btn_" + id).addClass('fa fa-angle-double-up');
+    viewTestCaseDetail: function(e) {
+        serial = $(e).attr("serial");
+        var testCaseDiv = $("#submission_test_case_detail_area_" + serial);
+        if (testCaseDiv.css('display') == 'none') {
+            testCaseDiv.show(50);
+            $("#view_test_case_btn_" + serial).removeClass('fa fa-angle-double-down');
+            $("#view_test_case_btn_" + serial).addClass('fa fa-angle-double-up');
+            if (testCaseDiv.html() == "") {
+                (new Div(testCaseDiv)).load({
+                    url: $(e).attr("url"),
+                    loader: 'div',
+                    data: {
+                        test_case_id: serial
+                    }
+                });
+            }
         } else {
-            $(divId).hide(300);
-            $("#view_test_case_btn_" + id).removeClass('fa fa-angle-double-up');
-            $("#view_test_case_btn_" + id).addClass('fa fa-angle-double-down');
+            testCaseDiv.hide();
+            $("#view_test_case_btn_" + serial).removeClass('fa fa-angle-double-up');
+            $("#view_test_case_btn_" + serial).addClass('fa fa-angle-double-down');
         }
     },
     copySourceCode: function() {
@@ -78,11 +90,62 @@ var submission = {
         if (language) data['language'] = language;
         var handle = $("#submission-filter-handle").val();
         if (handle) data['handle'] = handle;
-    
         base = base.replace(/\?.*$/, "") + "?" + jQuery.param(data);
         url.load(base);
+    },
+    updateSubmissionListSocket: function() {
+        if (this.submissionListForSocket.length == 0) return;
+        if (this.submissionListSocketBusy == true) return;
+        this.submissionListSocketBusy = true;
+        var data = {
+            'submission_list': JSON.stringify(this.submissionListForSocket)
+        };
+        console.log("soket start");
+        $.post("/api/submission_verdict", app.setToken(data), function(response) {
+            console.log(response);
+            $.each(response, function(key, submissionValue) {
+                $("#submission_" + submissionValue.id + "_time").html(submissionValue.time + " ms");
+                $("#submission_" + submissionValue.id + "_memory").html(submissionValue.memory + " kb");
+                $("#submission_" + submissionValue.id + "_verdict").html(submissionValue.verdict_label);
+                if (submissionValue.verdict_id >= 3) {
+                    const index = submission.submissionListForSocket.indexOf(submissionValue.id);
+                    if (index > -1) submission.submissionListForSocket.splice(index, 1);
+                }
+            });
+            submission.submissionListSocketBusy = false;
+        }).fail(function(error) {
+            submission.submissionListSocketBusy = false;
+        });
     }
 };
-setInterval(function() {
-    submission.loadSubmissionData();
-}, 2000);
+
+var pusherAppKey = atob($('meta[name="PAK"]').attr('content'));
+var pusher = new Pusher(pusherAppKey, {
+    cluster: 'mt1'
+});
+
+var channel = pusher.subscribe('submission-channel');
+channel.bind("submission-event", function(data) {
+    //    data = JSON.parse(data);
+    data = JSON.parse(data.message);
+    submissionData = data.submission;
+    $("#submission_" + submissionData.id + "_time").html(submissionData.time + " ms");
+    $("#submission_" + submissionData.id + "_memory").html(submissionData.memory + " kb");
+    $("#submission_" + submissionData.id + "_verdict").html(submissionData.verdict_label);
+    $("#submission_view_" + submissionData.id + "_time").html(submissionData.time + " ms");
+    $("#submission_view_" + submissionData.id + "_memory").html(submissionData.memory + " kb");
+    $("#submission_view_" + submissionData.id + "_verdict").html(submissionData.verdict_label);
+    $.each(data.testcases, function(key, testcase) {
+        setTestCase(testcase);
+    });
+});
+
+function setTestCase(value) {
+    $("#submission_test_case_verdict_" + value.id).html(value.verdict_status);
+    $("#submission_test_case_time_" + value.id).html(value.time + " ms");
+    $("#submission_test_case_memory_" + value.id).html(value.memory + " kb");
+    $("#submission_test_case_point_" + value.id).html(value.passed_point);
+    if (value.verdict_id >= 3 && value.verdict_id != 16) {
+        $("#view_test_case_btn_area_" + value.id).show();
+    }
+}

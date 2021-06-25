@@ -69,6 +69,5 @@ function copyer(containerid) {
             document.execCommand("copy");
             window.getSelection().removeAllRanges();
         }
-
     }
 }

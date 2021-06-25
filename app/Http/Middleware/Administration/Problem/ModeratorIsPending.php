@@ -18,10 +18,11 @@ class ModeratorIsPending
     {
         $problem  = Problem::where(['slug' => request()->slug])->firstOrFail();
         $problem  = auth()->user()->problems()->where('problem_id', $problem->id)->firstOrFail();
-        $owner    = $problem->moderator()->where('role', 'owner')->firstOrFail();
         $isAccept = $problem->pivot->is_accepted;
         if (!$isAccept) {
-            return response(view('pages.administration.problem.moderator_accept', ['problem' => $problem, 'owner' => $owner]));
+            return response(view('pages.administration.problem.moderator_accept', [
+                'problem' => $problem,
+            ]));
         }
         return $next($request);
     }

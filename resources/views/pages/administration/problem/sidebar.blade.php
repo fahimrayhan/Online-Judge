@@ -25,10 +25,10 @@ $sidebar = [
         'url' => route('administration.problem.test_case', ['slug' => request()->slug]),
         'callback' => '',
     ],
-    'checker' => [
-        'icon' => 'fas fa-list-alt',
-        'name' => 'Checker',
-        'url' => route('administration.problem.checker', ['slug' => request()->slug]),
+    'settings' => [
+        'icon' => 'fa fa-cog',
+        'name' => 'Settings',
+        'url' => route('administration.problem.settings', ['slug' => request()->slug]),
         'callback' => '',
     ],
     'languages' => [
@@ -37,19 +37,18 @@ $sidebar = [
         'url' => route('administration.problem.languages', ['slug' => request()->slug]),
         'callback' => '',
     ],
-    'settings' => [
-        'icon' => 'fa fa-cog',
-        'name' => 'Settings',
-        'url' => route('administration.problem.settings', ['slug' => request()->slug]),
-        'callback' => '',
-    ],
     'moderators' => [
         'icon' => 'fas fa-users',
         'name' => 'Moderators',
         'url' => route('administration.problem.moderators',['slug' => request()->slug]),
         'callback' => '',
     ],
-
+    'checker' => [
+        'icon' => 'fas fa-list-alt',
+        'name' => 'Checker',
+        'url' => route('administration.problem.checker', ['slug' => request()->slug]),
+        'callback' => '',
+    ],
     'test_submissions' => [
             'icon'  => 'fas fa-hammer',
             'name' => 'Test Submissions',

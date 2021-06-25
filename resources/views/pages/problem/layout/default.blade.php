@@ -62,8 +62,8 @@
 <div class="problem-top-area">
  	<div class="name">{{$problem->name}}</div>
  	<div class="limit">
- 		Time: {{$problem->time_limit/1000}} s<br>
-		Memory: 12.5 MB
+ 		Time: {{number_format($problem->time_limit/1000,2)}} s<br>
+		Memory: {{number_format($problem->memory_limit/2024,2)}} MB
 	</div>
 </div>
 

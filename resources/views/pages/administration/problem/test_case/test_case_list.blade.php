@@ -21,13 +21,21 @@
 		</tr>
 		@php 
 			$testCases = $problem->testCases()->get();
-			$cnt = 0;
+			$serial = 0;
 		@endphp
 		@foreach ($testCases as $key => $testCase)
 		<tr>
-			<td>{{++$cnt}}</td>
-			<td><a href="{{asset($testCase->input_file)}}" target="_blank">input-{{$cnt}}.txt ({{$testCase->inputLength()}} Bytes)</a> </td>
-			<td><a href="{{asset($testCase->output_file)}}" target="_blank">output-{{$cnt}}.txt ({{$testCase->outputLength()}} Bytes)</a></td>
+			<td>{{++$serial}}</td>
+			<td>
+				<a title="View Input-{{$serial}} File" href="{{route('problem.test_case.input.view',['slug' => request()->slug,'test_case_serial' => $serial])}}" target="_blank">input-{{$serial}}.txt </a> | 
+				<a title="Download Input File" target="_blank" href="{{route('problem.test_case.input.download',['slug' => request()->slug,'test_case_serial' => $serial])}}"><i class="fa fa-download"></i></a>
+				<br/><small class="text-muted">(<span title="File Size">{{$testCase->inputLength()}} Bytes</span> | <span title="Last Update">{{$testCase->inputLastModified()->diffForHumans()}})</span></small> 
+			</td>
+			<td>
+				<a title="View Output-{{$serial}} File" href="{{route('problem.test_case.output.view',['slug' => request()->slug,'test_case_serial' => $serial])}}" target="_blank">output-{{$serial}}.txt </a> | 
+				<a title="Download Output File" target="_blank" href="{{route('problem.test_case.output.download',['slug' => request()->slug,'test_case_serial' => $serial])}}"><i class="fa fa-download"></i></a>
+				<br/><small class="text-muted">(<span title="File Size">{{$testCase->outputLength()}} Bytes</span> | <span title="Last Update">{{$testCase->outputLastModified()->diffForHumans()}})</span></small> 
+			</td>
 			<td><input type="checkbox" name="{{route('problem.test_case.update_sample',['slug' => request()->slug,'test_case_id' => $testCase->id])}}" value="true" onchange="testCase.updateSample(this)" {{$testCase->sample ? "checked" : ""}}></td>
 			<td>{{$testCase->point}}</td>
 			<td>{{$testCase->created_at}}</td>

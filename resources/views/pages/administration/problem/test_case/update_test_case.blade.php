@@ -53,11 +53,17 @@
    </style>
 
    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" style="margin-top: -5px">
          <div class="alert-area">
             <div class="alert alert-danger error-area"></div>
             <div class="alert alert-success success-area"></div>
          </div>
+      </div>
+      <div class="col-md-12">
+         <div style="margin-top: -15px;"></div>
+         <b style='font-size: 17px;'>Point</b> 
+         <input type="number" name="point" id="testCasePoint" style="width: 250px;" class="form-control" value="{{$testCase->point}}" placeholder="Enter Test Case Point">
+         <div style="margin-bottom: 10px;"></div>
       </div>
       <div class="col-md-7"><b style='font-size: 17px;'>Input</b></div>
       <div class="col-md-5">
@@ -95,12 +101,8 @@
             </div>
          </div>
       </div>
-      <div class="col-md-12">
-         <div style="margin-top: 15px;"></div>
-         <b style='font-size: 17px;'>Point</b> 
-         <input type="number" name="point" id="testCasePoint" class="inputClass" value="{{$testCase->point}}" placeholder="Enter Test Case Point">
-      </div>
+      
    </div>
    <div style="margin-top: 15px;"></div>
-   <center><button type="submit" class="btn btn-success" id="addTestCase" onclick='testCase.updateTestCase()'>Update Test Case</button></center>
+   <center><button type="submit" class="btn btn-primary" id="addTestCase" onclick='testCase.updateTestCase()'>Update Test Case</button></center>
 </form>
