@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 Route::get('/test-event', 'Submission\SubmissionController@testEvent')->name('testevent');
 
 Route::get('/register', 'Auth\RegisterController@index')->name('register');
@@ -37,6 +36,21 @@ Route::group(['prefix' => 'problems'], function () {
     Route::post('/{slug}/submit', 'Submission\SubmissionController@createPracticeSubmission');
 });
 
+Route::group(['prefix' => 'contests'], function () {
+    Route::get('/', 'Problem\ProblemListController@show')->name('problems');
+    Route::group(['prefix' => '{contest_slug}'], function () {
+        Route::group(['prefix' => 'arena'], function () {
+            Route::get('/', 'Contest\ContestArenaController@problems')->name('contest.arena');
+            Route::get('/problems', 'Contest\ContestArenaController@problems')->name('contest.arena.problems');
+            Route::get('/problems/{problem_no}', 'Contest\ContestArenaController@viewProblem')->name('contest.arena.problem');
+            Route::get('/submissions', 'Contest\ContestArenaController@submissions')->name('contest.arena.submissions');
+            Route::get('/submissions/{submission_id}', 'Contest\ContestArenaController@viewSubmission')->name('contest.arena.submissions.view');
+            Route::get('/standings', 'Contest\ContestArenaController@standings')->name('contest.arena.standings');
+            Route::get('/clearifications', 'Contest\ContestArenaController@clearifications')->name('contest.arena.clearifications');
+        });
+    });
+});
+
 Route::group(['prefix' => 'submissions'], function () {
     Route::get('/', 'Submission\SubmissionController@practiceSubmissionList')->name('submissions');
     Route::get('/{submission_id}', 'Submission\SubmissionController@viewSubmission')->name('submissions.view');
@@ -52,6 +66,13 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         Route::get('/galery', 'Administration\FileManager\FileManagerController@galery')->name('administration.filemanager.galery');
         Route::post('/{id}/delete', 'Administration\FileManager\FileManagerController@delete')->name('administration.filemanager.delete');
     });
+
+    /*
+
+    Problem Group
+    Only Access by Moderator(30),Admin(20) And Super Admin(10)
+
+     */
     Route::group(['prefix' => 'problems'], function () {
         Route::get('/', 'Problem\ProblemDashboardController@show')->name('administration.problems');
         Route::get('/create', 'Problem\ProblemController@create')->name('problem.create');
@@ -93,7 +114,6 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::get('/input-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downloadInput')->name('problem.test_case.input.download');
                 Route::get('/output-{test_case_serial}.txt/download', 'TestCase\TestCaseController@downlaodOutput')->name('problem.test_case.output.download');
 
-
                 //test case edit
                 Route::get('/{test_case_id}/edit', 'Administration\ProblemController@updateTestCase')->name('problem.test_case.edit');
                 Route::post('/{test_case_id}/edit', 'TestCase\TestCaseController@updateTestCase');
@@ -125,6 +145,25 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submissions/{submission_id}', 'Administration\ProblemController@viewTestSubmissionPage')->name('administration.problem.submission.view');
             Route::get('/test_submissions/{submission_id}/test_case_details', 'Administration\ProblemController@viewTestSubmissionTestCaseDetailsPage')->name('administration.problem.submission.view.testcase.details');
 
+        });
+
+    });
+
+    /*
+    Contest Area
+    Only Access by Moderator(30),Admin(20) And Super Admin(10)
+     */
+
+    Route::group(['prefix' => 'contests', 'name' => 'administration.contest.'], function () {
+        Route::get('/', 'Administration\Contest\ContestController@contestList');
+        Route::get('/create', 'Contest\ContestController@create')->name('administration.contest.create');
+        Route::post('/create', 'Contest\ContestController@store');
+        Route::group(['prefix' => '{contest_id}'], function () {
+            Route::get('/', 'Administration\Contest\ContestController@overview');
+            Route::get('/overview', 'Administration\Contest\ContestController@overview')->name('administration.contest.overview');
+            Route::get('/edit', 'Administration\Contest\ContestController@edit')->name('administration.contest.edit');
+            Route::get('/problems', 'Administration\Contest\ContestController@overview')->name('administration.contest.problems');
+            Route::get('/moderators', 'Administration\Contest\ContestController@overview')->name('administration.contest.moderators');
         });
     });
 
@@ -174,7 +213,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::post('/{judge_problem_id}/aprove', 'JudgeProblem\JudgeProblemController@aproveRequest')->name('administration.settings.judge_problem.requests.aprove');
             });
         });
-         /// Country 
+        /// Country
 
         Route::group(['prefix' => 'country'], function () {
             Route::get('/', 'Administration\Country\CountryController@index')->name('administration.settings.country.index');
@@ -187,9 +226,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             });
         });
 
-
         ///City
-
 
     });
 });
@@ -206,10 +243,6 @@ Route::get('user/{id}', function ($id) {
     echo "$id";
 });
 
-Route::get('/modal', function () {
-    return view('includes.modal');
-});
-
 Route::get('/footer', function () {
     return view('includes.footer');
 });
@@ -222,4 +255,3 @@ Route::post('/profile/update_password', 'Profile\ProfileController@updatePasswor
 
 Route::get('/settings/change_avatar', 'Setting\SettingController@changeAvatar')->name('settings.change_avatar');
 Route::post('/profile/update_avatar', 'Profile\ProfileController@updateAvatar')->name('profile.update_avatar');
-

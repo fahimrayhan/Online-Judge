@@ -21,6 +21,7 @@ class CreateContestModeratorTable extends Migration
             $table->boolean('is_accepted')->default(false);
 
             $table->primary(['contest_id', 'user_id']);
+            $table->timestamps();
         });
     }
 

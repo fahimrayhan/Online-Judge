@@ -34,16 +34,20 @@
         </meta>
     </head>
     <body>
-        <!-- <div id="pre-loader">@include('includes.preload')</div> -->
         <div id="body-area">
             <div id="modal-area">
                 @include('includes.modal')
             </div>
             <div class="container-fluid content-body">
                 <div id="app-body">
-                    @include('includes.header')
+                    @include('includes.contest_navbar')
                     <div class="container">
-                        @yield('content')
+                        <div class="contestArea">
+                            @include('includes.contest_header')
+                            <div class="contestAreaBody">
+                                 @yield('content')
+                            </div>
+                        </div>
                     </div>
                     @include('includes.footer')
                 </div>
@@ -51,3 +55,7 @@
         </div>
     </body>
 </html>
+
+
+
+
