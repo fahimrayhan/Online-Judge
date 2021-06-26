@@ -147,7 +147,6 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::get('/test_submissions/{submission_id}/test_case_details', 'Administration\ProblemController@viewTestSubmissionTestCaseDetailsPage')->name('administration.problem.submission.view.testcase.details');
         });
     });
-
     /*
     Contest Area
     Only Access by Moderator(30),Admin(20) And Super Admin(10)
