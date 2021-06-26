@@ -38,6 +38,8 @@ class ContestService
         $contest->visibility = $data->visibility;
         $contest->password = $data->password == null ? null : hash('sha256', $data->password);
         $contest->registration_auto_accept = isset($data->registration_auto_accept);
+        $contest->participate_main_name = $data->participate_main_name;
+        $contest->participate_sub_name = $data->participate_sub_name;
         $contest->save();
     }
 
@@ -45,7 +47,7 @@ class ContestService
     {
         $problem = Problem::where(['slug' => $slug])->firstOrFail();
         // return $problem->slug;
-        $contest->problems()->attach($problem->id, ['user_id' => auth()->user()->id]);
+        $contest->problems()->sync($problem->id, ['user_id' => auth()->user()->id]);
         return "Problem Added Successfully";
     }
     public function removeProblem(Contest $contest, $problem_id)

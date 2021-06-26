@@ -10,7 +10,7 @@
     <div style='text-align: right; margin-bottom: 10px;'><button class="btn btn-primary"
             onclick="Contest.addProblem($(this))"
             url="{{ route('administration.contest.add_problem', ['contest_id' => request()->contest_id]) }}"><span
-                class='glyphicon glyphicon-plus'></span> Add Test Case</button></div>
+                class='glyphicon glyphicon-plus'></span> Add Problem</button></div>
     <table width='100%' class="table-custom">
         <tr>
             <th>Problem Id</th>

@@ -190,6 +190,32 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset>
+                <legend>
+                    <center>
+                        Perticipate Info
+                    </center>
+                </legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for=" Contest Name ">
+                        Perticipate Main Name
+                    </label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="participate_main_name" placeholder="Participate Main Name"
+                            value="{{ $contest->participate_main_name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for=" Contest Name ">
+                        Perticipate Sub Name
+                    </label>
+                    <div class="col-sm-9">
+                        <input class="form-control" name="participate_sub_name" placeholder="Participate Sub Name"
+                            value="{{ $contest->participate_sub_name }}">
+                    </div>
+                </div>
+
+            </fieldset>
             <div class="footer navbar-fixed-bottom footerSave">
                 <button id="saveContestDataBtn" type="submit" onclick="Contest.update()">
                     Save Changes
