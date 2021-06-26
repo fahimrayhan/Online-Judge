@@ -94,7 +94,7 @@
                  <li class="dropdown">
                     <button class="nav-profile-btn" data-toggle="dropdown">
                     <img src="{{ auth()->user()->avatar }}" >
-                    {{auth()->user()->handle}}
+                    {{auth()->user()->name}}
                         <b><i class="fas fa-chevron-down"></i></b>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-custom" style="margin-top: -5px;">
@@ -105,8 +105,8 @@
                                 <div class="row">
                                     <div class="col-md-12" style="color: #000000;text-align: center;margin-top: 5px;">
                                         <img class="img-thumbnail" src="{{ auth()->user()->avatar }}" style="height: 75px; width: 75px;border-radius: 50%"><br/>
-                                        <b style="font-size: 15px;">{{auth()->user()->handle}}</b>
-                                        <p class="text-center small">{{auth()->user()->email}}</p>
+                                        <b style="font-size: 15px;">{{auth()->user()->name}}</b>
+                                        <p class="text-center small">{{auth()->user()->handle}}</p>
                                     </div>
                                 </div>
                                 </a>

@@ -18,6 +18,8 @@
                     </script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js" type="text/javascript">
                     </script>
+
+
                     
                         <script src="{{ asset('lib/ckeditor/4.13.1/ckeditor.js') }}">
                         </script>
@@ -25,6 +27,12 @@
                         </script>
                         <script src="{{ mix('js/app.js') }}" type="text/javascript">
                         </script>
+                        <script language="JavaScript" src="http://localhost/project/Online-Judge/style/lib/datatable/jquery.dataTables.min.js" type="text/javascript"></script>
+
+<script language="JavaScript" src="http://localhost/project/Online-Judge/style/lib/datatable/dataTables.bootstrap.js" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="http://localhost/project/Online-Judge/style/lib/datatable/dataTables.bootstrap.css">
+
                         <link href="{{ asset('flag/css/flag-icon.css') }}" rel="stylesheet">
                             @include('includes.head')
                         </link>
