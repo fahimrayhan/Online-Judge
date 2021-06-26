@@ -170,7 +170,6 @@
         @if($role == "owner")
         <div class="col-md-6">
             <div class='box_body'>
-
                 <input type='text' onkeyup='problem.getModetatorsList($(this))' autocomplete='off' class='form-control'
                     id='search_moderators' placeholder='Enter Moderator Handle' name="search"
                     data-url="{{ route('administration.problem.get_moderators_list', ['slug' => request()->slug]) }}"

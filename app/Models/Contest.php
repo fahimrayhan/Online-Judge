@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Contest extends Model
 {
@@ -56,6 +57,28 @@ class Contest extends Model
         return $this->belongsToMany(User::class, 'contest_moderator', 'contest_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
     }
 
+    public function getUserDataFieldAttribute($userDataField)
+    {
+        $defaultField = ['handle','name','email','registration_time','temp_user','temp_user_password','registration_status'];
+
+        $userDataField = $userDataField == "" ? [] : json_decode($userDataField,true);
+
+        if(empty($userDataField)){
+            $userDataField['default'] = $defaultField;
+            $userDataField['registration'] = [];
+        }
+
+        foreach ($defaultField as $key => $value) {
+            if (($removeKey = array_search($value, $userDataField['registration'])) !== false) {
+                    unset($userDataField['registration'][$removeKey]);
+            }
+        }
+
+        return $userDataField;
+    }
+
+    
+
     public function owner()
     {
         return $this->moderator()->firstOrFail();
@@ -64,6 +87,10 @@ class Contest extends Model
     public function problems()
     {
         return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial']);
+    }
+
+    public function registrations(){
+        return $this->belongsToMany(User::class, 'contest_registration', 'contest_id', 'user_id')->withPivot(['id','registration_data','is_registration_accepted','is_temp_user','temp_user_password'])->withTimestamps();
     }
 
     public function getBannerPathAttribute()

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Contest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContestUpdateRequest extends FormRequest
+class GenerateContestUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,9 @@ class ContestUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'start' => 'required|date',
-            'duration' => 'required|integer',
-            'format' => 'required',
-            'start' => 'required',
-            'duration' => 'required',
-            'description' => 'required',
-            'visibility' => 'required',
+            'handle_prefix'   => "required|regex:/^[a-zA-Z0-9\_]*$/|min:4|max:30",
+            'data_file'       => "required|file",
+            'password_length' => "required|integer|min:4|max:16",
         ];
     }
 }

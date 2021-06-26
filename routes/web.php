@@ -167,6 +167,12 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::post('/add_problem', 'Administration\Contest\ContestController@addProblem')->name('administration.contest.add_problem');
             Route::post('/{problem_id}/remove_problem', 'Administration\Contest\ContestController@removeProblem')->name('administration.contest.remove_problem');
             Route::get('/moderators', 'Administration\Contest\ContestController@overview')->name('administration.contest.moderators');
+            Route::get('/participants', 'Administration\Contest\ContestController@participant')->name('administration.contest.participant');
+            Route::post('/participants', 'Administration\Contest\ContestController@uploadParticipant');
+
+            Route::get('/registrations', 'Administration\Contest\ContestController@registrationList')->name('administration.contest.registrations');
+            Route::post('/registrations', 'Administration\Contest\ContestController@participant')->name('administration.contest.registrations');
+            
         });
     });
 

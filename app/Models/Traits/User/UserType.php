@@ -16,6 +16,7 @@ trait UserType
             'admin' => 20,
             'moderator' => 30,
             'member' => 40,
+            'temp_member' => 50
         ];
     }
     /**

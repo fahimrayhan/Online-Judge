@@ -21,6 +21,11 @@ $sidebar = [
         'name' => 'Moderators',
         'url' => route('administration.contest.moderators', ['contest_id' => request()->contest_id]),
     ],
+    'registrations' => [
+        'icon' => 'fa fa-dashboard',
+        'name' => 'Registrations',
+        'url' => route('administration.contest.registrations', ['contest_id' => request()->contest_id]),
+    ],
     
 ];
 
