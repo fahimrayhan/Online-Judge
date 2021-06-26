@@ -149,6 +149,14 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
     });
 
     /*
+    Only Access by Moderator(30),Admin(20) And Super Admin(10)
+     */
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get('/send', 'Administration\Notification\NotificationController@sendMail')->name('administration.notification.sendMail');
+        Route::get('/create', 'Administration\Notification\NotificationController@create')->name('administration.notification.create');
+    });
+
+    /*
     Contest Area
     Only Access by Moderator(30),Admin(20) And Super Admin(10)
      */
