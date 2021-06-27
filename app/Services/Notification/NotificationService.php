@@ -62,7 +62,8 @@ class NotificationService
         $data['to'] = $mailData['to'];
         $data['body'] = $mailData['message'];
         $data['subject'] = $mailData['subject'];
-        $data['from_name'] = isset($mailData['from_name']) ? $mailData['from_name'] : env("MAIL_FROM_NAME");
+        $data['from_name'] = "CoderOJ";
+        
         return self::createNotification($data);
     }
 }

@@ -18,8 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->enum('type', ['sms', 'mail']);
             $table->string('to');
             $table->string('from_name')->nullable();
-            $table->string('subject')->nullable();
-            $table->string('body');
+            $table->text('subject')->nullable();
+            $table->text('body')->nullable();
             $table->timestamps();
         });
     }
