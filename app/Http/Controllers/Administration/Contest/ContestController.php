@@ -64,62 +64,25 @@ class ContestController extends Controller
 
     public function registrationList()
     {
-        $tableColumn = [];
-        $userDataField = $this->contest->user_data_field;
-
-        $defaultColumn = ['registration_id','handle','name','email','registration_time','temp_user','temp_user_password','is_registration_accepted' ];
-
-        foreach ($defaultColumn as $key => $value) {
-            array_push($tableColumn, ['data' => $value]);
-        }
-
-        foreach ($userDataField['registration'] as $key => $value) {
-            array_push($tableColumn, ['data' => $value]);
-        }
-
-        return view('pages.administration.contest.registration.registration', ['tableColumn' => json_encode($tableColumn)]);
+        $tableColumn = $this->contestService->getDatatableColumn();
+        return view('pages.administration.contest.registration.registration', [
+            'tableColumn'     => $tableColumn,
+            'tableColumnJson' => json_encode($tableColumn),
+        ]);
     }
 
-    public function participant()
+    public function datatableApi()
     {
-        // return datatables()->of(User::where(['id' => 1])->get())->toJson();
-        // return;
-        $users         = $this->contest->registrations()->get();
-        $userDataField = $this->contest->user_data_field;
-
-        $datas = [];
-
-        // dd($users);
-
-        //'registration_time','temp_user','temp_user_password','registration_status'
-        foreach ($users as $key => $user) {
-            $data = [
-                'registration_id'          => $user->pivot->id,
-                'handle'                   => $user->handle,
-                'name'                     => $user->name,
-                'email'                    => $user->email,
-                'registration_time'        => $user->pivot->created_at,
-                'temp_user'                => $user->pivot->is_temp_user,
-                'temp_user_password'       => $user->pivot->temp_user_password,
-                'is_registration_accepted' => $user->pivot->is_registration_accepted,
-            ];
-
-            $registrationData = json_decode($user['registration_data']);
-            foreach ($userDataField['registration'] as $key => $value) {
-                $data[$value] = isset($registrationData[$value]) ? $registrationData[$value] : "";
-            }
-
-            array_push($datas, $data);
-        }
-
-        $datas = collect($datas);
-
-        return datatables($datas)->toJson();
+        return $this->contestService->getDatatableData($this->contest);
     }
 
-    public function uploadParticipant(GenerateContestUserRequest $request)
+    public function viewGenerateTempUser()
     {
+        return view('pages.administration.contest.registration.create_temp_user');
+    }
 
+    public function GenerateTempUser(GenerateContestUserRequest $request)
+    {
         $path    = request()->file('data_file')->getRealPath();
         $csvData = array_map('str_getcsv', file($path));
 
@@ -130,5 +93,31 @@ class ContestController extends Controller
         ]);
 
         return $response;
+    }
+
+    public function updateRegistrationStatus()
+    {
+        $userList = request()->user_list;
+
+        $data = [];
+
+        if (request()->status == "Delete") {
+            $this->contest->registrations()->detach($userList);
+        } else {
+            foreach ($userList as $key => $value) {
+                $data[$value] = [
+                    'is_registration_accepted' => request()->status == "Accepted" ? 1 : 0,
+                ];
+            }
+            $this->contest->registrations()->syncWithoutDetaching($data);
+        }
+
+        $this->contest->registrationCacheData()->save();
+
+        $total  = count($userList);
+        $status = request()->status;
+        return response()->json([
+            'message' => "Successfully {$status} {$total} Registrations",
+        ]);
     }
 }

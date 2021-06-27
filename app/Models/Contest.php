@@ -59,7 +59,7 @@ class Contest extends Model
 
     public function getUserDataFieldAttribute($userDataField)
     {
-        $defaultField = ['handle','name','email','registration_time','temp_user','temp_user_password','registration_status'];
+        $defaultField = ['handle','id'];
 
         $userDataField = $userDataField == "" ? [] : json_decode($userDataField,true);
 
@@ -90,7 +90,11 @@ class Contest extends Model
     }
 
     public function registrations(){
-        return $this->belongsToMany(User::class, 'contest_registration', 'contest_id', 'user_id')->withPivot(['id','registration_data','is_registration_accepted','is_temp_user','temp_user_password'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'contest_registration', 'contest_id', 'user_id')->withPivot(['registration_data','is_registration_accepted','is_temp_user','temp_user_password'])->withTimestamps();
+    }
+
+    public function registrationCacheData(){
+        return (new \App\Services\Contest\ContestRegistrationCacheService($this));
     }
 
     public function getBannerPathAttribute()

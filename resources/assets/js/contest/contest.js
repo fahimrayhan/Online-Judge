@@ -60,4 +60,51 @@ var Contest = {
         });
         // console.log(problemSlug);
     },
+
+    generateTempUser: function(e){
+        var form = new Form("generateTempUser");
+        form.submit({
+            loadingText: "Creating...",
+            success: {
+                resetForm: true,
+                callback: function (response) {
+                    url.load();
+                    //new Modal().close();
+                }
+            }
+        });
+    },
+
+    checkAllRegistrationList(e){
+        $("input[name='registrations[]']").attr('checked', e.checked);
+    },
+
+    updateParticipantRegistration: function(e){
+        
+        var registrationList = [];
+        $("input[name='registrations[]']:checked").each(function (index, obj) {
+            registrationList.push(obj.value);
+        });
+        if(registrationList.length == 0){
+            alert("You can not select any row");
+            return;
+        }
+
+        var ok = confirm("Are You Want "+e.attr('status')+" Registration");
+        if (!ok) return;
+
+        var data = {
+            'user_list': registrationList,
+            'status': e.attr('status')
+        };
+        $.post(e.attr("url"), app.setToken(data), function (response) {
+           if(e.attr('status') == "Pending")toast.warning(response.message);
+           else if(e.attr('status') == "Accepted") toast.success(response.message);
+           else toast.danger(response.message);
+
+           $("#checkAllRegistrationList").prop("checked", false);
+           registrationDataTable.ajax.reload(null, false);
+           
+        });
+    }
 };

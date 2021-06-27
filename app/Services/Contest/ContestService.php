@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class ContestService
 {
+    protected $contest;
+
+    public function __construct()
+    {
+        if (isset(request()->contest_id)) {
+            $this->contest = Contest::where(['id' => request()->contest_id])->firstOrFail();
+        }
+    }
     public function bannerUpdate(Contest $contest, $data)
     {
         if ($data->hasfile('banner')) {
@@ -40,8 +48,8 @@ class ContestService
         $contest->visibility               = $data->visibility;
         $contest->password                 = $data->password == null ? null : hash('sha256', $data->password);
         $contest->registration_auto_accept = isset($data->registration_auto_accept);
-        $contest->participate_main_name = $data->participate_main_name;
-        $contest->participate_sub_name = $data->participate_sub_name;
+        $contest->participate_main_name    = $data->participate_main_name;
+        $contest->participate_sub_name     = $data->participate_sub_name;
         $contest->save();
     }
 
@@ -128,9 +136,87 @@ class ContestService
             'user_data_field' => json_encode($userDataField),
         ]);
 
+        $contest->registrationCacheData()->save();
+
         $totalUser = count($userData);
         return response()->json([
             'message' => "{$totalUser} Temporary User Successfully Created.",
         ]);
     }
+
+    public function getDatatableColumn()
+    {
+        
+        $tableColumn   = [];
+        $userDataField = $this->contest->user_data_field;
+
+        $defaultColumn = ['handle', 'main_name', 'sub_name', 'Registration Time', 'Registration Status', 'Is Temp User', 'Temp User Password', 'name', 'email'];
+
+        array_push($tableColumn, ['data' => 'action', 'orderable' => false]);
+
+        foreach ($defaultColumn as $key => $value) {
+            array_push($tableColumn, ['data' => $value]);
+        }
+
+        foreach ($userDataField['registration'] as $key => $value) {
+            if ((array_search($value, $defaultColumn)) !== false) continue;
+            array_push($tableColumn, ['data' => $value]);
+        }
+        return $tableColumn;
+    }
+
+    public function getDatatableData(Contest $contest)
+    {
+        $users         = $this->contest->registrationCacheData()->get();
+        $userDataField = $contest->user_data_field;
+
+        $datas = [];
+
+        //'registration_time','temp_user','temp_user_password','registration_status'
+        $serial = 0;
+        foreach ($users as $key => $user) {
+            $data = (array)$user;
+
+            $data['serial'] = $serial++;
+            $data['action'] = "<input type='checkbox' name='registrations[]' value='{$user->id}'>";
+            $data['handle'] = "<a href=''> {$user->handle}</a>";
+            $data['Registration Time'] = "<font title='{$user->registration_time->format('d M Y g:i A')}'>{$user->registration_time->diffForhumans()}</font>";
+            $data['Is Temp User'] = $user->is_temp_user ? "<i class='fa fa-check'></i>" : "";
+            $data['Temp User Password'] = $user->temp_user_password;
+            $data['Registration Status'] = $user->is_registration_accepted ? "<span class='label label-success'><i class='fa fa-check'></i> Accepted</span>" : "<span class='label label-warning'><i class='fa fa-clock'></i> Pending</span>";
+
+            array_push($datas, $data);
+        }
+
+        $tmpData = $datas;
+
+        $datas = collect($datas);
+        //datatable not working html in some row so we need to work html
+        $data = datatables($datas)->toArray();
+
+        $datatableData = $data['data'];
+
+        foreach ($datatableData as $key => $value) {
+            $datatableData[$key] = $tmpData[$value['serial']];
+        }
+
+        $data['data'] = $datatableData;
+
+        return json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+    }
+
+    public function createMailTemplate(Contest $contest)
+    {
+        return view("pages.administration.contest.mail.welcome", ['contest' => $contest])->render();
+    }
+
+    public function createName(User $user, $data, $name)
+    {
+        $data['handle'] = $user->handle;
+        foreach ($data as $key => $value) {
+            $name = str_replace("@$key@", $value, $name);
+        }
+        return $name;
+    }
+
 }

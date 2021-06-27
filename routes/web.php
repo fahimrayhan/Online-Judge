@@ -37,7 +37,7 @@ Route::group(['prefix' => 'problems'], function () {
 });
 
 Route::group(['prefix' => 'contests'], function () {
-    Route::get('/', 'Problem\ProblemListController@show')->name('problems');
+    Route::get('/', 'Contest\ContestController@getContestList')->name('contests');
     Route::group(['prefix' => '{contest_slug}'], function () {
         Route::group(['prefix' => 'arena'], function () {
             Route::get('/', 'Contest\ContestArenaController@problems')->name('contest.arena');
@@ -166,12 +166,23 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::post('/add_problem', 'Administration\Contest\ContestController@addProblem')->name('administration.contest.add_problem');
             Route::post('/{problem_id}/remove_problem', 'Administration\Contest\ContestController@removeProblem')->name('administration.contest.remove_problem');
             Route::get('/moderators', 'Administration\Contest\ContestController@overview')->name('administration.contest.moderators');
-            Route::get('/participants', 'Administration\Contest\ContestController@participant')->name('administration.contest.participant');
-            Route::post('/participants', 'Administration\Contest\ContestController@uploadParticipant');
 
-            Route::get('/registrations', 'Administration\Contest\ContestController@registrationList')->name('administration.contest.registrations');
-            Route::post('/registrations', 'Administration\Contest\ContestController@participant')->name('administration.contest.registrations');
+            Route::group(['prefix' => 'registrations'], function () {
+
+                Route::get('/', 'Administration\Contest\ContestController@registrationList')->name('administration.contest.registrations');
+                Route::post('/', 'Administration\Contest\ContestController@participant')->name('administration.contest.registrations');
+                Route::post('/datatable_api', 'Administration\Contest\ContestController@datatableApi')->name('administration.contest.registrations.datatable_api');
+                Route::get('/datatable_api', 'Administration\Contest\ContestController@datatableApi')->name('administration.contest.registrations.datatable_api');
+                
+                Route::get('/create_temp_user', 'Administration\Contest\ContestController@viewGenerateTempUser')->name('administration.contest.registrations.create_temp_user');
+                Route::post('/create_temp_user', 'Administration\Contest\ContestController@GenerateTempUser');
+
+
+                Route::post('/update_registration_status', 'Administration\Contest\ContestController@updateRegistrationStatus')->name('administration.contest.registrations.update_registration_status');
+
+            });
             
+
         });
     });
 

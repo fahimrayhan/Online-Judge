@@ -30,25 +30,6 @@
       	border: 1px solid #767676;
       }
 
-      .editorAlert{
-		background-color: #f5f5f5;
-		text-align: center;
-		padding-top: 90px;
-		height: 180px;
-		font-weight: bold;
-		font-size: 20px;
-		padding: 60px 10px 0px 10px;
-		border: 1px solid #767676;
-	}
-      .error-area,.success-area{
-      	display: none;
-      }
-      .error-input{
-      	border: solid 1px #ce9999;
-      }
-      .alert-area{
-      	margin-bottom: 15px;
-      }
    </style>
    <div class="row">
       <div class="col-md-12" style="margin-top: -5px">

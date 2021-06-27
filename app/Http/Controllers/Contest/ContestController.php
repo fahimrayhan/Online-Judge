@@ -36,4 +36,9 @@ class ContestController extends Controller
             ])
         ]);
     }
+
+    public function getContestList(){
+        $contests = Contest::where(['publish' => 1])->get();
+        return view("pages.contest.contest_list",['contests' => $contests]);
+    }
 }
