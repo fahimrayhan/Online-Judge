@@ -190,6 +190,11 @@ class JudgeService
 
         event(new SubmissionEvent($submission, $testCaseList));
 
+        if($judgeFinish == 1){
+            $contest = $submission->contest->first();
+            if($contest)$contest->rankList()->save();
+        }
+        
     }
 
 }

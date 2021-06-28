@@ -41,4 +41,9 @@ class ContestController extends Controller
         $contests = Contest::where(['publish' => 1])->get();
         return view("pages.contest.contest_list",['contests' => $contests]);
     }
+
+    public function contestInfo(){
+        $contest = Contest::where(['slug' => request()->contest_slug])->firstOrFail();
+        return view("pages.contest.contest_info",['contest' => $contest]);
+    }
 }

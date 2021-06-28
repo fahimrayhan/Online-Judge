@@ -60,7 +60,7 @@
 </style>
 <div class="problem">
 <div class="problem-top-area">
- 	<div class="name">{{$problem->name}}</div>
+ 	<div class="name">{{isset($contest_serial) ? $contest_serial.". " : ""}}{{$problem->name}}</div>
  	<div class="limit">
  		Time: {{number_format($problem->time_limit/1000,2)}} s<br>
 		Memory: {{number_format($problem->memory_limit/2024,2)}} MB

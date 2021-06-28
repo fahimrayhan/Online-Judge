@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Problem;
+use App\Models\Language;
 use App\Models\SubmissionTestCase;
 use App\Models\Traits\Submission\SubmissionType;
 use Illuminate\Database\Eloquent\Model;
@@ -27,10 +28,13 @@ class Submission extends Model
             $submission->user_id    = auth()->user()->id;
 
             $problem  = Problem::where(['id' => $submission->problem_id])->firstOrFail();
-            $language = $problem->languages()->where(['id' => $submission->language_id, 'is_archive' => false])->firstOrFail();
+            $language = $problem->getLanguage($submission->language_id);
+            if(empty($language)){
+                abort(419, "Language is not found");
+            }
 
-            $submission->time_limit   = (int) ceil($language->pivot->time_limit * $problem->time_limit);
-            $submission->memory_limit = (int) ceil($language->pivot->memory_limit * $problem->memory_limit);
+            $submission->time_limit   = (int) ceil($language->time_limit * $problem->time_limit);
+            $submission->memory_limit = (int) ceil($language->memory_limit * $problem->memory_limit);
 
         });
 
@@ -63,9 +67,11 @@ class Submission extends Model
         $this->save();
     }
 
-    public function getTypeAttribute()
+    public function getTypeAttribute($type)
     {
-        return "hamza";
+        if($type == 1)return "testing";
+        else if($type == 2)return "practice";
+        else return "contest";
     }
 
     public function testCases()
@@ -81,6 +87,11 @@ class Submission extends Model
     public function problem()
     {
         return $this->belongsTo(Problem::class);
+    }
+
+    public function contest()
+    {
+        return $this->belongsToMany(Contest::class, 'contest_submission', 'submission_id', 'contest_id');
     }
 
     public function user()

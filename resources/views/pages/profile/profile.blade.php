@@ -70,14 +70,12 @@
                      
                     <div class="box box-body" style="margin-top: 10px;">
                         <div class="userInfoLeft">
-                             <i class="fas fa-university profileInfoIcon"></i> EWU                        </div>
+                             <i class="fas fa-university profileInfoIcon"></i>                         </div>
                          <div class="userInfoLeft">
                              <i class="fas fa-envelope profileInfoIcon"></i> {{ $user->email }}                       </div>
-                         <div class="userInfoLeft">
-                             <i class="fas fa-eye profileInfoIcon"></i> Last seen <span style='color:green; font-weight: bold'><span class='onlineIcon'></span>Online Now</span>                        </div>
 
                         <div class="userInfoLeft">
-                             <i class="fas fa-history profileInfoIcon"></i> Join On 03 Aug 2020 05:47:AM                        </div>
+                             <i class="fas fa-history profileInfoIcon"></i> Join On {{$user->created_at->diffForHumans()}}                        </div>
                     </div>
                     
                 </div>
@@ -86,10 +84,10 @@
                 <div class="">
                 <ul class="nav nav-tabs">
                     <li class="nav-item userProfileTab box">
-                            <a class="nav-link active mixBackground" href="{{route('profile.info')}}">Overview</a>
+                            <a class="nav-link active mixBackground" href="">Overview</a>
                     </li>
                     <li class="nav-item userProfileTab box">
-                        <a class="nav-link mixBackground" href="profile.php?id=1&action=submission">Submission</a>
+                        <a class="nav-link mixBackground" href="">Submission</a>
                     </li>
                     
                 </ul>

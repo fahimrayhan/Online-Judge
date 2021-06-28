@@ -39,12 +39,6 @@
             'name' => 'Problems',
             'url' => route('contest.arena.problems',['contest_slug' => request()->contest_slug]),
         ],
-        
-        'clearifications' => [
-            'icon'  => 'fas fa-trophy',
-            'name' => 'Clearifications',
-            'url' => route('contest.arena.clearifications',['contest_slug' => request()->contest_slug]),
-        ],
         'standings' => [
             'icon'  => 'fas fa-trophy',
             'name' => 'Standings',
@@ -53,7 +47,7 @@
         'submissions' => [
             'icon'  => 'fas fa-list',
             'name' => 'Submissions',
-            'url' => route('contest.arena.submissions',['contest_slug' => request()->contest_slug]),
+            'url' => route('contest.arena.submissions.my',['contest_slug' => request()->contest_slug]),
         ],
     ];
 
@@ -71,7 +65,7 @@
         </div>
                        
       </button>
-      <a class="" href="index.php"><img src="http://localhost/project/Online-Judge/file/site_metarial/coderoj_logo.png" height="45px"></a>
+      <a class="" href="{{route('home')}}"><img src="{{asset("assets/img/coderoj_logo.png")}}" height="45px"></a>
     </div>
     <div class="pull-right">
       <div class="collapse navbar-collapse" id="myNavbar">
@@ -80,9 +74,12 @@
             <button class="btn navbar-btn contestNavBtn {{ Request::segment(4) == $key ? 'contestNavBtnActive' : '' }}"><i class="{{$navbar['icon']}}"></i> {{$navbar['name']}}</button>
           </a>
         @endforeach
-
-        <button class="btn contestNavBtn" style="margin-left: 20px">amirhamza05</button>
+        <a href="{{route('profile',['handle' => auth()->user()->handle])}}">
+        <button class="btn contestNavBtn" style="margin-left: 20px">{{auth()->user()->name}}</button>
+        </a>
+        <a href="" onclick="auth.logout(this)" url="{{route('logout')}}">
         <button class="btn contestNavBtn">Logout</button>
+        </a>
       </div>
     </div>
     

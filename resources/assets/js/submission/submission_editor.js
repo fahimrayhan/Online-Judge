@@ -43,19 +43,19 @@ var submissionEditor = {
             toast.danger("You can not select language");
             return;
         }
-
         var btn = new Button("btn-create-submission");
         btn.off("Processing");
-
         var data = {
             'language_id': language,
             'source_code': btoa(sourceCode),
         };
-
         $.post($(e).attr('url'), app.setToken(data), function(response) {
-            console.log(response);
-            new Modal('lg').load(response.view_submission_url,"Submission #"+response.submission_id);
+            new Modal('lg').load(response.view_submission_url, "Submission #" + response.submission_id);
             url.load();
+        }).fail(function(error) {
+            btn.on();
+            var error = JSON.parse(error.responseText);
+            toast.danger(error.response);
         });
     },
 }

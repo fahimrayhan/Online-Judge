@@ -25,7 +25,7 @@ class CreateContestsTable extends Migration
             $table->enum('visibility', ['public','protected','private'])->default('public');
             $table->string('password')->nullable();
 
-            $table->timestamp("start");
+            $table->timestamp("start")->nullable()->default(null);
             $table->integer("duration")->default(300);
 
             $table->boolean("registration_auto_accept")->default(0);

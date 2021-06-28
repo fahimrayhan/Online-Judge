@@ -113,6 +113,7 @@ class ContestController extends Controller
         }
 
         $this->contest->registrationCacheData()->save();
+        $this->contest->rankList()->save();
 
         $total  = count($userList);
         $status = request()->status;

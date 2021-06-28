@@ -31,19 +31,23 @@
 		font-size: 12px!important;
 	}
 </style>
-@php
 
-	$problems = $contest->problems()->get();
-@endphp
 	@foreach($problems as $key => $problem)
-	<a class="list-group-item problemListBox" href="contest_arena.php?id=3&problem=A" style="position: relative;">
-                    <div class="pull-right labelNormal" style="margin-top: 9px;">
-                        <i class="fa fa-user">
-                        </i>
-                        × 0
-                    </div>
-                    <div class="pull-left problemNo">
-                        {{chr($key + 65)}}
+@php
+    $label = "labelNormal";
+    $labelTitle = "Not Attempted";
+    if(isset($problemsStat[$problem->id]['solved_by'][auth()->user()->id])){
+        $label = $problemsStat[$problem->id]['solved_by'][auth()->user()->id] == 1 ? "labelAc" : "labelWa";
+        $labelTitle = $label == "labelAc" ? "Solved" : "Attempted";
+    }
+
+@endphp
+
+<a class="list-group-item problemListBox" href="{{route('contest.arena.problems.view',['contest_slug' => request()->contest_slug,'problem_no' => $key])}}" style="position: relative;">
+    <div class="pull-right {{$label}}" title="{{$labelTitle}}" style="margin-top: 9px;">
+        <i class="fa fa-user"></i>× {{isset($problemsStat[$problem->id]['solved']) ? $problemsStat[$problem->id]['solved'] : 0}} / {{isset($problemsStat[$problem->id]['attempted']) ? $problemsStat[$problem->id]['attempted'] : 0}} </div>
+    <div class="pull-left problemNo">
+                        {{$key}}
                     </div>
                     <h4 class="list-group-item-heading" style="margin: 5px 0 4px; line-height: 30px;">
                         {{$problem->name}}
