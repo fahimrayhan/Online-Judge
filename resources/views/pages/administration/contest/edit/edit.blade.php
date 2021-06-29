@@ -60,6 +60,7 @@
                     <div class="col-sm-9">
                         <input class="form-control" name="name" placeholder="Contest Name" required
                             value="{{ $contest->name }}">
+                        {{$contest->slug}}
                     </div>
                 </div>
                 <div class="form-group">

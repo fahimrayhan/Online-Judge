@@ -26,13 +26,22 @@ $sidebar = [
         'name' => 'Registrations',
         'url' => route('administration.contest.registrations', ['contest_id' => request()->contest_id]),
     ],
-    
+    'submissions' => [
+        'icon' => 'fa fa-dashboard',
+        'name' => 'Submissions',
+        'url' => route('administration.contest.submissions', ['contest_id' => request()->contest_id]),
+    ],
+    'ranklist' => [
+        'icon' => 'fa fa-dashboard',
+        'name' => 'Ranklist',
+        'url' => route("contest.arena.standings",['contest_slug' => $contest->slug])
+    ],    
 ];
 
 @endphp
 
 <div class="box">
-    <div class="header">Problem Dashboard</div>
+    <div class="header">Contest Dashboard</div>
     <div class="body" style="min-height: 300px;">
         @foreach ($sidebar as $key => $value)
             <a href="{{ $value['url'] }}">

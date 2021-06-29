@@ -160,7 +160,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
      */
 
     Route::group(['prefix' => 'contests', 'name' => 'administration.contest.'], function () {
-        Route::get('/', 'Administration\Contest\ContestController@contestList');
+        Route::get('/', 'Administration\Contest\ContestController@contestList')->name("administration.contests");
         Route::get('/create', 'Contest\ContestController@create')->name('administration.contest.create');
         Route::post('/create', 'Contest\ContestController@store');
         Route::group(['prefix' => '{contest_id}'], function () {
@@ -173,6 +173,10 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::post('/add_problem', 'Administration\Contest\ContestController@addProblem')->name('administration.contest.add_problem');
             Route::post('/{problem_id}/remove_problem', 'Administration\Contest\ContestController@removeProblem')->name('administration.contest.remove_problem');
             Route::get('/moderators', 'Administration\Contest\ContestController@overview')->name('administration.contest.moderators');
+
+            Route::get('/submissions', 'Administration\Contest\ContestController@submissionList')->name('administration.contest.submissions');
+            Route::get('/submissions/{submission_id}', 'Administration\Contest\ContestController@viewSubmission')->name('administration.contest.submissions.view');
+            Route::get('/submissions/{submission_id}/test_case_details', 'Administration\Contest\ContestController@viewTestCase')->name('administration.contest.submissions.view.test_case_details');
 
             Route::group(['prefix' => 'registrations'], function () {
 
@@ -189,8 +193,9 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
                 Route::post('/send_mail', 'Administration\Contest\ContestController@viewSendMail')->name('administration.contest.registrations.send_mail_view');
                 Route::post('/send_mail_confirm', 'Administration\Contest\ContestController@sendMail')->name('administration.contest.registrations.send_mail');
 
-            });
+               
 
+            });
         });
     });
 
