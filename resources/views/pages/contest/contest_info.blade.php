@@ -1,5 +1,5 @@
 @extends($layout)
-@section('title', 'Contests')
+@section('title', $contest->name)
 @section('content')
 <style type="text/css">
 
