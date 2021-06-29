@@ -186,6 +186,7 @@ var Contest = {
             else if (this.contestStatus == "upcomming") statusMessage = "Contest Is Start";
             alert(statusMessage);
             $("#contestStatusTxt").html(statusMessage);
+            url.load();
         }
     }
 };

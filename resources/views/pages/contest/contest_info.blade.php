@@ -59,6 +59,9 @@
   	padding: 5px;
   	border-radius: 5px;
   }
+  .contestInfoBox a:hover{
+  	outline: none;
+  }
 </style>
 
 <script type="text/javascript">
@@ -138,17 +141,34 @@
 			<p>{!!$contest->description!!}</p>
 			<hr>
 			<div style="padding-bottom: 5px">
-				<a>
-					<button class="btn btn-success" style="width: 100px;margin-bottom: 3px">Enter Arena</button>
+				@if($contest->isParticipant() && $contest->status != "upcomming")
+				<a href="{{route("contest.arena.problems",['contest_slug' => $contest->slug])}}">
+					<button class="btn btn-primary" style="width: 100px;margin-bottom: 3px">Enter Arena</button>
 				</a>
-				<button class="btn btn-info" style="width: 100px;margin-bottom: 3px">Standings</button>
-									<br/>
-			* You can not participate this contest. Please registration for participate this contest.	</div>
+				@endif
+				@if($contest->status != "upcomming")
+				<a href="{{route("contest.arena.standings",['contest_slug' => $contest->slug])}}">
+					<button class="btn btn-info" style="width: 100px;margin-bottom: 3px">Standings</button>
+				</a>
+				@endif
+				<hr>
+				@if($contest->isParticipant())
+					<b><font color="green"><i class="fa fa-flag" aria-hidden="true"></i> You can participate this contest.</font></b>
+				@elseif($contest->visibility == "private")
+					<b><font color="red"><i class="fa fa-flag" aria-hidden="true"></i> Only invited user can participate.</font></b>
+				@endif
+
+					
+			</div>
 		</div>
 	</div>
+
 </div>
 
 <input type="text" id="startcontesttimer" value="start" name="" hidden="">
 
+<script type="text/javascript">
+	if(typeof MathJax !== 'undefined') {MathJax.Hub.Queue(["Typeset",MathJax.Hub]);}
+</script>
 
 @stop
