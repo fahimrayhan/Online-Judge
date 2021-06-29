@@ -69,6 +69,17 @@ class ContestController extends Controller
         ]);
     }
 
+
+    public function moderators()
+    {
+        $moderators = $this->contest->moderator;
+        // dd($this->contest->authUserRole);
+        return view('pages.administration.contest.moderators', [
+            'moderators' => $moderators,
+            'role' =>  $this->contest->authUserRole
+        ]);
+    }
+
     public function registrationList()
     {
         $tableColumn = $this->contestService->getDatatableColumn();

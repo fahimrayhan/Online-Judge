@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'CheckContestPublish' => \App\Http\Middleware\Contest\Arena\CheckContestPublish::class,
         'CheckContestStart' => \App\Http\Middleware\Contest\Arena\CheckContestStart::class,
         'CheckContestParticipant' => \App\Http\Middleware\Contest\Arena\CheckContestParticipant::class,
+        'ContestModeratorIsPending' => \App\Http\Middleware\Administration\Contest\ContestModeratorIsPending::class,
     ];
 }
