@@ -134,8 +134,8 @@
                         Contest Description:
                     </label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="description" name="description"
-                            placeholder="Contest Description">{{ $contest->description }}</textarea>
+                        <textarea id="contestDescriptionEditor" name="contestDescriptionEditor"
+                            placeholder="Contest Description"></textarea>
                     </div>
                 </div>
             </fieldset>
@@ -217,10 +217,15 @@
 
             </fieldset>
             <div class="footer navbar-fixed-bottom footerSave">
-                <button id="saveContestDataBtn" type="submit" onclick="Contest.update()">
+                <button id="saveContestDataBtn" class="btn btn-primary" type="submit" onclick="Contest.update()">
                     Save Changes
                 </button>
             </div>
         </form>
     </div>
+<script type="text/javascript">
+
+    Contest.setEditor('{!!base64_encode($contest->description)!!}');
+</script>
+
 @stop

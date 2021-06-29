@@ -59,19 +59,5 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="contestBox">
-            <div class="contestBoxHeader">
-                Resources
-            </div>
-            <div class="problemLdistBox">
-            </div>
-        </div>
-        <div class="contestBox">
-            <div class="contestBoxHeader">
-                Announcement
-            </div>
-        </div>
-    </div>
 </div>
 @stop

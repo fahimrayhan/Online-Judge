@@ -19,7 +19,7 @@ var Form = function (form, options) {
         }
         $.ajax({
             url: this.action(),
-            data: this.data(),
+            data: options.defaultForm == null ? this.data() : options.defaultForm,
             processData: false,
             contentType: false,
             type: 'POST',

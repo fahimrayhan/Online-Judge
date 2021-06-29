@@ -38,9 +38,9 @@ Route::group(['prefix' => 'problems'], function () {
 
 Route::group(['prefix' => 'contests'], function () {
     Route::get('/', 'Contest\ContestController@getContestList')->name('contests');
-    Route::group(['prefix' => '{contest_slug}'], function () {
+    Route::group(['prefix' => '{contest_slug}','middleware' => ['CheckContestPublish']], function () {
         Route::get('/', 'Contest\ContestController@contestInfo')->name('contests.info');
-        Route::group(['prefix' => 'arena'], function () {
+        Route::group(['prefix' => 'arena', 'middleware' => ['CheckContestStart','CheckContestParticipant']], function () {
             Route::get('/', 'Contest\ContestArenaController@problems')->name('contest.arena');
             Route::get('/problems', 'Contest\ContestArenaController@problems')->name('contest.arena.problems');
             Route::get('/problems/{problem_no}', 'Contest\ContestArenaController@viewProblem')->name('contest.arena.problems.view');
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'contests'], function () {
             Route::get('/submissions', 'Contest\ContestArenaController@submissions')->name('contest.arena.submissions');
             Route::get('/submissions/my', 'Contest\ContestArenaController@mySubmissions')->name('contest.arena.submissions.my');
             Route::get('/submissions/{submission_id}', 'Contest\ContestArenaController@viewSubmission')->name('contest.arena.submissions.view');
-            Route::get('/standings', 'Contest\ContestArenaController@standings')->name('contest.arena.standings');
+            Route::get('/standings', 'Contest\ContestArenaController@standings')->withoutMiddleware('CheckContestParticipant')->name('contest.arena.standings');
             Route::get('/clearifications', 'Contest\ContestArenaController@clearifications')->name('contest.arena.clearifications');
         });
     });

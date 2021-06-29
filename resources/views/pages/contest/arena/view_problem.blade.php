@@ -9,6 +9,7 @@
             </div>
         </div>
     </div>
+    @if($contest->status == "running")
     <div class="col-md-3">
         <div class="contestBox">
             <div class="contestBoxHeader">
@@ -22,6 +23,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @stop

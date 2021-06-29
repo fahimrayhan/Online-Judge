@@ -79,7 +79,7 @@
 						<td class="contestInfoTd"><i class="fas fa-hourglass listIcon"></i></td>
 						<td class="contestInfoTd">
                             <div class="listTitle" id="timerArea">{{gmdate("H : i : s", $contest->timer())}}</div> 
-                            <div class="listLabel">
+                            <div class="listLabel" id="contestStatusTxt">
                             @if($contest->status == "running")
                             Contest Is Runnning
                             @elseif($contest->status == "upcomming")
@@ -135,7 +135,7 @@
 		<div class="contestInfoBox" style="padding: 10px;">
 			<h3>{{$contest->name}}</h3>
 			<hr>
-			<p>{{$contest->description}}</p>
+			<p>{!!$contest->description!!}</p>
 			<hr>
 			<div style="padding-bottom: 5px">
 				<a>
@@ -143,7 +143,7 @@
 				</a>
 				<button class="btn btn-info" style="width: 100px;margin-bottom: 3px">Standings</button>
 									<br/>
-			* You can not participate this contest. Please registration for participate this contest.			</div>
+			* You can not participate this contest. Please registration for participate this contest.	</div>
 		</div>
 	</div>
 </div>

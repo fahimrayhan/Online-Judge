@@ -208,7 +208,7 @@
 	<div class="contestTitle">{{$contest->name}}</div>
 	<div class="contestTime">
 		@if($contest->status != "past")
-		<div id="contestTimer">
+		<div id="timerArea">
 			{{gmdate("H : i : s", $contest->timer())}}
 		</div>
 		@endif
@@ -223,3 +223,8 @@
 	</div>
 </div>
 </div>
+
+<script type="text/javascript">
+	Contest.setTimer({{$contest->timer()}},"{{$contest->status}}")
+</script>
+<input type="text" id="startcontesttimer" value="start" name="" hidden="">

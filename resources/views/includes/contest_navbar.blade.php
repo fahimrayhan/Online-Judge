@@ -27,11 +27,6 @@
   }
 </style>
 
-<?php 
- $contestId = 1; 
-
-?>
-
 @php
     $navbars = [
         'problems' => [
@@ -74,11 +69,18 @@
             <button class="btn navbar-btn contestNavBtn {{ Request::segment(4) == $key ? 'contestNavBtnActive' : '' }}"><i class="{{$navbar['icon']}}"></i> {{$navbar['name']}}</button>
           </a>
         @endforeach
+        @if(!auth()->check())
+          <button onclick="auth.loginPage(this)" url="{{route('login')}}" style="margin-left: 20px" class="btn btn-sign contestNavBtn"><i class="fas fa-sign-in-alt"></i> Login</span></button>
+          <button class="btn btn-sign contestNavBtn" onclick="auth.registerPage(this)" url="{{route('register')}}"><i class="fas fa-user-plus"></i> Register</span></button>
+          
+        @endif
+        @if(auth()->check())
         <a href="{{route('profile',['handle' => auth()->user()->handle])}}">
         <button class="btn contestNavBtn" style="margin-left: 20px">{{auth()->user()->name}}</button>
         </a>
         <a href="" onclick="auth.logout(this)" url="{{route('logout')}}">
         <button class="btn contestNavBtn">Logout</button>
+        @endif
         </a>
       </div>
     </div>

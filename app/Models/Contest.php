@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Contest extends Model
 {
@@ -15,7 +16,7 @@ class Contest extends Model
         'start' => 'datetime',
     ];
 
-    protected $appends = ['bannerPath', 'end', 'status'];
+    protected $appends = ['bannerPath', 'end', 'status','duration_in_hours'];
 
     protected static function boot()
     {
@@ -77,9 +78,29 @@ class Contest extends Model
         return $userDataField;
     }
 
+    public function getBannerPathAttribute()
+    {
+        return 'upload/banner/';
+    }
+
+    public function getBannerAttribute($banner)
+    {
+        $banner = $this->bannerPath . $banner;
+        $banner .= $banner == $this->bannerPath ? "default.png" : "";
+        return File::exists($banner) ? asset($banner) : asset("assets/img/contest_default_banner.jpeg");
+    }
+
     public function getEndAttribute()
     {
         return Carbon::parse($this->start)->addMinutes($this->duration);
+    }
+    public function getDurationInHoursAttribute()
+    {
+        $hours = floor($this->duration / 60);
+        $minutes = $this->duration - floor($this->duration / 60) * 60;
+        if($hours < 10)$hours = $hours;
+        if($minutes < 10)$minutes = "0".$minutes;
+        return $hours.':'.$minutes;
     }
 
     public function owner()
@@ -129,9 +150,10 @@ class Contest extends Model
         return $this->belongsToMany(User::class, 'contest_registration', 'contest_id', 'user_id')->withPivot(['registration_data', 'is_registration_accepted', 'is_temp_user', 'temp_user_password'])->withTimestamps();
     }
 
-    public function registrationStatus()
-    {
-
+    public function isParticipant(){
+        if(!auth()->check())return 0;
+        $ok = $this->registrations()->where(['user_id' => auth()->user()->id,'is_registration_accepted' => 1])->exists();
+        return $ok;
     }
 
     public function registrationCacheData()
@@ -144,13 +166,5 @@ class Contest extends Model
         return (new \App\Services\Contest\RankList($this));
     }
 
-    public function getBannerPathAttribute()
-    {
-        return 'upload/banner/';
-    }
-
-    public function getBannerAttribute($banner)
-    {
-        return asset($this->bannerPath . $banner);
-    }
+    
 }

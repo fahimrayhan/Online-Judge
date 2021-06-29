@@ -43,7 +43,7 @@ class RankList
             $problemSolvedStat[$problem->id] = [
                 'attempted' => 0,
                 'solved'    => 0,
-                'no' => $problem->problem_no,
+                'no'        => $problem->problem_no,
                 'solved_by' => [],
             ];
         }
@@ -121,22 +121,24 @@ class RankList
 
             $problemSolvedStat[$problemId]['attempted'] += $problemStat['attempted'] == 1;
             $problemSolvedStat[$problemId]['solved_by'][$userId] = 0;
-            if($problemStat['verdict'] == 3){
-            	$problemSolvedStat[$problemId]['solved'] += 1;
-            	$problemSolvedStat[$problemId]['solved_by'][$userId] = 1;
+            if ($problemStat['verdict'] == 3) {
+                $problemSolvedStat[$problemId]['solved'] += 1;
+                $problemSolvedStat[$problemId]['solved_by'][$userId] = 1;
             }
 
         }
 
-        usort($rankList, function ($a, $b) use ($key) {
-            if ($a['total_solved'] == $b['total_solved']) {
-                return $a['total_panalty'] <=> $b['total_panalty'];
-            }
+        if (!empty($rankList)) {
+            usort($rankList, function ($a, $b) use ($key) {
+                if ($a['total_solved'] == $b['total_solved']) {
+                    return $a['total_panalty'] <=> $b['total_panalty'];
+                }
 
-            return $b['total_solved'] <=> $a['total_solved'];
-        });
+                return $b['total_solved'] <=> $a['total_solved'];
+            });
+        }
 
-       // dd($problemSolvedStat);
+        // dd($problemSolvedStat);
 
         return [
             'problemStat' => $problemSolvedStat,
@@ -150,7 +152,7 @@ class RankList
 
         cache()->put($this->cacheRankListKey, $data['rankList']);
         cache()->put($this->cacheProblemStatKey, $data['problemStat']);
-        
+
         return $data;
     }
 
