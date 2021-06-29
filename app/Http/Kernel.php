@@ -70,5 +70,9 @@ class Kernel extends HttpKernel
         'ModeratorIsPending' => \App\Http\Middleware\Administration\Problem\ModeratorIsPending::class,
         'Administration' => \App\Http\Middleware\Administration\Administration::class,
         'Admin' => \App\Http\Middleware\Admin::class,
+        'CheckContestPublish' => \App\Http\Middleware\Contest\Arena\CheckContestPublish::class,
+        'CheckContestPublish' => \App\Http\Middleware\Contest\Arena\CheckContestPublish::class,
+        'CheckContestStart' => \App\Http\Middleware\Contest\Arena\CheckContestStart::class,
+        'CheckContestParticipant' => \App\Http\Middleware\Contest\Arena\CheckContestParticipant::class,
     ];
 }

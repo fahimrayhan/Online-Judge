@@ -59,14 +59,14 @@
    .welcomeFeature:hover{
       cursor: pointer;
       font-size: 15px;
-      background: url('file/site_metarial/geometry.png');
+      background: url('{{asset("assets/img/geometry.png")}}');
    }
 </style>
    <div class="box">
    <div class="body" style="padding: 15px 15px 20px 15px;">
       <div class="logoTitle">Welcome To Coder Online Judge (CoderOJ) </div>
       
-      <div class="row" style="background: url('http://localhost/project/Online-Judge/file/site_metarial/geometry.png');">
+      <div class="row" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="col-md-4">
             <div class="bannerArea">
                <img class="welcomeBanner" src="http://coderoj.com/file/site_metarial/home-pic.png">
@@ -82,25 +82,25 @@
 </div>
 <div class="row">
    <div class="col-md-3 col-sm-6">
-      <div class="box box-body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
+      <div class="box box-body welcomeFeature" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="featureName">Organize a Contest</div>
          <i class="fas fa-trophy featureIcon"></i>
       </div>
    </div>
    <div class="col-md-3 col-sm-6">
-      <div class="box box-body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
+      <div class="box box-body welcomeFeature" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="featureName">Solve Problem</div>
          <i class="fas fa-list featureIcon"></i>
       </div>
    </div>
    <div class="col-md-3 col-sm-6">
-      <div class="box box-body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
+      <div class="box box-body welcomeFeature" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="featureName">Create Problem</div>
          <i class="fas fa-random featureIcon"></i>
       </div>
    </div>
    <div class="col-md-3 col-sm-6">
-      <div class="box box-body welcomeFeature" style="background: url('file/site_metarial/geometry.png');">
+      <div class="box box-body welcomeFeature" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="featureName">Progress Skill</div>
          <i class="fas fa-network-wired featureIcon"></i>
       </div>
@@ -108,11 +108,5 @@
 </div>   </div>
 
 </div>
-
-<script type="text/javascript">
-   function fun(){
-      console.log("home function is working");
-   }
-</script>
 
 @stop

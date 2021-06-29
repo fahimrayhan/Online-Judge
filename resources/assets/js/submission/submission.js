@@ -90,6 +90,11 @@ var submission = {
         if (language) data['language'] = language;
         var handle = $("#submission-filter-handle").val();
         if (handle) data['handle'] = handle;
+
+        var problem = $("#submission-filter-problem").val();
+        if (problem) data['problem'] = problem;
+
+
         base = base.replace(/\?.*$/, "") + "?" + jQuery.param(data);
         url.load(base);
     },

@@ -75,6 +75,7 @@
 		<th>#</th>
 		<th>When</th>
 		<th>Who</th>
+		<th>Type</th>
 		<th>Lang</th>
 		<th>Verdict</th>
 		<th>Time</th>
@@ -85,6 +86,7 @@
 			<td><a modal='true' modal-type='lg' modal-header="Submission #{{$submission->id}}" href="{{route('administration.problem.submission.view',['slug' => request()->slug,'submission_id' => $submission->id])}}"><u>{{$submission->id}}</u></a></td>
 			<td>{{$submission->created_at->format('M/d/Y h:i:s')}}</td>
 			<td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$submission->user->handle}}</a></td>
+			<td>{{$submission->type}}</td>
 			<td>{{$submission->language->name}}</td>
 			<td><span id="submission_{{$submission->id}}_verdict">{!!$submission->verdictStatus()!!}</span></td>
 			<td><span id="submission_{{$submission->id}}_time">{{$submission->time}} ms</span></td>

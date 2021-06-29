@@ -198,7 +198,7 @@ class ProblemController extends Controller
 
     public function viewTestSubmissionPage()
     {
-        $submission = $this->problemData->submissions()->where(['type' => '1', 'id' => request()->submission_id])->firstOrFail();
+        $submission = $this->problemData->submissions()->where(['id' => request()->submission_id])->firstOrFail();
 
         return view('pages.administration.problem.submission', [
             'submission'           => $submission,
@@ -211,7 +211,7 @@ class ProblemController extends Controller
 
     public function viewTestSubmissionTestCaseDetailsPage()
     {
-        $submission = $this->problemData->submissions()->where(['type' => '1', 'id' => request()->submission_id])->firstOrFail();
+        $submission = $this->problemData->submissions()->where(['id' => request()->submission_id])->firstOrFail();
         $testCase   = $submission->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
         return view('pages.submission.submission_test_case_details', [
             'testCase' => $testCase,

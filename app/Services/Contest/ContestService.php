@@ -7,6 +7,7 @@ use App\Models\Problem;
 use App\Models\User;
 use Hash;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class ContestService
 {
@@ -50,19 +51,28 @@ class ContestService
         $contest->registration_auto_accept = isset($data->registration_auto_accept);
         $contest->participate_main_name    = $data->participate_main_name;
         $contest->participate_sub_name     = $data->participate_sub_name;
+        
         $contest->save();
+
+        $contest->registrationCacheData()->save();
+        $contest->rankList()->save();
     }
 
     public function addProblem(Contest $contest, $slug)
     {
+        
         $problem = Problem::where(['slug' => $slug])->firstOrFail();
-        // return $problem->slug;
-        $contest->problems()->sync($problem->id, ['user_id' => auth()->user()->id]);
+        $contest->problems()->attach($problem->id, [
+            'user_id' => auth()->user()->id,
+            'serial' => Carbon::now()->timestamp
+        ]);
+        $contest->rankList()->save();
         return "Problem Added Successfully";
     }
     public function removeProblem(Contest $contest, $problem_id)
     {
         $contest->problems()->detach($problem_id);
+        $contest->rankList()->save();
         return "Problem Removed";
     }
 
@@ -137,6 +147,7 @@ class ContestService
         ]);
 
         $contest->registrationCacheData()->save();
+        $contest->rankList()->save();
 
         $totalUser = count($userData);
         return response()->json([

@@ -6,6 +6,13 @@
             'url' => route('home'),
             'callback' => ''
         ],
+
+        'contests' => [
+            'icon'  => 'glyphicon glyphicon-list',
+            'name' => 'CONTESTS',
+            'url' => route('contests'),
+            'callback' => ''
+        ],
         
         'problems' => [
             'icon'  => 'glyphicon glyphicon-list',

@@ -53,7 +53,7 @@
 	text-align: center;
 	color: #ffffff;
 	padding: 30px 20px 15px 0px;
-	background-image: url("http://localhost/project/Online-Judge/file/site_metarial/geometry.png");
+	background-image: url("{{asset("assets/img/geometry.png")}}");
 	border: 1px solid #DFDFDF;
 	border-width: 0px 0px 1px 0px;
 }
@@ -203,17 +203,28 @@
 
 </style>
 
-<script type="text/javascript">
-	var contestStatus = 1;
-	var contestTimerTime = 1; 	
-	var contestFinishStatus = 1;
-</script>
-
 <div class="contestTitleArea">
 	<div class="row"></div>
 	<div class="contestTitle">{{$contest->name}}</div>
-	<div class="contestTime"><div id="contestTimer">
-				11 : 35 : 12
+	<div class="contestTime">
+		@if($contest->status != "past")
+		<div id="timerArea">
+			{{gmdate("H : i : s", $contest->timer())}}
+		</div>
+		@endif
+	<div id="contestStatusTxt">
+		@if($contest->status == "running")
+        Contest Is Runnning
+        @elseif($contest->status == "upcomming")
+        Contest Is Not Start
+        @else
+        Contest Is End
+        @endif
 	</div>
-	<div id="contestStatusTxt">Contest Is Running</div></div>
 </div>
+</div>
+
+<script type="text/javascript">
+	Contest.setTimer({{$contest->timer()}},"{{$contest->status}}")
+</script>
+<input type="text" id="startcontesttimer" value="start" name="" hidden="">

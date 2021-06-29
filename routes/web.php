@@ -38,16 +38,23 @@ Route::group(['prefix' => 'problems'], function () {
 
 Route::group(['prefix' => 'contests'], function () {
     Route::get('/', 'Contest\ContestController@getContestList')->name('contests');
-    Route::group(['prefix' => '{contest_slug}'], function () {
-        Route::group(['prefix' => 'arena'], function () {
-            Route::get('/', 'Contest\ContestArenaController@problems')->name('contest.arena');
-            Route::get('/problems', 'Contest\ContestArenaController@problems')->name('contest.arena.problems');
-            Route::get('/problems/{problem_no}', 'Contest\ContestArenaController@viewProblem')->name('contest.arena.problem');
-            Route::get('/submissions', 'Contest\ContestArenaController@submissions')->name('contest.arena.submissions');
-            Route::get('/submissions/{submission_id}', 'Contest\ContestArenaController@viewSubmission')->name('contest.arena.submissions.view');
-            Route::get('/standings', 'Contest\ContestArenaController@standings')->name('contest.arena.standings');
-            Route::get('/clearifications', 'Contest\ContestArenaController@clearifications')->name('contest.arena.clearifications');
-        });
+
+});
+
+Route::group(['prefix' => 'c/{contest_slug}', 'middleware' => ['CheckContestPublish']], function () {
+    Route::get('/', 'Contest\ContestController@contestInfo')->name('contests.info');
+    Route::group(['prefix' => 'arena', 'middleware' => ['CheckContestStart', 'CheckContestParticipant']], function () {
+        Route::get('/', 'Contest\ContestArenaController@problems')->name('contest.arena');
+        Route::get('/problems', 'Contest\ContestArenaController@problems')->name('contest.arena.problems');
+        Route::get('/problems/{problem_no}', 'Contest\ContestArenaController@viewProblem')->name('contest.arena.problems.view');
+        Route::get('/problems/{problem_no}/submit', 'Contest\ContestArenaController@viewSubmitEditor')->name('contest.arena.problems.view.submit');
+        Route::post('/problems/{problem_no}/submit', 'Contest\ContestArenaController@submitProblem');
+
+        Route::get('/submissions', 'Contest\ContestArenaController@submissions')->name('contest.arena.submissions');
+        Route::get('/submissions/my', 'Contest\ContestArenaController@mySubmissions')->name('contest.arena.submissions.my');
+        Route::get('/submissions/{submission_id}', 'Contest\ContestArenaController@viewSubmission')->name('contest.arena.submissions.view');
+        Route::get('/standings', 'Contest\ContestArenaController@standings')->withoutMiddleware('CheckContestParticipant')->name('contest.arena.standings');
+        Route::get('/clearifications', 'Contest\ContestArenaController@clearifications')->name('contest.arena.clearifications');
     });
 });
 
@@ -153,7 +160,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
      */
 
     Route::group(['prefix' => 'contests', 'name' => 'administration.contest.'], function () {
-        Route::get('/', 'Administration\Contest\ContestController@contestList');
+        Route::get('/', 'Administration\Contest\ContestController@contestList')->name("administration.contests");
         Route::get('/create', 'Contest\ContestController@create')->name('administration.contest.create');
         Route::post('/create', 'Contest\ContestController@store');
         Route::group(['prefix' => '{contest_id}'], function () {
@@ -167,22 +174,28 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
             Route::post('/{problem_id}/remove_problem', 'Administration\Contest\ContestController@removeProblem')->name('administration.contest.remove_problem');
             Route::get('/moderators', 'Administration\Contest\ContestController@overview')->name('administration.contest.moderators');
 
+            Route::get('/submissions', 'Administration\Contest\ContestController@submissionList')->name('administration.contest.submissions');
+            Route::get('/submissions/{submission_id}', 'Administration\Contest\ContestController@viewSubmission')->name('administration.contest.submissions.view');
+            Route::get('/submissions/{submission_id}/test_case_details', 'Administration\Contest\ContestController@viewTestCase')->name('administration.contest.submissions.view.test_case_details');
+
             Route::group(['prefix' => 'registrations'], function () {
 
                 Route::get('/', 'Administration\Contest\ContestController@registrationList')->name('administration.contest.registrations');
                 Route::post('/', 'Administration\Contest\ContestController@participant')->name('administration.contest.registrations');
                 Route::post('/datatable_api', 'Administration\Contest\ContestController@datatableApi')->name('administration.contest.registrations.datatable_api');
                 Route::get('/datatable_api', 'Administration\Contest\ContestController@datatableApi')->name('administration.contest.registrations.datatable_api');
-                
+
                 Route::get('/create_temp_user', 'Administration\Contest\ContestController@viewGenerateTempUser')->name('administration.contest.registrations.create_temp_user');
                 Route::post('/create_temp_user', 'Administration\Contest\ContestController@GenerateTempUser');
 
-
                 Route::post('/update_registration_status', 'Administration\Contest\ContestController@updateRegistrationStatus')->name('administration.contest.registrations.update_registration_status');
 
-            });
-            
+                Route::post('/send_mail', 'Administration\Contest\ContestController@viewSendMail')->name('administration.contest.registrations.send_mail_view');
+                Route::post('/send_mail_confirm', 'Administration\Contest\ContestController@sendMail')->name('administration.contest.registrations.send_mail');
 
+               
+
+            });
         });
     });
 

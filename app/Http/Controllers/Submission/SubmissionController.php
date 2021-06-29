@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Submission;
 
 use App\Events\TestEvent;
 use App\Http\Controllers\Controller;
+use App\Models\Contest;
 use App\Models\Language;
 use App\Models\Problem;
 use App\Models\Submission;
@@ -16,10 +17,6 @@ class SubmissionController extends Controller
     {
 
         $problem = Problem::where(['slug' => request()->slug])->firstOrFail();
-        if (!$problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->exists()) {
-            abort(419, 'Problem language is not found');
-        }
-        $language = $problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->firstOrFail();
 
         $data = [
             'source_code' => base64_decode(request()->source_code),
@@ -44,13 +41,25 @@ class SubmissionController extends Controller
         ]);
     }
 
+    public function languageExit(Problem $problem)
+    {
+        $language = [];
+
+        if ($problem->language_auto_update) {
+            $language = Language::where(['id' => request()->language_id, 'is_archive' => 0])->first();
+        } else {
+            $language = $problem->languages()->where(['id' => request()->language_id, 'is_archive' => 0])->first();
+        }
+
+        if (empty($language)) {
+            abort(419, 'Problem language is not found');
+        }
+        return $language;
+    }
+
     public function createPracticeSubmission()
     {
         $problem = Problem::where(['slug' => request()->slug])->firstOrFail();
-        if (!$problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->exists()) {
-            abort(419, 'Problem language is not found');
-        }
-        $language = $problem->languages()->where(['id' => request()->language_id, 'is_archive' => false])->firstOrFail();
 
         $data = [
             'source_code' => base64_decode(request()->source_code),
@@ -68,6 +77,37 @@ class SubmissionController extends Controller
             'message'             => 'Submission Create Success',
             'submission_id'       => $submission->id,
             'view_submission_url' => route('submissions.view', [
+                'submission_id' => $submission->id,
+            ]),
+        ]);
+    }
+
+    public function createContestSubmission(Contest $contest, Problem $problem)
+    {
+
+        if($contest->status == "past"){
+            abort(419,'Contest Is Finished');
+        }
+
+        $data = [
+            'source_code' => base64_decode(request()->source_code),
+            'language_id' => request()->language_id,
+            'type'        => 3,
+            'judge_type'  => "binary",
+            'problem_id'  => $problem->id,
+        ];
+
+        $submission = Submission::create($data);
+
+        $contest->submissions()->attach($submission->id);
+
+        if($submission->verdict_id == 3)$contest->rankList()->save();
+
+        return response()->json([
+            'message'             => 'Submission Create Success',
+            'submission_id'       => $submission->id,
+            'view_submission_url' => route('contest.arena.submissions.view', [
+                'contest_slug'  => request()->contest_slug,
                 'submission_id' => $submission->id,
             ]),
         ]);

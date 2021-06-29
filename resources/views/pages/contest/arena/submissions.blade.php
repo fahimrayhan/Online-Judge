@@ -14,45 +14,46 @@
     <div class="col-md-9">
         <div class="contestBox">
             <div class="contestBoxHeader">
-                Submission |
-                <a href="contest_arena.php?id=3&submissions&user=1">
-                    My
-                </a>
+                Submission 
+            </div>
+            <div class="contestBoxBody">
+                <ul class="nav nav-pills">
+                    <li class="{{ Request::segment(5) == 'my' ? "active" : ""}}"><a href="{{route('contest.arena.submissions.my',['contest_slug' => request()->contest_slug])}}">My</a></li>
+                    <li class="{{ Request::segment(5) != 'my' ? "active" : ""}}"><a href="{{route('contest.arena.submissions',['contest_slug' => request()->contest_slug])}}">All</a></li></ul>
             </div>
             <div class="" style="padding: 0px;">
                 <div class="table-responsive">
-                    <table width="100%">
-                        <tr>
-                            <td class="td1">
-                                #
-                            </td>
-                            <td class="td1">
-                                When
-                            </td>
-                            <td class="td1">
-                                Who
-                            </td>
-                            <td class="td1">
-                                Problem Name
-                            </td>
-                            <td class="td1">
-                                Lang
-                            </td>
-                            <td class="td1">
-                                Verdict
-                            </td>
-                            <td class="td1">
-                                Time
-                            </td>
-                        </tr>
-                    </table>
+
+                    <table class="table-custom">
+    <tr>
+        <th>#</th>
+        <th>Author</th>
+        <th>Problem</th>
+        <th>Time</th>
+        <th>Language</th>
+        <th>CPU</th>
+        <th>Memory</th>
+        <th></th>
+    </tr>
+    @foreach($submissions as $key => $submission)
+        <tr>
+            <td><a modal='true' modal-type='lg' modal-header="Submission #{{$submission->id}}" href="{{route('contest.arena.submissions.view',['contest_slug' => request()->contest_slug,'submission_id' => $submission->id])}}"><u>{{$submission->id}}</u></a></td>
+           
+            <td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$users[$submission->user->id]->main_name}}</a></td>
+            <td style="text-align: left;">
+                <a href="{{route('contest.arena.problems.view',['contest_slug' => request()->contest_slug,'problem_no' => $problemsKeyId[$submission->problem->id]['problem_no']])}}">{{$problemsKeyId[$submission->problem->id]['problem_no']}}. {{$submission->problem->name}}</a></td>
+            <td><font title="{{$submission->created_at}}">{{gmdate("H : i : s", $contest->start->diffInSeconds($submission->created_at))}}</font></td>
+            <td>{{$submission->language->name}}</td>
+            <td><span id="submission_{{$submission->id}}_time">{{$submission->time}} ms</span></td>
+            <td><span id="submission_{{$submission->id}}_memory">{{$submission->memory}} kb</span></td>
+            <td><span id="submission_{{$submission->id}}_verdict">{!!$submission->verdictStatus()!!}</span></td>
+        </tr>
+    @endforeach
+</table>
                 </div>
-                <center>
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                        </ul>
-                    </nav>
-                </center>
+               <div style="text-align: center;">
+    {!! $submissions->appends(request()->input())->links() !!}
+</div>
             </div>
         </div>
     </div>
@@ -62,92 +63,32 @@
                 Filter
             </div>
             <div class="contestBoxBody">
-                <input class="form-control filterBox" id="filterUser" name="" placeholder="User Id" type="number" value="">
-                    <select class="form-control filterBox" id="filterProblem">
-                        <option value="-1">
+                <input class="form-control filterBox" id="submission-filter-handle" name="" placeholder="User Handle" type="text" value="{{request()->handle}}">
+                    <select class="form-control filterBox" id="submission-filter-problem">
+                        <option value="">
                             Any Problem
                         </option>
-                        <option value="A">
-                            A
-                        </option>
-                        <option value="B">
-                            B
-                        </option>
-                        <option value="C">
-                            C
-                        </option>
-                        <option value="D">
-                            D
-                        </option>
-                        <option value="E">
-                            E
-                        </option>
-                        <option value="F">
-                            F
-                        </option>
+                        @foreach($problems as $key => $problem)
+                        <option value="{{$key}}" {{$key == request()->problem ? "selected" : ""}}>{{$key}} . {{$problem->name}}</option>
+                        @endforeach
                     </select>
-                    <select class="form-control filterBox" id="filterLanguage">
-                        <option value="-1">
+                    <select class="form-control filterBox" id="submission-filter-language">
+                        <option value="">
                             Any Language
                         </option>
-                        <option value="1">
-                            C
-                        </option>
-                        <option value="2">
-                            C++
-                        </option>
-                        <option value="3">
-                            C++11
-                        </option>
+                        @foreach($languages as $key => $language)
+                        <option value="{{$language->name}}" {{$language->name == request()->language ? "selected" : ""}}>{{$language->name}}</option>
+                        @endforeach
                     </select>
-                    <select class="form-control filterBox" id="filterVerdict">
-                        <option value="-1">
+                    <select class="form-control filterBox" id="submission-filter-verdict">
+                        <option value="">
                             Any Verdict
                         </option>
-                        <option value="1">
-                            In Queue
-                        </option>
-                        <option value="2">
-                            Processing
-                        </option>
-                        <option value="3">
-                            Accepted
-                        </option>
-                        <option value="4">
-                            Wrong Answer
-                        </option>
-                        <option value="5">
-                            Time Limit Exceeded
-                        </option>
-                        <option value="6">
-                            Compilation Error
-                        </option>
-                        <option value="7">
-                            Runtime Error (SIGSEGV)
-                        </option>
-                        <option value="8">
-                            Runtime Error (SIGXFSZ)
-                        </option>
-                        <option value="9">
-                            Runtime Error (SIGFPE)
-                        </option>
-                        <option value="10">
-                            Runtime Error (SIGABRT)
-                        </option>
-                        <option value="11">
-                            Runtime Error (NZEC)
-                        </option>
-                        <option value="12">
-                            Runtime Error (Other)
-                        </option>
-                        <option value="13">
-                            Internal Error
-                        </option>
-                        <option value="14">
-                            Exec Format Error
-                        </option>
+                        @foreach($verdicts as $key => $verdict)
+                            <option value="{{$verdict->name}}" {{$verdict->name == request()->verdict ? "selected" : ""}}>{{$verdict->name}}</option>
+                        @endforeach
                     </select>
-                    <button class="btn btn-primary" style="margin-top: 10px; width: 100%">
+                    <button onclick="submission.filter('{{route('contest.arena.submissions',['contest_slug' => request()->contest_slug])}}')" class="btn btn-primary" style="margin-top: 10px; width: 100%">
                         Apply
                     </button>
                 </input>

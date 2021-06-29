@@ -100,6 +100,14 @@ class Problem extends Model
         return $problemLanguages;
     }
 
+    public function getLanguage($languageId){
+        $languages = $this->languageList();
+        foreach ($languages as $key => $value) {
+            if($value->id == $languageId)return $value;
+        }
+        return [];
+    }
+
     public function testCasesSample()
     {
         return $this->testCases()->where(['sample' => 1]);

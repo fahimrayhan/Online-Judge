@@ -58,6 +58,11 @@ $options = [
         'name' => 'Settings',
         'url' => route('administration.settings'),
     ],
+    'contests' => [
+        'icon' => 'fa fa-list',
+        'name' => 'Contests',
+        'url' => route('administration.contests'),
+    ],
     'problems' => [
         'icon' => 'fa fa-list',
         'name' => 'Problems',

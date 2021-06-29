@@ -30,7 +30,6 @@ class ContestUpdateRequest extends FormRequest
             'format' => 'required',
             'start' => 'required',
             'duration' => 'required',
-            'description' => 'required',
             'visibility' => 'required',
         ];
     }

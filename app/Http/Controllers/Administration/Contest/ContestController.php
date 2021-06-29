@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Contest\ContestUpdateRequest;
 use App\Http\Requests\Contest\GenerateContestUserRequest;
 use App\Models\Contest;
+use App\Models\Verdict;
+use App\Models\Submission;
+use App\Models\Language;
 use App\Models\User;
 use App\Services\Contest\ContestService;
+use App\Services\Notification\NotificationService;
 use Illuminate\Http\Request;
 
 class ContestController extends Controller
@@ -47,7 +51,10 @@ class ContestController extends Controller
 
     public function problems()
     {
-        return view('pages.administration.contest.problem.problem_list', ['problems' => $this->contest->problems]);
+        return view('pages.administration.contest.problem.problem_list', [
+            'problems' => $this->contest->problems,
+            'contest' => $this->contest
+        ]);
     }
     public function addProblem(Request $request)
     {
@@ -68,6 +75,135 @@ class ContestController extends Controller
         return view('pages.administration.contest.registration.registration', [
             'tableColumn'     => $tableColumn,
             'tableColumnJson' => json_encode($tableColumn),
+            'contest' => $this->contest
+        ]);
+    }
+
+    // submission area
+
+    public function getProblemListWithKeySerial()
+    {
+        $problems = $this->contest->problems()->get();
+        $tmp      = [];
+
+        foreach ($problems as $key => $value) {
+            $tmp[chr($key + 65)] = $value;
+        }
+
+        return $tmp;
+    }
+
+    public function getProblemListWithKeyId()
+    {
+        $problems = $this->contest->problems()->get();
+        $tmp      = [];
+
+        foreach ($problems as $key => $value) {
+            $tmp[$value->id]               = $value;
+            $tmp[$value->id]['problem_no'] = chr($key + 65);
+        }
+
+        return $tmp;
+    }
+
+    public function submissionList()
+    {
+        $problems = $this->getProblemListWithKeySerial();
+        $problemsKeyId = $this->getProblemListWithKeyId();
+
+        if (request()->problem != "") {
+            request()->problem_id = isset($problems[request()->problem]) ? $problems[request()->problem]->id : -1;
+        }
+
+        $problemsIdList = [];
+        foreach ($problems as $key => $value) {
+            array_push($problemsIdList, $value['id']);
+        }
+
+        $users = $this->contest->registrationCacheData()->get();
+        
+        $userIdList = [];
+        foreach ($users as $key => $value) {
+            if($value->is_registration_accepted)array_push($userIdList, $value->id);
+        }
+
+        $submissions = $this->contest->submissions()
+            ->whereIn('problem_id',$problemsIdList)
+            ->whereIn('user_id',$userIdList)
+            ->whereBetween('created_at', [$this->contest->start, $this->contest->end])
+            ->whereHas('verdict', function ($q) {
+                if (request()->verdict != "") {
+                    $q->where('name', request()->verdict);
+                }
+
+            })
+            ->whereHas('language', function ($q) {
+                if (request()->language != "") {
+                    $q->where('name', request()->language);
+                }
+            })
+            ->whereHas('user', function ($q) {
+                if (request()->handle != "") {
+                    $q->where('handle', request()->handle);
+                }
+            })
+            ->whereHas('problem', function ($q) {
+                if (request()->problem != "") {
+                    $q->where('id', request()->problem_id);
+                }
+            })
+            ->orderBy('id', 'DESC')->paginate(15);
+
+
+
+        return view('pages.administration.contest.submission.submission_list', [
+            'contest'     => $this->contest,
+            'submissions' => $submissions,
+            'problems'    => $this->getProblemListWithKeySerial(),
+            'verdicts'    => Verdict::all(),
+            'problemsKeyId' => $problemsKeyId,
+            'users' => $users,
+            'languages'   => Language::orderBy('name', 'asc')->get(),
+        ]);
+    }
+    public function viewSubmission()
+    {
+        $problems = $this->getProblemListWithKeyId();
+
+        $problemsIdList = [];
+        foreach ($problems as $key => $value) {
+            array_push($problemsIdList, $value['id']);
+        }
+
+        $users = $this->contest->registrationCacheData()->get();
+        
+        $userIdList = [];
+        foreach ($users as $key => $value) {
+            if($value->is_registration_accepted)array_push($userIdList, $value->id);
+        }
+
+        $submission = $this->contest->submissions()
+        ->where(['id' => request()->submission_id])
+        ->whereIn('problem_id',$problemsIdList)
+        ->whereIn('user_id',$userIdList)
+        ->firstOrFail();
+
+        //dd($problems);
+
+        return view('pages.administration.contest.submission.view_submission', [
+            'contest'    => $this->contest,
+            'submission' => $submission,
+            'users' => $users,
+            'problemKey' => $problems[$submission->problem_id]['problem_no']
+        ]);
+    }
+
+    public function viewTestCase()
+    {
+        $submission = Submission::where(['id' => request()->submission_id])->firstOrFail();
+        $testCase   = $submission->testCases()->where(['id' => request()->test_case_id])->firstOrFail();
+        return view('pages.submission.submission_test_case_details', [
+            'testCase' => $testCase,
         ]);
     }
 
@@ -113,11 +249,91 @@ class ContestController extends Controller
         }
 
         $this->contest->registrationCacheData()->save();
+        $this->contest->rankList()->save();
 
         $total  = count($userList);
         $status = request()->status;
         return response()->json([
             'message' => "Successfully {$status} {$total} Registrations",
+        ]);
+    }
+
+    public function buildMailData($mailType = "email")
+    {
+        $userData   = $this->contest->registrationCacheData()->get();
+        $mailData   = [];
+        $userList   = request()->user_list;
+        $totalValid = 0;
+        $totalMail  = 0;
+        foreach ($userList as $key => $userId) {
+            if (!isset($userData[$userId])) {
+                continue;
+            }
+
+            $mail = view("pages.administration.contest.mail.welcome", [
+                'contest' => $this->contest,
+                'user'    => $userData[$userId],
+            ])->render();
+
+            $to      = isset($userData[$userId]->$mailType) ? $userData[$userId]->$mailType : "";
+            $isValid = filter_var($to, FILTER_VALIDATE_EMAIL) ? 1 : 0;
+            array_push($mailData, [
+                'to'       => $to,
+                'body'     => $mail,
+                'is_valid' => $isValid,
+            ]);
+
+            $totalValid += $isValid;
+            $totalMail++;
+        }
+
+        $res = [
+            'totalMail'  => $totalMail,
+            'totalValid' => $totalValid,
+            'data'       => $mailData,
+        ];
+
+        return $res;
+    }
+
+    public function sendMail()
+    {
+        $mailData = $this->buildMailData(request()->email_type);
+        foreach ($mailData['data'] as $key => $value) {
+            if ($value['is_valid'] == 0) {
+                continue;
+            }
+
+            NotificationService::sendMail([
+                'to'      => $value['to'],
+                'message' => $value['body'],
+                'subject' => "Welcome to " . $this->contest->name,
+            ]);
+        }
+        return response()->json([
+            'message' => "Successfully send {$mailData['totalValid']} mail",
+        ]);
+    }
+
+    public function viewSendMail()
+    {
+        $contest       = $this->contest;
+        $userDataField = $this->contest->user_data_field;
+        $emailOption   = [];
+        array_push($emailOption, 'email');
+        foreach ($userDataField['registration'] as $key => $value) {
+            if ($value == 'email') {
+                continue;
+            }
+
+            array_push($emailOption, $value);
+        }
+        $mailData = $this->buildMailData(request()->email_type);
+
+        return view("pages.administration.contest.mail.view_send_mail", [
+            'emailOption' => $emailOption,
+            'mailData'    => $mailData,
+            'mailType'    => request()->email_type,
         ]);
     }
 }

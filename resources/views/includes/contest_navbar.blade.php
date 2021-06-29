@@ -27,23 +27,12 @@
   }
 </style>
 
-<?php 
- $contestId = 1; 
-
-?>
-
 @php
     $navbars = [
         'problems' => [
             'icon'  => 'fa fa-dashboard',
             'name' => 'Problems',
             'url' => route('contest.arena.problems',['contest_slug' => request()->contest_slug]),
-        ],
-        
-        'clearifications' => [
-            'icon'  => 'fas fa-trophy',
-            'name' => 'Clearifications',
-            'url' => route('contest.arena.clearifications',['contest_slug' => request()->contest_slug]),
         ],
         'standings' => [
             'icon'  => 'fas fa-trophy',
@@ -53,7 +42,7 @@
         'submissions' => [
             'icon'  => 'fas fa-list',
             'name' => 'Submissions',
-            'url' => route('contest.arena.submissions',['contest_slug' => request()->contest_slug]),
+            'url' => route('contest.arena.submissions.my',['contest_slug' => request()->contest_slug]),
         ],
     ];
 
@@ -71,7 +60,7 @@
         </div>
                        
       </button>
-      <a class="" href="index.php"><img src="http://localhost/project/Online-Judge/file/site_metarial/coderoj_logo.png" height="45px"></a>
+      <a class="" href="{{route('home')}}"><img src="{{asset("assets/img/coderoj_logo.png")}}" height="45px"></a>
     </div>
     <div class="pull-right">
       <div class="collapse navbar-collapse" id="myNavbar">
@@ -80,9 +69,19 @@
             <button class="btn navbar-btn contestNavBtn {{ Request::segment(4) == $key ? 'contestNavBtnActive' : '' }}"><i class="{{$navbar['icon']}}"></i> {{$navbar['name']}}</button>
           </a>
         @endforeach
-
-        <button class="btn contestNavBtn" style="margin-left: 20px">amirhamza05</button>
+        @if(!auth()->check())
+          <button onclick="auth.loginPage(this)" url="{{route('login')}}" style="margin-left: 20px" class="btn btn-sign contestNavBtn"><i class="fas fa-sign-in-alt"></i> Login</span></button>
+          <button class="btn btn-sign contestNavBtn" onclick="auth.registerPage(this)" url="{{route('register')}}"><i class="fas fa-user-plus"></i> Register</span></button>
+          
+        @endif
+        @if(auth()->check())
+        <a href="{{route('profile',['handle' => auth()->user()->handle])}}">
+        <button class="btn contestNavBtn" style="margin-left: 20px">{{auth()->user()->name}}</button>
+        </a>
+        <a href="" onclick="auth.logout(this)" url="{{route('logout')}}">
         <button class="btn contestNavBtn">Logout</button>
+        @endif
+        </a>
       </div>
     </div>
     
