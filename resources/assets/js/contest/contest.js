@@ -139,6 +139,52 @@ var Contest = {
             registrationDataTable.ajax.reload(null, false);
         });
     },
+    viewMail: function(e){
+        var registrationList = [];
+        $("input[name='registrations[]']:checked").each(function(index, obj) {
+            registrationList.push(obj.value);
+        });
+        if (registrationList.length == 0) {
+            alert("You can not select any row");
+            return;
+        }
+        var mailType = $("#selectMaiType").val();
+        if(!mailType) mailType = "email";
+        var data = {
+            'user_list': registrationList,
+            'email_type': mailType
+        };
+       
+        var modal = new Modal('md');
+        modal.open();
+        $.post(e.attr("url"), app.setToken(data), function(response) {
+            modal.html(response);
+        });
+    },
+    sendMail: function(e){
+        var ok = confirm("Are You Want To Send Email");
+        if (!ok) return;
+        var registrationList = [];
+        $("input[name='registrations[]']:checked").each(function(index, obj) {
+            registrationList.push(obj.value);
+        });
+        if (registrationList.length == 0) {
+            alert("You can not select any row");
+            return;
+        }
+        var mailType = $("#selectMaiType").val();
+        if(!mailType) mailType = "email";
+        var data = {
+            'user_list': registrationList,
+            'email_type': mailType
+        };
+        var btn = new Button("sendConfirmEmail");
+        btn.off("Sending...");
+        $.post(e.attr("url"), app.setToken(data), function(response) {
+            toast.success(response.message);
+            btn.on();
+        });
+    },
     contestTimer: 0,
     contestStatus: 0,
     startTime: 0,

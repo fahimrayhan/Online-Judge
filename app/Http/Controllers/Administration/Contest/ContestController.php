@@ -9,6 +9,7 @@ use App\Models\Contest;
 use App\Models\User;
 use App\Services\Contest\ContestService;
 use Illuminate\Http\Request;
+use App\Services\Notification\NotificationService;
 
 class ContestController extends Controller
 {
@@ -119,6 +120,73 @@ class ContestController extends Controller
         $status = request()->status;
         return response()->json([
             'message' => "Successfully {$status} {$total} Registrations",
+        ]);
+    }
+
+    public function buildMailData($mailType = "email"){
+        $userData = $this->contest->registrationCacheData()->get();
+        $mailData = [];
+        $userList = request()->user_list;
+        $totalValid = 0;
+        $totalMail = 0;
+        foreach ($userList as $key => $userId) {
+            if(!isset($userData[$userId]))continue;
+            $mail = view("pages.administration.contest.mail.welcome", [
+                'contest' => $this->contest,
+                'user' => $userData[$userId]
+            ])->render();
+
+            $to = isset($userData[$userId]->$mailType)? $userData[$userId]->$mailType : "";
+            $isValid = filter_var($to, FILTER_VALIDATE_EMAIL)? 1 : 0;
+            array_push($mailData, [
+                'to' => $to,
+                'body' => $mail,
+                'is_valid' => $isValid
+            ]);
+
+            $totalValid += $isValid;
+            $totalMail++;
+        }
+
+        $res = [
+            'totalMail' => $totalMail,
+            'totalValid' => $totalValid,
+            'data' => $mailData
+        ];
+
+        return $res;
+    }
+
+    public function sendMail(){
+        $mailData = $this->buildMailData(request()->email_type);
+        foreach ($mailData['data'] as $key => $value) {
+            if($value['is_valid'] == 0)continue;
+            NotificationService::sendMail([
+                'to' => $value['to'],
+                'message' => $value['body'],
+                'subject' => "Welcome to ".$this->contest->name
+            ]);
+        }
+        return response()->json([
+            'message' => "Successfully send {$mailData['totalValid']} mail",
+        ]);
+    }
+
+    public function viewSendMail(){
+        $contest = $this->contest;
+        $userDataField = $this->contest->user_data_field;
+        $emailOption = [];
+        array_push($emailOption, 'email');
+        foreach ($userDataField['registration'] as $key => $value) {
+            if($value == 'email')continue;
+            array_push($emailOption, $value);
+        }
+        $mailData = $this->buildMailData(request()->email_type);
+
+        return view("pages.administration.contest.mail.view_send_mail",[
+            'emailOption' => $emailOption,
+            'mailData' => $mailData,
+            'mailType' => request()->email_type
         ]);
     }
 }

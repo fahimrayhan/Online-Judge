@@ -14,26 +14,28 @@
 </style>
 </head>
 <body>
-Dear User,<br/>
-We are invite you to participate ICPC 2020.<br/><br/>
-<b>Date:</b> 20th July, (Friday).<br/>
-<b>Time:</b> 3 PM - 8 PM.<br/>
-<b>Contest Link:</b> https://algo.codemarshal.org/contests/bacsrpc18<br/><br/>
-
+Dear {{$user->name}},<br/><br/>
+Thank you for registering for <b>{{$contest->name}}</b>. The contest will take place at https://coderoj.com <br/><br/>
+<b>Start Time:</b> {{$contest->start->format('M d Y, g:i A')}}.<br/>
+<b>Duration:</b> {{$contest->durationInHours}} hours.<br/>
+<b>Contest Link:</b> {{route('contests.info',['contest_slug' => $contest->slug])}}<br/><br/>
+@if($user->is_temp_user)
 <table width="400px">
 	<tr>
 		<td colspan="2" style="background-color: #eeeeee;">Login Credientials</td>
 	</tr>
 	<tr>
 		<td style="width: 130px;background-color: #f5f5f5;">Handle</td>
-		<td>tmpdgpc.333</td>
+		<td>{{$user->handle}}</td>
 	</tr>
 	<tr>
 		<td style="width: 130px;background-color: #f5f5f5;">Password</td>
-		<td>rab</td>
+		<td>{{$user->temp_user_password}}</td>
 	</tr>
 </table><br/>
-Best Wish<br/>
+@endif
+Hope you have a nice contest!<br/><br/>
+Wish You Best of Luck,<br/>
 CoderOJ Team
 </body>
 </html>

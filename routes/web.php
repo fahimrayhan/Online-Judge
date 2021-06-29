@@ -186,6 +186,9 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
 
                 Route::post('/update_registration_status', 'Administration\Contest\ContestController@updateRegistrationStatus')->name('administration.contest.registrations.update_registration_status');
 
+                Route::post('/send_mail', 'Administration\Contest\ContestController@viewSendMail')->name('administration.contest.registrations.send_mail_view');
+                Route::post('/send_mail_confirm', 'Administration\Contest\ContestController@sendMail')->name('administration.contest.registrations.send_mail');
+
             });
 
         });
