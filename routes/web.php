@@ -91,6 +91,7 @@ Route::group(['prefix' => 'administration', 'middleware' => ['Administration']],
         Route::post('/{slug}/cancel_moderator', 'Administration\Problem\ModeratorController@cancelModeratorRequest')->name('administration.problem.cancel_moderator');
 
         Route::group(['prefix' => '{slug}', 'middleware' => ['ModeratorIsPending']], function () {
+            Route::get('/', 'Administration\ProblemController@viewProblemHome')->name('administration.problem.view');
             Route::get('/delete', 'Administration\ProblemController@deleteProblem')->name('administration.problem.delete');
             Route::get('/overview', 'Administration\ProblemController@overview')->name('administration.problem.overview');
             Route::get('/statement', 'Administration\ProblemController@details')->name('administration.problem.statement');

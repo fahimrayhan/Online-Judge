@@ -53,7 +53,7 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $requset)
     {
-        $this->authService->createNewUser($requset->all());
+        $user = $this->authService->createNewUser($requset->all());
         return response()->json([
             'message' => 'Account Successfully Created'
         ]);

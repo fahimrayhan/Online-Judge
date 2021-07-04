@@ -147,7 +147,7 @@ class Contest extends Model
 
     public function problems()
     {
-        return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial'])->orderBy('contest_problem.serial');
+        return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial','user_id'])->orderBy('contest_problem.serial');
     }
 
     public function submissions()

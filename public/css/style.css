@@ -29,7 +29,12 @@ a:hover {
 /*button*/
 
 .btn {
-    padding: 9px;
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    outline: none!important;
+    text-align: center;
 }
 .btn-default {
     background-color: #2C3542;

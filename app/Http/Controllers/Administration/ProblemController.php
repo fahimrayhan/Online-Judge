@@ -39,9 +39,13 @@ class ProblemController extends Controller
         }
     }
 
+    public function viewProblemHome(){
+        return view('pages.administration.problem.home',['problem' => $this->problemData]);
+    }
+
     public function overview()
     {
-        return view('pages.administration.problem.overview');
+        return view('pages.administration.problem.overview',['problem' => $this->problemData]);
     }
 
     public function activityLog()

@@ -15,7 +15,7 @@ class JudgeService
     protected $serverNo;
     protected $totalServer = 1;
     protected $serverList  = [
-        'http://134.122.52.123/JudgerController/judger/judger-egjruvkcix/api/api.php',
+        'http://134.122.52.123/JudgerController/judger/judger-gmharkjqkt/api/api.php',
         'http://134.122.52.123/JudgerController//judger/judger-gmharkjqkt/api/api.php',
         'http://134.122.52.123/JudgerController//judger/judger-buvqrmsydi/api/api.php',
         'http://134.122.52.123/JudgerController//judger/judger-uooyfyecxn/api/api.php',
@@ -90,7 +90,6 @@ class JudgeService
             'delete_checker_compile_file' => $this->submission->run_on_test == $this->submission->total_test_case ? 1 : 0,
             'api_type'            => 'submission',
         ];
-
         $url      = $this->serverList[$this->serverNo];
         $response = Http::asForm()->post($url, $data);
         $response = json_decode($response);

@@ -18,7 +18,7 @@ var problem = {
         form.submit({
             loadingText: "Updating...",
             success: {
-                resetForm: true,
+                resetForm: false,
             }
         });
     },
