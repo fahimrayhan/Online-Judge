@@ -1,5 +1,5 @@
 @extends($layout)
-@section('title', 'Contests')
+@section('title', $contest->name)
 @section('content')
 <style type="text/css">
 
@@ -11,7 +11,7 @@
   .contestInfoBox{
   	background-color: #ffffff;
   	border: 1px solid #eeeeee;
-  	box-shadow: 1px 1px 3px #DADADA;
+  	
   }
 
   .contestInfoBody{
@@ -62,6 +62,12 @@
   .contestInfoBox a:hover{
   	outline: none;
   }
+  .contestInfoBox .d-border{
+  	border: 1px solid #eeeeee;
+  	border-width: 0px 0px 1px 0px;
+  	margin: -10px -10px 10px -10px;
+  	padding: 15px 10px 15px 10px;
+  }
 </style>
 
 <script type="text/javascript">
@@ -71,7 +77,7 @@
 <div class="row">
 	
 	<div class="col-md-4">
-		<div class="box contestInfoBox">
+		<div class="box contestInfoBox box">
 			<img class="bannerImg" src="{{ $contest->banner }}">
 			<div style="padding: 10px;">
 				<h3 style="font-size: 18px;margin: 10px 0px 10px 0px;">{{$contest->name}}</h3>
@@ -135,10 +141,22 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div class="contestInfoBox" style="padding: 10px;">
-			<h3>{{$contest->name}}</h3>
-			<hr>
+		<div class="contestInfoBox box" style="padding: 10px;">
+			
+				<h2><b>{{$contest->name}}</b></h2>
+			
+			<hr/>
+			
 			<p>{!!$contest->description!!}</p>
+			<div style="margin-top: 25px;"></div>
+			<h4><b>Schedule</b></h4>
+			The contest will start on <b>{{ $contest->start->format(' M d Y, g:i A') }} +0600</b> and will run for <b>{{$contest->duration_in_hours}} hours.</b>
+			<div style="margin-top: 25px;"></div>
+			<h4><b>Rules</b></h4>
+			Be fair, be honest. Plagiarism will result in disqualification. Judges’ decisions will be final.
+			<div style="margin-top: 25px;"></div>
+			<h4><b>Disclaimer</b></h4>
+			The contents of this contest, as prepared by its organizer, may not have been reviewed by CoderOJ and does not necessarily represent CoderOJ's views.
 			<hr>
 			<div style="padding-bottom: 5px">
 				@if($contest->isParticipant() && $contest->status != "upcomming")

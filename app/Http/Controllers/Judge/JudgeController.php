@@ -10,7 +10,7 @@ use App\Services\Judge\JudgeService;
 class JudgeController extends Controller
 {
     public function process(){
-    	(new JudgeProcessService())->process();
+    	//(new JudgeProcessService())->process();
     	(new JudgeService(1))->Judge();
     }
 }

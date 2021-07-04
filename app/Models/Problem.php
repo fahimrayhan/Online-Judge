@@ -128,7 +128,7 @@ class Problem extends Model
 
     public function moderator()
     {
-        return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'problem_moderator', 'problem_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps()->orderBy('problem_moderator.created_at');
     }
 
     public function judgeProblem()

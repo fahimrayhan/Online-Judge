@@ -5,9 +5,9 @@ namespace App\Services\Contest;
 use App\Models\Contest;
 use App\Models\Problem;
 use App\Models\User;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class ContestService
 {
@@ -40,7 +40,6 @@ class ContestService
     {
         // dd(isset($data->publish));
         $contest                           = $this->bannerUpdate($contest, $data);
-        $contest->name                     = $data->name;
         $contest->format                   = $data->format;
         $contest->start                    = $data->start;
         $contest->duration                 = $data->duration;
@@ -51,20 +50,52 @@ class ContestService
         $contest->registration_auto_accept = isset($data->registration_auto_accept);
         $contest->participate_main_name    = $data->participate_main_name;
         $contest->participate_sub_name     = $data->participate_sub_name;
-        
+
+        if (isset($data->name)) {
+            if (\Str::slug($contest->name) != \Str::slug($data->name)) {
+                $contest->slug = $this->createSlug($data->name);
+            }
+        }
+
+        $contest->name = $data->name;
+
         $contest->save();
 
         $contest->registrationCacheData()->save();
         $contest->rankList()->save();
     }
 
+    public function createSlug($contestName)
+    {
+        $slug = \Str::slug($contestName);
+
+        if ($slug == "") {
+            $slug = "contest";
+        }
+
+        // check to see if any other slugs exist that are the same & count them
+        $count = Contest::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        while (1) {
+            $tmpSlug = $count ? "{$slug}-{$count}" : $slug;
+            if (Contest::where('slug', '=', $tmpSlug)->exists()) {
+                $count++;
+                continue;
+            }
+            break;
+        }
+        // if other slugs exist that are the same, append the count to the slug
+        $slug = $count ? "{$slug}-{$count}" : $slug;
+
+        return $slug;
+    }
+
     public function addProblem(Contest $contest, $slug)
     {
-        
+
         $problem = Problem::where(['slug' => $slug])->firstOrFail();
         $contest->problems()->attach($problem->id, [
             'user_id' => auth()->user()->id,
-            'serial' => Carbon::now()->timestamp
+            'serial'  => Carbon::now()->timestamp,
         ]);
         $contest->rankList()->save();
         return "Problem Added Successfully";
@@ -157,7 +188,7 @@ class ContestService
 
     public function getDatatableColumn()
     {
-        
+
         $tableColumn   = [];
         $userDataField = $this->contest->user_data_field;
 
@@ -170,7 +201,10 @@ class ContestService
         }
 
         foreach ($userDataField['registration'] as $key => $value) {
-            if ((array_search($value, $defaultColumn)) !== false) continue;
+            if ((array_search($value, $defaultColumn)) !== false) {
+                continue;
+            }
+
             array_push($tableColumn, ['data' => $value]);
         }
         return $tableColumn;
@@ -186,14 +220,14 @@ class ContestService
         //'registration_time','temp_user','temp_user_password','registration_status'
         $serial = 0;
         foreach ($users as $key => $user) {
-            $data = (array)$user;
+            $data = (array) $user;
 
-            $data['serial'] = $serial++;
-            $data['action'] = "<input type='checkbox' name='registrations[]' value='{$user->id}'>";
-            $data['handle'] = "<a href=''> {$user->handle}</a>";
-            $data['Registration Time'] = "<font title='{$user->registration_time->format('d M Y g:i A')}'>{$user->registration_time->diffForhumans()}</font>";
-            $data['Is Temp User'] = $user->is_temp_user ? "<i class='fa fa-check'></i>" : "";
-            $data['Temp User Password'] = $user->temp_user_password;
+            $data['serial']              = $serial++;
+            $data['action']              = "<input type='checkbox' name='registrations[]' value='{$user->id}'>";
+            $data['handle']              = "<a href=''> {$user->handle}</a>";
+            $data['Registration Time']   = "<font title='{$user->registration_time->format('d M Y g:i A')}'>{$user->registration_time->diffForhumans()}</font>";
+            $data['Is Temp User']        = $user->is_temp_user ? "<i class='fa fa-check'></i>" : "";
+            $data['Temp User Password']  = $user->temp_user_password;
             $data['Registration Status'] = $user->is_registration_accepted ? "<span class='label label-success'><i class='fa fa-check'></i> Accepted</span>" : "<span class='label label-warning'><i class='fa fa-clock'></i> Pending</span>";
 
             array_push($datas, $data);

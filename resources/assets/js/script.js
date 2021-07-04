@@ -21,7 +21,7 @@ var loader = {
     },
     div: function(div){
         div = (div instanceof jQuery) ? div : $("#" + div);
-        div.html('<div style="text-align: center;"><img style="top: 30%;height: 100px; width: 100px;" src="https://retchhh.files.wordpress.com/2015/03/loading4.gif"></div>');
+        div.html('<div style="text-align: center;"><img style="top: 30%;height: 100px; width: 100px;" src="/assets/img/loading.gif"></div>');
     }
 }
 

@@ -16,7 +16,7 @@ class Contest extends Model
         'start' => 'datetime',
     ];
 
-    protected $appends = ['bannerPath', 'end', 'status','duration_in_hours'];
+    protected $appends = ['bannerPath', 'end', 'status','duration_in_hours','authUserRole'];
 
     protected static function boot()
     {
@@ -55,7 +55,17 @@ class Contest extends Model
 
     public function moderator()
     {
-        return $this->belongsToMany(User::class, 'contest_moderator', 'contest_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'contest_moderator', 'contest_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps()->orderBy('contest_moderator.created_at');
+    }
+
+    public function getAuthUserRoleAttribute()
+    {
+        return $this->moderator()->where('user_id', auth()->user()->id)->firstOrFail()->pivot->role;
+    }
+
+    public function userRole($userId)
+    {
+        return $this->moderator()->where('user_id', $userId)->firstOrFail()->pivot->role;
     }
 
     public function getUserDataFieldAttribute($userDataField)
@@ -137,7 +147,7 @@ class Contest extends Model
 
     public function problems()
     {
-        return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial'])->orderBy('contest_problem.serial');
+        return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial','user_id'])->orderBy('contest_problem.serial');
     }
 
     public function submissions()

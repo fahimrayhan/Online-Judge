@@ -92,10 +92,6 @@
 		</div>
 	</div>
 	<div class="footer navbar-fixed-bottom footer-save">
-		<button class="btn btn-primary"
-                onclick="new Modal('lg').load('{{ route('administration.filemanager.structure') }}','File Manager')">Upload
-                Image</button>
-		<button id="update-problem-preview" type="submit" class="btn btn-primary" url="{{route('administration.problem.preview_problem',['slug' => request()->slug])}}" onclick="problem.preview(this)">Preview</button>
         <button id="update-problem-details" type="submit" class="btn btn-primary" onclick="problem.detailsUpadte('{{route('administration.problem.statement',['slug' => request()->slug])}}')">Update Details</button>
     </div>
 </div>

@@ -60,9 +60,20 @@
                     <div class="col-sm-9">
                         <input class="form-control" name="name" placeholder="Contest Name" required
                             value="{{ $contest->name }}">
-                        {{$contest->slug}}
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for=" Contest Name ">
+                        Contest Slug:
+                    </label>
+                    <div class="col-sm-9">
+                        {{url('/')}}/.../<span style="border: 1px solid #dddddd;padding: 0px;font-weight: bold;border-radius: 5px; display: inline-block;min-width: 150px;">{{$contest->slug}}</span><br/>
+                        <small class="form-text text-muted">
+                        Slug can only be updated when you change contest name.<br/></small>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label col-sm-3" for=" Contest Format ">
                         Contest Format:

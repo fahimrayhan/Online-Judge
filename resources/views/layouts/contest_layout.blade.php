@@ -3,12 +3,11 @@
     <head>
         <!-- App Meta -->
         <meta charset="utf-8">
-            <meta content="width=device-width,initial-scale=1,maximum-scale=1" name="viewport">
-                <meta content="{{ csrf_token() }}" name="csrf-token"/>
+            <meta content="{{ csrf_token() }}" name="csrf-token"/>
                 <meta content="{{ config('app.name') }}" name="app-name"/>
                 <meta content="{{ base64_encode(env('PUSHER_APP_KEY')) }}" name="PAK"/>
                 <meta content="{{ $layoutKey }}" name="layout-key"/>
-                <link href="http://coderoj.com/file/site_metarial/favicon.png" rel="icon" sizes="16x16" type="image/gif">
+                <link href="{{asset("assets/img/favicon.png")}}" rel="icon" sizes="16x16" type="image/gif">
                     <title>
                         @yield('title') - {{ config('app.name') }}
                     </title>
@@ -25,6 +24,13 @@
                         </script>
                         <script src="{{ mix('js/app.js') }}" type="text/javascript">
                         </script>
+                        <script language="JavaScript" src="{{ asset('lib/datatable/jquery.dataTables.min.js') }}" type="text/javascript"></script>
+
+
+                        <script language="JavaScript" src="{{ asset('lib/datatable/dataTables.bootstrap.js') }}"></script>
+
+                        <link rel="stylesheet" type="text/css" href="{{ asset('lib/datatable/dataTables.bootstrap.css') }}">
+
                         <link href="{{ asset('flag/css/flag-icon.css') }}" rel="stylesheet">
                             @include('includes.head')
                         </link>

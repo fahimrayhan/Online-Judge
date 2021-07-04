@@ -90,7 +90,6 @@
 							<span>Duration: <b>{{$contest->duration_in_hours}} hours</b></span>
 							<span title="{{$contest->isParticipant() ? 'You can participate this contest' : 'You can not participate this contest'}}"><b style="color: {{$contest->isParticipant() ? 'green' : 'red'}}"><i class="fa fa-flag" aria-hidden="true"></i></b></span>
 						</div>
-
 					</div>
 					</a>
 					@endforeach

@@ -69,7 +69,7 @@
       <div class="row" style="background: url('{{asset("assets/img/geometry.png")}}');">
          <div class="col-md-4">
             <div class="bannerArea">
-               <img class="welcomeBanner" src="http://coderoj.com/file/site_metarial/home-pic.png">
+               <img class="welcomeBanner" src="{{asset("assets/img/home-pic.png")}}">
             </div>
          </div>
          <div class="col-md-8">
