@@ -53,6 +53,11 @@ class Contest extends Model
         });
     }
 
+    public function getParticipateMainNameAttribute($name)
+    {
+        return trim($name) == "" ? "@handle@":$name;
+    }
+
     public function moderator()
     {
         return $this->belongsToMany(User::class, 'contest_moderator', 'contest_id', 'user_id')->withPivot(['role', 'is_accepted'])->withTimestamps()->orderBy('contest_moderator.created_at');

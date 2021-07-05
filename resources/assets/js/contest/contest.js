@@ -108,7 +108,21 @@ var Contest = {
                 resetForm: true,
                 callback: function(response) {
                     url.load();
-                    //new Modal().close();
+                    new Modal().close();
+                }
+            }
+        });
+    },
+
+    addParticipants: function(e){
+        var form = new Form("add-participants-form");
+        form.submit({
+            loadingText: "Adding...",
+            success: {
+                resetForm: false,
+                callback: function(response) {
+                    new Modal().close();
+                    url.load();
                 }
             }
         });
