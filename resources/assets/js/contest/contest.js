@@ -66,6 +66,19 @@ var Contest = {
             }
         });
     },
+    signUp: function(){
+        var form = new Form("contest_sign_up_form");
+        form.submit({
+            loadingText: "Processing...",
+            success: {
+                resetForm: true,
+                callback: function(response) {
+                    url.load(response.url);
+                    new Modal().close();
+                }
+            }
+        });
+    },
     loadFileBanner: function(event) {
         var output = document.getElementById('contestBannerPreview');
         if (!event.target.files[0]) {

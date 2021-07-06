@@ -75,6 +75,7 @@ class ContestController extends Controller
         // dd($this->contest->authUserRole);
         return view('pages.administration.contest.moderators', [
             'moderators' => $moderators,
+            'contest'    => $this->contest,
             'role'       => $this->contest->authUserRole,
         ]);
     }
