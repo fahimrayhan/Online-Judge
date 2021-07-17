@@ -92,7 +92,7 @@ class SubmissionController extends Controller
         if (!$contest->isParticipant()) {
             response()->json([
                 'message'             => 'You can not submit this contest'
-            ],419),
+            ],419);
         }
 
         $data = [
@@ -178,6 +178,13 @@ class SubmissionController extends Controller
 
     public function testEvent()
     {
+
+        $redis = new \Predis\Client([ 'scheme' => 'tls', 'host' => 'db-redis-blr1-24907-do-user-9308348-0.b.db.ondigitalocean.com', 'port' => 25061, 'password' => 'itqt3x4t9hrrtpfc']);
+
+        $redis->set('message', 'bar');
+        dd($redis->get('foo'));
+
+        return;
         $options = array(
             'cluster' => 'mt1',
             'useTLS'  => true,

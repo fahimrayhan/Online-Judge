@@ -8,8 +8,8 @@
          <div class="col-sm-12"  style="padding-top: 2px;">
             <p style="font-size:14px; text-align: center; color: #4A525B "><font face="Times New Roman"> 
                &copy; 2021 CoderOJ | TechSerm<br/>
-               Judge Developed By: Sk.Amir Hamza<br/>
-               Server Time: <a id="server_time"></a>
+               Judge Developed By: <a href="https://github.com/amirhamza05">Sk.Amir Hamza</a><br/>
+               Server Time: {{date('F j, Y, g:i a', time())}}
                </font>
             </p>
          </div>

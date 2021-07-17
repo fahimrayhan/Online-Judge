@@ -30,6 +30,9 @@
 		border-radius: 4px;
 		font-size: 12px!important;
 	}
+    a:hover,a:focus{
+        text-decoration: none;
+    }
 </style>
 
 	@foreach($problems as $key => $problem)
@@ -49,13 +52,41 @@
     <div class="pull-left problemNo">
                         {{$key}}
                     </div>
-                    <h4 class="list-group-item-heading" style="margin: 5px 0 4px; line-height: 30px;">
+                    <h4 class="list-group-item-heading" style="margin: 5px 0 4px; line-height: 30px;font-weight: normal;">
                         {{$problem->name}}
                     </h4>
                 </a>
 
 	@endforeach
 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="contestBox">
+            <div class="contestBoxHeader">
+                Resource
+            </div>
+            <div class="contestBoxBody">
+                
+            </div>
+        </div>
+        <div class="contestBox">
+            <div class="contestBoxHeader">
+                Announcement
+            </div>
+            <div class="contestBoxBody">
+                @for($i=1; $i<=2; $i++)
+                <div style="border: 1px solid #eeeeee; border-width: 0px 0px 1px 0px;padding: 10px 0px 10px 0px;">
+                    <a href="">this is test this is test this is test this is test this is test this is test this is test this is test this is test</a><br/>
+                    <small class="text-muted">56m ago</small>
+                </div>
+                @endfor
+                <center>
+                    <div style="padding-top: 10px;"><a href="">See more...</a></div>
+                </center>
             </div>
         </div>
     </div>

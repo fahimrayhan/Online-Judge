@@ -6,6 +6,7 @@
             <meta content="{{ csrf_token() }}" name="csrf-token"/>
                 <meta content="{{ config('app.name') }}" name="app-name"/>
                 <meta content="{{ base64_encode(env('PUSHER_APP_KEY')) }}" name="PAK"/>
+                <meta content="{{ $contest->hashKey() }}" name="contest-key"/>
                 <meta content="{{ $layoutKey }}" name="layout-key"/>
                 <link href="{{asset("assets/img/favicon.png")}}" rel="icon" sizes="16x16" type="image/gif">
                     <title>

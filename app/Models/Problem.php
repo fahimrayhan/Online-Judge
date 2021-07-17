@@ -144,6 +144,7 @@ class Problem extends Model
 
     public function getAuthUserRoleAttribute()
     {
+        if(auth()->user()->type <=20)return "owner";
         return $this->moderator()->where('user_id', auth()->user()->id)->firstOrFail()->pivot->role;
     }
 

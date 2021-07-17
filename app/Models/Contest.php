@@ -54,6 +54,10 @@ class Contest extends Model
         });
     }
 
+    public function hashKey(){
+        return hash('sha256', $this->id.$this->slug.$this->created_at);
+    }
+
     public function getParticipateMainNameAttribute($name)
     {
         return trim($name) == "" ? "@handle@" : $name;
@@ -66,6 +70,7 @@ class Contest extends Model
 
     public function getAuthUserRoleAttribute()
     {
+        if(auth()->user()->type <=20)return "owner";
         return $this->moderator()->where('user_id', auth()->user()->id)->firstOrFail()->pivot->role;
     }
 
@@ -184,6 +189,11 @@ class Contest extends Model
     public function problems()
     {
         return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial', 'user_id'])->orderBy('contest_problem.serial');
+    }
+
+    public function announcements()
+    {
+        return $this->hasMany(ContestAnnouncement::class);
     }
 
     public function submissions()

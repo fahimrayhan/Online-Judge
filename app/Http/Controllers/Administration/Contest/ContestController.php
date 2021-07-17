@@ -56,6 +56,16 @@ class ContestController extends Controller
             'contest'  => $this->contest,
         ]);
     }
+
+    public function viewProblem()
+    {
+        $problem = $this->contest->problems()->where(['slug' => request()->problem_slug])->firstOrFail();
+        return view('pages.administration.contest.problem.view_problem', [
+            'problem' => $problem,
+            'contest' => $this->contest,
+        ]);
+    }
+
     public function addProblem(Request $request)
     {
         return response()->json([

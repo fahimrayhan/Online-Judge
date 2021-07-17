@@ -37,6 +37,8 @@
 			<div class="col-md-3"><div class="option-name">Custom Checker Code</div></div>
 			<div class="col-md-9">
 				<textarea rows="10" id="checkerEditor">{{$problem->custom_checker}}</textarea>
+				<small class="text-muted">You must use <b>testlib</b> checker <a href="https://codeforces.com/blog/entry/18431"><u>Read About testlib Checker</u></a></small>
+				<br/>
 				<button id="custom_checker_btn" onclick="problem.updateCustomChecker(this)" url="{{route('administration.problem.checker',['slug' => request()->slug])}}" class="btn btn-primary" style="margin-top: 5px;">Save Custom Checker</button>
 			</div>
 		</div>
