@@ -19,6 +19,12 @@ $sidebar = [
         'count' => $contest->problems->count(), 
         'url' => route('administration.contest.problems', ['contest_id' => request()->contest_id]),
     ],
+    'announcements' => [
+        'icon' => 'fa fa-bullhorn',
+        'name' => 'Announcements',
+        'count' => $contest->announcements->count(), 
+        'url' => route('administration.contest.announcements.index', ['contest_id' => request()->contest_id]),
+    ],
     'moderators' => [
         'icon' => 'fas fa-users',
         'name' => 'Moderators',

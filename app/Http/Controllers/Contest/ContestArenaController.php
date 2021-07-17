@@ -28,6 +28,13 @@ class ContestArenaController extends Controller
         ]);
     }
 
+    public function completeProblems(){
+        return view('pages.contest.arena.complete_problem_set', [
+            'contest'  => $this->contest,
+            'problems' => $this->getProblemListWithKeySerial(),
+        ]);
+    }
+
     public function getProblemListWithKeySerial()
     {
         $problems = $this->contest->problems()->get();

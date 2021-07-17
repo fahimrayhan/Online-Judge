@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require("dotenv").config();
 
 /*
  |--------------------------------------------------------------------------
@@ -34,6 +34,7 @@ var helperJs = [
 
 var appJs = [
 	'resources/assets/js/auth/auth.js',
+	'resources/assets/js/websocket/websocket.js',
 	'resources/assets/js/problem/problem_dashboard.js',
 	'resources/assets/js/problem/problem_details_editor.js',
 	'resources/assets/js/profile/profile.js',
@@ -45,8 +46,8 @@ var appJs = [
 	'resources/assets/js/filemanager/file_manager.js',
 	'resources/assets/js/country/country.js',
 	'resources/assets/js/contest/contest.js',
+	'resources/assets/js/contest/contest_arena.js',
 	'resources/assets/js/city/city.js',
-
 ];
 
 var scripts = [].concat(libJs, helperJs, appJs);

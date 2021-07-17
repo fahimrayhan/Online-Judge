@@ -1,5 +1,5 @@
 contestDescriptionEditor = "";
-var Contest = { 
+var Contest = {
     descriptionEditor: "",
     setEditor: function(description) {
         contestDescriptionEditor = CKEDITOR.replace('contestDescriptionEditor');
@@ -14,7 +14,6 @@ var Contest = {
         CKEDITOR.config.autoGrow_minHeight = 100;
         CKEDITOR.config.autoGrow_maxHeight = 300;
         CKEDITOR.config.tabSpaces = 4;
-
         var toolbarConstraintsEditor = [{
             name: "paragraph",
             items: ['Bold', 'Italic', 'Strike']
@@ -66,7 +65,7 @@ var Contest = {
             }
         });
     },
-    signUp: function(){
+    signUp: function() {
         var form = new Form("contest_sign_up_form");
         form.submit({
             loadingText: "Processing...",
@@ -126,8 +125,7 @@ var Contest = {
             }
         });
     },
-
-    addParticipants: function(e){
+    addParticipants: function(e) {
         var form = new Form("add-participants-form");
         form.submit({
             loadingText: "Adding...",
@@ -166,7 +164,7 @@ var Contest = {
             registrationDataTable.ajax.reload(null, false);
         });
     },
-    viewMail: function(e){
+    viewMail: function(e) {
         var registrationList = [];
         $("input[name='registrations[]']:checked").each(function(index, obj) {
             registrationList.push(obj.value);
@@ -176,19 +174,18 @@ var Contest = {
             return;
         }
         var mailType = $("#selectMaiType").val();
-        if(!mailType) mailType = "email";
+        if (!mailType) mailType = "email";
         var data = {
             'user_list': registrationList,
             'email_type': mailType
         };
-       
         var modal = new Modal('md');
         modal.open("Send Email");
         $.post(e.attr("url"), app.setToken(data), function(response) {
             modal.html(response);
         });
     },
-    sendMail: function(e){
+    sendMail: function(e) {
         var ok = confirm("Are You Want To Send Email");
         if (!ok) return;
         var registrationList = [];
@@ -200,7 +197,7 @@ var Contest = {
             return;
         }
         var mailType = $("#selectMaiType").val();
-        if(!mailType) mailType = "email";
+        if (!mailType) mailType = "email";
         var data = {
             'user_list': registrationList,
             'email_type': mailType
@@ -243,16 +240,12 @@ var Contest = {
     processTimer: function() {
         var start = $("#startcontesttimer").val();
         if (!start) return;
-        if(this.contestTimer == 0)return;
-        
+        if (this.contestTimer == 0) return;
         var currTime = this.currTimeSecond();
         calSeconds = this.contestTimer - (currTime - this.startTime);
-
         if (calSeconds == 0) this.contestTimer = 0;
-
         time = this.timeConvert(calSeconds);
-        $("#timerArea").html(time.hour+" : "+time.minute+" : "+time.second);
-
+        $("#timerArea").html(time.hour + " : " + time.minute + " : " + time.second);
         if (calSeconds == 0) {
             var statusMessage = "";
             if (this.contestStatus == "running") statusMessage = "Contest Is End";
@@ -262,7 +255,7 @@ var Contest = {
             url.load();
         }
     },
-    getModetatorsList: function (el) {
+    getModetatorsList: function(el) {
         $('#suggestion_box').html("");
         var geturl = el.attr('data-url');
         var addUrl = el.attr('data-add-url');
@@ -271,27 +264,27 @@ var Contest = {
         if (data['search'] == "") {
             return;
         }
-        $.post(geturl, app.setToken(data), function (response) {
+        $.post(geturl, app.setToken(data), function(response) {
             console.log(response);
             var moderatorsList = response.moderators;
             $('#suggestion_box').html("");
-            $.each(moderatorsList, function () {
+            $.each(moderatorsList, function() {
                 $('#suggestion_box').append("<li class='list-group-item moderators_suggestion_li' onclick='Contest.addContestModerator($(this))' data-userId='" + this.id + "' data-url='" + addUrl + "'>" + "<img class='img-thumbnail moderators_suggestion_li_img' src='" + this.avatar + "' style='width: 50px;'><b> " + this.handle + "</b></li>");
             });
         });
     },
-    addContestModerator: function (el) {
+    addContestModerator: function(el) {
         var userId = el.attr('data-userId');
         var addurl = el.attr('data-url');
         var data = {
             'userId': userId,
         }
-        $.post(addurl, app.setToken(data), function (response) {
+        $.post(addurl, app.setToken(data), function(response) {
             url.load();
             toast.success(response.message);
         });
     },
-    deleteContestModerator: function (el) {
+    deleteContestModerator: function(el) {
         var ok = confirm("Are you want to delete moderator?");
         if (ok) {
             var delUrl = el.attr('data-url');
@@ -299,44 +292,117 @@ var Contest = {
             var data = {
                 'userId': userId,
             }
-            $.post(delUrl, app.setToken(data), function (response) {
+            $.post(delUrl, app.setToken(data), function(response) {
                 url.load();
                 toast.success(response.message);
             });
         }
     },
-    acceptProblemModerator: function (el) {
+    acceptProblemModerator: function(el) {
         var acceptUrl = el.attr('data-url');
         var userId = el.attr('data-userId');
         console.log(userId);
         var data = {
             'userId': userId
         };
-        $.post(acceptUrl, app.setToken(data), function (response) {
+        $.post(acceptUrl, app.setToken(data), function(response) {
             url.load();
             toast.success(response.message);
         });
     },
-    cancelProblemModerator: function (el) {
+    cancelProblemModerator: function(el) {
         var delUrl = el.attr('data-url');
         var data = {}
-        $.post(delUrl, app.setToken(data), function (response) {
+        $.post(delUrl, app.setToken(data), function(response) {
             url.load(response.url);
             toast.success(response.message);
         });
     },
-    leaveFromModerator: function (el) {
+    leaveFromModerator: function(el) {
         var ok = confirm("Are you want to Leave From moderator?");
         if (ok) {
             var delUrl = el.attr('data-url');
             var data = {};
-            $.post(delUrl, app.setToken(data), function (response) {
+            $.post(delUrl, app.setToken(data), function(response) {
                 url.load(response.url);
                 toast.success(response.message);
             });
         }
     },
+    selectContestVisibility: function(e) {
+        $("#contestPassword").hide();
+        $("#contestRegistraionFormInputArea").hide();
+        if (e.value == "public") {
+            $("#contestRegistraionFormInputArea").show();
+        } else if (e.value == "protected") {
+            $("#contestPassword").show();
+            $("#contestRegistraionFormInputArea").show();
+        } else if (e.value == "private") {
+            $("#contestRegistraionFormInputArea").hide();
+        }
+    },
+    announcement: {
+        store: function(e) {
+            var form = new Form(e);
+            form.submit({
+                loadingText: "Creating...",
+                success: {
+                    resetForm: true,
+                    callback: function(response) {
+                        url.load(response.url);
+                        new Modal().close();
+                    }
+                }
+            });
+            // form.submit();
+        },
+        update: function(e) {
+            var form = new Form(e);
+            form.submit({
+                loadingText: "Updating...",
+                success: {
+                    resetForm: true,
+                    callback: function(response) {
+                        url.load(response.url);
+                        new Modal().close();
+                    }
+                }
+            });
+        },
+        delete: function() {},
+    },
 };
 setInterval(function() {
     Contest.processTimer();
 }, 1000);
+
+
+function buildFormList(){
+    $.each(FormList, function(key, value) {
+        $(document).on("submit", '#' + key, function(e) {
+            eval(value + "('" + key + "')");
+        });
+    });
+}
+
+var FormList = {
+    'create_contest_announcement': 'Contest.announcement.store',
+    'update_contest_announcement': 'Contest.announcement.update'
+};
+
+
+buildFormList();
+
+// FormSubmitList.build({
+//     'id': "create_contest_announcement",
+//     'function' : "Contest.announcement.update"
+// });
+
+// FormList.add({
+//     'id': "create_contest_announcement",
+//     'function' : "Contest.announcement.update"
+// });
+
+// FormSubmitList.build("create_contest_announcement",function(data){
+
+// });

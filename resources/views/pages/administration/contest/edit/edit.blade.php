@@ -44,68 +44,7 @@
             text-align: right;
         }
 
-        .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  border-radius: 3px;
-  transition: .4s;
-
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 3px;
-  bottom: 4px;
-  border-radius: 3px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 
     </style>
 
@@ -232,7 +171,7 @@ input:checked + .slider:before {
                         Contest Visibility:
                     </label>
                     <div class="col-sm-9">
-                        <select class="form-control" name="visibility">
+                        <select onchange="Contest.selectContestVisibility(this)" class="form-control" name="visibility">
                             <option value="public" {{ $contest->visibility == 'public' ? 'selected' : '' }}>
                                 Public - any one can registration and participate
                             </option>
@@ -245,28 +184,26 @@ input:checked + .slider:before {
                         </select>
                     </div>
                 </div>
-                <div id="contestRegistraionFormInputArea" style="display: block">
-                    <div id="contestPassword" style="display: none">
+                @php
+
+
+
+
+                @endphp
+
+                <div id="contestRegistraionFormInputArea" style="display: {{$contest->visibility == "private" ? 'none':'block'}}">
+                    <div id="contestPassword" style="display:  {{$contest->visibility != "protected" ? 'none':'block'}}">
                         <div class="form-group">
                             <label class="control-label col-sm-3" for=" Contest Password ">
                                 Contest Password:
                             </label>
                             <div class="col-sm-9">
-                                <input type="password" class="form-control" name="password" placeholder="Contest Password">
+                                <input type="text" class="form-control" value="{{$contest->password}}" name="password" placeholder="Contest Password">
                                 <small class="form-text text-muted">
                                     User need this password before registration
                                 </small>
                                 <br />
-
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">
-                            Contest Password:
-                        </label>
-                        <div class="col-sm-9">
-                            <input value="{{$contest->password}}" class="form-control" style="margin-top: 10px;" name="password" >
                         </div>
                     </div>
                     <div class="form-group">

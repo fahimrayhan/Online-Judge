@@ -52,7 +52,7 @@
 	margin : 0px 0px 0px 0px;
 	text-align: center;
 	color: #ffffff;
-	padding: 30px 20px 15px 0px;
+	padding: 40px 20px 25px 0px;
 	background-image: url("{{asset("assets/img/geometry.png")}}");
 	border: 1px solid #DFDFDF;
 	border-width: 0px 0px 1px 0px;
@@ -151,7 +151,7 @@
 
 	.problemListBox{
 		margin-bottom: 2px;
-		padding: 8px;
+		padding: 10px;
 		border: 1px solid #EEEEEE;
 	}
 	.problemNo{
