@@ -87,7 +87,7 @@
 			<td>{{$submission->created_at->diffForHumans()}}</td>
 			<td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$submission->user->handle}}</a></td>
 			<td><a href="{{route('problem.view',[ 'slug' => $submission->problem->slug])}}">{{$submission->problem->name}}</a></td>
-			<td>{{$submission->language->name}}</td>
+			<td>{{$submission->language->name}}</td> 
 			<td><span id="submission_{{$submission->id}}_verdict">{!!$submission->verdictStatus()!!}</span></td>
 			<td><span id="submission_{{$submission->id}}_time">{{$submission->time}} ms</span></td>
 			<td><span id="submission_{{$submission->id}}_memory">{{$submission->memory}} kb</span></td>

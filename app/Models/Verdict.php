@@ -38,6 +38,7 @@ class Verdict extends Model
             $label = "warning";
         } else {
             $label = "danger";
+            if($this->id != 6 && $this->id != 15 && isset($data['run_on_test']))$this->name.= " On Test {$data['run_on_test']}";
         }
 
         if($id == 2){

@@ -115,7 +115,9 @@ class Problem extends Model
 
     public function owner()
     {
-        return $this->moderator()->firstOrFail();
+        return cache()->rememberForever("problem_owner_" . $this->id, function () {
+            return $this->moderator()->firstOrFail();
+        });
     }
 
     public function isUserSolved(){
