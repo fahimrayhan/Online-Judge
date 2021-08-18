@@ -39,9 +39,9 @@
         <tr>
             <td><a modal='true' modal-type='lg' modal-header="Submission #{{$submission->id}}" href="{{route('contest.arena.submissions.view',['contest_slug' => request()->contest_slug,'submission_id' => $submission->id])}}"><u>{{$submission->id}}</u></a></td>
            
-            <td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$users[$submission->user->id]->main_name}}</a></td>
+            <td><a href="{{route('profile',[ 'handle' => $submission->user->handle])}}">{{$submission->main_name}}</a></td>
             <td style="text-align: left;">
-                <a href="{{route('contest.arena.problems.view',['contest_slug' => request()->contest_slug,'problem_no' => $problemsKeyId[$submission->problem->id]['problem_no']])}}">{{$problemsKeyId[$submission->problem->id]['problem_no']}}. {{$submission->problem->name}}</a></td>
+                <a href="{{route('contest.arena.problems.view',['contest_slug' => request()->contest_slug,'problem_no' => $submission->problem_no])}}">{{$submission->problem_no}}. {{$submission->problem->name}}</a></td>
             <td><font title="{{$submission->created_at}}">{{gmdate("H : i : s", $contest->start->diffInSeconds($submission->created_at))}}</font></td>
             <td>{{$submission->language->name}}</td>
             <td><span id="submission_{{$submission->id}}_time">{{$submission->time}} ms</span></td>
@@ -69,7 +69,7 @@
                             Any Problem
                         </option>
                         @foreach($problems as $key => $problem)
-                        <option value="{{$key}}" {{$key == request()->problem ? "selected" : ""}}>{{$key}} . {{$problem->name}}</option>
+                        <option value="{{$problem->problem_no}}" {{$key == request()->problem ? "selected" : ""}}>{{$problem->problem_no}} . {{$problem->name}}</option>
                         @endforeach
                     </select>
                     <select class="form-control filterBox" id="submission-filter-language">

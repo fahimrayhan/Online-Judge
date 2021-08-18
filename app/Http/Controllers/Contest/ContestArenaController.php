@@ -11,63 +11,40 @@ use App\Models\Verdict;
 class ContestArenaController extends Controller
 {
     protected $contest;
+    protected $problems;
 
     public function __construct()
     {
         if (isset(request()->contest_slug)) {
-            $this->contest = Contest::where(['slug' => request()->contest_slug])->firstOrFail();
+            $this->contest  = Contest::where(['slug' => request()->contest_slug])->firstOrFail();
+            $this->problems = new \App\Services\Contest\ContestProblem($this->contest);
         }
     }
 
     public function problems()
     {
         return view('pages.contest.arena.problems', [
-            'contest'  => $this->contest,
-            'problems' => $this->getProblemListWithKeySerial(),
-            'problemsStat' => $this->contest->rankList()->getProblemStat(),
+            'contest'       => $this->contest,
+            'problems'      => $this->problems->get(),
+            'problemsStat'  => $this->contest->rankList()->getProblemStat(),
+            'announcements' => $this->contest->announcements()->orderBy('id', 'desc')->get(),
         ]);
     }
 
-    public function completeProblems(){
+    public function completeProblems()
+    {
         return view('pages.contest.arena.complete_problem_set', [
             'contest'  => $this->contest,
-            'problems' => $this->getProblemListWithKeySerial(),
+            'problems' => $this->problems->get(),
         ]);
-    }
-
-    public function getProblemListWithKeySerial()
-    {
-        $problems = $this->contest->problems()->get();
-        $tmp      = [];
-
-        foreach ($problems as $key => $value) {
-            $tmp[chr($key + 65)] = $value;
-        }
-
-        return $tmp;
-    }
-
-    public function getProblemListWithKeyId()
-    {
-        $problems = $this->contest->problems()->get();
-        $tmp      = [];
-
-        foreach ($problems as $key => $value) {
-            $tmp[$value->id]               = $value;
-            $tmp[$value->id]['problem_no'] = chr($key + 65);
-        }
-
-        return $tmp;
     }
 
     public function getProblem()
     {
-        $problems = $this->getProblemListWithKeySerial();
-
-        if (!isset($problems[request()->problem_no])) {
+        $problem = $this->problems->whereNo(request()->problem_no);
+        if (empty($problem)) {
             abort(404, "Problem is not found");
         }
-        $problem = $problems[request()->problem_no];
         return $problem;
     }
 
@@ -97,11 +74,11 @@ class ContestArenaController extends Controller
 
     public function submissions()
     {
-        $problems = $this->getProblemListWithKeySerial();
-        $problemsKeyId = $this->getProblemListWithKeyId();
+        $problems = $this->problems->get();
 
         if (request()->problem != "") {
-            request()->problem_id = isset($problems[request()->problem]) ? $problems[request()->problem]->id : -1;
+            $problem              = $this->problems->whereNo(request()->problem);
+            request()->problem_id = empty($problem) ? -1 : $problem->id;
         }
 
         $problemsIdList = [];
@@ -110,15 +87,17 @@ class ContestArenaController extends Controller
         }
 
         $users = $this->contest->registrationCacheData()->get();
-        
+
         $userIdList = [];
         foreach ($users as $key => $value) {
-            if($value->is_registration_accepted)array_push($userIdList, $value->id);
+            if ($value->is_registration_accepted) {
+                array_push($userIdList, $value->id);
+            }
         }
 
         $submissions = $this->contest->submissions()
-            ->whereIn('problem_id',$problemsIdList)
-            ->whereIn('user_id',$userIdList)
+            ->whereIn('problem_id', $problemsIdList)
+            ->whereIn('user_id', $userIdList)
             ->whereBetween('created_at', [$this->contest->start, $this->contest->end])
             ->whereHas('verdict', function ($q) {
                 if (request()->verdict != "") {
@@ -143,79 +122,28 @@ class ContestArenaController extends Controller
             })
             ->orderBy('id', 'DESC')->paginate(15);
 
-        return view('pages.contest.arena.submissions', [
-            'contest'     => $this->contest,
-            'submissions' => $submissions,
-            'problems'    => $this->getProblemListWithKeySerial(),
-            'verdicts'    => Verdict::all(),
-            'problemsKeyId' => $problemsKeyId,
-            'users' => $users,
-            'languages'   => Language::orderBy('name', 'asc')->get(),
-        ]);
-    }
-
-    public function mySubmissions()
-    {
-        $problems = $this->getProblemListWithKeySerial();
-        $problemsKeyId = $this->getProblemListWithKeyId();
-
-        if (request()->problem != "") {
-            request()->problem_id = isset($problems[request()->problem]) ? $problems[request()->problem]->id : -1;
-        }
-
-        $problemsIdList = [];
-        foreach ($problems as $key => $value) {
-            array_push($problemsIdList, $value['id']);
-        }
-
-        $users = $this->contest->registrationCacheData()->get();
-        
-        $userIdList = [];
-        foreach ($users as $key => $value) {
-            if($value->is_registration_accepted)array_push($userIdList, $value->id);
-        }
-
-        $submissions = $this->contest->submissions()->where(['user_id' => auth()->user()->id])
-            ->whereIn('problem_id',$problemsIdList)
-            ->whereIn('user_id',$userIdList)
-            ->whereBetween('created_at', [$this->contest->start, $this->contest->end])
-            ->whereHas('verdict', function ($q) {
-                if (request()->verdict != "") {
-                    $q->where('name', request()->verdict);
-                }
-
-            })
-            ->whereHas('language', function ($q) {
-                if (request()->language != "") {
-                    $q->where('name', request()->language);
-                }
-            })
-            ->whereHas('user', function ($q) {
-                if (request()->handle != "") {
-                    $q->where('handle', request()->handle);
-                }
-            })
-            ->whereHas('problem', function ($q) {
-                if (request()->problem != "") {
-                    $q->where('id', request()->problem_id);
-                }
-            })
-            ->orderBy('id', 'DESC')->paginate(15);
+        $submissions->each(function ($submission) use ($users) {
+            $submission->problem_no = $this->problems->whereId($submission->problem_id)->problem_no;
+            $submission->main_name  = $users[$submission->user->id]->main_name;
+        });
 
         return view('pages.contest.arena.submissions', [
             'contest'     => $this->contest,
             'submissions' => $submissions,
             'problems'    => $problems,
             'verdicts'    => Verdict::all(),
-            'problemsKeyId' => $problemsKeyId,
-            'users' => $users,
             'languages'   => Language::orderBy('name', 'asc')->get(),
         ]);
     }
 
-    public function viewSubmission()
+    public function mySubmissions()
     {
-        $problems = $this->getProblemListWithKeyId();
+        $problems = $this->problems->get();
+
+        if (request()->problem != "") {
+            $problem              = $this->problems->whereNo(request()->problem);
+            request()->problem_id = empty($problem) ? -1 : $problem->id;
+        }
 
         $problemsIdList = [];
         foreach ($problems as $key => $value) {
@@ -223,25 +151,91 @@ class ContestArenaController extends Controller
         }
 
         $users = $this->contest->registrationCacheData()->get();
-        
+
         $userIdList = [];
         foreach ($users as $key => $value) {
-            if($value->is_registration_accepted)array_push($userIdList, $value->id);
+            if ($value->is_registration_accepted) {
+                array_push($userIdList, $value->id);
+            }
+
+        }
+
+        $submissions = $this->contest->submissions()->where(['user_id' => auth()->user()->id])
+            ->whereIn('problem_id', $problemsIdList)
+            ->whereIn('user_id', $userIdList)
+            ->whereBetween('created_at', [$this->contest->start, $this->contest->end])
+            ->whereHas('verdict', function ($q) {
+                if (request()->verdict != "") {
+                    $q->where('name', request()->verdict);
+                }
+            })
+            ->whereHas('language', function ($q) {
+                if (request()->language != "") {
+                    $q->where('name', request()->language);
+                }
+            })
+            ->whereHas('user', function ($q) {
+                if (request()->handle != "") {
+                    $q->where('handle', request()->handle);
+                }
+            })
+            ->whereHas('problem', function ($q) {
+                if (request()->problem != "") {
+                    $q->where('id', request()->problem_id);
+                }
+            })
+            ->orderBy('id', 'DESC')->paginate(15);
+
+        $submissions->each(function ($submission) use ($users) {
+            $submission->problem_no = $this->problems->whereId($submission->problem_id)->problem_no;
+            $submission->main_name  = $users[$submission->user->id]->main_name;
+        });
+
+        return view('pages.contest.arena.submissions', [
+            'contest'     => $this->contest,
+            'submissions' => $submissions,
+            'problems'    => $problems,
+            'verdicts'    => Verdict::all(),
+            'languages'   => Language::orderBy('name', 'asc')->get(),
+        ]);
+    }
+
+    public function viewSubmission()
+    {
+        $problems = $this->problems->get();
+
+        $problemsIdList = [];
+        foreach ($problems as $key => $value) {
+            array_push($problemsIdList, $value['id']);
+        }
+
+        $users = $this->contest->registrationCacheData()->get();
+
+        $userIdList = [];
+        foreach ($users as $key => $value) {
+            if ($value->is_registration_accepted) {
+                array_push($userIdList, $value->id);
+            }
+
         }
 
         $submission = $this->contest->submissions()
-        ->where(['id' => request()->submission_id])
-        ->whereIn('problem_id',$problemsIdList)
-        ->whereIn('user_id',$userIdList)
-        ->firstOrFail();
+            ->where(['id' => request()->submission_id])
+            ->whereIn('problem_id', $problemsIdList)
+            ->whereIn('user_id', $userIdList)
+            ->firstOrFail();
+
+        $submission->problem_no = $this->problems->whereId($submission->problem_id)->problem_no;
+        $submission->main_name  = $users[$submission->user->id]->main_name;
 
         //dd($problems);
+        $problem = $this->problems->whereId($submission->problem_id);
 
         return view('pages.contest.arena.view_submission', [
             'contest'    => $this->contest,
             'submission' => $submission,
-            'users' => $users,
-            'problemKey' => $problems[$submission->problem_id]['problem_no']
+            'users'      => $users,
+            'problemKey' => $problem['problem_no'],
         ]);
     }
 
@@ -256,6 +250,14 @@ class ContestArenaController extends Controller
 
     public function clearifications()
     {
+
+    }
+
+    public function announcements(){
+        echo "hey";
+    }
+
+    public function showAnnouncements(){
         
     }
 }

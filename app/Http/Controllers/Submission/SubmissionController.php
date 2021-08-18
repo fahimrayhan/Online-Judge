@@ -145,7 +145,7 @@ class SubmissionController extends Controller
                     $q->where('slug', request()->slug);
                 }
             })
-            ->orderBy('id', 'DESC')->paginate(25);
+            ->orderBy('id', 'DESC')->paginate(100);
 
         return view('pages.submission.practice_submission_list', [
             'submissions' => $submissions,
@@ -176,9 +176,17 @@ class SubmissionController extends Controller
         ]);
     }
 
+    public function testCache(){
+        echo "hello";
+        return ['test' => "ok"];
+    }
+
     public function testEvent()
     {
 
+
+        return;
+        //
         $redis = new \Predis\Client([ 'scheme' => 'tls', 'host' => 'db-redis-blr1-24907-do-user-9308348-0.b.db.ondigitalocean.com', 'port' => 25061, 'password' => 'itqt3x4t9hrrtpfc']);
 
         $redis->set('message', 'bar');

@@ -41,4 +41,11 @@ class SubmissionTestCase extends Model
     {
         return $this->belongsTo(Verdict::class);
     }
+
+    public function getVerdictAttribute()
+    {
+        return cache()->rememberForever("submission_test_case_verdict_" . $this->verdict_id, function () {
+            return $this->verdict()->first();
+        });
+    }
 }

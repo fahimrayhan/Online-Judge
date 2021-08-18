@@ -16,10 +16,10 @@
 }
 </script>
 
-<input type="button" onclick="printDiv('problem-set')" value="print a div!" />
 <div class="row">
-	<div class="col-md-9">
-		<div id="problem-set">
+	<div class="col-md-12">
+    <button class="btn btn-primary pull-right" onclick="printDiv('problem-set')"><i class="fa fa-print"></i> Print Problem Set</button>
+		<div id="problem-set" class="contestBoxBody">
 			<style type="text/css">
 header{
 	display: none;
@@ -59,9 +59,6 @@ footer {
 			</div>
 			@endforeach
 		</div>
-	</div>
-	<div class="col-md-3">
-		
 	</div>
 </div>
 

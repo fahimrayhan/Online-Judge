@@ -62,6 +62,7 @@ Route::group(['prefix' => 'c/{contest_slug}', 'middleware' => ['CheckContestPubl
         Route::get('/submissions/{submission_id}', 'Contest\ContestArenaController@viewSubmission')->name('contest.arena.submissions.view');
         Route::get('/standings', 'Contest\ContestArenaController@standings')->withoutMiddleware('CheckContestParticipant')->name('contest.arena.standings');
         Route::get('/clearifications', 'Contest\ContestArenaController@clearifications')->name('contest.arena.clearifications');
+        Route::get('/announcements', 'Contest\ContestArenaController@announcements')->name('contest.arena.announcements');
     });
 });
 

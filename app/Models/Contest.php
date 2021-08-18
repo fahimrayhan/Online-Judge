@@ -191,6 +191,13 @@ class Contest extends Model
         return $this->belongsToMany(Problem::class, 'contest_problem', 'contest_id', 'problem_id')->withPivot(['serial', 'user_id'])->orderBy('contest_problem.serial');
     }
 
+    public function getProblemsAttribute()
+    {
+       // return cache()->rememberForever("contest_problems_" . $this->id, function () {
+        return $this->problems()->get();
+        //});
+    }
+
     public function announcements()
     {
         return $this->hasMany(ContestAnnouncement::class);

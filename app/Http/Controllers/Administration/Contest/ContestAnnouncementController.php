@@ -105,9 +105,9 @@ class ContestAnnouncementController extends Controller
             'is_published' => $request->is_published ? 1 : 0,
         ]);
 
-        //if($announcementBroadcast == 1 && $announcement->is_published == 1){
+        if($announcementBroadcast == 1 && $announcement->is_published == 1){
             event(new ContestAnnouncementBroadcastEvent($announcement));
-        //}
+        }
 
         return response()->json([
             'message' => "Successflly update announcement",
