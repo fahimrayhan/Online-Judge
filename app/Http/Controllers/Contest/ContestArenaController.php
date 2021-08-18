@@ -13,6 +13,7 @@ class ContestArenaController extends Controller
     protected $contest;
     protected $problems;
 
+    //test
     public function __construct()
     {
         if (isset(request()->contest_slug)) {
